@@ -1,0 +1,816 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s13_weak_func_check.html" title="./../s13_weak_func_check.html" >&laquo; Back to s13_weak_func_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<a class="refmodul" href="./s12_binary_protection.html" title="LINK" ><pre>[</span><span class="orange">*</span>] Binary protection state of </span><span class="orange">ppp_unix.so</span></pre></a>
+
+<br />
+<pre>  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      </pre>
+<pre>  	<span class="red">No RELRO</span>       <span class="red">No Canary found</span>   <span class="green">NX enabled</span>   <span class="orange">DSO</span>          <span class="green">No RPATH</span>     <span class="green">No RUNPATH</span>   <span class="red">Symbols</span></pre>
+<br />
+<pre></span></pre>
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">printf</span> tear down of </span><span class="orange">ppp_unix.so</span></pre>
+<br />
+<pre>    26e4:	e5930004 	ldr	r0, [r3, #4]</pre>
+<pre>    26e8:	ebfffad0 	bl	1230 &lt;inet_ntoa&commat;plt&gt;</pre>
+<pre>    26ec:	e1a06000 	mov	r6, r0</pre>
+<pre>    26f0:	e51b3060 	ldr	r3, [fp, #-96]	; 0xffffffa0</pre>
+<pre>    26f4:	e1d330b2 	ldrh	r3, [r3, #2]</pre>
+<pre>    26f8:	e1a00003 	mov	r0, r3</pre>
+<pre>    26fc:	ebfffada 	bl	126c &lt;htons&commat;plt&gt;</pre>
+<pre>    2700:	e1a03000 	mov	r3, r0</pre>
+<pre>    2704:	e58d9000 	str	r9, [sp]</pre>
+<pre>    2708:	e58da004 	str	sl, [sp, #4]</pre>
+<pre>    270c:	e58d8008 	str	r8, [sp, #8]</pre>
+<pre>    2710:	e58d700c 	str	r7, [sp, #12]</pre>
+<pre>    2714:	e58d6010 	str	r6, [sp, #16]</pre>
+<pre>    2718:	e58d3014 	str	r3, [sp, #20]</pre>
+<pre>    271c:	e1a00005 	mov	r0, r5</pre>
+<pre>    2720:	e59f3194 	ldr	r3, [pc, #404]	; 28bc &lt;ppp_unix_socket_connect+0x2d8&gt;</pre>
+<pre>    2724:	e0843003 	add	r3, r4, r3</pre>
+<pre>    2728:	e1a01003 	mov	r1, r3</pre>
+<pre>    272c:	e51b2058 	ldr	r2, [fp, #-88]	; 0xffffffa8</pre>
+<pre>    2730:	e51b305c 	ldr	r3, [fp, #-92]	; 0xffffffa4</pre>
+<pre><span class="red">    2734:	ebfffa60 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    2738:	ea00001d 	b	27b4 &lt;ppp_unix_socket_connect+0x1d0&gt;</pre>
+<pre>    273c:	e15ba6b2 	ldrh	sl, [fp, #-98]	; 0xffffff9e</pre>
+<pre>--</pre>
+<pre>    2988:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    298c:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    2990:	e3530000 	cmp	r3, #0</pre>
+<pre>    2994:	0a00001b 	beq	2a08 &lt;ppp_unix_inc_pppd_active_count+0x144&gt;</pre>
+<pre>    2998:	e59f3090 	ldr	r3, [pc, #144]	; 2a30 &lt;ppp_unix_inc_pppd_active_count+0x16c&gt;</pre>
+<pre>    299c:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    29a0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    29a4:	e3530000 	cmp	r3, #0</pre>
+<pre>    29a8:	0a00000c 	beq	29e0 &lt;ppp_unix_inc_pppd_active_count+0x11c&gt;</pre>
+<pre>    29ac:	e59f3080 	ldr	r3, [pc, #128]	; 2a34 &lt;ppp_unix_inc_pppd_active_count+0x170&gt;</pre>
+<pre>    29b0:	e0843003 	add	r3, r4, r3</pre>
+<pre>    29b4:	e1a02003 	mov	r2, r3</pre>
+<pre>    29b8:	e59f3060 	ldr	r3, [pc, #96]	; 2a20 &lt;ppp_unix_inc_pppd_active_count+0x15c&gt;</pre>
+<pre>    29bc:	e0843003 	add	r3, r4, r3</pre>
+<pre>    29c0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    29c4:	e1a00002 	mov	r0, r2</pre>
+<pre>    29c8:	e59f2068 	ldr	r2, [pc, #104]	; 2a38 &lt;ppp_unix_inc_pppd_active_count+0x174&gt;</pre>
+<pre>    29cc:	e0842002 	add	r2, r4, r2</pre>
+<pre>    29d0:	e1a01002 	mov	r1, r2</pre>
+<pre>    29d4:	e1a02003 	mov	r2, r3</pre>
+<pre><span class="red">    29d8:	ebfff9b7 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    29dc:	ea000009 	b	2a08 &lt;ppp_unix_inc_pppd_active_count+0x144&gt;</pre>
+<pre>    29e0:	e59f3038 	ldr	r3, [pc, #56]	; 2a20 &lt;ppp_unix_inc_pppd_active_count+0x15c&gt;</pre>
+<pre>--</pre>
+<pre>    2a9c:	e3530000 	cmp	r3, #0</pre>
+<pre>    2aa0:	0a00001c 	beq	2b18 &lt;ppp_unix_dec_pppd_active_count+0xd8&gt;</pre>
+<pre>    2aa4:	e59f31a0 	ldr	r3, [pc, #416]	; 2c4c &lt;ppp_unix_dec_pppd_active_count+0x20c&gt;</pre>
+<pre>    2aa8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    2aac:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    2ab0:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    2ab4:	e3530000 	cmp	r3, #0</pre>
+<pre>    2ab8:	0a000016 	beq	2b18 &lt;ppp_unix_dec_pppd_active_count+0xd8&gt;</pre>
+<pre>    2abc:	e59f318c 	ldr	r3, [pc, #396]	; 2c50 &lt;ppp_unix_dec_pppd_active_count+0x210&gt;</pre>
+<pre>    2ac0:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    2ac4:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    2ac8:	e3530000 	cmp	r3, #0</pre>
+<pre>    2acc:	0a000008 	beq	2af4 &lt;ppp_unix_dec_pppd_active_count+0xb4&gt;</pre>
+<pre>    2ad0:	e59f317c 	ldr	r3, [pc, #380]	; 2c54 &lt;ppp_unix_dec_pppd_active_count+0x214&gt;</pre>
+<pre>    2ad4:	e0843003 	add	r3, r4, r3</pre>
+<pre>    2ad8:	e1a00003 	mov	r0, r3</pre>
+<pre>    2adc:	e59f3174 	ldr	r3, [pc, #372]	; 2c58 &lt;ppp_unix_dec_pppd_active_count+0x218&gt;</pre>
+<pre>    2ae0:	e0843003 	add	r3, r4, r3</pre>
+<pre>    2ae4:	e1a01003 	mov	r1, r3</pre>
+<pre>    2ae8:	e51b2010 	ldr	r2, [fp, #-16]</pre>
+<pre><span class="red">    2aec:	ebfff972 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    2af0:	ea000008 	b	2b18 &lt;ppp_unix_dec_pppd_active_count+0xd8&gt;</pre>
+<pre>    2af4:	e3a00007 	mov	r0, #7</pre>
+<pre>--</pre>
+<pre>    2ca0:	0a00001e 	beq	2d20 &lt;ppp_unix_find_by_id+0xb4&gt;</pre>
+<pre>    2ca4:	e59f31c0 	ldr	r3, [pc, #448]	; 2e6c &lt;ppp_unix_find_by_id+0x200&gt;</pre>
+<pre>    2ca8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    2cac:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    2cb0:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    2cb4:	e3530000 	cmp	r3, #0</pre>
+<pre>    2cb8:	0a000018 	beq	2d20 &lt;ppp_unix_find_by_id+0xb4&gt;</pre>
+<pre>    2cbc:	e59f31ac 	ldr	r3, [pc, #428]	; 2e70 &lt;ppp_unix_find_by_id+0x204&gt;</pre>
+<pre>    2cc0:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    2cc4:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    2cc8:	e3530000 	cmp	r3, #0</pre>
+<pre>    2ccc:	0a000009 	beq	2cf8 &lt;ppp_unix_find_by_id+0x8c&gt;</pre>
+<pre>    2cd0:	e59f319c 	ldr	r3, [pc, #412]	; 2e74 &lt;ppp_unix_find_by_id+0x208&gt;</pre>
+<pre>    2cd4:	e0843003 	add	r3, r4, r3</pre>
+<pre>    2cd8:	e1a01003 	mov	r1, r3</pre>
+<pre>    2cdc:	e15b21be 	ldrh	r2, [fp, #-30]	; 0xffffffe2</pre>
+<pre>    2ce0:	e15b32b0 	ldrh	r3, [fp, #-32]	; 0xffffffe0</pre>
+<pre>    2ce4:	e1a00001 	mov	r0, r1</pre>
+<pre>    2ce8:	e59f1188 	ldr	r1, [pc, #392]	; 2e78 &lt;ppp_unix_find_by_id+0x20c&gt;</pre>
+<pre>    2cec:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    2cf0:	ebfff8f1 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    2cf4:	ea000009 	b	2d20 &lt;ppp_unix_find_by_id+0xb4&gt;</pre>
+<pre>    2cf8:	e15b31be 	ldrh	r3, [fp, #-30]	; 0xffffffe2</pre>
+<pre>--</pre>
+<pre>    2d6c:	e3530000 	cmp	r3, #0</pre>
+<pre>    2d70:	0a000021 	beq	2dfc &lt;ppp_unix_find_by_id+0x190&gt;</pre>
+<pre>    2d74:	e59f30f4 	ldr	r3, [pc, #244]	; 2e70 &lt;ppp_unix_find_by_id+0x204&gt;</pre>
+<pre>    2d78:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    2d7c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    2d80:	e3530000 	cmp	r3, #0</pre>
+<pre>    2d84:	0a00000e 	beq	2dc4 &lt;ppp_unix_find_by_id+0x158&gt;</pre>
+<pre>    2d88:	e59f30f4 	ldr	r3, [pc, #244]	; 2e84 &lt;ppp_unix_find_by_id+0x218&gt;</pre>
+<pre>    2d8c:	e0843003 	add	r3, r4, r3</pre>
+<pre>    2d90:	e1a01003 	mov	r1, r3</pre>
+<pre>    2d94:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    2d98:	e1d330b8 	ldrh	r3, [r3, #8]</pre>
+<pre>    2d9c:	e1a02003 	mov	r2, r3</pre>
+<pre>    2da0:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    2da4:	e1d330ba 	ldrh	r3, [r3, #10]</pre>
+<pre>    2da8:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    2dac:	e58d0000 	str	r0, [sp]</pre>
+<pre>    2db0:	e1a00001 	mov	r0, r1</pre>
+<pre>    2db4:	e59f10bc 	ldr	r1, [pc, #188]	; 2e78 &lt;ppp_unix_find_by_id+0x20c&gt;</pre>
+<pre>    2db8:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    2dbc:	ebfff8be 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    2dc0:	ea00000d 	b	2dfc &lt;ppp_unix_find_by_id+0x190&gt;</pre>
+<pre>    2dc4:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    2ee8:	e5922000 	ldr	r2, [r2]</pre>
+<pre>    2eec:	e3520000 	cmp	r2, #0</pre>
+<pre>    2ef0:	0a000012 	beq	2f40 &lt;ppp_unix_pppd_terminated+0xb4&gt;</pre>
+<pre>    2ef4:	e59f215c 	ldr	r2, [pc, #348]	; 3058 &lt;ppp_unix_pppd_terminated+0x1cc&gt;</pre>
+<pre>    2ef8:	e0832002 	add	r2, r3, r2</pre>
+<pre>    2efc:	e1a01002 	mov	r1, r2</pre>
+<pre>    2f00:	e51b2008 	ldr	r2, [fp, #-8]</pre>
+<pre>    2f04:	e1d220b8 	ldrh	r2, [r2, #8]</pre>
+<pre>    2f08:	e51b0008 	ldr	r0, [fp, #-8]</pre>
+<pre>    2f0c:	e1d000ba 	ldrh	r0, [r0, #10]</pre>
+<pre>    2f10:	e1a0c000 	mov	ip, r0</pre>
+<pre>    2f14:	e51b0014 	ldr	r0, [fp, #-20]	; 0xffffffec</pre>
+<pre>    2f18:	e58d0000 	str	r0, [sp]</pre>
+<pre>    2f1c:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    2f20:	e58d0004 	str	r0, [sp, #4]</pre>
+<pre>    2f24:	e1a00001 	mov	r0, r1</pre>
+<pre>    2f28:	e59f112c 	ldr	r1, [pc, #300]	; 305c &lt;ppp_unix_pppd_terminated+0x1d0&gt;</pre>
+<pre>    2f2c:	e0833001 	add	r3, r3, r1</pre>
+<pre>    2f30:	e1a01003 	mov	r1, r3</pre>
+<pre>    2f34:	e1a0300c 	mov	r3, ip</pre>
+<pre><span class="red">    2f38:	ebfff85f 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    2f3c:	ea000012 	b	2f8c &lt;ppp_unix_pppd_terminated+0x100&gt;</pre>
+<pre>    2f40:	e51b2008 	ldr	r2, [fp, #-8]</pre>
+<pre>--</pre>
+<pre>    30d8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    30dc:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    30e0:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    30e4:	e3530000 	cmp	r3, #0</pre>
+<pre>    30e8:	0a000019 	beq	3154 &lt;ppp_unix_pppd_terminate+0xf0&gt;</pre>
+<pre>    30ec:	e59f316c 	ldr	r3, [pc, #364]	; 3260 &lt;ppp_unix_pppd_terminate+0x1fc&gt;</pre>
+<pre>    30f0:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    30f4:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    30f8:	e3530000 	cmp	r3, #0</pre>
+<pre>    30fc:	0a00000b 	beq	3130 &lt;ppp_unix_pppd_terminate+0xcc&gt;</pre>
+<pre>    3100:	e59f315c 	ldr	r3, [pc, #348]	; 3264 &lt;ppp_unix_pppd_terminate+0x200&gt;</pre>
+<pre>    3104:	e0843003 	add	r3, r4, r3</pre>
+<pre>    3108:	e1a02003 	mov	r2, r3</pre>
+<pre>    310c:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    3110:	e5933020 	ldr	r3, [r3, #32]</pre>
+<pre>    3114:	e1a00002 	mov	r0, r2</pre>
+<pre>    3118:	e59f2148 	ldr	r2, [pc, #328]	; 3268 &lt;ppp_unix_pppd_terminate+0x204&gt;</pre>
+<pre>    311c:	e0842002 	add	r2, r4, r2</pre>
+<pre>    3120:	e1a01002 	mov	r1, r2</pre>
+<pre>    3124:	e1a02003 	mov	r2, r3</pre>
+<pre><span class="red">    3128:	ebfff7e3 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    312c:	ea000008 	b	3154 &lt;ppp_unix_pppd_terminate+0xf0&gt;</pre>
+<pre>    3130:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    5428:	e3530000 	cmp	r3, #0</pre>
+<pre>    542c:	0a00001c 	beq	54a4 &lt;ppp_unix_pppd_spawn+0x1c90&gt;</pre>
+<pre>    5430:	e51f3b50 	ldr	r3, [pc, #-2896]	; 48e8 &lt;ppp_unix_pppd_spawn+0x10d4&gt;</pre>
+<pre>    5434:	e7963003 	ldr	r3, [r6, r3]</pre>
+<pre>    5438:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    543c:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    5440:	e3530000 	cmp	r3, #0</pre>
+<pre>    5444:	0a000016 	beq	54a4 &lt;ppp_unix_pppd_spawn+0x1c90&gt;</pre>
+<pre>    5448:	e51f3b64 	ldr	r3, [pc, #-2916]	; 48ec &lt;ppp_unix_pppd_spawn+0x10d8&gt;</pre>
+<pre>    544c:	e7963003 	ldr	r3, [r6, r3]</pre>
+<pre>    5450:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5454:	e3530000 	cmp	r3, #0</pre>
+<pre>    5458:	0a000008 	beq	5480 &lt;ppp_unix_pppd_spawn+0x1c6c&gt;</pre>
+<pre>    545c:	e51f3b88 	ldr	r3, [pc, #-2952]	; 48dc &lt;ppp_unix_pppd_spawn+0x10c8&gt;</pre>
+<pre>    5460:	e0863003 	add	r3, r6, r3</pre>
+<pre>    5464:	e1a00003 	mov	r0, r3</pre>
+<pre>    5468:	e51f3b78 	ldr	r3, [pc, #-2936]	; 48f8 &lt;ppp_unix_pppd_spawn+0x10e4&gt;</pre>
+<pre>    546c:	e0863003 	add	r3, r6, r3</pre>
+<pre>    5470:	e1a01003 	mov	r1, r3</pre>
+<pre>    5474:	e51b2028 	ldr	r2, [fp, #-40]	; 0xffffffd8</pre>
+<pre><span class="red">    5478:	ebffef0f 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    547c:	ea000008 	b	54a4 &lt;ppp_unix_pppd_spawn+0x1c90&gt;</pre>
+<pre>    5480:	e3a00007 	mov	r0, #7</pre>
+<pre>--</pre>
+<pre>    54c0:	e3530000 	cmp	r3, #0</pre>
+<pre>    54c4:	0a00001c 	beq	553c &lt;ppp_unix_pppd_spawn+0x1d28&gt;</pre>
+<pre>    54c8:	e51f3be8 	ldr	r3, [pc, #-3048]	; 48e8 &lt;ppp_unix_pppd_spawn+0x10d4&gt;</pre>
+<pre>    54cc:	e7963003 	ldr	r3, [r6, r3]</pre>
+<pre>    54d0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    54d4:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    54d8:	e3530000 	cmp	r3, #0</pre>
+<pre>    54dc:	0a000016 	beq	553c &lt;ppp_unix_pppd_spawn+0x1d28&gt;</pre>
+<pre>    54e0:	e51f3bfc 	ldr	r3, [pc, #-3068]	; 48ec &lt;ppp_unix_pppd_spawn+0x10d8&gt;</pre>
+<pre>    54e4:	e7963003 	ldr	r3, [r6, r3]</pre>
+<pre>    54e8:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    54ec:	e3530000 	cmp	r3, #0</pre>
+<pre>    54f0:	0a000008 	beq	5518 &lt;ppp_unix_pppd_spawn+0x1d04&gt;</pre>
+<pre>    54f4:	e51f3c0c 	ldr	r3, [pc, #-3084]	; 48f0 &lt;ppp_unix_pppd_spawn+0x10dc&gt;</pre>
+<pre>    54f8:	e0863003 	add	r3, r6, r3</pre>
+<pre>    54fc:	e1a00003 	mov	r0, r3</pre>
+<pre>    5500:	e51f3c10 	ldr	r3, [pc, #-3088]	; 48f8 &lt;ppp_unix_pppd_spawn+0x10e4&gt;</pre>
+<pre>    5504:	e0863003 	add	r3, r6, r3</pre>
+<pre>    5508:	e1a01003 	mov	r1, r3</pre>
+<pre>    550c:	e51b2028 	ldr	r2, [fp, #-40]	; 0xffffffd8</pre>
+<pre><span class="red">    5510:	ebffeee9 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5514:	ea000008 	b	553c &lt;ppp_unix_pppd_spawn+0x1d28&gt;</pre>
+<pre>    5518:	e3a00007 	mov	r0, #7</pre>
+<pre>--</pre>
+<pre>    55c8:	e59f30f0 	ldr	r3, [pc, #240]	; 56c0 &lt;ppp_unix_param_defaults+0x17c&gt;</pre>
+<pre>    55cc:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    55d0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    55d4:	e3530000 	cmp	r3, #0</pre>
+<pre>    55d8:	0a000016 	beq	5638 &lt;ppp_unix_param_defaults+0xf4&gt;</pre>
+<pre>    55dc:	e59f30e0 	ldr	r3, [pc, #224]	; 56c4 &lt;ppp_unix_param_defaults+0x180&gt;</pre>
+<pre>    55e0:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    55e4:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    55e8:	e2033004 	and	r3, r3, #4</pre>
+<pre>    55ec:	e3530000 	cmp	r3, #0</pre>
+<pre>    55f0:	0a000010 	beq	5638 &lt;ppp_unix_param_defaults+0xf4&gt;</pre>
+<pre>    55f4:	e59f30cc 	ldr	r3, [pc, #204]	; 56c8 &lt;ppp_unix_param_defaults+0x184&gt;</pre>
+<pre>    55f8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    55fc:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5600:	e3530000 	cmp	r3, #0</pre>
+<pre>    5604:	0a000005 	beq	5620 &lt;ppp_unix_param_defaults+0xdc&gt;</pre>
+<pre>    5608:	e59f30bc 	ldr	r3, [pc, #188]	; 56cc &lt;ppp_unix_param_defaults+0x188&gt;</pre>
+<pre>    560c:	e0843003 	add	r3, r4, r3</pre>
+<pre>    5610:	e1a00003 	mov	r0, r3</pre>
+<pre>    5614:	e51b101c 	ldr	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre><span class="red">    5618:	ebffeea7 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    561c:	ea000005 	b	5638 &lt;ppp_unix_param_defaults+0xf4&gt;</pre>
+<pre>    5620:	e3a00007 	mov	r0, #7</pre>
+<pre>--</pre>
+<pre>    578c:	e3520000 	cmp	r2, #0</pre>
+<pre>    5790:	0a000022 	beq	5820 &lt;ppp_unix_delete+0xd0&gt;</pre>
+<pre>    5794:	e59f21cc 	ldr	r2, [pc, #460]	; 5968 &lt;ppp_unix_delete+0x218&gt;</pre>
+<pre>    5798:	e7932002 	ldr	r2, [r3, r2]</pre>
+<pre>    579c:	e5922000 	ldr	r2, [r2]</pre>
+<pre>    57a0:	e3520000 	cmp	r2, #0</pre>
+<pre>    57a4:	0a00000e 	beq	57e4 &lt;ppp_unix_delete+0x94&gt;</pre>
+<pre>    57a8:	e59f21bc 	ldr	r2, [pc, #444]	; 596c &lt;ppp_unix_delete+0x21c&gt;</pre>
+<pre>    57ac:	e0832002 	add	r2, r3, r2</pre>
+<pre>    57b0:	e1a01002 	mov	r1, r2</pre>
+<pre>    57b4:	e51b2008 	ldr	r2, [fp, #-8]</pre>
+<pre>    57b8:	e1d220b8 	ldrh	r2, [r2, #8]</pre>
+<pre>    57bc:	e51b0008 	ldr	r0, [fp, #-8]</pre>
+<pre>    57c0:	e1d000ba 	ldrh	r0, [r0, #10]</pre>
+<pre>    57c4:	e1a0c000 	mov	ip, r0</pre>
+<pre>    57c8:	e1a00001 	mov	r0, r1</pre>
+<pre>    57cc:	e59f119c 	ldr	r1, [pc, #412]	; 5970 &lt;ppp_unix_delete+0x220&gt;</pre>
+<pre>    57d0:	e0833001 	add	r3, r3, r1</pre>
+<pre>    57d4:	e1a01003 	mov	r1, r3</pre>
+<pre>    57d8:	e1a0300c 	mov	r3, ip</pre>
+<pre><span class="red">    57dc:	ebffee36 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    57e0:	ea00000e 	b	5820 &lt;ppp_unix_delete+0xd0&gt;</pre>
+<pre>    57e4:	e51b2008 	ldr	r2, [fp, #-8]</pre>
+<pre>--</pre>
+<pre>    59bc:	0a00001e 	beq	5a3c &lt;ppp_unix_create+0xc4&gt;</pre>
+<pre>    59c0:	e59f34f0 	ldr	r3, [pc, #1264]	; 5eb8 &lt;ppp_unix_create+0x540&gt;</pre>
+<pre>    59c4:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    59c8:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    59cc:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    59d0:	e3530000 	cmp	r3, #0</pre>
+<pre>    59d4:	0a000018 	beq	5a3c &lt;ppp_unix_create+0xc4&gt;</pre>
+<pre>    59d8:	e59f34dc 	ldr	r3, [pc, #1244]	; 5ebc &lt;ppp_unix_create+0x544&gt;</pre>
+<pre>    59dc:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    59e0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    59e4:	e3530000 	cmp	r3, #0</pre>
+<pre>    59e8:	0a000009 	beq	5a14 &lt;ppp_unix_create+0x9c&gt;</pre>
+<pre>    59ec:	e59f34cc 	ldr	r3, [pc, #1228]	; 5ec0 &lt;ppp_unix_create+0x548&gt;</pre>
+<pre>    59f0:	e0843003 	add	r3, r4, r3</pre>
+<pre>    59f4:	e1a01003 	mov	r1, r3</pre>
+<pre>    59f8:	e15b22ba 	ldrh	r2, [fp, #-42]	; 0xffffffd6</pre>
+<pre>    59fc:	e15b32bc 	ldrh	r3, [fp, #-44]	; 0xffffffd4</pre>
+<pre>    5a00:	e1a00001 	mov	r0, r1</pre>
+<pre>    5a04:	e59f14b8 	ldr	r1, [pc, #1208]	; 5ec4 &lt;ppp_unix_create+0x54c&gt;</pre>
+<pre>    5a08:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    5a0c:	ebffedaa 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5a10:	ea000009 	b	5a3c &lt;ppp_unix_create+0xc4&gt;</pre>
+<pre>    5a14:	e15b32ba 	ldrh	r3, [fp, #-42]	; 0xffffffd6</pre>
+<pre>--</pre>
+<pre>    5a78:	0a000105 	beq	5e94 &lt;ppp_unix_create+0x51c&gt;</pre>
+<pre>    5a7c:	e59f3434 	ldr	r3, [pc, #1076]	; 5eb8 &lt;ppp_unix_create+0x540&gt;</pre>
+<pre>    5a80:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5a84:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5a88:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    5a8c:	e3530000 	cmp	r3, #0</pre>
+<pre>    5a90:	0a000101 	beq	5e9c &lt;ppp_unix_create+0x524&gt;</pre>
+<pre>    5a94:	e59f3420 	ldr	r3, [pc, #1056]	; 5ebc &lt;ppp_unix_create+0x544&gt;</pre>
+<pre>    5a98:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5a9c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5aa0:	e3530000 	cmp	r3, #0</pre>
+<pre>    5aa4:	0a000009 	beq	5ad0 &lt;ppp_unix_create+0x158&gt;</pre>
+<pre>    5aa8:	e59f341c 	ldr	r3, [pc, #1052]	; 5ecc &lt;ppp_unix_create+0x554&gt;</pre>
+<pre>    5aac:	e0843003 	add	r3, r4, r3</pre>
+<pre>    5ab0:	e1a01003 	mov	r1, r3</pre>
+<pre>    5ab4:	e15b22ba 	ldrh	r2, [fp, #-42]	; 0xffffffd6</pre>
+<pre>    5ab8:	e15b32bc 	ldrh	r3, [fp, #-44]	; 0xffffffd4</pre>
+<pre>    5abc:	e1a00001 	mov	r0, r1</pre>
+<pre>    5ac0:	e59f13fc 	ldr	r1, [pc, #1020]	; 5ec4 &lt;ppp_unix_create+0x54c&gt;</pre>
+<pre>    5ac4:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    5ac8:	ebffed7b 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5acc:	ea0000f3 	b	5ea0 &lt;ppp_unix_create+0x528&gt;</pre>
+<pre>    5ad0:	e15b32ba 	ldrh	r3, [fp, #-42]	; 0xffffffd6</pre>
+<pre>--</pre>
+<pre>    5c30:	0a000086 	beq	5e50 &lt;ppp_unix_create+0x4d8&gt;</pre>
+<pre>    5c34:	e59f327c 	ldr	r3, [pc, #636]	; 5eb8 &lt;ppp_unix_create+0x540&gt;</pre>
+<pre>    5c38:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5c3c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5c40:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    5c44:	e3530000 	cmp	r3, #0</pre>
+<pre>    5c48:	0a000082 	beq	5e58 &lt;ppp_unix_create+0x4e0&gt;</pre>
+<pre>    5c4c:	e59f3268 	ldr	r3, [pc, #616]	; 5ebc &lt;ppp_unix_create+0x544&gt;</pre>
+<pre>    5c50:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5c54:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5c58:	e3530000 	cmp	r3, #0</pre>
+<pre>    5c5c:	0a000009 	beq	5c88 &lt;ppp_unix_create+0x310&gt;</pre>
+<pre>    5c60:	e59f3270 	ldr	r3, [pc, #624]	; 5ed8 &lt;ppp_unix_create+0x560&gt;</pre>
+<pre>    5c64:	e0843003 	add	r3, r4, r3</pre>
+<pre>    5c68:	e1a01003 	mov	r1, r3</pre>
+<pre>    5c6c:	e15b22ba 	ldrh	r2, [fp, #-42]	; 0xffffffd6</pre>
+<pre>    5c70:	e15b32bc 	ldrh	r3, [fp, #-44]	; 0xffffffd4</pre>
+<pre>    5c74:	e1a00001 	mov	r0, r1</pre>
+<pre>    5c78:	e59f1244 	ldr	r1, [pc, #580]	; 5ec4 &lt;ppp_unix_create+0x54c&gt;</pre>
+<pre>    5c7c:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    5c80:	ebffed0d 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5c84:	ea000078 	b	5e6c &lt;ppp_unix_create+0x4f4&gt;</pre>
+<pre>    5c88:	e15b32ba 	ldrh	r3, [fp, #-42]	; 0xffffffd6</pre>
+<pre>--</pre>
+<pre>    5d24:	0a00004d 	beq	5e60 &lt;ppp_unix_create+0x4e8&gt;</pre>
+<pre>    5d28:	e59f3188 	ldr	r3, [pc, #392]	; 5eb8 &lt;ppp_unix_create+0x540&gt;</pre>
+<pre>    5d2c:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5d30:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5d34:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    5d38:	e3530000 	cmp	r3, #0</pre>
+<pre>    5d3c:	0a000049 	beq	5e68 &lt;ppp_unix_create+0x4f0&gt;</pre>
+<pre>    5d40:	e59f3174 	ldr	r3, [pc, #372]	; 5ebc &lt;ppp_unix_create+0x544&gt;</pre>
+<pre>    5d44:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5d48:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5d4c:	e3530000 	cmp	r3, #0</pre>
+<pre>    5d50:	0a000009 	beq	5d7c &lt;ppp_unix_create+0x404&gt;</pre>
+<pre>    5d54:	e59f3188 	ldr	r3, [pc, #392]	; 5ee4 &lt;ppp_unix_create+0x56c&gt;</pre>
+<pre>    5d58:	e0843003 	add	r3, r4, r3</pre>
+<pre>    5d5c:	e1a01003 	mov	r1, r3</pre>
+<pre>    5d60:	e15b22ba 	ldrh	r2, [fp, #-42]	; 0xffffffd6</pre>
+<pre>    5d64:	e15b32bc 	ldrh	r3, [fp, #-44]	; 0xffffffd4</pre>
+<pre>    5d68:	e1a00001 	mov	r0, r1</pre>
+<pre>    5d6c:	e59f1150 	ldr	r1, [pc, #336]	; 5ec4 &lt;ppp_unix_create+0x54c&gt;</pre>
+<pre>    5d70:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    5d74:	ebffecd0 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5d78:	ea00003b 	b	5e6c &lt;ppp_unix_create+0x4f4&gt;</pre>
+<pre>    5d7c:	e15b32ba 	ldrh	r3, [fp, #-42]	; 0xffffffd6</pre>
+<pre>--</pre>
+<pre>    5f70:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    5f74:	e3530000 	cmp	r3, #0</pre>
+<pre>    5f78:	0a000020 	beq	6000 &lt;ppp_unix_session_created+0x110&gt;</pre>
+<pre>    5f7c:	e59f3118 	ldr	r3, [pc, #280]	; 609c &lt;ppp_unix_session_created+0x1ac&gt;</pre>
+<pre>    5f80:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    5f84:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    5f88:	e3530000 	cmp	r3, #0</pre>
+<pre>    5f8c:	0a00000d 	beq	5fc8 &lt;ppp_unix_session_created+0xd8&gt;</pre>
+<pre>    5f90:	e59f3108 	ldr	r3, [pc, #264]	; 60a0 &lt;ppp_unix_session_created+0x1b0&gt;</pre>
+<pre>    5f94:	e0843003 	add	r3, r4, r3</pre>
+<pre>    5f98:	e1a05003 	mov	r5, r3</pre>
+<pre>    5f9c:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    5fa0:	ebffec96 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    5fa4:	e1a02000 	mov	r2, r0</pre>
+<pre>    5fa8:	e15b31ba 	ldrh	r3, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    5fac:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    5fb0:	e58d1000 	str	r1, [sp]</pre>
+<pre>    5fb4:	e1a00005 	mov	r0, r5</pre>
+<pre>    5fb8:	e59f10e4 	ldr	r1, [pc, #228]	; 60a4 &lt;ppp_unix_session_created+0x1b4&gt;</pre>
+<pre>    5fbc:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    5fc0:	ebffec3d 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    5fc4:	ea00000d 	b	6000 &lt;ppp_unix_session_created+0x110&gt;</pre>
+<pre>    5fc8:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    6130:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    6134:	e3530000 	cmp	r3, #0</pre>
+<pre>    6138:	0a000020 	beq	61c0 &lt;ppp_unix_session_deleted+0x110&gt;</pre>
+<pre>    613c:	e59f3128 	ldr	r3, [pc, #296]	; 626c &lt;ppp_unix_session_deleted+0x1bc&gt;</pre>
+<pre>    6140:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6144:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6148:	e3530000 	cmp	r3, #0</pre>
+<pre>    614c:	0a00000d 	beq	6188 &lt;ppp_unix_session_deleted+0xd8&gt;</pre>
+<pre>    6150:	e59f3118 	ldr	r3, [pc, #280]	; 6270 &lt;ppp_unix_session_deleted+0x1c0&gt;</pre>
+<pre>    6154:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6158:	e1a05003 	mov	r5, r3</pre>
+<pre>    615c:	e51b0020 	ldr	r0, [fp, #-32]	; 0xffffffe0</pre>
+<pre>    6160:	ebffec26 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6164:	e1a02000 	mov	r2, r0</pre>
+<pre>    6168:	e15b32b2 	ldrh	r3, [fp, #-34]	; 0xffffffde</pre>
+<pre>    616c:	e15b12b4 	ldrh	r1, [fp, #-36]	; 0xffffffdc</pre>
+<pre>    6170:	e58d1000 	str	r1, [sp]</pre>
+<pre>    6174:	e1a00005 	mov	r0, r5</pre>
+<pre>    6178:	e59f10f4 	ldr	r1, [pc, #244]	; 6274 &lt;ppp_unix_session_deleted+0x1c4&gt;</pre>
+<pre>    617c:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    6180:	ebffebcd 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6184:	ea00000d 	b	61c0 &lt;ppp_unix_session_deleted+0x110&gt;</pre>
+<pre>    6188:	e51b0020 	ldr	r0, [fp, #-32]	; 0xffffffe0</pre>
+<pre>--</pre>
+<pre>    62f0:	0a00001e 	beq	6370 &lt;ppp_unix_session_modified+0xf0&gt;</pre>
+<pre>    62f4:	e59f31c0 	ldr	r3, [pc, #448]	; 64bc &lt;ppp_unix_session_modified+0x23c&gt;</pre>
+<pre>    62f8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    62fc:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6300:	e2033004 	and	r3, r3, #4</pre>
+<pre>    6304:	e3530000 	cmp	r3, #0</pre>
+<pre>    6308:	0a000018 	beq	6370 &lt;ppp_unix_session_modified+0xf0&gt;</pre>
+<pre>    630c:	e59f31ac 	ldr	r3, [pc, #428]	; 64c0 &lt;ppp_unix_session_modified+0x240&gt;</pre>
+<pre>    6310:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6314:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6318:	e3530000 	cmp	r3, #0</pre>
+<pre>    631c:	0a000009 	beq	6348 &lt;ppp_unix_session_modified+0xc8&gt;</pre>
+<pre>    6320:	e59f319c 	ldr	r3, [pc, #412]	; 64c4 &lt;ppp_unix_session_modified+0x244&gt;</pre>
+<pre>    6324:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6328:	e1a01003 	mov	r1, r3</pre>
+<pre>    632c:	e15b24b2 	ldrh	r2, [fp, #-66]	; 0xffffffbe</pre>
+<pre>    6330:	e15b34b4 	ldrh	r3, [fp, #-68]	; 0xffffffbc</pre>
+<pre>    6334:	e1a00001 	mov	r0, r1</pre>
+<pre>    6338:	e59f1188 	ldr	r1, [pc, #392]	; 64c8 &lt;ppp_unix_session_modified+0x248&gt;</pre>
+<pre>    633c:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    6340:	ebffeb5d 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6344:	ea000009 	b	6370 &lt;ppp_unix_session_modified+0xf0&gt;</pre>
+<pre>    6348:	e15b34b2 	ldrh	r3, [fp, #-66]	; 0xffffffbe</pre>
+<pre>--</pre>
+<pre>    6570:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6574:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6578:	e3530000 	cmp	r3, #0</pre>
+<pre>    657c:	0a000011 	beq	65c8 &lt;ppp_unix_session_up+0xf4&gt;</pre>
+<pre>    6580:	e59f3234 	ldr	r3, [pc, #564]	; 67bc &lt;ppp_unix_session_up+0x2e8&gt;</pre>
+<pre>    6584:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6588:	e1a05003 	mov	r5, r3</pre>
+<pre>    658c:	e51b0020 	ldr	r0, [fp, #-32]	; 0xffffffe0</pre>
+<pre>    6590:	ebffeb1a 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6594:	e1a02000 	mov	r2, r0</pre>
+<pre>    6598:	e15b32b2 	ldrh	r3, [fp, #-34]	; 0xffffffde</pre>
+<pre>    659c:	e15bc2b4 	ldrh	ip, [fp, #-36]	; 0xffffffdc</pre>
+<pre>    65a0:	e15b02b6 	ldrh	r0, [fp, #-38]	; 0xffffffda</pre>
+<pre>    65a4:	e1db10b4 	ldrh	r1, [fp, #4]</pre>
+<pre>    65a8:	e58dc000 	str	ip, [sp]</pre>
+<pre>    65ac:	e58d0004 	str	r0, [sp, #4]</pre>
+<pre>    65b0:	e58d1008 	str	r1, [sp, #8]</pre>
+<pre>    65b4:	e1a00005 	mov	r0, r5</pre>
+<pre>    65b8:	e59f1200 	ldr	r1, [pc, #512]	; 67c0 &lt;ppp_unix_session_up+0x2ec&gt;</pre>
+<pre>    65bc:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    65c0:	ebffeabd 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    65c4:	ea000011 	b	6610 &lt;ppp_unix_session_up+0x13c&gt;</pre>
+<pre>    65c8:	e51b0020 	ldr	r0, [fp, #-32]	; 0xffffffe0</pre>
+<pre>--</pre>
+<pre>    6858:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    685c:	e3530000 	cmp	r3, #0</pre>
+<pre>    6860:	0a000020 	beq	68e8 &lt;ppp_unix_session_down+0x110&gt;</pre>
+<pre>    6864:	e59f30c4 	ldr	r3, [pc, #196]	; 6930 &lt;ppp_unix_session_down+0x158&gt;</pre>
+<pre>    6868:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    686c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6870:	e3530000 	cmp	r3, #0</pre>
+<pre>    6874:	0a00000d 	beq	68b0 &lt;ppp_unix_session_down+0xd8&gt;</pre>
+<pre>    6878:	e59f30b4 	ldr	r3, [pc, #180]	; 6934 &lt;ppp_unix_session_down+0x15c&gt;</pre>
+<pre>    687c:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6880:	e1a05003 	mov	r5, r3</pre>
+<pre>    6884:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    6888:	ebffea5c 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    688c:	e1a02000 	mov	r2, r0</pre>
+<pre>    6890:	e15b31ba 	ldrh	r3, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    6894:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    6898:	e58d1000 	str	r1, [sp]</pre>
+<pre>    689c:	e1a00005 	mov	r0, r5</pre>
+<pre>    68a0:	e59f1090 	ldr	r1, [pc, #144]	; 6938 &lt;ppp_unix_session_down+0x160&gt;</pre>
+<pre>    68a4:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    68a8:	ebffea03 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    68ac:	ea00000d 	b	68e8 &lt;ppp_unix_session_down+0x110&gt;</pre>
+<pre>    68b0:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    69c8:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    69cc:	e3530000 	cmp	r3, #0</pre>
+<pre>    69d0:	0a000020 	beq	6a58 &lt;ppp_unix_session_get_stats+0x118&gt;</pre>
+<pre>    69d4:	e59f32ec 	ldr	r3, [pc, #748]	; 6cc8 &lt;ppp_unix_session_get_stats+0x388&gt;</pre>
+<pre>    69d8:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    69dc:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    69e0:	e3530000 	cmp	r3, #0</pre>
+<pre>    69e4:	0a00000d 	beq	6a20 &lt;ppp_unix_session_get_stats+0xe0&gt;</pre>
+<pre>    69e8:	e59f32dc 	ldr	r3, [pc, #732]	; 6ccc &lt;ppp_unix_session_get_stats+0x38c&gt;</pre>
+<pre>    69ec:	e0843003 	add	r3, r4, r3</pre>
+<pre>    69f0:	e1a05003 	mov	r5, r3</pre>
+<pre>    69f4:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    69f8:	ebffea00 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    69fc:	e1a02000 	mov	r2, r0</pre>
+<pre>    6a00:	e15b31ba 	ldrh	r3, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    6a04:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    6a08:	e58d1000 	str	r1, [sp]</pre>
+<pre>    6a0c:	e1a00005 	mov	r0, r5</pre>
+<pre>    6a10:	e59f12b8 	ldr	r1, [pc, #696]	; 6cd0 &lt;ppp_unix_session_get_stats+0x390&gt;</pre>
+<pre>    6a14:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    6a18:	ebffe9a7 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6a1c:	ea00000d 	b	6a58 &lt;ppp_unix_session_get_stats+0x118&gt;</pre>
+<pre>    6a20:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    6ac0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6ac4:	e2033004 	and	r3, r3, #4</pre>
+<pre>    6ac8:	e3530000 	cmp	r3, #0</pre>
+<pre>    6acc:	0a00001a 	beq	6b3c &lt;ppp_unix_session_get_stats+0x1fc&gt;</pre>
+<pre>    6ad0:	e59f31f0 	ldr	r3, [pc, #496]	; 6cc8 &lt;ppp_unix_session_get_stats+0x388&gt;</pre>
+<pre>    6ad4:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6ad8:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6adc:	e3530000 	cmp	r3, #0</pre>
+<pre>    6ae0:	0a00000c 	beq	6b18 &lt;ppp_unix_session_get_stats+0x1d8&gt;</pre>
+<pre>    6ae4:	e59f31ec 	ldr	r3, [pc, #492]	; 6cd8 &lt;ppp_unix_session_get_stats+0x398&gt;</pre>
+<pre>    6ae8:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6aec:	e1a05003 	mov	r5, r3</pre>
+<pre>    6af0:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    6af4:	ebffe9c1 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6af8:	e1a02000 	mov	r2, r0</pre>
+<pre>    6afc:	e51b3014 	ldr	r3, [fp, #-20]	; 0xffffffec</pre>
+<pre>    6b00:	e593302c 	ldr	r3, [r3, #44]	; 0x2c</pre>
+<pre>    6b04:	e1a00005 	mov	r0, r5</pre>
+<pre>    6b08:	e1a01002 	mov	r1, r2</pre>
+<pre>    6b0c:	e1a02003 	mov	r2, r3</pre>
+<pre><span class="red">    6b10:	ebffe969 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6b14:	ea000008 	b	6b3c &lt;ppp_unix_session_get_stats+0x1fc&gt;</pre>
+<pre>    6b18:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    6bf0:	e1a05003 	mov	r5, r3</pre>
+<pre>    6bf4:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    6bf8:	ebffe980 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6bfc:	e1a02000 	mov	r2, r0</pre>
+<pre>    6c00:	e15bc1ba 	ldrh	ip, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    6c04:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    6c08:	e51b3014 	ldr	r3, [fp, #-20]	; 0xffffffec</pre>
+<pre>    6c0c:	e3530000 	cmp	r3, #0</pre>
+<pre>    6c10:	0a000002 	beq	6c20 &lt;ppp_unix_session_get_stats+0x2e0&gt;</pre>
+<pre>    6c14:	e51b3014 	ldr	r3, [fp, #-20]	; 0xffffffec</pre>
+<pre>    6c18:	e5933028 	ldr	r3, [r3, #40]	; 0x28</pre>
+<pre>    6c1c:	ea000000 	b	6c24 &lt;ppp_unix_session_get_stats+0x2e4&gt;</pre>
+<pre>    6c20:	e3e03000 	mvn	r3, #0</pre>
+<pre>    6c24:	e58d1000 	str	r1, [sp]</pre>
+<pre>    6c28:	e58d3004 	str	r3, [sp, #4]</pre>
+<pre>    6c2c:	e1a00005 	mov	r0, r5</pre>
+<pre>    6c30:	e59f3098 	ldr	r3, [pc, #152]	; 6cd0 &lt;ppp_unix_session_get_stats+0x390&gt;</pre>
+<pre>    6c34:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6c38:	e1a01003 	mov	r1, r3</pre>
+<pre>    6c3c:	e1a0300c 	mov	r3, ip</pre>
+<pre><span class="red">    6c40:	ebffe91d 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6c44:	ea000017 	b	6ca8 &lt;ppp_unix_session_get_stats+0x368&gt;</pre>
+<pre>    6c48:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    6d6c:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    6d70:	e3530000 	cmp	r3, #0</pre>
+<pre>    6d74:	0a000020 	beq	6dfc &lt;ppp_unix_session_ppp_created_hook+0x110&gt;</pre>
+<pre>    6d78:	e59f3104 	ldr	r3, [pc, #260]	; 6e84 &lt;ppp_unix_session_ppp_created_hook+0x198&gt;</pre>
+<pre>    6d7c:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6d80:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6d84:	e3530000 	cmp	r3, #0</pre>
+<pre>    6d88:	0a00000d 	beq	6dc4 &lt;ppp_unix_session_ppp_created_hook+0xd8&gt;</pre>
+<pre>    6d8c:	e59f30f4 	ldr	r3, [pc, #244]	; 6e88 &lt;ppp_unix_session_ppp_created_hook+0x19c&gt;</pre>
+<pre>    6d90:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6d94:	e1a05003 	mov	r5, r3</pre>
+<pre>    6d98:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    6d9c:	ebffe917 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6da0:	e1a02000 	mov	r2, r0</pre>
+<pre>    6da4:	e15b31ba 	ldrh	r3, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    6da8:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    6dac:	e58d1000 	str	r1, [sp]</pre>
+<pre>    6db0:	e1a00005 	mov	r0, r5</pre>
+<pre>    6db4:	e59f10d0 	ldr	r1, [pc, #208]	; 6e8c &lt;ppp_unix_session_ppp_created_hook+0x1a0&gt;</pre>
+<pre>    6db8:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    6dbc:	ebffe8be 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6dc0:	ea00000d 	b	6dfc &lt;ppp_unix_session_ppp_created_hook+0x110&gt;</pre>
+<pre>    6dc4:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    6f08:	e2033c01 	and	r3, r3, #256	; 0x100</pre>
+<pre>    6f0c:	e3530000 	cmp	r3, #0</pre>
+<pre>    6f10:	0a000020 	beq	6f98 &lt;ppp_unix_session_ppp_deleted_hook+0x104&gt;</pre>
+<pre>    6f14:	e59f30d8 	ldr	r3, [pc, #216]	; 6ff4 &lt;ppp_unix_session_ppp_deleted_hook+0x160&gt;</pre>
+<pre>    6f18:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    6f1c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    6f20:	e3530000 	cmp	r3, #0</pre>
+<pre>    6f24:	0a00000d 	beq	6f60 &lt;ppp_unix_session_ppp_deleted_hook+0xcc&gt;</pre>
+<pre>    6f28:	e59f30c8 	ldr	r3, [pc, #200]	; 6ff8 &lt;ppp_unix_session_ppp_deleted_hook+0x164&gt;</pre>
+<pre>    6f2c:	e0843003 	add	r3, r4, r3</pre>
+<pre>    6f30:	e1a05003 	mov	r5, r3</pre>
+<pre>    6f34:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>    6f38:	ebffe8b0 	bl	1200 &lt;l2tp_session_get_name&commat;plt&gt;</pre>
+<pre>    6f3c:	e1a02000 	mov	r2, r0</pre>
+<pre>    6f40:	e15b31ba 	ldrh	r3, [fp, #-26]	; 0xffffffe6</pre>
+<pre>    6f44:	e15b11bc 	ldrh	r1, [fp, #-28]	; 0xffffffe4</pre>
+<pre>    6f48:	e58d1000 	str	r1, [sp]</pre>
+<pre>    6f4c:	e1a00005 	mov	r0, r5</pre>
+<pre>    6f50:	e59f10a4 	ldr	r1, [pc, #164]	; 6ffc &lt;ppp_unix_session_ppp_deleted_hook+0x168&gt;</pre>
+<pre>    6f54:	e0841001 	add	r1, r4, r1</pre>
+<pre><span class="red">    6f58:	ebffe857 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    6f5c:	ea00000d 	b	6f98 &lt;ppp_unix_session_ppp_deleted_hook+0x104&gt;</pre>
+<pre>    6f60:	e51b0018 	ldr	r0, [fp, #-24]	; 0xffffffe8</pre>
+<pre>--</pre>
+<pre>    702c:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    7030:	e3530000 	cmp	r3, #0</pre>
+<pre>    7034:	0a00001a 	beq	70a4 &lt;openl2tp_plugin_init+0xa0&gt;</pre>
+<pre>    7038:	e59f31dc 	ldr	r3, [pc, #476]	; 721c &lt;openl2tp_plugin_init+0x218&gt;</pre>
+<pre>    703c:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    7040:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    7044:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    7048:	e3530000 	cmp	r3, #0</pre>
+<pre>    704c:	0a000014 	beq	70a4 &lt;openl2tp_plugin_init+0xa0&gt;</pre>
+<pre>    7050:	e59f31c8 	ldr	r3, [pc, #456]	; 7220 &lt;openl2tp_plugin_init+0x21c&gt;</pre>
+<pre>    7054:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    7058:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    705c:	e3530000 	cmp	r3, #0</pre>
+<pre>    7060:	0a000007 	beq	7084 &lt;openl2tp_plugin_init+0x80&gt;</pre>
+<pre>    7064:	e59f31b8 	ldr	r3, [pc, #440]	; 7224 &lt;openl2tp_plugin_init+0x220&gt;</pre>
+<pre>    7068:	e0843003 	add	r3, r4, r3</pre>
+<pre>    706c:	e1a00003 	mov	r0, r3</pre>
+<pre>    7070:	e59f31b0 	ldr	r3, [pc, #432]	; 7228 &lt;openl2tp_plugin_init+0x224&gt;</pre>
+<pre>    7074:	e0843003 	add	r3, r4, r3</pre>
+<pre>    7078:	e1a01003 	mov	r1, r3</pre>
+<pre><span class="red">    707c:	ebffe80e 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    7080:	ea000007 	b	70a4 &lt;openl2tp_plugin_init+0xa0&gt;</pre>
+<pre>    7084:	e3a00007 	mov	r0, #7</pre>
+<pre>--</pre>
+<pre>    72ac:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    72b0:	e3530000 	cmp	r3, #0</pre>
+<pre>    72b4:	0a00001a 	beq	7324 &lt;openl2tp_plugin_cleanup+0x94&gt;</pre>
+<pre>    72b8:	e59f318c 	ldr	r3, [pc, #396]	; 744c &lt;openl2tp_plugin_cleanup+0x1bc&gt;</pre>
+<pre>    72bc:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    72c0:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    72c4:	e2033040 	and	r3, r3, #64	; 0x40</pre>
+<pre>    72c8:	e3530000 	cmp	r3, #0</pre>
+<pre>    72cc:	0a000014 	beq	7324 &lt;openl2tp_plugin_cleanup+0x94&gt;</pre>
+<pre>    72d0:	e59f3178 	ldr	r3, [pc, #376]	; 7450 &lt;openl2tp_plugin_cleanup+0x1c0&gt;</pre>
+<pre>    72d4:	e7943003 	ldr	r3, [r4, r3]</pre>
+<pre>    72d8:	e5933000 	ldr	r3, [r3]</pre>
+<pre>    72dc:	e3530000 	cmp	r3, #0</pre>
+<pre>    72e0:	0a000007 	beq	7304 &lt;openl2tp_plugin_cleanup+0x74&gt;</pre>
+<pre>    72e4:	e59f3168 	ldr	r3, [pc, #360]	; 7454 &lt;openl2tp_plugin_cleanup+0x1c4&gt;</pre>
+<pre>    72e8:	e0843003 	add	r3, r4, r3</pre>
+<pre>    72ec:	e1a00003 	mov	r0, r3</pre>
+<pre>    72f0:	e59f3160 	ldr	r3, [pc, #352]	; 7458 &lt;openl2tp_plugin_cleanup+0x1c8&gt;</pre>
+<pre>    72f4:	e0843003 	add	r3, r4, r3</pre>
+<pre>    72f8:	e1a01003 	mov	r1, r3</pre>
+<pre><span class="red">    72fc:	ebffe76e 	bl	10bc &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    7300:	ea000007 	b	7324 &lt;openl2tp_plugin_cleanup+0x94&gt;</pre>
+<pre>    7304:	e3a00007 	mov	r0, #7</pre>
+<br />
+<pre></span></pre>
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">printf</span> used </span><span class="orange">27</span> times </span><span class="orange">ppp_unix.so</span></pre>
+<br />
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+#!/bin/sh
+#set -x
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1  #表示参数 setconfig ,基本上没有用
+G_Parameter_two=$2  #ID
+G_SuccessFlag=0   #0 ,表示全部开启成功，非零数字表示有几个程序没有开启成功
+G_APP_INSTALLED_DIR=""
+G_ConfigFilename="config"
+G_Path=""  #配置文件的路径
+G_Parameter_all=$*
+G_ValueLast=
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -lt 2 ];then
+		xRouterLog 2 "appSetConfig" "FunParamLegal" "Parameter Err."
+		exit 1
+	fi
+}
+
+FunGetConfigPath()
+{
+	local Path=""
+	
+	OfficeAppPath="/usr/local/app/appinstalled/"
+	AllOfficeAppFile=`ls $OfficeAppPath`
+		
+	for EachOfficeAppFile in ${AllOfficeAppFile}
+	do 
+		if [ ${G_Parameter_one} = "$EachOfficeAppFile" ];then
+					isOfficeApp="YES"
+					break
+		fi
+	done
+		
+	if [ ${isOfficeApp} = "YES" ];then
+		isOfficeApp="NO"
+		G_APP_INSTALLED_DIR="/usr/local/app/appinstalled/"
+	else
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		mkdir -p /opt/app/appinstalled
+	fi
+	
+	xRouterLog 0 "appSetConfig" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+	
+	cd ${G_APP_INSTALLED_DIR}
+	#指定ID的文件不存在  检查插件是否安装
+	if [ ! -f "${G_Parameter_two}" ];then
+		cd -
+		xRouterLog 2 "appSetConfig" "FunGetConfigPath" "App not installed."
+		exit 1
+	else
+		Path=`cat ${G_Parameter_two} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`	
+		#没有找到路径
+		if [ "${Path}" == "" ];then
+			cd -
+			xRouterLog 2 "appSetConfig" "FunGetConfigPath" "Get path fail."
+			exit 2
+		else
+			G_Path="${Path}etc/${G_ConfigFilename}"
+		fi
+	fi
+}
+
+#备份配置文件
+FunCopyConfig()
+{
+	local TmpPath=""
+	
+	TmpPath=`dirname ${G_Path}`
+	
+	#先判断文件是否存在
+	if [ ! -f "${G_Path}" ];then
+		xRouterLog 2 "appSetConfig" "FunCopyConfig" "No config file."
+		exit 3	
+	else
+		cp ${G_Path} ${TmpPath}/config_copy
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 "appSetConfig" "FunCopyConfig" "Copy config file fail."
+			exit 3				
+		fi
+	fi	
+	
+}
+
+#恢复备份的配置文件
+FunRecoveryConfig()
+{
+	local TmpPath=""
+	
+	TmpPath=`dirname ${G_Path}`
+	
+	#先判断文件是否存在
+	if [ ! -f "${TmpPath}/config_copy" ];then
+		xRouterLog 2 "appSetConfig" "FunRecoveryConfig" "No copy config file."
+		exit 3	
+	else
+		cp ${TmpPath}/config_copy ${G_Path} 
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 "appSetConfig" "FunRecoveryConfig" "Copy config file fail."
+			exit 3				
+		fi		
+	fi	
+}
+
+#删除备份的配置文件
+FunDelConfig()
+{
+	local TmpPath=""
+	
+	TmpPath=`dirname ${G_Path}`
+	rm -f ${TmpPath}/config_copy
+}
+
+
+#修改配置文件的某一行
+FunSetOneLine()
+{
+	local TmpLine=""
+	local Tmp=""
+	local TmpNextLine=""
+	local Parameter_one=$1
+	local Key=""
+	local Value=""
+	local TmpNum=""
+	
+	Key=`echo ${Parameter_one} | awk -F "=" '{print $1}' | awk -F " " '{print $1}'`
+	Value=`echo ${Parameter_one} | awk -F "=" '{print $2}' | awk -F " " '{print $1}'`
+	
+	if [ "${Key}" == "" ];then
+		xRouterLog 2 "appSetConfig" "FunSetOneLine" "Key is null."
+		return 1  #返回1表示失败
+	elif [ "${Value}" == "" ];then
+		xRouterLog 2 "appSetConfig" "FunSetOneLine" "Value is null."
+		return 1 #返回1表示失败
+	else
+		while read line
+		do
+			Tmp=`echo ${line} | grep ${Key}=`	
+			if [ "${Tmp}" == "" ];then
+				continue
+			else
+				#找到指定的行号
+				TmpLine=`sed = ${G_Path}|sed 'N;s/\n/:/' |grep "${Key}" | awk -F ":" '{printf $1}'`		
+
+				TmpNum=`printf "%d" ${TmpLine}`
+				TmpNextLine=`expr ${TmpNum} + 1`
+		
+				#在当前行插入一个新行，内容为 ${Key}=${Value} 
+				sed -ri ''${TmpLine}'i\'${Key}=${Value}  ${G_Path}
+		
+				#删除插入后的下一行
+				sed -ri ''${TmpNextLine}'d' ${G_Path}
+				
+				return 0 #返回0表示成功
+			fi
+		done < ${G_Path}
+
+		xRouterLog 2 "appSetConfig" "FunSetOneLine" "No Key ${Key}."
+		return 1 #返回1表示失败
+	fi
+}
+
+
+#设置插件配置文件内容
+FunSetConfig()
+{
+	local Tmp=""
+	local line=""
+	local Key=""
+	local Return=""
+	local Parameter=""
+	
+	for Parameter in ${G_Parameter_all}
+	do
+		#跳过第一个参数
+		if [ "${Parameter}" == "${G_Parameter_one}" ];then
+			continue
+			
+		#跳过第二个参数	
+		elif [ "${Parameter}" == "${G_Parameter_two}" ];then
+			continue
+		else	
+			FunSetOneLine ${Parameter}
+			Return=$?
+			if [ ${Return} -ne 0 ];then
+				FunRecoveryConfig
+				FunDelConfig
+				xRouterLog 2 "appSetConfig" "FunSetConfig" "set config fail,${Parameter}."
+				exit 5
+			fi
+		fi	
+	done
+
+	FunDelConfig
+	
+	xRouterLog 0 "appSetConfig" "FunSetConfig" "`basename $0` ${G_Parameter_all} success."
+	exit 0		
+}
+
+
+############## 开始执行程序，程序入口
+
+xRouterLog 0 "appSetConfig" - "`basename $0` ${G_Parameter_all}."
+############## 检查参数合法性
+FunParamLegal
+
+#获取配置文件路径
+FunGetConfigPath
+
+#备份配置文件
+FunCopyConfig
+
+#设置插件配置文件内容
+FunSetConfig

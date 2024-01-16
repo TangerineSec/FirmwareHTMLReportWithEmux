@@ -1,0 +1,46 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 9:[0m
+[0mintport=`$userconfig -read RTSP Port`[0m
+[32m        ^---------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+intport=$($userconfig -read RTSP Port)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 10:[0m
+[0mextport=`$userconfig -read UPnP ExternRTSPPort`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+extport=$($userconfig -read UPnP ExternRTSPPort)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 16:[0m
+[0m	enable=`$userconfig -read UPnP EnablePortForward`[0m
+[32m               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	enable=$($userconfig -read UPnP EnablePortForward)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 37:[0m
+[0m		oldport=`cat $portfile`[0m
+[32m                        ^-------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		oldport=$(cat $portfile)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 38:[0m
+[0m		if [ ! -z "$oldport" ]; then[0m
+[32m                     ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/upnp_igd-rtsp.sh line 69:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...
+  https://www.shellcheck.net/wiki/SC2236 -- Use -n instead of ! -z.

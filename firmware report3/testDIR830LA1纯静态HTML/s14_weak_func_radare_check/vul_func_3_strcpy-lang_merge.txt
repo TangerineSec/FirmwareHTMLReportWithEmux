@@ -1,0 +1,152 @@
+[[0;33m*[0m] Binary protection state of [0;33mlang_merge[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlang_merge[0m
+
+lui gp, 0x42
+addiu gp, gp, -0x4710
+sw gp, 0x10(sp)
+move s0, a1
+beqz a1, 0x400f80
+move s1, a0
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move a0, a1
+lw gp, 0x10(sp)
+addiu a2, v0, 1
+move a0, a2
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+sw a2, 0x18(sp)
+lw gp, 0x10(sp)
+sw v0, (s1)
+lw a2, 0x18(sp)
+beqz v0, 0x400f80
+move a0, v0
+lw t9, -sym.imp.memset(gp)
+jalr t9
+move a1, zero
+lw gp, 0x10(sp)
+lw a0, (s1)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a1, s0
+b 0x400f84
+move v0, zero
+addiu v0, zero, 1
+lw ra, 0x2c(sp)
+lw s1, 0x28(sp)
+lw s0, 0x24(sp)
+jr ra
+addiu sp, sp, 0x30
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+sw s0, 0x18(sp)
+lui gp, 0x42
+addiu gp, gp, -0x4710
+sw gp, 0x10(sp)
+lui a0, 0x41
+lb v0, 0x3a34(a0)
+beqz v0, 0x401004
+addiu a0, a0, 0x3a34
+--
+jalr t9
+addiu a2, zero, 0x1000
+lui a3, 0x40
+move a1, s2
+lw gp, 0x10(sp)
+lui a2, 0x40
+move a0, s0
+addiu a3, a3, 0x34bc
+lw t9, -sym.imp.sprintf(gp)
+jalr t9
+addiu a2, a2, 0x3500
+lw gp, 0x10(sp)
+lw a1, 0x3a0c(s1)
+lw t9, -sym.imp.fputs(gp)
+jalr t9
+move a0, s0
+addiu a2, zero, 0x1000
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.memset(gp)
+jalr t9
+move a1, zero
+lui a1, 0x40
+move a0, s0
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+addiu a1, a1, 0x350c
+lw gp, 0x10(sp)
+lw a1, 0x3a0c(s1)
+lw t9, -sym.imp.fputs(gp)
+jalr t9
+move a0, s0
+move a0, s0
+move a1, zero
+lw gp, 0x10(sp)
+lw t9, -sym.imp.memset(gp)
+jalr t9
+addiu a2, zero, 0x1000
+lui v0, 0x41
+lw gp, 0x10(sp)
+lw s2, 0x38d8(v0)
+b 0x4013c0
+move a1, s5
+beqz s5, 0x4012f4
+nop
+--
+addiu a0, s0, 0xc
+lw gp, 0x10(sp)
+bnez v0, 0x4029f0
+lui a1, 0x41
+lbu v0, 0x18(sp)
+lw t9, -sym.imp.list_add_tail(gp)
+addiu a1, a1, 0x38d0
+lw a0, 0x1120(sp)
+addiu s1, sp, 0x20
+jalr t9
+sb v0, (s0)
+move a0, s1
+lw gp, 0x10(sp)
+lw t9, -sym.imp.strcmp(gp)
+jalr t9
+move a1, s4
+lw gp, 0x10(sp)
+beqz v0, 0x4029a4
+move a0, s1
+lw t9, -sym.imp.memset(gp)
+move a1, zero
+jalr t9
+addiu a2, zero, 0x80
+move a0, s1
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a1, s4
+lw gp, 0x10(sp)
+lw t9, -sym.imp.memset(gp)
+addiu a0, sp, 0x120
+move a1, zero
+addiu a2, zero, 0x1000
+jalr t9
+nop
+lw gp, 0x10(sp)
+lui v0, 0x41
+addiu s0, sp, 0x120
+lw t9, -sym.imp.fgets(gp)
+move a0, s0
+lw a2, 0x3a0c(v0)
+jalr t9
+addiu a1, zero, 0x1000
+lw gp, 0x10(sp)
+bnez v0, 0x4025fc
+nop
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m3[0m times [0;33mlang_merge[0m
+

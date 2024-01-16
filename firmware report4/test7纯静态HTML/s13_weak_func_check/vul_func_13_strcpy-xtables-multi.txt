@@ -1,0 +1,324 @@
+[[0;33m*[0m] Binary protection state of [0;33mxtables-multi[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [31mRPATH[0m        [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mxtables-multi[0m
+
+    d4fc:	e1a00004 	mov	r0, r4
+    d500:	e59d1004 	ldr	r1, [sp, #4]
+    d504:	e1a02005 	mov	r2, r5
+    d508:	e12fff33 	blx	r3
+    d50c:	e31a0080 	tst	sl, #128	; 0x80
+    d510:	1a000002 	bne	d520 <print_firewall+0x37c>
+    d514:	e3a0000a 	mov	r0, #10
+    d518:	e5991000 	ldr	r1, [r9]
+    d51c:	ebfff2d5 	bl	a078 <fputc@plt>
+    d520:	e28dd024 	add	sp, sp, #36	; 0x24
+    d524:	e28dda01 	add	sp, sp, #4096	; 0x1000
+    d528:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    d52c:	e3550000 	cmp	r5, #0
+    d530:	1a00003a 	bne	d620 <print_firewall+0x47c>
+    d534:	e2840004 	add	r0, r4, #4
+    d538:	ebfff2dd 	bl	a0b4 <xtables_ipaddr_to_anyname@plt>
+    d53c:	e28d7020 	add	r7, sp, #32
+    d540:	e1a01000 	mov	r1, r0
+    d544:	e2477014 	sub	r7, r7, #20
+    d548:	e1a00007 	mov	r0, r7
+[31m    d54c:	ebfff36b 	bl	a300 <strcpy@plt>[0m
+    d550:	e284000c 	add	r0, r4, #12
+    d554:	ebfff2ac 	bl	a00c <xtables_ipmask_to_numeric@plt>
+--
+    d580:	0affffaf 	beq	d444 <print_firewall+0x2a0>
+    d584:	e5993000 	ldr	r3, [r9]
+    d588:	e3a01001 	mov	r1, #1
+    d58c:	e59f01b0 	ldr	r0, [pc, #432]	; d744 <print_firewall+0x5a0>
+    d590:	e3a02002 	mov	r2, #2
+    d594:	ebfff20f 	bl	9dd8 <fwrite@plt>
+    d598:	e5d43052 	ldrb	r3, [r4, #82]	; 0x52
+    d59c:	e3130002 	tst	r3, #2
+    d5a0:	0affffaa 	beq	d450 <print_firewall+0x2ac>
+    d5a4:	e59f019c 	ldr	r0, [pc, #412]	; d748 <print_firewall+0x5a4>
+    d5a8:	ebfff327 	bl	a24c <printf@plt>
+    d5ac:	eaffffa7 	b	d450 <print_firewall+0x2ac>
+    d5b0:	e3550000 	cmp	r5, #0
+    d5b4:	1a000016 	bne	d614 <print_firewall+0x470>
+    d5b8:	e1a00004 	mov	r0, r4
+    d5bc:	ebfff2bc 	bl	a0b4 <xtables_ipaddr_to_anyname@plt>
+    d5c0:	e28d7020 	add	r7, sp, #32
+    d5c4:	e1a01000 	mov	r1, r0
+    d5c8:	e2477014 	sub	r7, r7, #20
+    d5cc:	e1a00007 	mov	r0, r7
+[31m    d5d0:	ebfff34a 	bl	a300 <strcpy@plt>[0m
+    d5d4:	e2840008 	add	r0, r4, #8
+    d5d8:	ebfff28b 	bl	a00c <xtables_ipmask_to_numeric@plt>
+--
+    dab4:	ebfff127 	bl	9f58 <iptc_first_chain@plt>
+    dab8:	e3500000 	cmp	r0, #0
+    dabc:	01a06000 	moveq	r6, r0
+    dac0:	0a000006 	beq	dae0 <for_each_chain4+0x48>
+    dac4:	e3a06000 	mov	r6, #0
+    dac8:	e1a00004 	mov	r0, r4
+    dacc:	e2866001 	add	r6, r6, #1
+    dad0:	ebfff126 	bl	9f70 <iptc_next_chain@plt>
+    dad4:	e3500000 	cmp	r0, #0
+    dad8:	1afffffa 	bne	dac8 <for_each_chain4+0x30>
+    dadc:	e1a00286 	lsl	r0, r6, #5
+    dae0:	ebfff17c 	bl	a0d8 <xtables_malloc@plt>
+    dae4:	e58d0004 	str	r0, [sp, #4]
+    dae8:	e1a00004 	mov	r0, r4
+    daec:	ebfff119 	bl	9f58 <iptc_first_chain@plt>
+    daf0:	e2501000 	subs	r1, r0, #0
+    daf4:	0a000007 	beq	db18 <for_each_chain4+0x80>
+    daf8:	e59d5004 	ldr	r5, [sp, #4]
+    dafc:	e1a00005 	mov	r0, r5
+    db00:	e2855020 	add	r5, r5, #32
+[31m    db04:	ebfff1fd 	bl	a300 <strcpy@plt>[0m
+    db08:	e1a00004 	mov	r0, r4
+    db0c:	ebfff117 	bl	9f70 <iptc_next_chain@plt>
+--
+    e868:	e3530000 	cmp	r3, #0
+    e86c:	1a0006f0 	bne	10434 <do_command4+0x2468>
+    e870:	e28da058 	add	sl, sp, #88	; 0x58
+    e874:	e3a01003 	mov	r1, #3
+    e878:	e28a20b4 	add	r2, sl, #180	; 0xb4
+    e87c:	e5990000 	ldr	r0, [r9]
+    e880:	ebffee44 	bl	a198 <xtables_find_match@plt>
+    e884:	e1a0a000 	mov	sl, r0
+    e888:	e3a00001 	mov	r0, #1
+    e88c:	e59a3010 	ldr	r3, [sl, #16]
+    e890:	e2833020 	add	r3, r3, #32
+    e894:	e1a01003 	mov	r1, r3
+    e898:	e58d302c 	str	r3, [sp, #44]	; 0x2c
+    e89c:	ebffee0a 	bl	a0cc <xtables_calloc@plt>
+    e8a0:	e58a004c 	str	r0, [sl, #76]	; 0x4c
+    e8a4:	e59d302c 	ldr	r3, [sp, #44]	; 0x2c
+    e8a8:	e1c030b0 	strh	r3, [r0]
+    e8ac:	e59a004c 	ldr	r0, [sl, #76]	; 0x4c
+    e8b0:	e59a1008 	ldr	r1, [sl, #8]
+    e8b4:	e2800002 	add	r0, r0, #2
+[31m    e8b8:	ebffee90 	bl	a300 <strcpy@plt>[0m
+    e8bc:	e5da300c 	ldrb	r3, [sl, #12]
+    e8c0:	e1a0000a 	mov	r0, sl
+--
+    e944:	ebffee3a 	bl	a234 <xtables_find_target@plt>
+    e948:	e3500000 	cmp	r0, #0
+    e94c:	e1a0a000 	mov	sl, r0
+    e950:	e58d0110 	str	r0, [sp, #272]	; 0x110
+    e954:	0afffe85 	beq	e370 <do_command4+0x3a4>
+    e958:	e5903010 	ldr	r3, [r0, #16]
+    e95c:	e3a00001 	mov	r0, #1
+    e960:	e2833020 	add	r3, r3, #32
+    e964:	e1a01003 	mov	r1, r3
+    e968:	e58d302c 	str	r3, [sp, #44]	; 0x2c
+    e96c:	ebffedd6 	bl	a0cc <xtables_calloc@plt>
+    e970:	e58a004c 	str	r0, [sl, #76]	; 0x4c
+    e974:	e59d2110 	ldr	r2, [sp, #272]	; 0x110
+    e978:	e59d302c 	ldr	r3, [sp, #44]	; 0x2c
+    e97c:	e592204c 	ldr	r2, [r2, #76]	; 0x4c
+    e980:	e1c230b0 	strh	r3, [r2]
+    e984:	e59d3110 	ldr	r3, [sp, #272]	; 0x110
+    e988:	e59d111c 	ldr	r1, [sp, #284]	; 0x11c
+    e98c:	e593004c 	ldr	r0, [r3, #76]	; 0x4c
+    e990:	e2800002 	add	r0, r0, #2
+[31m    e994:	ebffee59 	bl	a300 <strcpy@plt>[0m
+    e998:	e59d3110 	ldr	r3, [sp, #272]	; 0x110
+    e99c:	e593204c 	ldr	r2, [r3, #76]	; 0x4c
+--
+    f6b4:	e3500000 	cmp	r0, #0
+    f6b8:	0a00001d 	beq	f734 <do_command4+0x1768>
+    f6bc:	e3a01003 	mov	r1, #3
+    f6c0:	e51f069c 	ldr	r0, [pc, #-1692]	; f02c <do_command4+0x1060>
+    f6c4:	ebffeada 	bl	a234 <xtables_find_target@plt>
+    f6c8:	e1a04000 	mov	r4, r0
+    f6cc:	e3a00001 	mov	r0, #1
+    f6d0:	e58d4110 	str	r4, [sp, #272]	; 0x110
+    f6d4:	e5945010 	ldr	r5, [r4, #16]
+    f6d8:	e2855020 	add	r5, r5, #32
+    f6dc:	e1a01005 	mov	r1, r5
+    f6e0:	ebffea79 	bl	a0cc <xtables_calloc@plt>
+    f6e4:	e584004c 	str	r0, [r4, #76]	; 0x4c
+    f6e8:	e59d3110 	ldr	r3, [sp, #272]	; 0x110
+    f6ec:	e593304c 	ldr	r3, [r3, #76]	; 0x4c
+    f6f0:	e1c350b0 	strh	r5, [r3]
+    f6f4:	e59d3110 	ldr	r3, [sp, #272]	; 0x110
+    f6f8:	e59d111c 	ldr	r1, [sp, #284]	; 0x11c
+    f6fc:	e593004c 	ldr	r0, [r3, #76]	; 0x4c
+    f700:	e2800002 	add	r0, r0, #2
+[31m    f704:	ebffeafd 	bl	a300 <strcpy@plt>[0m
+    f708:	e59db048 	ldr	fp, [sp, #72]	; 0x48
+    f70c:	e59d011c 	ldr	r0, [sp, #284]	; 0x11c
+--
+   120c4:	e1a00004 	mov	r0, r4
+   120c8:	e59d1004 	ldr	r1, [sp, #4]
+   120cc:	e1a02005 	mov	r2, r5
+   120d0:	e12fff33 	blx	r3
+   120d4:	e31a0080 	tst	sl, #128	; 0x80
+   120d8:	1a000002 	bne	120e8 <print_firewall+0x384>
+   120dc:	e3a0000a 	mov	r0, #10
+   120e0:	e5991000 	ldr	r1, [r9]
+   120e4:	ebffdfe3 	bl	a078 <fputc@plt>
+   120e8:	e28dd024 	add	sp, sp, #36	; 0x24
+   120ec:	e28dda01 	add	sp, sp, #4096	; 0x1000
+   120f0:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+   120f4:	e3550000 	cmp	r5, #0
+   120f8:	1a00003a 	bne	121e8 <print_firewall+0x484>
+   120fc:	e2840010 	add	r0, r4, #16
+   12100:	ebffe042 	bl	a210 <xtables_ip6addr_to_anyname@plt>
+   12104:	e28d8020 	add	r8, sp, #32
+   12108:	e1a01000 	mov	r1, r0
+   1210c:	e2488014 	sub	r8, r8, #20
+   12110:	e1a00008 	mov	r0, r8
+[31m   12114:	ebffe079 	bl	a300 <strcpy@plt>[0m
+   12118:	e1a00007 	mov	r0, r7
+   1211c:	ebffdf8a 	bl	9f4c <xtables_ip6mask_to_numeric@plt>
+--
+   12148:	0affffaf 	beq	1200c <print_firewall+0x2a8>
+   1214c:	e5993000 	ldr	r3, [r9]
+   12150:	e3a01001 	mov	r1, #1
+   12154:	e59f01b4 	ldr	r0, [pc, #436]	; 12310 <print_firewall+0x5ac>
+   12158:	e3a02002 	mov	r2, #2
+   1215c:	ebffdf1d 	bl	9dd8 <fwrite@plt>
+   12160:	e5d43083 	ldrb	r3, [r4, #131]	; 0x83
+   12164:	e3130004 	tst	r3, #4
+   12168:	0affffaa 	beq	12018 <print_firewall+0x2b4>
+   1216c:	e59f01a0 	ldr	r0, [pc, #416]	; 12314 <print_firewall+0x5b0>
+   12170:	ebffe035 	bl	a24c <printf@plt>
+   12174:	eaffffa7 	b	12018 <print_firewall+0x2b4>
+   12178:	e3550000 	cmp	r5, #0
+   1217c:	1a000016 	bne	121dc <print_firewall+0x478>
+   12180:	e1a00004 	mov	r0, r4
+   12184:	ebffe021 	bl	a210 <xtables_ip6addr_to_anyname@plt>
+   12188:	e28d8020 	add	r8, sp, #32
+   1218c:	e1a01000 	mov	r1, r0
+   12190:	e2488014 	sub	r8, r8, #20
+   12194:	e1a00008 	mov	r0, r8
+[31m   12198:	ebffe058 	bl	a300 <strcpy@plt>[0m
+   1219c:	e1a00007 	mov	r0, r7
+   121a0:	ebffdf69 	bl	9f4c <xtables_ip6mask_to_numeric@plt>
+--
+   12644:	ebffde64 	bl	9fdc <ip6tc_first_chain@plt>
+   12648:	e3500000 	cmp	r0, #0
+   1264c:	01a06000 	moveq	r6, r0
+   12650:	0a000006 	beq	12670 <for_each_chain6+0x48>
+   12654:	e3a06000 	mov	r6, #0
+   12658:	e1a00004 	mov	r0, r4
+   1265c:	e2866001 	add	r6, r6, #1
+   12660:	ebffdf23 	bl	a2f4 <ip6tc_next_chain@plt>
+   12664:	e3500000 	cmp	r0, #0
+   12668:	1afffffa 	bne	12658 <for_each_chain6+0x30>
+   1266c:	e1a00286 	lsl	r0, r6, #5
+   12670:	ebffde98 	bl	a0d8 <xtables_malloc@plt>
+   12674:	e58d0004 	str	r0, [sp, #4]
+   12678:	e1a00004 	mov	r0, r4
+   1267c:	ebffde56 	bl	9fdc <ip6tc_first_chain@plt>
+   12680:	e2501000 	subs	r1, r0, #0
+   12684:	0a000007 	beq	126a8 <for_each_chain6+0x80>
+   12688:	e59d5004 	ldr	r5, [sp, #4]
+   1268c:	e1a00005 	mov	r0, r5
+   12690:	e2855020 	add	r5, r5, #32
+[31m   12694:	ebffdf19 	bl	a300 <strcpy@plt>[0m
+   12698:	e1a00004 	mov	r0, r4
+   1269c:	ebffdf14 	bl	a2f4 <ip6tc_next_chain@plt>
+--
+   13948:	1a0005b8 	bne	15030 <do_command6+0x24d0>
+   1394c:	e3013998 	movw	r3, #6552	; 0x1998
+   13950:	e28b20b4 	add	r2, fp, #180	; 0xb4
+   13954:	e3403002 	movt	r3, #2
+   13958:	e3a01003 	mov	r1, #3
+   1395c:	e5930000 	ldr	r0, [r3]
+   13960:	ebffda0c 	bl	a198 <xtables_find_match@plt>
+   13964:	e1a08000 	mov	r8, r0
+   13968:	e3a00001 	mov	r0, #1
+   1396c:	e5983010 	ldr	r3, [r8, #16]
+   13970:	e2833020 	add	r3, r3, #32
+   13974:	e1a01003 	mov	r1, r3
+   13978:	e58d302c 	str	r3, [sp, #44]	; 0x2c
+   1397c:	ebffd9d2 	bl	a0cc <xtables_calloc@plt>
+   13980:	e588004c 	str	r0, [r8, #76]	; 0x4c
+   13984:	e59d302c 	ldr	r3, [sp, #44]	; 0x2c
+   13988:	e1c030b0 	strh	r3, [r0]
+   1398c:	e598004c 	ldr	r0, [r8, #76]	; 0x4c
+   13990:	e5981008 	ldr	r1, [r8, #8]
+   13994:	e2800002 	add	r0, r0, #2
+[31m   13998:	ebffda58 	bl	a300 <strcpy@plt>[0m
+   1399c:	e598304c 	ldr	r3, [r8, #76]	; 0x4c
+   139a0:	e1a00008 	mov	r0, r8
+--
+   13a10:	ebffda07 	bl	a234 <xtables_find_target@plt>
+   13a14:	e3500000 	cmp	r0, #0
+   13a18:	e1a08000 	mov	r8, r0
+   13a1c:	e58d0118 	str	r0, [sp, #280]	; 0x118
+   13a20:	0afffd35 	beq	12efc <do_command6+0x39c>
+   13a24:	e5903010 	ldr	r3, [r0, #16]
+   13a28:	e3a00001 	mov	r0, #1
+   13a2c:	e2833020 	add	r3, r3, #32
+   13a30:	e1a01003 	mov	r1, r3
+   13a34:	e58d302c 	str	r3, [sp, #44]	; 0x2c
+   13a38:	ebffd9a3 	bl	a0cc <xtables_calloc@plt>
+   13a3c:	e588004c 	str	r0, [r8, #76]	; 0x4c
+   13a40:	e59d2118 	ldr	r2, [sp, #280]	; 0x118
+   13a44:	e59d302c 	ldr	r3, [sp, #44]	; 0x2c
+   13a48:	e592204c 	ldr	r2, [r2, #76]	; 0x4c
+   13a4c:	e1c230b0 	strh	r3, [r2]
+   13a50:	e59d3118 	ldr	r3, [sp, #280]	; 0x118
+   13a54:	e59d1124 	ldr	r1, [sp, #292]	; 0x124
+   13a58:	e593004c 	ldr	r0, [r3, #76]	; 0x4c
+   13a5c:	e2800002 	add	r0, r0, #2
+[31m   13a60:	ebffda26 	bl	a300 <strcpy@plt>[0m
+   13a64:	e59d3118 	ldr	r3, [sp, #280]	; 0x118
+   13a68:	e593204c 	ldr	r2, [r3, #76]	; 0x4c
+--
+   14490:	e3500000 	cmp	r0, #0
+   14494:	0a000014 	beq	144ec <do_command6+0x198c>
+   14498:	e3a01003 	mov	r1, #3
+   1449c:	e51f0924 	ldr	r0, [pc, #-2340]	; 13b80 <do_command6+0x1020>
+   144a0:	ebffd763 	bl	a234 <xtables_find_target@plt>
+   144a4:	e1a04000 	mov	r4, r0
+   144a8:	e3a00001 	mov	r0, #1
+   144ac:	e58d4118 	str	r4, [sp, #280]	; 0x118
+   144b0:	e5945010 	ldr	r5, [r4, #16]
+   144b4:	e2855020 	add	r5, r5, #32
+   144b8:	e1a01005 	mov	r1, r5
+   144bc:	ebffd702 	bl	a0cc <xtables_calloc@plt>
+   144c0:	e584004c 	str	r0, [r4, #76]	; 0x4c
+   144c4:	e59d3118 	ldr	r3, [sp, #280]	; 0x118
+   144c8:	e593304c 	ldr	r3, [r3, #76]	; 0x4c
+   144cc:	e1c350b0 	strh	r5, [r3]
+   144d0:	e59d3118 	ldr	r3, [sp, #280]	; 0x118
+   144d4:	e59d1124 	ldr	r1, [sp, #292]	; 0x124
+   144d8:	e593004c 	ldr	r0, [r3, #76]	; 0x4c
+   144dc:	e2800002 	add	r0, r0, #2
+[31m   144e0:	ebffd786 	bl	a300 <strcpy@plt>[0m
+   144e4:	e59d0118 	ldr	r0, [sp, #280]	; 0x118
+   144e8:	eb00044c 	bl	15620 <xs_init_target>
+--
+   15788:	e3510000 	cmp	r1, #0
+   1578c:	1affffeb 	bne	15740 <command_default+0x48>
+   15790:	e5922000 	ldr	r2, [r2]
+   15794:	e3520000 	cmp	r2, #0
+   15798:	1afffff2 	bne	15768 <command_default+0x70>
+   1579c:	e1a00006 	mov	r0, r6
+   157a0:	ebffff57 	bl	15504 <load_proto>
+   157a4:	e2504000 	subs	r4, r0, #0
+   157a8:	0a000034 	beq	15880 <command_default+0x188>
+   157ac:	e3a00001 	mov	r0, #1
+   157b0:	e58600c0 	str	r0, [r6, #192]	; 0xc0
+   157b4:	e5946010 	ldr	r6, [r4, #16]
+   157b8:	e2866020 	add	r6, r6, #32
+   157bc:	e1a01006 	mov	r1, r6
+   157c0:	ebffd241 	bl	a0cc <xtables_calloc@plt>
+   157c4:	e584004c 	str	r0, [r4, #76]	; 0x4c
+   157c8:	e1c060b0 	strh	r6, [r0]
+   157cc:	e594004c 	ldr	r0, [r4, #76]	; 0x4c
+   157d0:	e5941008 	ldr	r1, [r4, #8]
+   157d4:	e2800002 	add	r0, r0, #2
+[31m   157d8:	ebffd2c8 	bl	a300 <strcpy@plt>[0m
+   157dc:	e5d4200c 	ldrb	r2, [r4, #12]
+   157e0:	e1a00004 	mov	r0, r4
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m13[0m times [0;33mxtables-multi[0m
+

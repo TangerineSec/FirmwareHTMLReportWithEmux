@@ -1,0 +1,195 @@
+<%
+	require "luci.template"
+	require "luci.http"
+
+	-- 检测是否打开 /etc/qos_ry
+	local http_qosturn = luci.http.formvalue('qosturn') or '0'
+	local uci = require "luci.model.uci".cursor()
+	
+	if http_qosturn == '0' then
+		qosturn = uci:get('qos_ry','qos','enable')
+	else
+		qosturn = http_qosturn
+	end
+	
+	qos_type = luci.sys.exec('uci get user.@qos_type[0].status')
+	qos_type = luci.common.trim(qos_type)
+
+	local upbps = uci:get('qos_gargoyle','upload','total_bandwidth') or ''
+	local downbps = uci:get('qos_gargoyle','download','total_bandwidth') or ''
+
+	local qosips = {}
+	require "luci.common"
+
+	function splitip(ip)
+		local a = string.gsub(ip,"%.","|")
+		local tmp1 = luci.common.split(a,"|")
+		local nip = tmp1[4]
+
+		return nip
+	end
+
+	function qosipsplit(ip)
+		local tmp = luci.common.split(ip,"-")
+
+		local low,up = splitip(tmp[1]),splitip(tmp[2])
+		return low,up
+	end
+
+	function checkqosip(s)
+		local name = s['class']
+		local ipfield = s['destination']
+		local tmp = {}
+
+		local lowip,upip = qosipsplit(ipfield)
+		local enable = s['enable']
+		local bandwidth = uci:get('qos_gargoyle',name,'max_bandwidth')
+		table.insert(tmp,name)
+		table.insert(tmp,bandwidth)
+		table.insert(tmp,enable)
+		table.insert(tmp,lowip)
+		table.insert(tmp,upip)
+
+		table.insert(qosips,tmp)
+	end
+
+	-- 获取前缀IP
+	local curaddr = uci:get("network","lan","ipaddr")
+	curaddr = string.gsub(curaddr,"%.","|")
+	local tmpip = luci.common.split(curaddr,"|")
+	curaddr = tmpip[1].."."..tmpip[2].."."..tmpip[3].."."
+
+	--如果是MAC限制
+	if qos_type == '0' then
+		uci:foreach("qos_ry","download_rule",checkqosip)
+
+		local qosturn = uci:get('qos_ry','qos','enable')
+		local qosnetsel = uci:get('qos_ry','qos','gargoyle')
+	end
+%>
+<div class='qos_opt'>
+	<div class='setup_head'>
+		<h4 rel='0' p='0'>带宽管理<%=qos_turn%></h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+	<div class='qos_main'>
+		<div class='qos_content'>
+			<div class='qosip_main'>
+				<div class='qosip_title'>
+					<div class='qosip_choose'>
+						<% if qosturn == '0' then %>
+							<input type='checkbox' class='qosturn' id="qos_on"><label for="qos_on"><span>开启带宽限制</span></label>
+						<% else %>
+							<input type='checkbox' class='qosturn' checked='checked' id="qos_on"><label for="qos_on"><span>开启带宽限制</span></label>
+						<% end %>
+					</div>
+					<% if qosturn == '0' then %>
+						<a href='javascript:void(0)' class='subbtn saveqos saveqos2'><b>保存</b></a>
+						<span class='saveqosstd saveqosip1'></span>
+					<% else %>
+						<a href='javascript:void(0)' class='subbtn saveqos saveqos2' style='display:none;'><b>保存</b></a>
+						<span class='saveqosstd saveqosip1'></span>
+					<% end %>
+				</div>
+				<% if qosturn == '0' then %>
+				<div class='qosip_content'>
+				<% else %>
+				<div class='qosip_content' style='display:block;'>
+				<% end %>	
+					<div class='qosip_para'>
+						<p>填写外网带宽参数</p>
+						<span>下行最大带宽(kbps)</span>
+						<input class='qosipstore downkbps' maxLength='6' type='text' value='<%=downbps%>'>
+						<span>上行最大带宽(kbps)</span>
+						<input class='qosipstore upkbps' maxLength='6' type='text' value='<%=upbps%>'>
+					</div>
+					<div style="margin-top:15px;margin-left:15px;">
+						选择带宽限制类型
+						<select id="limit_type">
+							<option value="qos" selected>通过IP地址限制</option>
+							<option value="qosmac" >通过MAC地址限制</option>
+						</select>
+					</div>
+					<div class='qosip_table_main'>
+						<div class='qosip_tabledata'>
+							<table cellspacing=0 cellpadding=0 class='qosip_table'>
+								<tr class='firstmacfilter'>
+									<th style='width:40px;'><p>序号</p></th>
+									<th style='width:326px;'><p>IP地址区间</p></th>
+									<th><p>限制带宽(kbps)</p></th>
+									<th style='width:40px;'>启用</th>
+									<th style='background:#FFF;width:26px;'></th>
+								</tr>
+								<% for i,v in ipairs(qosips) do %>
+								<tr>
+									<td><p><%=i%></p></td>
+									<td><p><span class='curqosaddr'><%=curaddr%></span><input type='text' maxLength=3 value='<%=v[4]%>' class='qosiptapebox qosip_down'>
+										~<span class='curqosaddr'><%=curaddr%></span><input type='text' maxLength=3 value='<%=v[5]%>' class='qosiptapebox qosip_up'>
+									</p></td>
+									<td><p><input type='text' value='<%=v[2]%>' class='qosnettape' maxLength='4'></p></td>
+									<td>
+										<% if v[3] == '0' then%>
+										<input type='checkbox' class='saveqosstatus'>
+										<% else %>
+										<input type='checkbox' checked='checked' class='saveqosstatus'>
+										<% end %>
+									</td>
+									<td class='deleteqos'><span></span></td>
+								</tr>
+								<% end %>
+							</table>
+						</div>
+					</div>
+					<a href="javascript:void(0)" class="addstatic addqosbtn"><span class="addimg"></span><span class="addmacfilter">添加IP地址区间</span></a>
+					<a href='javascript:void(0)' class='subbtn saveqos saveqos1' style="margin-top:3px;"><b>保存</b></a>
+					<span class='saveqosstd saveqosip'></span>
+				</div>
+				<table cellspacing=0 cellpadding=0 class='qosip_table_addr'>
+					<tr>
+						<td><p>1</p></td>
+						<td><p><span class='curqosaddr'><%=curaddr%></span><input type='text' maxLength=3 value='' class='qosiptapebox qosip_down'>
+							~<span class='curqosaddr'><%=curaddr%></span><input type='text' maxLength=3 value='' class='qosiptapebox qosip_up'>
+						</p></td>
+						<td><p><input type='text' value='' class='qosnettape' maxLength='4'></p></td>
+						<td>
+							<input type='checkbox' checked='checked' class='saveqosstatus'>
+						</td>
+						<td class='deleteqos'><span></span></td>
+					</tr>		
+				</table>
+			</div>
+			<div class='qosnet_main'>
+				<div class='qosnet_content'>
+					<p>请选择您的上网模式</p>
+					<div class='qosnet_select'>
+						<% if qosnetsel == '0' or not qosnetsel then %>
+						<input type='radio' name='qosnetselect' class='qosnetselect qosnetview' rel='view'>
+						<span>浏览优先</span>&nbsp;&nbsp;<span>保证流畅浏览网页.</span><br>
+						<input type='radio' name='qosnetselect' class='qosnetselect qosnetdownload' rel='download' checked='checked'>
+						<span>下载优先</span>&nbsp;&nbsp;<span>保证全速下载，浏览网页会受影响.</span><br>
+						<% elseif qosnetsel == '1' then %>
+						<input type='radio' name='qosnetselect' class='qosnetselect qosnetview' rel='view' checked='checked'>
+						<span>浏览优先</span>&nbsp;&nbsp;<span>保证流畅浏览网页.</span><br>
+						<input type='radio' name='qosnetselect' class='qosnetselect qosnetdownload' rel='download'>
+						<span>下载优先</span>&nbsp;&nbsp;<span>保证全速下载，浏览网页会受影响.</span><br>
+						<% end %>
+					</div>
+					<a href='javascript:void(0)' class='subbtn saveqosnet'><b>保存</b></a>
+					<span class='saveqosstd menqosnet'></span>
+				</div>
+				<div class='qosnet_n_content'>
+					<p>请先在"IP带宽限制"中勾选"开启带宽限制"</p>
+				</div>
+			</div>
+		</div>
+		<div class='qos_footer'>
+			<a href='javascript:void(0)' class='qoschange qosip curqos' rel='qosip'><b>IP带宽限制</b></a>
+			<a href='javascript:void(0)' class='qoschange qosnet' rel='qosnet'><b>上网模式</b></a>
+			<div class='qoschangeleft'>
+			</div>
+		</div>
+	</div>
+</div>

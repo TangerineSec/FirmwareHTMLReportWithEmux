@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mwps_monitor[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mwps_monitor[0m
+
+    da90:	e58d344c 	str	r3, [sp, #1100]	; 0x44c
+    da94:	eaffff9d 	b	d910 <_start+0x3b8c>
+    da98:	e3500001 	cmp	r0, #1
+    da9c:	e92d4030 	push	{r4, r5, lr}
+    daa0:	e24dd094 	sub	sp, sp, #148	; 0x94
+    daa4:	ca000088 	bgt	dccc <_start+0x3f48>
+    daa8:	e59f0250 	ldr	r0, [pc, #592]	; dd00 <_start+0x3f7c>
+    daac:	e59f1250 	ldr	r1, [pc, #592]	; dd04 <_start+0x3f80>
+    dab0:	ebfff002 	bl	9ac0 <fopen@plt>
+    dab4:	e2505000 	subs	r5, r0, #0
+    dab8:	1a000075 	bne	dc94 <_start+0x3f10>
+    dabc:	e59f023c 	ldr	r0, [pc, #572]	; dd00 <_start+0x3f7c>
+    dac0:	e59f1240 	ldr	r1, [pc, #576]	; dd08 <_start+0x3f84>
+    dac4:	ebffeffd 	bl	9ac0 <fopen@plt>
+    dac8:	e2504000 	subs	r4, r0, #0
+    dacc:	0a000086 	beq	dcec <_start+0x3f68>
+    dad0:	ebffefdf 	bl	9a54 <getpid@plt>
+    dad4:	e59f1230 	ldr	r1, [pc, #560]	; dd0c <_start+0x3f88>
+    dad8:	e1a02000 	mov	r2, r0
+    dadc:	e1a00004 	mov	r0, r4
+[31m    dae0:	ebfff04a 	bl	9c10 <fprintf@plt>[0m
+    dae4:	e1a00004 	mov	r0, r4
+    dae8:	ebffefe5 	bl	9a84 <fclose@plt>
+--
+    dc54:	ebfff041 	bl	9d60 <nvram_set@plt>
+    dc58:	e3140004 	tst	r4, #4
+    dc5c:	0affffe0 	beq	dbe4 <_start+0x3e60>
+    dc60:	ebfff7dc 	bl	bbd8 <_start+0x1e54>
+    dc64:	eaffffde 	b	dbe4 <_start+0x3e60>
+    dc68:	e28d5004 	add	r5, sp, #4
+    dc6c:	e3540000 	cmp	r4, #0
+    dc70:	e3022688 	movw	r2, #9864	; 0x2688
+    dc74:	e1a00005 	mov	r0, r5
+    dc78:	e59f10ac 	ldr	r1, [pc, #172]	; dd2c <_start+0x3fa8>
+    dc7c:	03a02084 	moveq	r2, #132	; 0x84
+    dc80:	ebffeffd 	bl	9c7c <sprintf@plt>
+    dc84:	e1a01005 	mov	r1, r5
+    dc88:	e59f0098 	ldr	r0, [pc, #152]	; dd28 <_start+0x3fa4>
+    dc8c:	ebfff033 	bl	9d60 <nvram_set@plt>
+    dc90:	eaffffc9 	b	dbbc <_start+0x3e38>
+    dc94:	e59f30a0 	ldr	r3, [pc, #160]	; dd3c <_start+0x3fb8>
+    dc98:	e59f10a0 	ldr	r1, [pc, #160]	; dd40 <_start+0x3fbc>
+    dc9c:	e59f20a0 	ldr	r2, [pc, #160]	; dd44 <_start+0x3fc0>
+    dca0:	e5930000 	ldr	r0, [r3]
+[31m    dca4:	ebffefd9 	bl	9c10 <fprintf@plt>[0m
+    dca8:	e1a00005 	mov	r0, r5
+    dcac:	ebffef74 	bl	9a84 <fclose@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m2[0m times [0;33mwps_monitor[0m
+

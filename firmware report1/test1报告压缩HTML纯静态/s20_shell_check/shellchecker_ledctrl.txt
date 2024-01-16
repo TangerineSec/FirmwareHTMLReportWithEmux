@@ -1,0 +1,31 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/ledctrl line 23:[0m
+[0m		if [ -z $2 -o -z $3 ]; then[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                           ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+[32m                                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ -z "$2" -o -z "$3" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/ledctrl line 28:[0m
+[0m		i2ccmd w 1 0x3 0x${2}${2}[0m
+[32m                                 ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		i2ccmd w 1 0x3 0x"${2}""${2}"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/ledctrl line 29:[0m
+[0m		i2ccmd w 1 0x5 0x${3}${3}[0m
+[32m                                 ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		i2ccmd w 1 0x5 0x"${3}""${3}"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] || [ q ] as [ p -o q...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

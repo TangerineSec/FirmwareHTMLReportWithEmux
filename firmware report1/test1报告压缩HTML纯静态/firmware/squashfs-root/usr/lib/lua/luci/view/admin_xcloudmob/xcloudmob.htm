@@ -1,0 +1,125 @@
+<%+xcmob_header%>
+<style type='text/css'>
+	.xcmod_pwdsetuppanel{
+		width:260px;
+		margin:50px auto 0px auto;
+	}
+
+	.pppoeuser{
+		display: block;
+		margin:15px auto 0px auto;
+		padding-left:50px;
+		padding-right:10px;
+		color:#666;
+		width:200px;
+		height:44px;
+		border: none;		
+		background: url('<%=media%>/mobile/pppoepassport.png') no-repeat center;
+	}
+
+	.pppoepasswd{
+		display: block;
+		margin:15px auto 0px auto;
+		padding-left:50px;
+		padding-right:10px;
+		color:#666;
+		width:200px;
+		height:44px;
+		border: none;		
+		background: url('<%=media%>/mobile/pppoepassword.png') no-repeat center;
+	}
+
+	#pppoegray{
+		background: url('<%=media%>/mobile/inputgray.png') no-repeat center;
+		color:white;
+		cursor: default;
+	}
+	
+	.xcmod_lansetup{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		right:10px;
+		background: url('<%=media%>/mobile/lansetup.png') no-repeat center;
+	}
+
+	.xcmod_back{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		cursor: pointer;
+		left:10px;
+		background: url('<%=media%>/mobile/navreturn.png') no-repeat center;
+	}	
+</style>
+<div class='xcmod_nav'>
+	<h2>new wifi</h2>
+	<a href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmoblan"))%>' class='xcmod_lansetup'></a>
+</div>
+<div class='xcmod_content'>
+	<div class='xcmod_img'>
+		<img src='<%=media%>/mobile/logo.png' class='xcmod_logo'>
+	</div>
+	<div class='xcmod_pwdsetuppanel'>
+		<input type='text' class='pppoeuser' value='输入上网名'>
+		<input type='text' class='pppoepasswd' value='输入上网密码'>
+		<input type='submit' name='submit' class='loginsubmit pppoesure' id='pppoegray' value='确定'>
+		<input type='submit' name='submit' class='loginsubmit pppoenot' id='pppoepass' value='跳过'>
+	</div>
+	<div style='height:60px;'>
+	</div>
+</div>
+<script type='text/javascript'>
+	$('#pppoepass').click(function(){
+		window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudcheckconn"))%>';
+	})
+
+	$('.pppoesure').click(function(){
+		if (!$(this).attr('id')){
+			var name = $('.pppoeuser').val();
+			var passwd = $('.pppoepasswd').val();
+			$.ajax({
+				url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudcheckconn"))%>',
+				data:{type:'pppoe',user:name,pwd:passwd},
+				type:'POST',
+				dataType:'json',
+				success:function(r){
+					if(r.result == 'success')
+						window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudtocheck"))%>';
+				}
+			})
+		}
+	})
+
+	function checkpppoe(){
+		var pst = $('.pppoeuser').val();
+		var pwd = $('.pppoepasswd').val();
+
+		if (pst != "" && pwd != ""){
+			$('.pppoesure').removeAttr('id');
+		}else{
+			$('.pppoesure').attr('id','pppoegray');
+		}
+	}
+
+	$('.pppoeuser').focus(function(){
+		$(this).val('');
+	})
+
+	$('.pppoepasswd').focus(function(){
+		$(this).val('');
+	})
+
+	$('.pppoeuser').focusout(function(){
+		checkpppoe();
+	})
+
+	$('.pppoepasswd').focusout(function(){
+		checkpppoe();
+	})	
+</script>
+<%+xcmob_footer%>

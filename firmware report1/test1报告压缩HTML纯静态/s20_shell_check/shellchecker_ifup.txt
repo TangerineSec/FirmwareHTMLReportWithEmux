@@ -1,0 +1,50 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 7:[0m
+[0m	local interface="$1"[0m
+[33m        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 9:[0m
+[0m		ubus call network.interface $mode "{ \"interface\" : \"$interface\" }"[0m
+[32m                                            ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		ubus call network.interface "$mode" "{ \"interface\" : \"$interface\" }"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 40:[0m
+[0m	for interface in `ubus -S list 'network.interface.*'`; do[0m
+[32m                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	for interface in $(ubus -S list 'network.interface.*'); do
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 54:[0m
+[0m	. /lib/functions.sh[0m
+[32m          ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 57:[0m
+[0m		local wdev wnet[0m
+[33m                ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 70:[0m
+[0m	local radio_devs[0m
+[33m        ^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 71:[0m
+[0m	local network="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/ifup line 75:[0m
+[0m	local dev[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC1091 -- Not following: /lib/functions.sh ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

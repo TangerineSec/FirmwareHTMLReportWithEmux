@@ -1,0 +1,35 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/PhoneMTDFirmware line 8:[0m
+[0m	/usr/local/localshell/download $ParamInput[0m
+[32m                                       ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	/usr/local/localshell/download "$ParamInput"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/PhoneMTDFirmware line 9:[0m
+[0m	if [ $? -ne 0 ][0m
+[32m             ^-- SC2181 (style): Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/PhoneMTDFirmware line 20:[0m
+[0m} &>/tmp/upgrade.log[0m
+[33m  ^----------------^ SC3020 (warning): In POSIX sh, &> is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/PhoneMTDFirmware line 22:[0m
+[0mpreopt $1[0m
+[32m       ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+preopt "$1"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/PhoneMTDFirmware line 23:[0m
+[0m/sbin/sysupgrade /tmp/firmware.img &>/tmp/upgrade.log[0m
+[33m                                   ^----------------^ SC3020 (warning): In POSIX sh, &> is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3020 -- In POSIX sh, &> is undefined.
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2181 -- Check exit code directly with e.g...

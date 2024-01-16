@@ -1,0 +1,39 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ddns-0 line 24:[0m
+[0m    enable=`$configpath -read DDNS Enable`[0m
+[32m           ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    enable=$($configpath -read DDNS Enable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ddns-0 line 25:[0m
+[0m    if [ $enable == "0x01" ]; then[0m
+[32m         ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                 ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+    if [ "$enable" == "0x01" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ddns-0 line 26:[0m
+[0m        echo -n "Starting $prog ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ddns-0 line 28:[0m
+[0m        $binpath $args&[0m
+[32m                 ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+        $binpath "$args"&
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ddns-0 line 35:[0m
+[0m    echo -n "Stopping $prog ... "[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

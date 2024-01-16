@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibshared.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mpopen[0m tear down of [0;33mlibshared.so[0m
+
+    a754:	e3a01000 	mov	r1, #0
+    a758:	e3a02c01 	mov	r2, #256	; 0x100
+    a75c:	e08f4004 	add	r4, pc, r4
+    a760:	ebffe495 	bl	39bc <memset@plt>
+    a764:	e3570000 	cmp	r7, #0
+    a768:	e1a0600d 	mov	r6, sp
+    a76c:	01a00007 	moveq	r0, r7
+    a770:	0a000016 	beq	a7d0 <daemon_exist+0xa4>
+    a774:	e5d70000 	ldrb	r0, [r7]
+    a778:	e3500000 	cmp	r0, #0
+    a77c:	0a000013 	beq	a7d0 <daemon_exist+0xa4>
+    a780:	e59f2054 	ldr	r2, [pc, #84]	; a7dc <daemon_exist+0xb0>
+    a784:	e1a03007 	mov	r3, r7
+    a788:	e3a01c01 	mov	r1, #256	; 0x100
+    a78c:	e1a00005 	mov	r0, r5
+    a790:	e0842002 	add	r2, r4, r2
+    a794:	ebffe3d7 	bl	36f8 <snprintf@plt>
+    a798:	e59f1040 	ldr	r1, [pc, #64]	; a7e0 <daemon_exist+0xb4>
+    a79c:	e1a00005 	mov	r0, r5
+    a7a0:	e0841001 	add	r1, r4, r1
+[31m    a7a4:	ebffe3bb 	bl	3698 <popen@plt>[0m
+    a7a8:	e1a04000 	mov	r4, r0
+    a7ac:	e3a01c01 	mov	r1, #256	; 0x100
+--
+    a7dc:	ffff6388 			; <UNDEFINED> instruction: 0xffff6388
+    a7e0:	ffff7c10 			; <UNDEFINED> instruction: 0xffff7c10
+
+0000a7e4 <get_port_linkstatus>:
+    a7e4:	e92d4070 	push	{r4, r5, r6, lr}
+    a7e8:	e3500004 	cmp	r0, #4
+    a7ec:	e59f406c 	ldr	r4, [pc, #108]	; a860 <get_port_linkstatus+0x7c>
+    a7f0:	e24dd008 	sub	sp, sp, #8
+    a7f4:	e3a03000 	mov	r3, #0
+    a7f8:	e1a05000 	mov	r5, r0
+    a7fc:	e58d3004 	str	r3, [sp, #4]
+    a800:	e08f4004 	add	r4, pc, r4
+    a804:	9a000002 	bls	a814 <get_port_linkstatus+0x30>
+    a808:	e3e00000 	mvn	r0, #0
+    a80c:	e28dd008 	add	sp, sp, #8
+    a810:	e8bd8070 	pop	{r4, r5, r6, pc}
+    a814:	e59f0048 	ldr	r0, [pc, #72]	; a864 <get_port_linkstatus+0x80>
+    a818:	e59f1048 	ldr	r1, [pc, #72]	; a868 <get_port_linkstatus+0x84>
+    a81c:	e0840000 	add	r0, r4, r0
+    a820:	e0841001 	add	r1, r4, r1
+[31m    a824:	ebffe39b 	bl	3698 <popen@plt>[0m
+    a828:	e2506000 	subs	r6, r0, #0
+    a82c:	0afffff5 	beq	a808 <get_port_linkstatus+0x24>
+
+[0m
+[[0;33m*[0m] Function [0;33mpopen[0m used [0;33m2[0m times [0;33mlibshared.so[0m
+

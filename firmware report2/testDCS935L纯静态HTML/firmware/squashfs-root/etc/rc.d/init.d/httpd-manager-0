@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# ipfilter: This starts and stops httpd-manager.
+#
+# chkconfig: 2345 06 10
+# description: httpd-manager
+#
+# processname: /usr/sbin/httpd-manager
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/bin:/usr/sbin
+
+[ -f $binpath ] || exit
+
+start(){
+    echo -n "Starting httpd-manager ... "
+    /usr/sbin/httpd-manager&
+    echo "."
+}
+
+stop(){
+    echo -n "Stopping httpd-manager ... "
+    killall httpd-manager
+    echo "."
+}
+
+# See how we are called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    *)
+        start
+        exit 1
+esac
+
+exit 0

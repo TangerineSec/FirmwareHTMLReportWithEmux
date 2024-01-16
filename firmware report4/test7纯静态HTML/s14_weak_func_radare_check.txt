@@ -1,0 +1,95 @@
+[[0;34m+[0m] [0;36m[1mCheck binaries for weak functions (radare mode)[0m
+[1m=================================================================[0m
+This module identifies the usage of critical binary functions in firmware via [0;33mradare2[0m.
+Examples of binary functions are system, strcpy, printf and strcat. These functions are configured in the configuration
+file config/functions.cfg. The module counts the usages per binary. For strcpy functions it also counts strlen functions
+right before the strcpy function. Additionally it checks if the binary is a known Linux binary or unknown and probably
+a vendor binary.
+
+
+[[0;33m*[0m] Vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system
+
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 50 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/ld-uClibc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 24 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 3 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 100 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 89 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 22 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libc.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 36 [0m/ [0;33mstrlen: 24 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 4 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 132 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 17 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 30 [0m/ [0;33mstrlen: 31 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /bin/ntfs-3g (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msystem [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+
+[0;34m==>[0m [0;36mTop 10 legacy C functions - Radare2 disasm mode[0m
+-----------------------------------------------------------------
+
+
+[[0;32m+[0m][0;32m fprintf - top 10 results:[0m
+[0;32m	100   : ntfs-3g         : common linux file: yes[0m
+[0;33m	50    : libc.so.0       : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m mmap - top 10 results:[0m
+[0;32m	4     : ntfs-3g         : common linux file: yes[0m
+[0;33m	3     : libc.so.0       : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m printf - top 10 results:[0m
+[0;32m	132   : ntfs-3g         : common linux file: yes[0m
+[0;33m	89    : libc.so.0       : common linux file: no[0m
+[0;33m	24    : ld-uClibc.so.0  : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m sprintf - top 10 results:[0m
+[0;33m	22    : libc.so.0       : common linux file: no[0m
+[0;32m	17    : ntfs-3g         : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcat - top 10 results:[0m
+[0;32m	8     : ntfs-3g         : common linux file: yes[0m
+[0;33m	4     : libc.so.0       : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcpy - top 10 results:[0m
+[0;33m	36    : libc.so.0       : common linux file: no[0m
+[0;32m	30    : ntfs-3g         : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m system - top 10 results:[0m
+[0;32m	8     : ntfs-3g         : common linux file: yes[0m
+
+
+
+[*] Statistics:66
+
+[*] Statistics1:ARM

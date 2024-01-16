@@ -1,0 +1,66 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 3:[0m
+[0m. /etc/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /etc/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 4:[0m
+[0m. /lib/ralink.sh[0m
+[32m  ^------------^ SC1091 (info): Not following: /lib/ralink.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 5:[0m
+[0m. /lib/functions/uci-defaults.sh[0m
+[32m  ^----------------------------^ SC1091 (info): Not following: /lib/functions/uci-defaults.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 14:[0m
+[0m	local board="$1"[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 61:[0m
+[0m	local lan_mac=""[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 62:[0m
+[0m	local wan_mac=""[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 68:[0m
+[0m	[ -n "$lan_mac" ] && ucidef_set_interface_macaddr lan $lan_mac[0m
+[32m                                                              ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -n "$lan_mac" ] && ucidef_set_interface_macaddr lan "$lan_mac"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 69:[0m
+[0m	[ -n "$wan_mac" ] && ucidef_set_interface_macaddr wan $wan_mac[0m
+[32m                                                              ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -n "$wan_mac" ] && ucidef_set_interface_macaddr wan "$wan_mac"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 70:[0m
+[0m	[ -n "$wan_mac" ] && ucidef_set_userwan_macaddr wan $wan_mac[0m
+[32m                                                            ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -n "$wan_mac" ] && ucidef_set_userwan_macaddr wan "$wan_mac"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/uci-defaults/network line 79:[0m
+[0mralink_setup_interfaces $board[0m
+[32m                        ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+ralink_setup_interfaces "$board"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC1091 -- Not following: /etc/functions.sh ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

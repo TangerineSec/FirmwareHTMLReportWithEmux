@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mwl.ko[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mREL[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mwl.ko[0m
+
+  13f6e4:	e3a03000 	mov	r3, #0
+  13f6e8:	e58430dc 	str	r3, [r4, #220]	; 0xdc
+  13f6ec:	e8bd8010 	pop	{r4, pc}
+
+0013f6f0 <wlc_wmf_start>:
+  13f6f0:	e92d4070 	push	{r4, r5, r6, lr}
+  13f6f4:	e24dde43 	sub	sp, sp, #1072	; 0x430
+  13f6f8:	e28d4004 	add	r4, sp, #4
+  13f6fc:	e28d6e42 	add	r6, sp, #1056	; 0x420
+  13f700:	e1a05000 	mov	r5, r0
+  13f704:	e2866004 	add	r6, r6, #4
+  13f708:	e1a00004 	mov	r0, r4
+  13f70c:	e3a01e42 	mov	r1, #1056	; 0x420
+  13f710:	ebfffffe 	bl	0 <__memzero>
+  13f714:	e1d524dc 	ldrsb	r2, [r5, #76]	; 0x4c
+  13f718:	e1a00006 	mov	r0, r6
+  13f71c:	e59f104c 	ldr	r1, [pc, #76]	; 13f770 <wlc_wmf_start+0x80>
+  13f720:	ebfffffe 	bl	0 <sprintf>
+  13f724:	e1a01006 	mov	r1, r6
+  13f728:	e1a00004 	mov	r0, r4
+[31m  13f72c:	ebfffffe 	bl	0 <strcpy>[0m
+  13f730:	e3a03001 	mov	r3, #1
+  13f734:	e3a02002 	mov	r2, #2
+--
+
+0013f774 <wlc_wmf_stop>:
+  13f774:	e92d4070 	push	{r4, r5, r6, lr}
+  13f778:	e1a05000 	mov	r5, r0
+  13f77c:	e59030dc 	ldr	r3, [r0, #220]	; 0xdc
+  13f780:	e24dde43 	sub	sp, sp, #1072	; 0x430
+  13f784:	e3530000 	cmp	r3, #0
+  13f788:	0a000017 	beq	13f7ec <wlc_wmf_stop+0x78>
+  13f78c:	e28d4004 	add	r4, sp, #4
+  13f790:	e28d6e42 	add	r6, sp, #1056	; 0x420
+  13f794:	e1a00004 	mov	r0, r4
+  13f798:	e3a01e42 	mov	r1, #1056	; 0x420
+  13f79c:	e2866004 	add	r6, r6, #4
+  13f7a0:	ebfffffe 	bl	0 <__memzero>
+  13f7a4:	e59f1048 	ldr	r1, [pc, #72]	; 13f7f4 <wlc_wmf_stop+0x80>
+  13f7a8:	e1a00006 	mov	r0, r6
+  13f7ac:	e1d524dc 	ldrsb	r2, [r5, #76]	; 0x4c
+  13f7b0:	ebfffffe 	bl	0 <sprintf>
+  13f7b4:	e1a01006 	mov	r1, r6
+  13f7b8:	e1a00004 	mov	r0, r4
+[31m  13f7bc:	ebfffffe 	bl	0 <strcpy>[0m
+  13f7c0:	e3a03001 	mov	r3, #1
+  13f7c4:	e1a01004 	mov	r1, r4
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33mwl.ko[0m
+

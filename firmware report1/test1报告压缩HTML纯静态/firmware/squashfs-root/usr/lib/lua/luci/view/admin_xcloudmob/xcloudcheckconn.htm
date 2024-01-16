@@ -1,0 +1,182 @@
+<%+xcmob_header%>
+<style type='text/css'>
+	.xcmod_checkconnimg{
+		position: relative;
+		margin:0px auto;
+		width:217px;
+		height:259px;
+	}
+
+	.xcmod_checkabsolute{
+		position: absolute;
+		width:85px;
+		height:25px;
+	}
+
+	.xcmod_checkabsolute span,img{
+		vertical-align: middle;
+	}
+
+	.xcmod_checknew{
+		left:80px;
+		top:80px;
+	}
+
+	.xcmod_checkwan{
+		left:20px;
+		top:220px;	
+	}
+
+	.xcmod_checkwifi{
+		top:220px;
+		left:140px;
+	}
+
+	.xcmod_checkcontent h2{
+		font-size:18px;
+		color:#50BBBC;
+		font-weight: 700;
+		width:180px;
+		margin:50px auto 0px auto;
+		text-align: center;
+	}
+
+	#checkconnect{
+		background: url('<%=media%>/mobile/inputgray.png') no-repeat center;
+		color:white;
+		cursor: default;
+	}
+
+	.xcmod_lansetup{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		right:10px;
+		background: url('<%=media%>/mobile/lansetup.png') no-repeat center;
+	}
+
+	.xcmod_back{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		cursor: pointer;
+		left:10px;
+		background: url('<%=media%>/mobile/navreturn.png') no-repeat center;
+	}	
+</style>
+<%
+	--检查无线连接状态
+	local uci = require "luci.model.uci".cursor()
+	local ntm = require "luci.model.network"
+	ntm.init(uci)
+
+	local devices  = ntm:get_wifidevs()
+	local devs
+	local netlist = {}
+
+	for _, dev in ipairs(devices) do local nets = dev:get_wifinets()
+		local nets = dev:get_wifinets()
+		for _, net in ipairs(nets) do
+			netlist[#netlist+1] = net:id()
+		end
+	end
+
+	local netmd = require "luci.model.network".init()
+	local net = netmd:get_wifinet(netlist[1])	
+
+	local wireSafe = false
+	local wireSafePwd = nil
+	if net:get("encryption") == "none" then
+		wireSafe = false
+	else
+		wireSafe = true
+		wireSafePwd = net:get("key")
+	end
+
+	-- 检查wan口连接
+	local sel = luci.sys.exec('uci get user.@wan_conn[0].status')
+	sel = string.sub(sel,1,string.len(sel)-1)	
+	sel = tostring(sel)
+%>
+<div class='xcmod_nav'>
+	<h2>new wifi</h2>
+	<a class='xcmod_back' href='javascript:void(0);' onClick="history.back();"></a>
+	<a href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmoblan"))%>' class='xcmod_lansetup'></a>
+</div>
+<div class='xcmod_content xcmod_checkcontent'>
+	<div style='height:60px'>
+	</div>
+	<div class='xcmod_checkconnimg'>
+		<img src='<%=media%>/mobile/connect.png'>
+		<div class='xcmod_checkabsolute xcmod_checknew'>
+			<span>新路由</span>
+			<%if sel == '1' then%>
+				<img src='<%=media%>/mobile/success.png'>
+			<%else%>
+				<img src='<%=media%>/mobile/failed.png'>
+			<%end%>			
+		</div>
+		<div class='xcmod_checkabsolute xcmod_checkwan'>
+			<span>外网</span>
+			<img src='<%=media%>/mobile/failed.png'>
+		</div>
+		<div class='xcmod_checkabsolute xcmod_checkwifi'>
+			<span>无线WIFI</span>
+			<%if wireSafe then%>
+				<img src='<%=media%>/mobile/success.png'>
+			<%else%>
+				<img src='<%=media%>/mobile/failed.png'>
+			<%end%>
+		</div>		
+	</div>
+	<h2>正在测试连接</h2>
+	<input type='submit' name='submit' class='loginsubmit checkconnect' id='checkconnect' value='下一步'>
+	<!--<input type='submit' name='submit' class='loginsubmit checkconnect' value='下一步'>-->
+	<div style='height:60px;'>
+	</div>	
+</div>
+<script type='text/javascript'>
+	$('.checkconnect').click(function(){
+		if (!$(this).attr('id'))
+			window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudpwdsetup"))%>';
+	})
+
+	function checknow(){
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/checknowconnect"))%>',
+			type:'post',
+			dataType:'json',
+			success:function(r){
+				//alert(r.result);
+				
+				if(r.result == '0'){
+					$('.xcmod_checkwan img').attr('src','<%=media%>/mobile/failed.png');
+					$('.checkconnect').removeAttr('id');
+					$('.xcmod_checkcontent h2').html('当前连接失败');
+				}else{
+					//$('.xcmod_checkwan img').attr('src','<%=media%>/mobile/success.png')
+					window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudconnsuccess"))%>';
+				}
+			}
+		})
+
+	}
+
+	// 测试拨号
+	$.ajax({
+		url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/setupcheckconnect"))%>',
+		type:'post',
+		dataType:'json',
+		timeout:15000,
+		success:function(r){
+		},
+		error:function(){
+			setTimeout('checknow()',8000);
+		}
+	})
+</script>
+<%+xcmob_footer%>

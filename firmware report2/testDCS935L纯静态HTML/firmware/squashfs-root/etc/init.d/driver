@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# driver: This installs and removes drivers.
+#
+# chkconfig: 2345 02 98
+#
+
+MODULE_DIR=/lib/modules
+
+start()
+{
+	if [ ! -f /etc/Wireless/RTL8192CD.dat ]; then
+		cat /etc/Wireless/RTL8192CD_static.dat > /etc/Wireless/RTL8192CD.dat
+	fi
+	insmod $MODULE_DIR/hwmon.ko
+	insmod $MODULE_DIR/gpio_i2c.ko
+	insmod $MODULE_DIR/al3010.ko dwALSGain=3
+}
+
+stop()
+{
+	rmmod al3010
+	rmmod gpio_i2c
+	rmmod hwmon
+}
+
+# See how we were called.
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+esac
+
+exit 0

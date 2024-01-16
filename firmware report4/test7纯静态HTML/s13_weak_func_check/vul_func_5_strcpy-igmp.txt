@@ -1,0 +1,69 @@
+[[0;33m*[0m] Binary protection state of [0;33migmp[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33migmp[0m
+
+    9e5c:	1a00000a 	bne	9e8c <_start+0x11e0>
+    9e60:	e1a00008 	mov	r0, r8
+    9e64:	ebfffb7b 	bl	8c58 <strlen@plt>
+    9e68:	e1a01008 	mov	r1, r8
+    9e6c:	e1a02000 	mov	r2, r0
+    9e70:	e2870048 	add	r0, r7, #72	; 0x48
+    9e74:	ebfffb4a 	bl	8ba4 <memcmp@plt>
+    9e78:	e3500000 	cmp	r0, #0
+    9e7c:	1a000002 	bne	9e8c <_start+0x11e0>
+    9e80:	e59a3000 	ldr	r3, [sl]
+    9e84:	e5873068 	str	r3, [r7, #104]	; 0x68
+    9e88:	e8bd8ff8 	pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    9e8c:	e597706c 	ldr	r7, [r7, #108]	; 0x6c
+    9e90:	e3570000 	cmp	r7, #0
+    9e94:	1affffd9 	bne	9e00 <_start+0x1154>
+    9e98:	e3a00070 	mov	r0, #112	; 0x70
+    9e9c:	ebfffb04 	bl	8ab4 <malloc@plt>
+    9ea0:	e250b000 	subs	fp, r0, #0
+    9ea4:	0a000011 	beq	9ef0 <_start+0x1244>
+    9ea8:	e1a01006 	mov	r1, r6
+[31m    9eac:	ebfffae8 	bl	8a54 <strcpy@plt>[0m
+    9eb0:	e1a01005 	mov	r1, r5
+    9eb4:	e28b0008 	add	r0, fp, #8
+[31m    9eb8:	ebfffae5 	bl	8a54 <strcpy@plt>[0m
+    9ebc:	e1a01004 	mov	r1, r4
+    9ec0:	e28b0028 	add	r0, fp, #40	; 0x28
+[31m    9ec4:	ebfffae2 	bl	8a54 <strcpy@plt>[0m
+    9ec8:	e28b0048 	add	r0, fp, #72	; 0x48
+    9ecc:	e1a01008 	mov	r1, r8
+[31m    9ed0:	ebfffadf 	bl	8a54 <strcpy@plt>[0m
+    9ed4:	e59a3000 	ldr	r3, [sl]
+    9ed8:	e3a00001 	mov	r0, #1
+--
+    a620:	e1a06001 	mov	r6, r1
+    a624:	e1a01000 	mov	r1, r0
+    a628:	ebfff987 	bl	8c4c <daemon@plt>
+    a62c:	e3700001 	cmn	r0, #1
+    a630:	e1a04000 	mov	r4, r0
+    a634:	1a000004 	bne	a64c <_start+0x19a0>
+    a638:	e59f31c0 	ldr	r3, [pc, #448]	; a800 <_start+0x1b54>
+    a63c:	e59f01c0 	ldr	r0, [pc, #448]	; a804 <_start+0x1b58>
+    a640:	e5931000 	ldr	r1, [r3]
+    a644:	ebfff989 	bl	8c70 <fputs@plt>
+    a648:	ea00006a 	b	a7f8 <_start+0x1b4c>
+    a64c:	ebffffda 	bl	a5bc <_start+0x1910>
+    a650:	e24aa001 	sub	sl, sl, #1
+    a654:	e59f41ac 	ldr	r4, [pc, #428]	; a808 <_start+0x1b5c>
+    a658:	e3a05000 	mov	r5, #0
+    a65c:	e59f81a8 	ldr	r8, [pc, #424]	; a80c <_start+0x1b60>
+    a660:	e3a07001 	mov	r7, #1
+    a664:	ea000009 	b	a690 <_start+0x19e4>
+    a668:	e1a00004 	mov	r0, r4
+    a66c:	e5b61004 	ldr	r1, [r6, #4]!
+[31m    a670:	ebfff8f7 	bl	8a54 <strcpy@plt>[0m
+    a674:	e2855001 	add	r5, r5, #1
+    a678:	e1a00004 	mov	r0, r4
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m5[0m times [0;33migmp[0m
+

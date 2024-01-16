@@ -1,0 +1,203 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33msystem[0m tear down of [0;33mntfs-3g[0m
+
+b 0x9f30
+mov r2, r8
+ldr r8, [sp, 0x3c]
+mov r6, r2
+b 0x9f1c
+andeq fp, r8, ip, asr 28
+andeq ip, r6, r4, ror fp
+andeq ip, r6, r4, lsr ip
+push {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+mov r8, r2
+ldr r4, obj.ctx
+sub sp, sp, 0x54
+mov r5, r1
+mov r7, r0
+mov r6, r3
+mov r0, r1
+ldr r2, [r4]
+mov r3, 0
+str r3, [sp, 0x4c]
+ldr r1, [r2]
+[31mbl sym.ntfs_xattr_system_type[0m
+subs sl, r0, 0
+beq 0x9fdc
+--
+bl sym.free
+b 0xa048
+ldr r3, [r4]
+mov r1, r5
+mov r2, r7
+ldr r0, [r3]
+bl sym.ntfs_pathname_to_inode
+subs sb, r0, 0
+beq 0xa1ec
+add fp, sp, 0x20
+mov r0, fp
+bl sym.ntfs_fuse_fill_security_context
+cmp sl, 7
+beq 0xa264
+mov r0, fp
+mov r1, sl
+mov r2, sb
+mov r3, r5
+str r8, [sp]
+str r6, [sp, 4]
+[31mbl sym.ntfs_xattr_system_getxattr[0m
+str r0, [sp, 0x48]
+mov r0, sb
+--
+b 0x9fd4
+bl sym.__errno_location
+ldr r3, [r0]
+rsb r3, r3, 0
+str r3, [sp, 0x44]
+b 0xa210
+bl sym.__errno_location
+ldr r3, [r0]
+rsb r3, r3, 0
+str r3, [sp, 0x44]
+b 0xa218
+mov r0, r7
+bl sym.get_parent_dir
+mov r4, r0
+mov r1, sl
+mov r0, fp
+mov r2, sb
+mov r3, r4
+str r8, [sp]
+str r6, [sp, 4]
+[31mbl sym.ntfs_xattr_system_getxattr[0m
+cmp r4, 0
+str r0, [sp, 0x48]
+--
+mov r6, 0
+str r3, [r0]
+b 0xbd70
+mov r6, r7
+b 0xbd70
+andeq fp, r8, ip, asr 28
+strdeq r4, r5, [r7], -r8
+push {r4, r5, r6, r7, r8, sb, sl, fp, lr}
+mov sl, r2
+ldr r6, obj.ctx
+sub sp, sp, 0x4c
+mov r7, r1
+mov r5, r0
+mov r8, r3
+mov r0, r1
+ldr r2, [r6]
+mov r3, 0
+ldr sb, [sp, 0x70]
+str r3, [sp, 0x44]
+ldr r1, [r2]
+[31mbl sym.ntfs_xattr_system_type[0m
+subs r4, r0, 0
+beq 0xbf08
+--
+ldr r3, [r6]
+mov r2, r5
+ldr r0, [r3]
+bl sym.ntfs_pathname_to_inode
+mov r6, r0
+cmp r6, 0
+beq 0xbee0
+add r7, sp, 0x20
+mov r0, r7
+bl sym.ntfs_fuse_fill_security_context
+cmp r0, 0
+bne 0xbea8
+cmp r4, 7
+movne r3, 0
+beq 0xc02c
+mov r0, r7
+mov r1, r4
+mov r2, r6
+str sl, [sp]
+stmib sp, {r8, sb}
+[31mbl sym.ntfs_xattr_system_setxattr[0m
+cmp r0, 0
+str r0, [sp, 0x40]
+--
+ldr r3, [ip, 0x14]
+tst r3, 0x4000
+beq 0xc13c
+mov r1, r7
+bl sym.ntfs_efs_fixup_attribute
+cmp r0, 0
+beq 0xc13c
+b 0xc12c
+andeq fp, r8, ip, asr 28
+push {r4, r5, r6, r7, r8, lr}
+mov r3, 0
+ldr r7, obj.ctx
+sub sp, sp, 0x28
+mov r5, r1
+mov r6, r0
+mov r0, r1
+str r3, [sp, 0x24]
+ldr r2, [r7]
+str r3, [sp, 0x20]
+ldr r1, [r2]
+[31mbl sym.ntfs_xattr_system_type[0m
+subs r4, r0, 0
+beq 0xc30c
+--
+add sp, sp, 0x28
+pop {r4, r5, r6, r7, r8, pc}
+ldr r3, [r7]
+mov r2, r6
+ldr r0, [r3]
+bl sym.ntfs_pathname_to_inode
+mov r5, r0
+cmp r5, 0
+beq 0xc3b4
+mov r0, sp
+mov r7, sp
+bl sym.ntfs_fuse_fill_security_context
+cmp r0, 0
+bne 0xc2dc
+cmp r4, 7
+movne r3, 0
+beq 0xc3a4
+mov r0, sp
+mov r1, r4
+mov r2, r5
+[31mbl sym.ntfs_xattr_system_removexattr[0m
+cmp r0, 0
+str r0, [sp, 0x20]
+--
+mov r6, r2
+add r1, sp, 4
+mov r0, 1
+bl sym.__GI_pthread_setcanceltype
+mov r1, r4
+mov r2, r6
+mov r0, r5
+bl sym.__GI_read
+mov r1, 0
+mov r4, r0
+ldr r0, [sp, 4]
+bl sym.__GI_pthread_setcanceltype
+mov r0, r4
+pop {r2, r3, r4, r5, r6, pc}
+push {r0, r1, r4, lr}
+mov r4, r0
+add r1, sp, 4
+mov r0, 1
+bl sym.__GI_pthread_setcanceltype
+mov r0, r4
+[31mbl sym.__libc_system[0m
+mov r1, 0
+mov r4, r0
+
+[[0;33m*[0m] Function [0;33msystem[0m used [0;33m8[0m times [0;33mntfs-3g[0m
+

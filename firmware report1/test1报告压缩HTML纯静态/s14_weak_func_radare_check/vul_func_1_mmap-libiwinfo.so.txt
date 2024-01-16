@@ -1,0 +1,33 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibiwinfo.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mlibiwinfo.so[0m
+
+[31mlw t9, -sym.imp.mmap(gp)[0m
+lw a1, 0x24(sp)
+sw v0, 0x10(sp)
+sw zero, 0x14(sp)
+move a0, zero
+addiu a2, zero, 1
+jalr t9
+ori a3, zero, 0x8002
+beq v0, s1, 0x248c
+lw gp, 0x18(sp)
+lw a1, 0x24(sp)
+sh zero, (s0)
+sh zero, 2(s0)
+srl v1, a1, 0x1f
+addu v1, v1, a1
+sra v1, v1, 1
+addiu v1, v1, -0x800
+sll a2, v1, 1
+sw v1, 0x20(sp)
+addu a2, v0, a2
+addiu s5, zero, 0x3533
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m1[0m times [0;33mlibiwinfo.so[0m
+

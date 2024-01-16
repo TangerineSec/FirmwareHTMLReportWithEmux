@@ -1,0 +1,74 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 6:[0m
+[0m	PPPoEEnable=`userconfig -read NETWORK_V4 PPPoEEnable`[0m
+[32m                    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	PPPoEEnable=$(userconfig -read NETWORK_V4 PPPoEEnable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 7:[0m
+[0m	PPPoEUID=`userconfig -read NETWORK_V4 PPPoEUID`[0m
+[32m                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	PPPoEUID=$(userconfig -read NETWORK_V4 PPPoEUID)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 8:[0m
+[0m	PPPoEPWD=`userconfig -read NETWORK_V4 PPPoEPWD`[0m
+[32m                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	PPPoEPWD=$(userconfig -read NETWORK_V4 PPPoEPWD)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 9:[0m
+[0m	if [ $PPPoEEnable == "0x01" ]; then[0m
+[32m             ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                          ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+	if [ "$PPPoEEnable" == "0x01" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 15:[0m
+[0m		cfg -a w -p /var/config/ppp/ pppoe.conf "" "USER" $PPPoEUID[0m
+[32m                                                                  ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		cfg -a w -p /var/config/ppp/ pppoe.conf "" "USER" "$PPPoEUID"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 17:[0m
+[0m		echo -ne "\""$PPPoEUID"\"	*	\""$PPPoEPWD"\"\n" > /var/config/ppp/pap-secrets[0m
+[33m                     ^-^ SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+[33m                             ^-------^ SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m                             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                                           ^-------^ SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m                                                           ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		echo -ne "\"""$PPPoEUID""\"	*	\"""$PPPoEPWD""\"\n" > /var/config/ppp/pap-secrets
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 18:[0m
+[0m		echo -ne "\""$PPPoEUID"\"   *       \""$PPPoEPWD"\"\n" > /var/config/ppp/chap-secrets[0m
+[33m                     ^-^ SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+[33m                             ^-------^ SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m                             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                                       ^-------^ SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m                                                       ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		echo -ne "\"""$PPPoEUID""\"   *       \"""$PPPoEPWD""\"\n" > /var/config/ppp/chap-secrets
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/pppoe.sh line 45:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2027 -- The surrounding quotes actually u...
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...

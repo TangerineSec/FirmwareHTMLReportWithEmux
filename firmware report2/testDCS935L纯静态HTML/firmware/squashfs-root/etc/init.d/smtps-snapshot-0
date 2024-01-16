@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# https: This starts and stops smtps.
+#
+# chkconfig: 2345 81 19
+# description: smtps
+#
+# processname: /bin/stunnel
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+server_port=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP_SNAPSHOT ServerPort`
+server_addr=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP_SNAPSHOT ServerAddr`
+starttls_enable=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP_SNAPSHOT STARTTLS`
+
+/usr/sbin/cfg -a w -p /var stunnel-smtps-snapshot.conf smtps connect $server_addr:$server_port
+if [ $starttls_enable = 0x01 ]; then
+	/usr/sbin/cfg -a w -p /var stunnel-smtps-snapshot.conf smtps protocol smtp
+else	
+	/usr/sbin/cfg -a d -p /var stunnel-smtps-snapshot.conf smtps protocol
+fi
+
+start() {
+	encrypt=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP_SNAPSHOT SSL`
+	if [ $encrypt = 0x01 ]; then
+	echo -n "Starting smtps stunnel:"
+	export HOME=/; /bin/stunnel-smtps-snapshot /var/stunnel-smtps-snapshot.conf
+	fi
+}
+
+stop() {
+	/bin/kill `pidof stunnel-smtps-snapshot`
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart|teststart|teststop}"
+		exit 1
+esac
+
+exit $?

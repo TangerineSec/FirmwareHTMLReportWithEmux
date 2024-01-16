@@ -1,0 +1,125 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibebt_limit.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mlibebt_limit.so[0m
+
+jr ra
+nop
+lw a2, 0x24(a0)
+lw v1, 0x24(a1)
+beq a2, v1, 0x590
+move v0, zero
+jr ra
+nop
+lw v1, 0x28(a0)
+lw v0, 0x28(a1)
+xor v0, v1, v0
+jr ra
+sltiu v0, v0, 1
+lui gp, 2
+addiu gp, gp, -0x7694
+addu gp, gp, t9
+lw a0, -0x7fe8(gp)
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu sp, sp, -0x20
+sw gp, 0x10(sp)
+sw s0, 0x18(sp)
+addiu a0, a0, 0xc10
+sw ra, 0x1c(sp)
+jalr t9
+move s0, a1
+lw v0, 0x24(s0)
+lui v1, 0x225
+addiu a0, v1, 0x5101
+sltu a0, v0, a0
+beqz a0, 0x6c4
+lw gp, 0x10(sp)
+addiu v1, v1, 0x5100
+divu zero, v1, v0
+teq v0, zero, 7
+mfhi v1
+mflo a0
+sltu v1, a0, v1
+bnez v1, 0x6c4
+lui v1, 9
+addiu a0, v1, 0x27c1
+sltu a0, v0, a0
+beqz a0, 0x6b8
+addiu v1, v1, 0x27c0
+divu zero, v1, v0
+teq v0, zero, 7
+mfhi v1
+mflo a0
+sltu v1, a0, v1
+bnez v1, 0x6b8
+sltiu v1, v0, 0x2711
+beqz v1, 0x6bc
+addiu a0, zero, 3
+addiu v1, zero, 0x2710
+divu zero, v1, v0
+teq v0, zero, 7
+mfhi v1
+mflo a1
+sltu v1, a1, v1
+bnez v1, 0x6bc
+nop
+lw v1, -0x7fe4(gp)
+sll a0, a0, 3
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu v1, v1, 0xe68
+addu v1, v1, a0
+lw a1, 4(v1)
+lw a0, -0x7fe8(gp)
+lw a2, (v1)
+divu zero, a1, v0
+teq v0, zero, 7
+addiu a0, a0, 0xc1c
+jalr t9
+mflo a1
+lw gp, 0x10(sp)
+lw a1, 0x28(s0)
+lw ra, 0x1c(sp)
+lw a0, -0x7fe8(gp)
+lw s0, 0x18(sp)
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu a0, a0, 0xc24
+jr t9
+addiu sp, sp, 0x20
+addiu a0, zero, 2
+b 0x660
+addiu a0, a0, -1
+addiu a0, zero, 1
+b 0x660
+addiu a0, a0, -1
+lui gp, 2
+addiu gp, gp, -0x77c0
+addu gp, gp, t9
+lw a0, -0x7fe8(gp)
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu a1, zero, 5
+jr t9
+addiu a0, a0, 0xc38
+lui gp, 2
+addiu gp, gp, -0x77e0
+addu gp, gp, t9
+lw t9, -sym.imp.strchr(gp)
+addiu sp, sp, -0x30
+sw gp, 0x10(sp)
+sw s4, 0x28(sp)
+sw s2, 0x20(sp)
+sw ra, 0x2c(sp)
+sw s3, 0x24(sp)
+sw s1, 0x1c(sp)
+sw s0, 0x18(sp)
+move s4, a1
+addiu a1, zero, 0x2f
+jalr t9
+move s2, a0
+beqz v0, 0x77c
+
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m4[0m times [0;33mlibebt_limit.so[0m
+

@@ -1,0 +1,36 @@
+[[0;33m*[0m] Binary protection state of [0;33macs_cli[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33macs_cli[0m
+
+    8c0c:	e2844004 	add	r4, r4, #4
+    8c10:	ebffff3a 	bl	8900 <strncpy@plt>
+    8c14:	e5947000 	ldr	r7, [r4]
+    8c18:	e3570000 	cmp	r7, #0
+    8c1c:	0a00017d 	beq	9218 <_start+0x870>
+    8c20:	e59f8c50 	ldr	r8, [pc, #3152]	; 9878 <_start+0xed0>
+    8c24:	e1a00007 	mov	r0, r7
+    8c28:	e1a01008 	mov	r1, r8
+    8c2c:	ebffff42 	bl	893c <strcmp@plt>
+    8c30:	e3500000 	cmp	r0, #0
+    8c34:	1a00003c 	bne	8d2c <_start+0x384>
+    8c38:	e5b43004 	ldr	r3, [r4, #4]!
+    8c3c:	e3530000 	cmp	r3, #0
+    8c40:	0a000172 	beq	9210 <_start+0x868>
+    8c44:	e59f7c30 	ldr	r7, [pc, #3120]	; 987c <_start+0xed4>
+    8c48:	e8980003 	ldm	r8, {r0, r1}
+    8c4c:	e5870000 	str	r0, [r7]
+    8c50:	e2870080 	add	r0, r7, #128	; 0x80
+    8c54:	e5c71004 	strb	r1, [r7, #4]
+    8c58:	e5941000 	ldr	r1, [r4]
+[31m    8c5c:	ebfffeee 	bl	881c <strcpy@plt>[0m
+    8c60:	e2873080 	add	r3, r7, #128	; 0x80
+    8c64:	e1a02007 	mov	r2, r7
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m1[0m times [0;33macs_cli[0m
+

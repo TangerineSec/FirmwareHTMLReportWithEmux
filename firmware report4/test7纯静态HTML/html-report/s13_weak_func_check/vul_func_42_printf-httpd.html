@@ -1,0 +1,1020 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s13_weak_func_check.html" title="./../s13_weak_func_check.html" >&laquo; Back to s13_weak_func_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<a class="refmodul" href="./s12_binary_protection.html" title="LINK" ><pre>[</span><span class="orange">*</span>] Binary protection state of </span><span class="orange">httpd</span></pre></a>
+
+<br />
+<pre>  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      </pre>
+<pre>  	<span class="red">No RELRO</span>       <span class="red">No Canary found</span>   <span class="green">NX enabled</span>   <span class="red">No PIE</span>       <span class="green">No RPATH</span>     <span class="green">No RUNPATH</span>   <span class="green">No Symbols</span></pre>
+<br />
+<pre></span></pre>
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">printf</span> tear down of </span><span class="orange">httpd</span></pre>
+<br />
+<pre>    afac:	e59d2004 	ldr	r2, [sp, #4]</pre>
+<pre>    afb0:	ebfffcc6 	bl	a2d0 &lt;fgets&commat;plt&gt;</pre>
+<pre>    afb4:	e3500000 	cmp	r0, #0</pre>
+<pre>    afb8:	0a00001a 	beq	b028 &lt;_start&commat;&commat;Base+0x65c&gt;</pre>
+<pre>    afbc:	e3a0100a 	mov	r1, #10</pre>
+<pre>    afc0:	e1a00004 	mov	r0, r4</pre>
+<pre>    afc4:	ebfffe59 	bl	a930 &lt;strchr&commat;plt&gt;</pre>
+<pre>    afc8:	e3500000 	cmp	r0, #0</pre>
+<pre>    afcc:	e3a0102c 	mov	r1, #44	; 0x2c</pre>
+<pre>    afd0:	15c05000 	strbne	r5, [r0]</pre>
+<pre>    afd4:	e1a00004 	mov	r0, r4</pre>
+<pre>    afd8:	ebfffe54 	bl	a930 &lt;strchr&commat;plt&gt;</pre>
+<pre>    afdc:	e2506000 	subs	r6, r0, #0</pre>
+<pre>    afe0:	0a00006f 	beq	b1a4 &lt;_start&commat;&commat;Base+0x7d8&gt;</pre>
+<pre>    afe4:	e0642006 	rsb	r2, r4, r6</pre>
+<pre>    afe8:	e5c65000 	strb	r5, [r6]</pre>
+<pre>    afec:	e352001f 	cmp	r2, #31</pre>
+<pre>    aff0:	da000031 	ble	b0bc &lt;_start&commat;&commat;Base+0x6f0&gt;</pre>
+<pre>    aff4:	e1a01004 	mov	r1, r4</pre>
+<pre>    aff8:	e59f02bc 	ldr	r0, [pc, #700]	; b2bc &lt;_start&commat;&commat;Base+0x8f0&gt;</pre>
+<pre><span class="red">    affc:	ebfffc71 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    b000:	e3a01000 	mov	r1, #0</pre>
+<pre>    b004:	e3a02a01 	mov	r2, #4096	; 0x1000</pre>
+<pre>--</pre>
+<pre>    b014:	e3a01a01 	mov	r1, #4096	; 0x1000</pre>
+<pre>    b018:	e59d2004 	ldr	r2, [sp, #4]</pre>
+<pre>    b01c:	ebfffcab 	bl	a2d0 &lt;fgets&commat;plt&gt;</pre>
+<pre>    b020:	e3500000 	cmp	r0, #0</pre>
+<pre>    b024:	1affffe4 	bne	afbc &lt;_start&commat;&commat;Base+0x5f0&gt;</pre>
+<pre>    b028:	e59d0004 	ldr	r0, [sp, #4]</pre>
+<pre>    b02c:	ebfffdcd 	bl	a768 &lt;fclose&commat;plt&gt;</pre>
+<pre>    b030:	e3580000 	cmp	r8, #0</pre>
+<pre>    b034:	130323f4 	movwne	r2, #13300	; 0x33f4</pre>
+<pre>    b038:	13a03031 	movne	r3, #49	; 0x31</pre>
+<pre>    b03c:	13402006 	movtne	r2, #6</pre>
+<pre>    b040:	15c23000 	strbne	r3, [r2]</pre>
+<pre>    b044:	e1580007 	cmp	r8, r7</pre>
+<pre>    b048:	03a00001 	moveq	r0, #1</pre>
+<pre>    b04c:	0a000006 	beq	b06c &lt;_start&commat;&commat;Base+0x6a0&gt;</pre>
+<pre>    b050:	e59f0268 	ldr	r0, [pc, #616]	; b2c0 &lt;_start&commat;&commat;Base+0x8f4&gt;</pre>
+<pre>    b054:	ebfffcac 	bl	a30c &lt;puts&commat;plt&gt;</pre>
+<pre>    b058:	e59f0264 	ldr	r0, [pc, #612]	; b2c4 &lt;_start&commat;&commat;Base+0x8f8&gt;</pre>
+<pre>    b05c:	e1a01007 	mov	r1, r7</pre>
+<pre>    b060:	e1a02008 	mov	r2, r8</pre>
+<pre><span class="red">    b064:	ebfffc57 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    b068:	e3a00001 	mov	r0, #1</pre>
+<pre>    b06c:	e28dd0ac 	add	sp, sp, #172	; 0xac</pre>
+<pre>--</pre>
+<pre>    b134:	e5923000 	ldr	r3, [r2]</pre>
+<pre>    b138:	e083a00a 	add	sl, r3, sl</pre>
+<pre>    b13c:	e59d3008 	ldr	r3, [sp, #8]</pre>
+<pre>    b140:	e58a3020 	str	r3, [sl, #32]</pre>
+<pre>    b144:	ebfffded 	bl	a900 &lt;strlen&commat;plt&gt;</pre>
+<pre>    b148:	e59d2008 	ldr	r2, [sp, #8]</pre>
+<pre>    b14c:	e2823001 	add	r3, r2, #1</pre>
+<pre>    b150:	e0833000 	add	r3, r3, r0</pre>
+<pre>    b154:	e58d3008 	str	r3, [sp, #8]</pre>
+<pre>    b158:	e1a00004 	mov	r0, r4</pre>
+<pre>    b15c:	e3a01000 	mov	r1, #0</pre>
+<pre>    b160:	e3a02a01 	mov	r2, #4096	; 0x1000</pre>
+<pre>    b164:	e2888001 	add	r8, r8, #1</pre>
+<pre>    b168:	ebfffd72 	bl	a738 &lt</span>emset&commat;plt&gt;</pre>
+<pre>    b16c:	eaffff8c 	b	afa4 &lt;_start&commat;&commat;Base+0x5d8&gt;</pre>
+<pre>    b170:	e30a31b4 	movw	r3, #41396	; 0xa1b4</pre>
+<pre>    b174:	e59f0150 	ldr	r0, [pc, #336]	; b2cc &lt;_start&commat;&commat;Base+0x900&gt;</pre>
+<pre>    b178:	e3403007 	movt	r3, #7</pre>
+<pre>    b17c:	e5931000 	ldr	r1, [r3]</pre>
+<pre>    b180:	e081100a 	add	r1, r1, sl</pre>
+<pre><span class="red">    b184:	ebfffc0f 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    b188:	e30a21b4 	movw	r2, #41396	; 0xa1b4</pre>
+<pre>    b18c:	e3402007 	movt	r2, #7</pre>
+<pre>    b190:	e5923000 	ldr	r3, [r2]</pre>
+<pre>    b194:	e083a00a 	add	sl, r3, sl</pre>
+<pre>    b198:	e3e03000 	mvn	r3, #0</pre>
+<pre>    b19c:	e58a3020 	str	r3, [sl, #32]</pre>
+<pre>    b1a0:	eaffffec 	b	b158 &lt;_start&commat;&commat;Base+0x78c&gt;</pre>
+<pre>    b1a4:	e1a01004 	mov	r1, r4</pre>
+<pre>    b1a8:	e59f0120 	ldr	r0, [pc, #288]	; b2d0 &lt;_start&commat;&commat;Base+0x904&gt;</pre>
+<pre><span class="red">    b1ac:	ebfffc05 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>    b1b0:	e1a00004 	mov	r0, r4</pre>
+<pre>    b1b4:	e1a01006 	mov	r1, r6</pre>
+<pre>--</pre>
+<pre>   119d4:	e0892007 	add	r2, r9, r7</pre>
+<pre>   119d8:	e0822082 	add	r2, r2, r2, lsl #1</pre>
+<pre>   119dc:	e086c00c 	add	ip, r6, ip</pre>
+<pre>   119e0:	e0444080 	sub	r4, r4, r0, lsl #1</pre>
+<pre>   119e4:	e08cc004 	add	ip, ip, r4</pre>
+<pre>   119e8:	e08c2002 	add	r2, ip, r2</pre>
+<pre>   119ec:	e0805293 	umull	r5, r0, r3, r2</pre>
+<pre>   119f0:	e1a001a0 	lsr	r0, r0, #3</pre>
+<pre>   119f4:	e0800100 	add	r0, r0, r0, lsl #2</pre>
+<pre>   119f8:	e0520080 	subs	r0, r2, r0, lsl #1</pre>
+<pre>   119fc:	13e00000 	mvnne	r0, #0</pre>
+<pre>   11a00:	eaffffa2 	b	11890 &lt;_start&commat;&commat;Base+0x6ec4&gt;</pre>
+<pre>   11a04:	e92d40f8 	push	{r3, r4, r5, r6, r7, lr}</pre>
+<pre>   11a08:	e1a05003 	mov	r5, r3</pre>
+<pre>   11a0c:	e59f404c 	ldr	r4, [pc, #76]	; 11a60 &lt;_start&commat;&commat;Base+0x7094&gt;</pre>
+<pre>   11a10:	e3a03016 	mov	r3, #22</pre>
+<pre>   11a14:	e1a06001 	mov	r6, r1</pre>
+<pre>   11a18:	e1a07002 	mov	r7, r2</pre>
+<pre>   11a1c:	e59f0040 	ldr	r0, [pc, #64]	; 11a64 &lt;_start&commat;&commat;Base+0x7098&gt;</pre>
+<pre>   11a20:	e5843000 	str	r3, [r4]</pre>
+<pre><span class="red">   11a24:	ebffe1e7 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   11a28:	e3550000 	cmp	r5, #0</pre>
+<pre>   11a2c:	0a000005 	beq	11a48 &lt;_start&commat;&commat;Base+0x707c&gt;</pre>
+<pre>--</pre>
+<pre>   19454:	e59f00a4 	ldr	r0, [pc, #164]	; 19500 &lt;_start&commat;&commat;Base+0xeb34&gt;</pre>
+<pre>   19458:	ebffc3b1 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<pre>   1945c:	e59f00a0 	ldr	r0, [pc, #160]	; 19504 &lt;_start&commat;&commat;Base+0xeb38&gt;</pre>
+<pre>   19460:	ebffc3af 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<pre>   19464:	ebffc4c8 	bl	a78c &lt;nvram_commit&commat;plt&gt;</pre>
+<pre>   19468:	e1a00005 	mov	r0, r5</pre>
+<pre>   1946c:	e1a01004 	mov	r1, r4</pre>
+<pre>   19470:	ebffd0e4 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   19474:	e3a00000 	mov	r0, #0</pre>
+<pre>   19478:	ebffc5bc 	bl	ab70 &lt;_start&commat;&commat;Base+0x1a4&gt;</pre>
+<pre>   1947c:	e28dd008 	add	sp, sp, #8</pre>
+<pre>   19480:	e8bd8070 	pop	{r4, r5, r6, pc}</pre>
+<pre>   19484:	e59f007c 	ldr	r0, [pc, #124]	; 19508 &lt;_start&commat;&commat;Base+0xeb3c&gt;</pre>
+<pre>   19488:	ebffc3a5 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<pre>   1948c:	e59f1078 	ldr	r1, [pc, #120]	; 1950c &lt;_start&commat;&commat;Base+0xeb40&gt;</pre>
+<pre>   19490:	e59f0064 	ldr	r0, [pc, #100]	; 194fc &lt;_start&commat;&commat;Base+0xeb30&gt;</pre>
+<pre>   19494:	ebffc432 	bl	a564 &lt;nvram_set&commat;plt&gt;</pre>
+<pre>   19498:	eafffff1 	b	19464 &lt;_start&commat;&commat;Base+0xea98&gt;</pre>
+<pre>   1949c:	e1a01004 	mov	r1, r4</pre>
+<pre>   194a0:	e59f0068 	ldr	r0, [pc, #104]	; 19510 &lt;_start&commat;&commat;Base+0xeb44&gt;</pre>
+<pre><span class="red">   194a4:	ebffc347 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   194a8:	e1a00004 	mov	r0, r4</pre>
+<pre>   194ac:	e59f1060 	ldr	r1, [pc, #96]	; 19514 &lt;_start&commat;&commat;Base+0xeb48&gt;</pre>
+<pre>--</pre>
+<pre>   259c4:	e1520003 	cmp	r2, r3</pre>
+<pre>   259c8:	ba000066 	blt	25b68 &lt;_start&commat;&commat;Base+0x1b19c&gt;</pre>
+<pre>   259cc:	e59fb264 	ldr	fp, [pc, #612]	; 25c38 &lt;_start&commat;&commat;Base+0x1b26c&gt;</pre>
+<pre>   259d0:	e3a04000 	mov	r4, #0</pre>
+<pre>   259d4:	e3a08902 	mov	r8, #32768	; 0x8000</pre>
+<pre>   259d8:	ea000010 	b	25a20 &lt;_start&commat;&commat;Base+0x1b054&gt;</pre>
+<pre>   259dc:	ebff9259 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>   259e0:	e59f2240 	ldr	r2, [pc, #576]	; 25c28 &lt;_start&commat;&commat;Base+0x1b25c&gt;</pre>
+<pre>   259e4:	e1a03008 	mov	r3, r8</pre>
+<pre>   259e8:	e1a00007 	mov	r0, r7</pre>
+<pre>   259ec:	e3a01033 	mov	r1, #51	; 0x33</pre>
+<pre>   259f0:	e5858000 	str	r8, [r5]</pre>
+<pre>   259f4:	ebff9397 	bl	a858 &lt;wl_ioctl&commat;plt&gt;</pre>
+<pre>   259f8:	e3500000 	cmp	r0, #0</pre>
+<pre>   259fc:	e59f0238 	ldr	r0, [pc, #568]	; 25c3c &lt;_start&commat;&commat;Base+0x1b270&gt;</pre>
+<pre>   25a00:	aa000018 	bge	25a68 &lt;_start&commat;&commat;Base+0x1b09c&gt;</pre>
+<pre>   25a04:	e3540004 	cmp	r4, #4</pre>
+<pre>   25a08:	e2844001 	add	r4, r4, #1</pre>
+<pre>   25a0c:	e1a01004 	mov	r1, r4</pre>
+<pre>   25a10:	ca00004b 	bgt	25b44 &lt;_start&commat;&commat;Base+0x1b178&gt;</pre>
+<pre><span class="red">   25a14:	ebff91eb 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   25a18:	e3a00001 	mov	r0, #1</pre>
+<pre>   25a1c:	ebff9249 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>   25a20:	e1a02006 	mov	r2, r6</pre>
+<pre>   25a24:	e3a030c0 	mov	r3, #192	; 0xc0</pre>
+<pre>   25a28:	e3a01032 	mov	r1, #50	; 0x32</pre>
+<pre>   25a2c:	e1a00007 	mov	r0, r7</pre>
+<pre>   25a30:	ebff9388 	bl	a858 &lt;wl_ioctl&commat;plt&gt;</pre>
+<pre>   25a34:	e3500000 	cmp	r0, #0</pre>
+<pre>   25a38:	e3a00002 	mov	r0, #2</pre>
+<pre>   25a3c:	aaffffe6 	bge	259dc &lt;_start&commat;&commat;Base+0x1b010&gt;</pre>
+<pre>   25a40:	e3540004 	cmp	r4, #4</pre>
+<pre>   25a44:	e2849001 	add	r9, r4, #1</pre>
+<pre>   25a48:	e1a04009 	mov	r4, r9</pre>
+<pre>   25a4c:	caffffe2 	bgt	259dc &lt;_start&commat;&commat;Base+0x1b010&gt;</pre>
+<pre>   25a50:	e1a01009 	mov	r1, r9</pre>
+<pre>   25a54:	e59f01e4 	ldr	r0, [pc, #484]	; 25c40 &lt;_start&commat;&commat;Base+0x1b274&gt;</pre>
+<pre><span class="red">   25a58:	ebff91da 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   25a5c:	e3a00001 	mov	r0, #1</pre>
+<pre>   25a60:	ebff9238 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   31a7c:	e59f681c 	ldr	r6, [pc, #2076]	; 322a0 &lt;_start&commat;&commat;Base+0x278d4&gt;</pre>
+<pre>   31a80:	ebff6254 	bl	a3d8 &lt;fflush&commat;plt&gt;</pre>
+<pre>   31a84:	e59f08c4 	ldr	r0, [pc, #2244]	; 32350 &lt;_start&commat;&commat;Base+0x27984&gt;</pre>
+<pre>   31a88:	ebff6404 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   31a8c:	e3500000 	cmp	r0, #0</pre>
+<pre>   31a90:	11a08000 	movne	r8, r0</pre>
+<pre>   31a94:	e59f08b8 	ldr	r0, [pc, #2232]	; 32354 &lt;_start&commat;&commat;Base+0x27988&gt;</pre>
+<pre>   31a98:	01a08006 	moveq	r8, r6</pre>
+<pre>   31a9c:	ebff63ff 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   31aa0:	e3500000 	cmp	r0, #0</pre>
+<pre>   31aa4:	11a07000 	movne	r7, r0</pre>
+<pre>   31aa8:	e59f097c 	ldr	r0, [pc, #2428]	; 3242c &lt;_start&commat;&commat;Base+0x27a60&gt;</pre>
+<pre>   31aac:	01a07006 	moveq	r7, r6</pre>
+<pre>   31ab0:	ebff6317 	bl	a714 &lt;nvram_get&commat;plt&gt;</pre>
+<pre>   31ab4:	e3500000 	cmp	r0, #0</pre>
+<pre>   31ab8:	e1a01007 	mov	r1, r7</pre>
+<pre>   31abc:	11a06000 	movne	r6, r0</pre>
+<pre>   31ac0:	e1a02008 	mov	r2, r8</pre>
+<pre>   31ac4:	e1a03006 	mov	r3, r6</pre>
+<pre>   31ac8:	e59f0888 	ldr	r0, [pc, #2184]	; 32358 &lt;_start&commat;&commat;Base+0x2798c&gt;</pre>
+<pre><span class="red">   31acc:	ebff61bd 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   31ad0:	e3a01001 	mov	r1, #1</pre>
+<pre>   31ad4:	e3a02008 	mov	r2, #8</pre>
+<pre>--</pre>
+<pre>   31f20:	ebff61fb 	bl	a714 &lt;nvram_get&commat;plt&gt;</pre>
+<pre>   31f24:	e0863005 	add	r3, r6, r5</pre>
+<pre>   31f28:	e3500000 	cmp	r0, #0</pre>
+<pre>   31f2c:	11a02000 	movne	r2, r0</pre>
+<pre>   31f30:	01a02004 	moveq	r2, r4</pre>
+<pre>   31f34:	e59f146c 	ldr	r1, [pc, #1132]	; 323a8 &lt;_start&commat;&commat;Base+0x279dc&gt;</pre>
+<pre>   31f38:	e1a00003 	mov	r0, r3</pre>
+<pre><span class="red">   31f3c:	ebff6224 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   31f40:	e0805005 	add	r5, r0, r5</pre>
+<pre>   31f44:	e59f0460 	ldr	r0, [pc, #1120]	; 323ac &lt;_start&commat;&commat;Base+0x279e0&gt;</pre>
+<pre>   31f48:	ebff61f1 	bl	a714 &lt;nvram_get&commat;plt&gt;</pre>
+<pre>   31f4c:	e0865005 	add	r5, r6, r5</pre>
+<pre>   31f50:	e3500000 	cmp	r0, #0</pre>
+<pre>   31f54:	11a02000 	movne	r2, r0</pre>
+<pre>   31f58:	e59f1450 	ldr	r1, [pc, #1104]	; 323b0 &lt;_start&commat;&commat;Base+0x279e4&gt;</pre>
+<pre>   31f5c:	01a02004 	moveq	r2, r4</pre>
+<pre>   31f60:	e1a00005 	mov	r0, r5</pre>
+<pre><span class="red">   31f64:	ebff621a 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   31f68:	e59f0444 	ldr	r0, [pc, #1092]	; 323b4 &lt;_start&commat;&commat;Base+0x279e8&gt;</pre>
+<pre>   31f6c:	e1a01006 	mov	r1, r6</pre>
+<pre><span class="red">   31f70:	ebff6094 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   31f74:	e1a00006 	mov	r0, r6</pre>
+<pre>   31f78:	ebffa6c1 	bl	1ba84 &lt;_start&commat;&commat;Base+0x110b8&gt;</pre>
+<pre>--</pre>
+<pre><span class="red">   327b0:	ebff6007 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   327b4:	e59a9e64 	ldr	r9, [sl, #3684]	; 0xe64</pre>
+<pre>   327b8:	e0888000 	add	r8, r8, r0</pre>
+<pre>   327bc:	eafffe44 	b	320d4 &lt;_start&commat;&commat;Base+0x27708&gt;</pre>
+<pre>   327c0:	e51f035c 	ldr	r0, [pc, #-860]	; 3246c &lt;_start&commat;&commat;Base+0x27aa0&gt;</pre>
+<pre>   327c4:	e51f135c 	ldr	r1, [pc, #-860]	; 32470 &lt;_start&commat;&commat;Base+0x27aa4&gt;</pre>
+<pre>   327c8:	ebff7224 	bl	f060 &lt;_start&commat;&commat;Base+0x4694&gt;</pre>
+<pre>   327cc:	e3500000 	cmp	r0, #0</pre>
+<pre>   327d0:	0a00006a 	beq	32980 &lt;_start&commat;&commat;Base+0x27fb4&gt;</pre>
+<pre>   327d4:	e51f0368 	ldr	r0, [pc, #-872]	; 32474 &lt;_start&commat;&commat;Base+0x27aa8&gt;</pre>
+<pre>   327d8:	ebff5fcd 	bl	a714 &lt;nvram_get&commat;plt&gt;</pre>
+<pre>   327dc:	e2503000 	subs	r3, r0, #0</pre>
+<pre>   327e0:	0afffcfc 	beq	31bd8 &lt;_start&commat;&commat;Base+0x2720c&gt;</pre>
+<pre>   327e4:	e5d33000 	ldrb	r3, [r3]</pre>
+<pre>   327e8:	e3530000 	cmp	r3, #0</pre>
+<pre>   327ec:	0afffcf9 	beq	31bd8 &lt;_start&commat;&commat;Base+0x2720c&gt;</pre>
+<pre>   327f0:	ebff602d 	bl	a8ac &lt;atoi&commat;plt&gt;</pre>
+<pre>   327f4:	e1a04000 	mov	r4, r0</pre>
+<pre>   327f8:	e51f0388 	ldr	r0, [pc, #-904]	; 32478 &lt;_start&commat;&commat;Base+0x27aac&gt;</pre>
+<pre>   327fc:	e1a01004 	mov	r1, r4</pre>
+<pre><span class="red">   32800:	ebff5e70 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   32804:	e3540003 	cmp	r4, #3</pre>
+<pre>   32808:	979ff104 	ldrls	pc, [pc, r4, lsl #2]</pre>
+<pre>--</pre>
+<pre>   33274:	e3500000 	cmp	r0, #0</pre>
+<pre>   33278:	03a03002 	moveq	r3, #2</pre>
+<pre>   3327c:	058b3e14 	streq	r3, [fp, #3604]	; 0xe14</pre>
+<pre>   33280:	0afffe6b 	beq	32c34 &lt;_start&commat;&commat;Base+0x28268&gt;</pre>
+<pre>   33284:	e1a00005 	mov	r0, r5</pre>
+<pre>   33288:	e59f1610 	ldr	r1, [pc, #1552]	; 338a0 &lt;_start&commat;&commat;Base+0x28ed4&gt;</pre>
+<pre>   3328c:	ebff5d44 	bl	a7a4 &lt;strcmp&commat;plt&gt;</pre>
+<pre>   33290:	e3500000 	cmp	r0, #0</pre>
+<pre>   33294:	03a03001 	moveq	r3, #1</pre>
+<pre>   33298:	058b3e14 	streq	r3, [fp, #3604]	; 0xe14</pre>
+<pre>   3329c:	eafffe64 	b	32c34 &lt;_start&commat;&commat;Base+0x28268&gt;</pre>
+<pre>   332a0:	e59f05fc 	ldr	r0, [pc, #1532]	; 338a4 &lt;_start&commat;&commat;Base+0x28ed8&gt;</pre>
+<pre>   332a4:	ebff5dfd 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   332a8:	e3500000 	cmp	r0, #0</pre>
+<pre>   332ac:	1afffe92 	bne	32cfc &lt;_start&commat;&commat;Base+0x28330&gt;</pre>
+<pre>   332b0:	e59d001c 	ldr	r0, [sp, #28]</pre>
+<pre>   332b4:	ebffe2c7 	bl	2bdd8 &lt;_start&commat;&commat;Base+0x2140c&gt;</pre>
+<pre>   332b8:	ea000009 	b	332e4 &lt;_start&commat;&commat;Base+0x28918&gt;</pre>
+<pre>   332bc:	e1a0100c 	mov	r1, ip</pre>
+<pre>   332c0:	e59f05e0 	ldr	r0, [pc, #1504]	; 338a8 &lt;_start&commat;&commat;Base+0x28edc&gt;</pre>
+<pre><span class="red">   332c4:	ebff5bbf 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   332c8:	e59d0018 	ldr	r0, [sp, #24]</pre>
+<pre>   332cc:	e3a02002 	mov	r2, #2</pre>
+<pre>--</pre>
+<pre>   3364c:	e59d001c 	ldr	r0, [sp, #28]</pre>
+<pre>   33650:	ebff5b60 	bl	a3d8 &lt;fflush&commat;plt&gt;</pre>
+<pre>   33654:	e59b0024 	ldr	r0, [fp, #36]	; 0x24</pre>
+<pre>   33658:	ebff5cd8 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   3365c:	e58b4024 	str	r4, [fp, #36]	; 0x24</pre>
+<pre>   33660:	eaffff1f 	b	332e4 &lt;_start&commat;&commat;Base+0x28918&gt;</pre>
+<pre>   33664:	e28d6fa5 	add	r6, sp, #660	; 0x294</pre>
+<pre>   33668:	e3a020fa 	mov	r2, #250	; 0xfa</pre>
+<pre>   3366c:	e1a00006 	mov	r0, r6</pre>
+<pre>   33670:	ebff5c30 	bl	a738 &lt</span>emset&commat;plt&gt;</pre>
+<pre>   33674:	e59f0274 	ldr	r0, [pc, #628]	; 338f0 &lt;_start&commat;&commat;Base+0x28f24&gt;</pre>
+<pre>   33678:	ebff5c25 	bl	a714 &lt;nvram_get&commat;plt&gt;</pre>
+<pre>   3367c:	e3500000 	cmp	r0, #0</pre>
+<pre>   33680:	e59f2178 	ldr	r2, [pc, #376]	; 33800 &lt;_start&commat;&commat;Base+0x28e34&gt;</pre>
+<pre>   33684:	e59f1268 	ldr	r1, [pc, #616]	; 338f4 &lt;_start&commat;&commat;Base+0x28f28&gt;</pre>
+<pre>   33688:	11a02000 	movne	r2, r0</pre>
+<pre>   3368c:	e1a00006 	mov	r0, r6</pre>
+<pre><span class="red">   33690:	ebff5c4f 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   33694:	e1a01006 	mov	r1, r6</pre>
+<pre>   33698:	e59f0258 	ldr	r0, [pc, #600]	; 338f8 &lt;_start&commat;&commat;Base+0x28f2c&gt;</pre>
+<pre><span class="red">   3369c:	ebff5ac9 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   336a0:	e1a00006 	mov	r0, r6</pre>
+<pre>   336a4:	ebff5b1e 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   34068:	ebff594c 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   3406c:	e3500000 	cmp	r0, #0</pre>
+<pre>   34070:	0a000016 	beq	340d0 &lt;_start&commat;&commat;Base+0x29704&gt;</pre>
+<pre>   34074:	e1a00007 	mov	r0, r7</pre>
+<pre>   34078:	e1a01004 	mov	r1, r4</pre>
+<pre>   3407c:	ebff65e1 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34080:	e35a0000 	cmp	sl, #0</pre>
+<pre>   34084:	0a000001 	beq	34090 &lt;_start&commat;&commat;Base+0x296c4&gt;</pre>
+<pre>   34088:	e1a0000a 	mov	r0, sl</pre>
+<pre>   3408c:	ebff5a4b 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   34090:	e3a00000 	mov	r0, #0</pre>
+<pre>   34094:	ebff5ab5 	bl	ab70 &lt;_start&commat;&commat;Base+0x1a4&gt;</pre>
+<pre>   34098:	e28dd038 	add	sp, sp, #56	; 0x38</pre>
+<pre>   3409c:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}</pre>
+<pre>   340a0:	e1a00007 	mov	r0, r7</pre>
+<pre>   340a4:	e59f1304 	ldr	r1, [pc, #772]	; 343b0 &lt;_start&commat;&commat;Base+0x299e4&gt;</pre>
+<pre>   340a8:	ebff65d6 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   340ac:	eafffff7 	b	34090 &lt;_start&commat;&commat;Base+0x296c4&gt;</pre>
+<pre>   340b0:	e1a01004 	mov	r1, r4</pre>
+<pre>   340b4:	e59f02f8 	ldr	r0, [pc, #760]	; 343b4 &lt;_start&commat;&commat;Base+0x299e8&gt;</pre>
+<pre><span class="red">   340b8:	ebff5842 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   340bc:	e1a00004 	mov	r0, r4</pre>
+<pre>   340c0:	e59f12e8 	ldr	r1, [pc, #744]	; 343b0 &lt;_start&commat;&commat;Base+0x299e4&gt;</pre>
+<pre>--</pre>
+<pre>   345ec:	ebff57eb 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   345f0:	e3500000 	cmp	r0, #0</pre>
+<pre>   345f4:	0a000016 	beq	34654 &lt;_start&commat;&commat;Base+0x29c88&gt;</pre>
+<pre>   345f8:	e1a00005 	mov	r0, r5</pre>
+<pre>   345fc:	e1a01004 	mov	r1, r4</pre>
+<pre>   34600:	ebff6480 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34604:	e3570000 	cmp	r7, #0</pre>
+<pre>   34608:	0a000001 	beq	34614 &lt;_start&commat;&commat;Base+0x29c48&gt;</pre>
+<pre>   3460c:	e1a00007 	mov	r0, r7</pre>
+<pre>   34610:	ebff58ea 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   34614:	e3a00000 	mov	r0, #0</pre>
+<pre>   34618:	ebff5954 	bl	ab70 &lt;_start&commat;&commat;Base+0x1a4&gt;</pre>
+<pre>   3461c:	e28dd00c 	add	sp, sp, #12</pre>
+<pre>   34620:	e8bd85f0 	pop	{r4, r5, r6, r7, r8, sl, pc}</pre>
+<pre>   34624:	e1a00005 	mov	r0, r5</pre>
+<pre>   34628:	e59f117c 	ldr	r1, [pc, #380]	; 347ac &lt;_start&commat;&commat;Base+0x29de0&gt;</pre>
+<pre>   3462c:	ebff6475 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34630:	eafffff7 	b	34614 &lt;_start&commat;&commat;Base+0x29c48&gt;</pre>
+<pre>   34634:	e1a01004 	mov	r1, r4</pre>
+<pre>   34638:	e59f0170 	ldr	r0, [pc, #368]	; 347b0 &lt;_start&commat;&commat;Base+0x29de4&gt;</pre>
+<pre><span class="red">   3463c:	ebff56e1 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   34640:	e1a00004 	mov	r0, r4</pre>
+<pre>   34644:	e59f1160 	ldr	r1, [pc, #352]	; 347ac &lt;_start&commat;&commat;Base+0x29de0&gt;</pre>
+<pre>--</pre>
+<pre>   349f8:	ebff56e8 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   349fc:	e3500000 	cmp	r0, #0</pre>
+<pre>   34a00:	0a000016 	beq	34a60 &lt;_start&commat;&commat;Base+0x2a094&gt;</pre>
+<pre>   34a04:	e1a00005 	mov	r0, r5</pre>
+<pre>   34a08:	e1a01004 	mov	r1, r4</pre>
+<pre>   34a0c:	ebff637d 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34a10:	e3570000 	cmp	r7, #0</pre>
+<pre>   34a14:	0a000001 	beq	34a20 &lt;_start&commat;&commat;Base+0x2a054&gt;</pre>
+<pre>   34a18:	e1a00007 	mov	r0, r7</pre>
+<pre>   34a1c:	ebff57e7 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   34a20:	e3a00000 	mov	r0, #0</pre>
+<pre>   34a24:	ebff5851 	bl	ab70 &lt;_start&commat;&commat;Base+0x1a4&gt;</pre>
+<pre>   34a28:	e28dd008 	add	sp, sp, #8</pre>
+<pre>   34a2c:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}</pre>
+<pre>   34a30:	e1a00005 	mov	r0, r5</pre>
+<pre>   34a34:	e59f10d4 	ldr	r1, [pc, #212]	; 34b10 &lt;_start&commat;&commat;Base+0x2a144&gt;</pre>
+<pre>   34a38:	ebff6372 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34a3c:	eafffff7 	b	34a20 &lt;_start&commat;&commat;Base+0x2a054&gt;</pre>
+<pre>   34a40:	e1a01004 	mov	r1, r4</pre>
+<pre>   34a44:	e59f00c8 	ldr	r0, [pc, #200]	; 34b14 &lt;_start&commat;&commat;Base+0x2a148&gt;</pre>
+<pre><span class="red">   34a48:	ebff55de 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   34a4c:	e1a00004 	mov	r0, r4</pre>
+<pre>   34a50:	e59f10b8 	ldr	r1, [pc, #184]	; 34b10 &lt;_start&commat;&commat;Base+0x2a144&gt;</pre>
+<pre>--</pre>
+<pre>   34c28:	ebff565c 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   34c2c:	e3500000 	cmp	r0, #0</pre>
+<pre>   34c30:	0a000016 	beq	34c90 &lt;_start&commat;&commat;Base+0x2a2c4&gt;</pre>
+<pre>   34c34:	e1a00005 	mov	r0, r5</pre>
+<pre>   34c38:	e1a01004 	mov	r1, r4</pre>
+<pre>   34c3c:	ebff62f1 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34c40:	e3570000 	cmp	r7, #0</pre>
+<pre>   34c44:	0a000001 	beq	34c50 &lt;_start&commat;&commat;Base+0x2a284&gt;</pre>
+<pre>   34c48:	e1a00007 	mov	r0, r7</pre>
+<pre>   34c4c:	ebff575b 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   34c50:	e3a00000 	mov	r0, #0</pre>
+<pre>   34c54:	ebff57c5 	bl	ab70 &lt;_start&commat;&commat;Base+0x1a4&gt;</pre>
+<pre>   34c58:	e28dd008 	add	sp, sp, #8</pre>
+<pre>   34c5c:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}</pre>
+<pre>   34c60:	e1a00005 	mov	r0, r5</pre>
+<pre>   34c64:	e59f11e4 	ldr	r1, [pc, #484]	; 34e50 &lt;_start&commat;&commat;Base+0x2a484&gt;</pre>
+<pre>   34c68:	ebff62e6 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   34c6c:	eafffff7 	b	34c50 &lt;_start&commat;&commat;Base+0x2a284&gt;</pre>
+<pre>   34c70:	e1a01004 	mov	r1, r4</pre>
+<pre>   34c74:	e59f01d8 	ldr	r0, [pc, #472]	; 34e54 &lt;_start&commat;&commat;Base+0x2a488&gt;</pre>
+<pre><span class="red">   34c78:	ebff5552 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   34c7c:	e1a00004 	mov	r0, r4</pre>
+<pre>   34c80:	e59f11c8 	ldr	r1, [pc, #456]	; 34e50 &lt;_start&commat;&commat;Base+0x2a484&gt;</pre>
+<pre>--</pre>
+<pre>   3526c:	e1a00008 	mov	r0, r8</pre>
+<pre>   35270:	e59f18cc 	ldr	r1, [pc, #2252]	; 35b44 &lt;_start&commat;&commat;Base+0x2b178&gt;</pre>
+<pre>   35274:	ebff554a 	bl	a7a4 &lt;strcmp&commat;plt&gt;</pre>
+<pre>   35278:	e3500000 	cmp	r0, #0</pre>
+<pre>   3527c:	0a00013b 	beq	35770 &lt;_start&commat;&commat;Base+0x2ada4&gt;</pre>
+<pre>   35280:	e59f08c0 	ldr	r0, [pc, #2240]	; 35b48 &lt;_start&commat;&commat;Base+0x2b17c&gt;</pre>
+<pre>   35284:	e1a01009 	mov	r1, r9</pre>
+<pre>   35288:	ebff5545 	bl	a7a4 &lt;strcmp&commat;plt&gt;</pre>
+<pre>   3528c:	e3500000 	cmp	r0, #0</pre>
+<pre>   35290:	0a000004 	beq	352a8 &lt;_start&commat;&commat;Base+0x2a8dc&gt;</pre>
+<pre>   35294:	e1a0000b 	mov	r0, fp</pre>
+<pre>   35298:	e59f18ac 	ldr	r1, [pc, #2220]	; 35b4c &lt;_start&commat;&commat;Base+0x2b180&gt;</pre>
+<pre>   3529c:	ebff5540 	bl	a7a4 &lt;strcmp&commat;plt&gt;</pre>
+<pre>   352a0:	e3500000 	cmp	r0, #0</pre>
+<pre>   352a4:	1a00018f 	bne	358e8 &lt;_start&commat;&commat;Base+0x2af1c&gt;</pre>
+<pre>   352a8:	e1a00004 	mov	r0, r4</pre>
+<pre>   352ac:	ebfff01c 	bl	31324 &lt;_start&commat;&commat;Base+0x26958&gt;</pre>
+<pre>   352b0:	eaffff61 	b	3503c &lt;_start&commat;&commat;Base+0x2a670&gt;</pre>
+<pre>   352b4:	e1a01009 	mov	r1, r9</pre>
+<pre>   352b8:	e59f0890 	ldr	r0, [pc, #2192]	; 35b50 &lt;_start&commat;&commat;Base+0x2b184&gt;</pre>
+<pre><span class="red">   352bc:	ebff53c1 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   352c0:	e1a00009 	mov	r0, r9</pre>
+<pre>   352c4:	e59f1834 	ldr	r1, [pc, #2100]	; 35b00 &lt;_start&commat;&commat;Base+0x2b134&gt;</pre>
+<pre>--</pre>
+<pre>   36220:	ebff50cf 	bl	a564 &lt;nvram_set&commat;plt&gt;</pre>
+<pre>   36224:	e1a01007 	mov	r1, r7</pre>
+<pre>   36228:	e59f02b0 	ldr	r0, [pc, #688]	; 364e0 &lt;_start&commat;&commat;Base+0x2bb14&gt;</pre>
+<pre>   3622c:	ebff50cc 	bl	a564 &lt;nvram_set&commat;plt&gt;</pre>
+<pre>   36230:	e1a01004 	mov	r1, r4</pre>
+<pre>   36234:	e59f02a8 	ldr	r0, [pc, #680]	; 364e4 &lt;_start&commat;&commat;Base+0x2bb18&gt;</pre>
+<pre>   36238:	ebff50c9 	bl	a564 &lt;nvram_set&commat;plt&gt;</pre>
+<pre>   3623c:	ebff5152 	bl	a78c &lt;nvram_commit&commat;plt&gt;</pre>
+<pre>   36240:	e59f02a0 	ldr	r0, [pc, #672]	; 364e8 &lt;_start&commat;&commat;Base+0x2bb1c&gt;</pre>
+<pre>   36244:	ebff5036 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<pre>   36248:	e1a00006 	mov	r0, r6</pre>
+<pre>   3624c:	e1a01005 	mov	r1, r5</pre>
+<pre>   36250:	ebff5d6c 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   36254:	eafffed8 	b	35dbc &lt;_start&commat;&commat;Base+0x2b3f0&gt;</pre>
+<pre>   36258:	e1a00006 	mov	r0, r6</pre>
+<pre>   3625c:	e59f1288 	ldr	r1, [pc, #648]	; 364ec &lt;_start&commat;&commat;Base+0x2bb20&gt;</pre>
+<pre>   36260:	ebff5d68 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   36264:	eafffed4 	b	35dbc &lt;_start&commat;&commat;Base+0x2b3f0&gt;</pre>
+<pre>   36268:	e1a01005 	mov	r1, r5</pre>
+<pre>   3626c:	e59f027c 	ldr	r0, [pc, #636]	; 364f0 &lt;_start&commat;&commat;Base+0x2bb24&gt;</pre>
+<pre><span class="red">   36270:	ebff4fd4 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   36274:	e1a00005 	mov	r0, r5</pre>
+<pre>   36278:	e59f126c 	ldr	r1, [pc, #620]	; 364ec &lt;_start&commat;&commat;Base+0x2bb20&gt;</pre>
+<pre>--</pre>
+<pre>   37ae8:	13a04001 	movne	r4, #1</pre>
+<pre>   37aec:	e5975e90 	ldr	r5, [r7, #3728]	; 0xe90</pre>
+<pre>   37af0:	e3550000 	cmp	r5, #0</pre>
+<pre>   37af4:	1a000003 	bne	37b08 &lt;_start&commat;&commat;Base+0x2d13c&gt;</pre>
+<pre>   37af8:	ea00001e 	b	37b78 &lt;_start&commat;&commat;Base+0x2d1ac&gt;</pre>
+<pre>   37afc:	e5955000 	ldr	r5, [r5]</pre>
+<pre>   37b00:	e3550000 	cmp	r5, #0</pre>
+<pre>   37b04:	0a00001b 	beq	37b78 &lt;_start&commat;&commat;Base+0x2d1ac&gt;</pre>
+<pre>   37b08:	e5953008 	ldr	r3, [r5, #8]</pre>
+<pre>   37b0c:	e1500003 	cmp	r0, r3</pre>
+<pre>   37b10:	1afffff9 	bne	37afc &lt;_start&commat;&commat;Base+0x2d130&gt;</pre>
+<pre>   37b14:	e5953014 	ldr	r3, [r5, #20]</pre>
+<pre>   37b18:	e1530004 	cmp	r3, r4</pre>
+<pre>   37b1c:	1afffff6 	bne	37afc &lt;_start&commat;&commat;Base+0x2d130&gt;</pre>
+<pre>   37b20:	e59f3114 	ldr	r3, [pc, #276]	; 37c3c &lt;_start&commat;&commat;Base+0x2d270&gt;</pre>
+<pre>   37b24:	e3540000 	cmp	r4, #0</pre>
+<pre>   37b28:	e1a02000 	mov	r2, r0</pre>
+<pre>   37b2c:	e59f110c 	ldr	r1, [pc, #268]	; 37c40 &lt;_start&commat;&commat;Base+0x2d274&gt;</pre>
+<pre>   37b30:	e59f010c 	ldr	r0, [pc, #268]	; 37c44 &lt;_start&commat;&commat;Base+0x2d278&gt;</pre>
+<pre>   37b34:	11a01003 	movne	r1, r3</pre>
+<pre><span class="red">   37b38:	ebff49a2 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   37b3c:	e2850018 	add	r0, r5, #24</pre>
+<pre>   37b40:	ebff4ae7 	bl	a6e4 &lt;strdup&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   37bdc:	ebff4ac0 	bl	a6e4 &lt;strdup&commat;plt&gt;</pre>
+<pre>   37be0:	e1a05000 	mov	r5, r0</pre>
+<pre>   37be4:	eaffffd7 	b	37b48 &lt;_start&commat;&commat;Base+0x2d17c&gt;</pre>
+<pre>   37be8:	e59f005c 	ldr	r0, [pc, #92]	; 37c4c &lt;_start&commat;&commat;Base+0x2d280&gt;</pre>
+<pre>   37bec:	ebff4abc 	bl	a6e4 &lt;strdup&commat;plt&gt;</pre>
+<pre>   37bf0:	e1a05000 	mov	r5, r0</pre>
+<pre>   37bf4:	eaffffd3 	b	37b48 &lt;_start&commat;&commat;Base+0x2d17c&gt;</pre>
+<pre>   37bf8:	e28d0004 	add	r0, sp, #4</pre>
+<pre>   37bfc:	e3a01004 	mov	r1, #4</pre>
+<pre>   37c00:	e3a02002 	mov	r2, #2</pre>
+<pre>   37c04:	ebff49de 	bl	a384 &lt;gethostbyaddr&commat;plt&gt;</pre>
+<pre>   37c08:	e3500000 	cmp	r0, #0</pre>
+<pre>   37c0c:	0affffdb 	beq	37b80 &lt;_start&commat;&commat;Base+0x2d1b4&gt;</pre>
+<pre>   37c10:	e5900000 	ldr	r0, [r0]</pre>
+<pre>   37c14:	ebff4ab2 	bl	a6e4 &lt;strdup&commat;plt&gt;</pre>
+<pre>   37c18:	e2505000 	subs	r5, r0, #0</pre>
+<pre>   37c1c:	1affffdb 	bne	37b90 &lt;_start&commat;&commat;Base+0x2d1c4&gt;</pre>
+<pre>   37c20:	eaffffd6 	b	37b80 &lt;_start&commat;&commat;Base+0x2d1b4&gt;</pre>
+<pre>   37c24:	e59f0024 	ldr	r0, [pc, #36]	; 37c50 &lt;_start&commat;&commat;Base+0x2d284&gt;</pre>
+<pre>   37c28:	e1a01003 	mov	r1, r3</pre>
+<pre><span class="red">   37c2c:	ebff4965 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   37c30:	e3a05000 	mov	r5, #0</pre>
+<pre>   37c34:	eaffffc3 	b	37b48 &lt;_start&commat;&commat;Base+0x2d17c&gt;</pre>
+<pre>--</pre>
+<pre>   393ac:	e5c32000 	strb	r2, [r3]</pre>
+<pre>   393b0:	ea000006 	b	393d0 &lt;_start&commat;&commat;Base+0x2ea04&gt;</pre>
+<pre>   393b4:	ebff4437 	bl	a498 &lt;__ctype_tolower_loc&commat;plt&gt;</pre>
+<pre>   393b8:	e7d43006 	ldrb	r3, [r4, r6]</pre>
+<pre>   393bc:	e5902000 	ldr	r2, [r0]</pre>
+<pre>   393c0:	e1a03083 	lsl	r3, r3, #1</pre>
+<pre>   393c4:	e19230f3 	ldrsh	r3, [r2, r3]</pre>
+<pre>   393c8:	e7c53006 	strb	r3, [r5, r6]</pre>
+<pre>   393cc:	e2866001 	add	r6, r6, #1</pre>
+<pre>   393d0:	e1a00004 	mov	r0, r4</pre>
+<pre>   393d4:	ebff4549 	bl	a900 &lt;strlen&commat;plt&gt;</pre>
+<pre>   393d8:	e1500006 	cmp	r0, r6</pre>
+<pre>   393dc:	8afffff4 	bhi	393b4 &lt;_start&commat;&commat;Base+0x2e9e8&gt;</pre>
+<pre>   393e0:	e1a00005 	mov	r0, r5</pre>
+<pre>   393e4:	e59f111c 	ldr	r1, [pc, #284]	; 39508 &lt;_start&commat;&commat;Base+0x2eb3c&gt;</pre>
+<pre>   393e8:	ebff446c 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   393ec:	e3500000 	cmp	r0, #0</pre>
+<pre>   393f0:	0a00000a 	beq	39420 &lt;_start&commat;&commat;Base+0x2ea54&gt;</pre>
+<pre>   393f4:	e59f0110 	ldr	r0, [pc, #272]	; 3950c &lt;_start&commat;&commat;Base+0x2eb40&gt;</pre>
+<pre>   393f8:	e1a01004 	mov	r1, r4</pre>
+<pre><span class="red">   393fc:	ebff4371 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   39400:	e3550000 	cmp	r5, #0</pre>
+<pre>   39404:	01a00005 	moveq	r0, r5</pre>
+<pre>--</pre>
+<pre>   39474:	e1a0000d 	mov	r0, sp</pre>
+<pre>   39478:	e1a0500d 	mov	r5, sp</pre>
+<pre>   3947c:	ebff4399 	bl	a2e8 &lt</span>emcpy&commat;plt&gt;</pre>
+<pre>   39480:	e1a00004 	mov	r0, r4</pre>
+<pre>   39484:	e3a0103b 	mov	r1, #59	; 0x3b</pre>
+<pre>   39488:	ebff4528 	bl	a930 &lt;strchr&commat;plt&gt;</pre>
+<pre>   3948c:	e3500000 	cmp	r0, #0</pre>
+<pre>   39490:	0a00000e 	beq	394d0 &lt;_start&commat;&commat;Base+0x2eb04&gt;</pre>
+<pre>   39494:	e24d6004 	sub	r6, sp, #4</pre>
+<pre>   39498:	e2855f8d 	add	r5, r5, #564	; 0x234</pre>
+<pre>   3949c:	ea000001 	b	394a8 &lt;_start&commat;&commat;Base+0x2eadc&gt;</pre>
+<pre>   394a0:	e1560005 	cmp	r6, r5</pre>
+<pre>   394a4:	0a000015 	beq	39500 &lt;_start&commat;&commat;Base+0x2eb34&gt;</pre>
+<pre>   394a8:	e5b61004 	ldr	r1, [r6, #4]!</pre>
+<pre>   394ac:	e1a00004 	mov	r0, r4</pre>
+<pre>   394b0:	ebff443a 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   394b4:	e3500000 	cmp	r0, #0</pre>
+<pre>   394b8:	0afffff8 	beq	394a0 &lt;_start&commat;&commat;Base+0x2ead4&gt;</pre>
+<pre>   394bc:	e59f005c 	ldr	r0, [pc, #92]	; 39520 &lt;_start&commat;&commat;Base+0x2eb54&gt;</pre>
+<pre>   394c0:	e1a01004 	mov	r1, r4</pre>
+<pre><span class="red">   394c4:	ebff433f 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   394c8:	e3a00000 	mov	r0, #0</pre>
+<pre>   394cc:	eaffffd1 	b	39418 &lt;_start&commat;&commat;Base+0x2ea4c&gt;</pre>
+<pre>--</pre>
+<pre>   3a0d8:	e1a02009 	mov	r2, r9</pre>
+<pre>   3a0dc:	ebff41e0 	bl	a864 &lt;get_ifname_unit&commat;plt&gt;</pre>
+<pre>   3a0e0:	e3700001 	cmn	r0, #1</pre>
+<pre>   3a0e4:	0affffaa 	beq	39f94 &lt;_start&commat;&commat;Base+0x2f5c8&gt;</pre>
+<pre>   3a0e8:	e59d3098 	ldr	r3, [sp, #152]	; 0x98</pre>
+<pre>   3a0ec:	e3530000 	cmp	r3, #0</pre>
+<pre>   3a0f0:	e59d3094 	ldr	r3, [sp, #148]	; 0x94</pre>
+<pre>   3a0f4:	b58d8098 	strlt	r8, [sp, #152]	; 0x98</pre>
+<pre>   3a0f8:	e3530000 	cmp	r3, #0</pre>
+<pre>   3a0fc:	b58d8094 	strlt	r8, [sp, #148]	; 0x94</pre>
+<pre>   3a100:	ba00000d 	blt	3a13c &lt;_start&commat;&commat;Base+0x2f770&gt;</pre>
+<pre>   3a104:	0a00000c 	beq	3a13c &lt;_start&commat;&commat;Base+0x2f770&gt;</pre>
+<pre>   3a108:	e59f1064 	ldr	r1, [pc, #100]	; 3a174 &lt;_start&commat;&commat;Base+0x2f7a8&gt;</pre>
+<pre>   3a10c:	e59d2098 	ldr	r2, [sp, #152]	; 0x98</pre>
+<pre>   3a110:	e59f0060 	ldr	r0, [pc, #96]	; 3a178 &lt;_start&commat;&commat;Base+0x2f7ac&gt;</pre>
+<pre><span class="red">   3a114:	ebff41ae 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   3a118:	eaffff9d 	b	39f94 &lt;_start&commat;&commat;Base+0x2f5c8&gt;</pre>
+<pre>   3a11c:	e59f0058 	ldr	r0, [pc, #88]	; 3a17c &lt;_start&commat;&commat;Base+0x2f7b0&gt;</pre>
+<pre>   3a120:	e304208a 	movw	r2, #16522	; 0x408a</pre>
+<pre>   3a124:	e59f1054 	ldr	r1, [pc, #84]	; 3a180 &lt;_start&commat;&commat;Base+0x2f7b4&gt;</pre>
+<pre><span class="red">   3a128:	ebff4026 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3a12c:	e28d30a0 	add	r3, sp, #160	; 0xa0</pre>
+<pre>   3a130:	e0835105 	add	r5, r3, r5, lsl #2</pre>
+<pre>--</pre>
+<pre>   3a354:	e28d7f46 	add	r7, sp, #280	; 0x118</pre>
+<pre>   3a358:	e89a000f 	ldm	sl, {r0, r1, r2, r3}</pre>
+<pre>   3a35c:	e8ae0007 	stmia	lr!, {r0, r1, r2}</pre>
+<pre>   3a360:	e1ce30b0 	strh	r3, [lr]</pre>
+<pre>   3a364:	e1a0e006 	mov	lr, r6</pre>
+<pre>   3a368:	e8bc000f 	ldm	ip!, {r0, r1, r2, r3}</pre>
+<pre>   3a36c:	e8ae000f 	stmia	lr!, {r0, r1, r2, r3}</pre>
+<pre>   3a370:	e3a01000 	mov	r1, #0</pre>
+<pre>   3a374:	e1dcc0b0 	ldrh	ip, [ip]</pre>
+<pre>   3a378:	e3a02064 	mov	r2, #100	; 0x64</pre>
+<pre>   3a37c:	e1a00007 	mov	r0, r7</pre>
+<pre>   3a380:	e1cec0b0 	strh	ip, [lr]</pre>
+<pre>   3a384:	ebff40eb 	bl	a738 &lt</span>emset&commat;plt&gt;</pre>
+<pre>   3a388:	ebffff7e 	bl	3a188 &lt;_start&commat;&commat;Base+0x2f7bc&gt;</pre>
+<pre>   3a38c:	e59f0f84 	ldr	r0, [pc, #3972]	; 3b318 &lt;_start&commat;&commat;Base+0x3094c&gt;</pre>
+<pre>   3a390:	ebff41c2 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   3a394:	e2508000 	subs	r8, r0, #0</pre>
+<pre>   3a398:	0a000005 	beq	3a3b4 &lt;_start&commat;&commat;Base+0x2f9e8&gt;</pre>
+<pre>   3a39c:	e1a01008 	mov	r1, r8</pre>
+<pre>   3a3a0:	e59f0f74 	ldr	r0, [pc, #3956]	; 3b31c &lt;_start&commat;&commat;Base+0x30950&gt;</pre>
+<pre><span class="red">   3a3a4:	ebff3f87 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3a3a8:	e59f0f68 	ldr	r0, [pc, #3944]	; 3b318 &lt;_start&commat;&commat;Base+0x3094c&gt;</pre>
+<pre>   3a3ac:	e1a01008 	mov	r1, r8</pre>
+<pre>--</pre>
+<pre>   3be24:	e28d7f42 	add	r7, sp, #264	; 0x108</pre>
+<pre>   3be28:	e898000f 	ldm	r8, {r0, r1, r2, r3}</pre>
+<pre>   3be2c:	e8ae0007 	stmia	lr!, {r0, r1, r2}</pre>
+<pre>   3be30:	e1ce30b0 	strh	r3, [lr]</pre>
+<pre>   3be34:	e1a0e006 	mov	lr, r6</pre>
+<pre>   3be38:	e8bc000f 	ldm	ip!, {r0, r1, r2, r3}</pre>
+<pre>   3be3c:	e8ae000f 	stmia	lr!, {r0, r1, r2, r3}</pre>
+<pre>   3be40:	e3a01000 	mov	r1, #0</pre>
+<pre>   3be44:	e1dcc0b0 	ldrh	ip, [ip]</pre>
+<pre>   3be48:	e3a02064 	mov	r2, #100	; 0x64</pre>
+<pre>   3be4c:	e1a00007 	mov	r0, r7</pre>
+<pre>   3be50:	e1cec0b0 	strh	ip, [lr]</pre>
+<pre>   3be54:	ebff3a37 	bl	a738 &lt</span>emset&commat;plt&gt;</pre>
+<pre>   3be58:	ebfff8ca 	bl	3a188 &lt;_start&commat;&commat;Base+0x2f7bc&gt;</pre>
+<pre>   3be5c:	e59f0f70 	ldr	r0, [pc, #3952]	; 3cdd4 &lt;_start&commat;&commat;Base+0x32408&gt;</pre>
+<pre>   3be60:	ebff3b0e 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   3be64:	e250a000 	subs	sl, r0, #0</pre>
+<pre>   3be68:	0a000005 	beq	3be84 &lt;_start&commat;&commat;Base+0x314b8&gt;</pre>
+<pre>   3be6c:	e1a0100a 	mov	r1, sl</pre>
+<pre>   3be70:	e59f0f60 	ldr	r0, [pc, #3936]	; 3cdd8 &lt;_start&commat;&commat;Base+0x3240c&gt;</pre>
+<pre><span class="red">   3be74:	ebff38d3 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3be78:	e59f0f54 	ldr	r0, [pc, #3924]	; 3cdd4 &lt;_start&commat;&commat;Base+0x32408&gt;</pre>
+<pre>   3be7c:	e1a0100a 	mov	r1, sl</pre>
+<pre>--</pre>
+<pre>   3ed30:	ebff2e47 	bl	a654 &lt;strtok&commat;plt&gt;</pre>
+<pre>   3ed34:	ebff2edc 	bl	a8ac &lt;atoi&commat;plt&gt;</pre>
+<pre>   3ed38:	e1a01005 	mov	r1, r5</pre>
+<pre>   3ed3c:	e1a04000 	mov	r4, r0</pre>
+<pre>   3ed40:	e3a0202e 	mov	r2, #46	; 0x2e</pre>
+<pre>   3ed44:	e1a0000b 	mov	r0, fp</pre>
+<pre>   3ed48:	ebff2e2c 	bl	a600 &lt;strncpy&commat;plt&gt;</pre>
+<pre>   3ed4c:	e1a00006 	mov	r0, r6</pre>
+<pre>   3ed50:	ebff2d34 	bl	a228 &lt;pclose&commat;plt&gt;</pre>
+<pre>   3ed54:	e1a00004 	mov	r0, r4</pre>
+<pre>   3ed58:	e28ddfa5 	add	sp, sp, #660	; 0x294</pre>
+<pre>   3ed5c:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}</pre>
+<pre>   3ed60:	e1a00006 	mov	r0, r6</pre>
+<pre>   3ed64:	e3e04000 	mvn	r4, #0</pre>
+<pre>   3ed68:	ebff2d2e 	bl	a228 &lt;pclose&commat;plt&gt;</pre>
+<pre>   3ed6c:	eafffff8 	b	3ed54 &lt;_start&commat;&commat;Base+0x34388&gt;</pre>
+<pre>   3ed70:	e30523db 	movw	r2, #21467	; 0x53db</pre>
+<pre>   3ed74:	e59f1030 	ldr	r1, [pc, #48]	; 3edac &lt;_start&commat;&commat;Base+0x343e0&gt;</pre>
+<pre>   3ed78:	e59f0030 	ldr	r0, [pc, #48]	; 3edb0 &lt;_start&commat;&commat;Base+0x343e4&gt;</pre>
+<pre>   3ed7c:	e3e04000 	mvn	r4, #0</pre>
+<pre><span class="red">   3ed80:	ebff2d10 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3ed84:	eafffff2 	b	3ed54 &lt;_start&commat;&commat;Base+0x34388&gt;</pre>
+<pre>   3ed88:	00054f48 	andeq	r4, r5, r8, asr #30</pre>
+<pre>--</pre>
+<pre>   3f4a0:	e0670003 	rsb	r0, r7, r3</pre>
+<pre>   3f4a4:	e3a02000 	mov	r2, #0</pre>
+<pre>   3f4a8:	e5c32000 	strb	r2, [r3]</pre>
+<pre>   3f4ac:	e8bd80f8 	pop	{r3, r4, r5, r6, r7, pc}</pre>
+<pre>   3f4b0:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}</pre>
+<pre>   3f4b4:	e2518000 	subs	r8, r1, #0</pre>
+<pre>   3f4b8:	e24dd008 	sub	sp, sp, #8</pre>
+<pre>   3f4bc:	e3a03000 	mov	r3, #0</pre>
+<pre>   3f4c0:	e58d3004 	str	r3, [sp, #4]</pre>
+<pre>   3f4c4:	0a00004a 	beq	3f5f4 &lt;_start&commat;&commat;Base+0x34c28&gt;</pre>
+<pre>   3f4c8:	e3500000 	cmp	r0, #0</pre>
+<pre>   3f4cc:	0a00004d 	beq	3f608 &lt;_start&commat;&commat;Base+0x34c3c&gt;</pre>
+<pre>   3f4d0:	e28d3008 	add	r3, sp, #8</pre>
+<pre>   3f4d4:	e59f1140 	ldr	r1, [pc, #320]	; 3f61c &lt;_start&commat;&commat;Base+0x34c50&gt;</pre>
+<pre>   3f4d8:	e5230004 	str	r0, [r3, #-4]!</pre>
+<pre>   3f4dc:	e1a00003 	mov	r0, r3</pre>
+<pre>   3f4e0:	ebff2cca 	bl	a810 &lt;strsep&commat;plt&gt;</pre>
+<pre>   3f4e4:	e59d4004 	ldr	r4, [sp, #4]</pre>
+<pre>   3f4e8:	e59f0130 	ldr	r0, [pc, #304]	; 3f620 &lt;_start&commat;&commat;Base+0x34c54&gt;</pre>
+<pre>   3f4ec:	e1a01004 	mov	r1, r4</pre>
+<pre><span class="red">   3f4f0:	ebff2b34 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3f4f4:	e3540000 	cmp	r4, #0</pre>
+<pre>   3f4f8:	01a07004 	moveq	r7, r4</pre>
+<pre>--</pre>
+<pre>   3f54c:	e59f10d4 	ldr	r1, [pc, #212]	; 3f628 &lt;_start&commat;&commat;Base+0x34c5c&gt;</pre>
+<pre>   3f550:	ebff2c93 	bl	a7a4 &lt;strcmp&commat;plt&gt;</pre>
+<pre>   3f554:	e3500000 	cmp	r0, #0</pre>
+<pre>   3f558:	0a000019 	beq	3f5c4 &lt;_start&commat;&commat;Base+0x34bf8&gt;</pre>
+<pre>   3f55c:	e3a00000 	mov	r0, #0</pre>
+<pre>   3f560:	e59f10bc 	ldr	r1, [pc, #188]	; 3f624 &lt;_start&commat;&commat;Base+0x34c58&gt;</pre>
+<pre>   3f564:	ebff2c3a 	bl	a654 &lt;strtok&commat;plt&gt;</pre>
+<pre>   3f568:	e2504000 	subs	r4, r0, #0</pre>
+<pre>   3f56c:	1affffec 	bne	3f524 &lt;_start&commat;&commat;Base+0x34b58&gt;</pre>
+<pre>   3f570:	e3570000 	cmp	r7, #0</pre>
+<pre>   3f574:	0a000001 	beq	3f580 &lt;_start&commat;&commat;Base+0x34bb4&gt;</pre>
+<pre>   3f578:	e1a00007 	mov	r0, r7</pre>
+<pre>   3f57c:	ebff2d0f 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>   3f580:	e59f00a4 	ldr	r0, [pc, #164]	; 3f62c &lt;_start&commat;&commat;Base+0x34c60&gt;</pre>
+<pre>   3f584:	ebff2c56 	bl	a6e4 &lt;strdup&commat;plt&gt;</pre>
+<pre>   3f588:	e1a05000 	mov	r5, r0</pre>
+<pre>   3f58c:	e3550000 	cmp	r5, #0</pre>
+<pre>   3f590:	0a000014 	beq	3f5e8 &lt;_start&commat;&commat;Base+0x34c1c&gt;</pre>
+<pre>   3f594:	e1a01005 	mov	r1, r5</pre>
+<pre>   3f598:	e59f0090 	ldr	r0, [pc, #144]	; 3f630 &lt;_start&commat;&commat;Base+0x34c64&gt;</pre>
+<pre><span class="red">   3f59c:	ebff2b09 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   3f5a0:	e1a00005 	mov	r0, r5</pre>
+<pre>   3f5a4:	ebff2d05 	bl	a9c0 &lt;free&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   40368:	e5cc301e 	strb	r3, [ip, #30]</pre>
+<pre>   4036c:	ebff2792 	bl	a1bc &lt;popen&commat;plt&gt;</pre>
+<pre>   40370:	e2504000 	subs	r4, r0, #0</pre>
+<pre>   40374:	0affff2b 	beq	40028 &lt;_start&commat;&commat;Base+0x3565c&gt;</pre>
+<pre>   40378:	e3a01001 	mov	r1, #1</pre>
+<pre>   4037c:	e3a02b01 	mov	r2, #1024	; 0x400</pre>
+<pre>   40380:	e1a03004 	mov	r3, r4</pre>
+<pre>   40384:	e1a00008 	mov	r0, r8</pre>
+<pre>   40388:	ebff28c6 	bl	a6a8 &lt;fread&commat;plt&gt;</pre>
+<pre>   4038c:	e1a00004 	mov	r0, r4</pre>
+<pre>   40390:	ebff27a4 	bl	a228 &lt;pclose&commat;plt&gt;</pre>
+<pre>   40394:	e1a00008 	mov	r0, r8</pre>
+<pre>   40398:	ebff27db 	bl	a30c &lt;puts&commat;plt&gt;</pre>
+<pre>   4039c:	e1a00008 	mov	r0, r8</pre>
+<pre>   403a0:	e59f1118 	ldr	r1, [pc, #280]	; 404c0 &lt;_start&commat;&commat;Base+0x35af4&gt;</pre>
+<pre>   403a4:	ebff287d 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   403a8:	e3500000 	cmp	r0, #0</pre>
+<pre>   403ac:	0affff1d 	beq	40028 &lt;_start&commat;&commat;Base+0x3565c&gt;</pre>
+<pre>   403b0:	e59d103c 	ldr	r1, [sp, #60]	; 0x3c</pre>
+<pre>   403b4:	e59f0108 	ldr	r0, [pc, #264]	; 404c4 &lt;_start&commat;&commat;Base+0x35af8&gt;</pre>
+<pre><span class="red">   403b8:	ebff2782 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   403bc:	e59f10fc 	ldr	r1, [pc, #252]	; 404c0 &lt;_start&commat;&commat;Base+0x35af4&gt;</pre>
+<pre>   403c0:	e1a00008 	mov	r0, r8</pre>
+<pre>   403c4:	ebff2875 	bl	a5a0 &lt;strstr&commat;plt&gt;</pre>
+<pre>   403c8:	e2800008 	add	r0, r0, #8</pre>
+<pre>   403cc:	ebff2936 	bl	a8ac &lt;atoi&commat;plt&gt;</pre>
+<pre>   403d0:	e58d003c 	str	r0, [sp, #60]	; 0x3c</pre>
+<pre>   403d4:	e59d103c 	ldr	r1, [sp, #60]	; 0x3c</pre>
+<pre>   403d8:	e59f00e8 	ldr	r0, [pc, #232]	; 404c8 &lt;_start&commat;&commat;Base+0x35afc&gt;</pre>
+<pre><span class="red">   403dc:	ebff2779 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   403e0:	eaffff10 	b	40028 &lt;_start&commat;&commat;Base+0x3565c&gt;</pre>
+<pre>   403e4:	e59f00e0 	ldr	r0, [pc, #224]	; 404cc &lt;_start&commat;&commat;Base+0x35b00&gt;</pre>
+<pre>--</pre>
+<pre>   40848:	e287703c 	add	r7, r7, #60	; 0x3c</pre>
+<pre>   4084c:	e3530001 	cmp	r3, #1</pre>
+<pre>   40850:	0affffda 	beq	407c0 &lt;_start&commat;&commat;Base+0x35df4&gt;</pre>
+<pre>   40854:	e3560031 	cmp	r6, #49	; 0x31</pre>
+<pre>   40858:	e59d5034 	ldr	r5, [sp, #52]	; 0x34</pre>
+<pre>   4085c:	da000230 	ble	41124 &lt;_start&commat;&commat;Base+0x36758&gt;</pre>
+<pre>   40860:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c</pre>
+<pre>   40864:	e59f0c20 	ldr	r0, [pc, #3104]	; 4148c &lt;_start&commat;&commat;Base+0x36ac0&gt;</pre>
+<pre>   40868:	e5016464 	str	r6, [r1, #-1124]	; 0xfffffb9c</pre>
+<pre>   4086c:	ebff26a6 	bl	a30c &lt;puts&commat;plt&gt;</pre>
+<pre>   40870:	e59d2028 	ldr	r2, [sp, #40]	; 0x28</pre>
+<pre>   40874:	e5d23fbc 	ldrb	r3, [r2, #4028]	; 0xfbc</pre>
+<pre>   40878:	e3530001 	cmp	r3, #1</pre>
+<pre>   4087c:	1a00002a 	bne	4092c &lt;_start&commat;&commat;Base+0x35f60&gt;</pre>
+<pre>   40880:	e59f4c00 	ldr	r4, [pc, #3072]	; 41488 &lt;_start&commat;&commat;Base+0x36abc&gt;</pre>
+<pre>   40884:	e3a06000 	mov	r6, #0</pre>
+<pre>   40888:	e59fac00 	ldr	sl, [pc, #3072]	; 41490 &lt;_start&commat;&commat;Base+0x36ac4&gt;</pre>
+<pre>   4088c:	e59f8c00 	ldr	r8, [pc, #3072]	; 41494 &lt;_start&commat;&commat;Base+0x36ac8&gt;</pre>
+<pre>   40890:	e1a01006 	mov	r1, r6</pre>
+<pre>   40894:	e59f0bfc 	ldr	r0, [pc, #3068]	; 41498 &lt;_start&commat;&commat;Base+0x36acc&gt;</pre>
+<pre><span class="red">   40898:	ebff264a 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   4089c:	e2841001 	add	r1, r4, #1</pre>
+<pre>   408a0:	e59f0bf4 	ldr	r0, [pc, #3060]	; 4149c &lt;_start&commat;&commat;Base+0x36ad0&gt;</pre>
+<pre><span class="red">   408a4:	ebff2647 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   408a8:	e1a0100b 	mov	r1, fp</pre>
+<pre>   408ac:	e2840023 	add	r0, r4, #35	; 0x23</pre>
+<pre>   408b0:	ebff27be 	bl	a7b0 &lt;ether_etoa&commat;plt&gt;</pre>
+<pre>   408b4:	e1a01000 	mov	r1, r0</pre>
+<pre>   408b8:	e59f0be0 	ldr	r0, [pc, #3040]	; 414a0 &lt;_start&commat;&commat;Base+0x36ad4&gt;</pre>
+<pre><span class="red">   408bc:	ebff2641 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   408c0:	e5d41034 	ldrb	r1, [r4, #52]	; 0x34</pre>
+<pre>   408c4:	e1a07004 	mov	r7, r4</pre>
+<pre>   408c8:	e59f0bd4 	ldr	r0, [pc, #3028]	; 414a4 &lt;_start&commat;&commat;Base+0x36ad8&gt;</pre>
+<pre>   408cc:	e2866001 	add	r6, r6, #1</pre>
+<pre><span class="red">   408d0:	ebff263c 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   408d4:	e5d43035 	ldrb	r3, [r4, #53]	; 0x35</pre>
+<pre>   408d8:	e59f0bc8 	ldr	r0, [pc, #3016]	; 414a8 &lt;_start&commat;&commat;Base+0x36adc&gt;</pre>
+<pre>   408dc:	e3530000 	cmp	r3, #0</pre>
+<pre>   408e0:	059f0bc4 	ldreq	r0, [pc, #3012]	; 414ac &lt;_start&commat;&commat;Base+0x36ae0&gt;</pre>
+<pre><span class="red">   408e4:	ebff2637 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   408e8:	e1d403f6 	ldrsh	r0, [r4, #54]	; 0x36</pre>
+<pre>   408ec:	ebffff6a 	bl	4069c &lt;_start&commat;&commat;Base+0x35cd0&gt;</pre>
+<pre>   408f0:	e1a01000 	mov	r1, r0</pre>
+<pre>   408f4:	e59f0bb4 	ldr	r0, [pc, #2996]	; 414b0 &lt;_start&commat;&commat;Base+0x36ae4&gt;</pre>
+<pre><span class="red">   408f8:	ebff2632 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   408fc:	e5d41038 	ldrb	r1, [r4, #56]	; 0x38</pre>
+<pre>   40900:	e284403c 	add	r4, r4, #60	; 0x3c</pre>
+<pre>   40904:	e59f0ba8 	ldr	r0, [pc, #2984]	; 414b4 &lt;_start&commat;&commat;Base+0x36ae8&gt;</pre>
+<pre>   40908:	e3510000 	cmp	r1, #0</pre>
+<pre>   4090c:	01a0100a 	moveq	r1, sl</pre>
+<pre>   40910:	11a01008 	movne	r1, r8</pre>
+<pre><span class="red">   40914:	ebff262b 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   40918:	e3a0000a 	mov	r0, #10</pre>
+<pre>   4091c:	ebff2611 	bl	a168 &lt;putchar&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   411f8:	e59d259c 	ldr	r2, [sp, #1436]	; 0x59c</pre>
+<pre>   411fc:	e1520003 	cmp	r2, r3</pre>
+<pre>   41200:	ba000032 	blt	412d0 &lt;_start&commat;&commat;Base+0x36904&gt;</pre>
+<pre>   41204:	e3a04000 	mov	r4, #0</pre>
+<pre>   41208:	e3a0a902 	mov	sl, #32768	; 0x8000</pre>
+<pre>   4120c:	ea000010 	b	41254 &lt;_start&commat;&commat;Base+0x36888&gt;</pre>
+<pre>   41210:	ebff244c 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>   41214:	e59f2260 	ldr	r2, [pc, #608]	; 4147c &lt;_start&commat;&commat;Base+0x36ab0&gt;</pre>
+<pre>   41218:	e1a0300a 	mov	r3, sl</pre>
+<pre>   4121c:	e1a00006 	mov	r0, r6</pre>
+<pre>   41220:	e3a01033 	mov	r1, #51	; 0x33</pre>
+<pre>   41224:	e587a000 	str	sl, [r7]</pre>
+<pre>   41228:	ebff258a 	bl	a858 &lt;wl_ioctl&commat;plt&gt;</pre>
+<pre>   4122c:	e3500000 	cmp	r0, #0</pre>
+<pre>   41230:	e59f030c 	ldr	r0, [pc, #780]	; 41544 &lt;_start&commat;&commat;Base+0x36b78&gt;</pre>
+<pre>   41234:	aaffffa0 	bge	410bc &lt;_start&commat;&commat;Base+0x366f0&gt;</pre>
+<pre>   41238:	e3540004 	cmp	r4, #4</pre>
+<pre>   4123c:	e2844001 	add	r4, r4, #1</pre>
+<pre>   41240:	e1a01004 	mov	r1, r4</pre>
+<pre>   41244:	ca000019 	bgt	412b0 &lt;_start&commat;&commat;Base+0x368e4&gt;</pre>
+<pre><span class="red">   41248:	ebff23de 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   4124c:	e3a00001 	mov	r0, #1</pre>
+<pre>   41250:	ebff243c 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>   41254:	e1a02008 	mov	r2, r8</pre>
+<pre>   41258:	e3a030c0 	mov	r3, #192	; 0xc0</pre>
+<pre>   4125c:	e3a01032 	mov	r1, #50	; 0x32</pre>
+<pre>   41260:	e1a00006 	mov	r0, r6</pre>
+<pre>   41264:	ebff257b 	bl	a858 &lt;wl_ioctl&commat;plt&gt;</pre>
+<pre>   41268:	e3500000 	cmp	r0, #0</pre>
+<pre>   4126c:	e3a00002 	mov	r0, #2</pre>
+<pre>   41270:	aaffffe6 	bge	41210 &lt;_start&commat;&commat;Base+0x36844&gt;</pre>
+<pre>   41274:	e3540004 	cmp	r4, #4</pre>
+<pre>   41278:	e2849001 	add	r9, r4, #1</pre>
+<pre>   4127c:	e1a04009 	mov	r4, r9</pre>
+<pre>   41280:	caffffe2 	bgt	41210 &lt;_start&commat;&commat;Base+0x36844&gt;</pre>
+<pre>   41284:	e1a01009 	mov	r1, r9</pre>
+<pre>   41288:	e59f02b8 	ldr	r0, [pc, #696]	; 41548 &lt;_start&commat;&commat;Base+0x36b7c&gt;</pre>
+<pre><span class="red">   4128c:	ebff23cd 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   41290:	e3a00001 	mov	r0, #1</pre>
+<pre>   41294:	ebff242b 	bl	a348 &lt;sleep&commat;plt&gt;</pre>
+<pre>--</pre>
+<pre>   41b2c:	e3500000 	cmp	r0, #0</pre>
+<pre>   41b30:	01a00003 	moveq	r0, r3</pre>
+<pre>   41b34:	ebffbd23 	bl	30fc8 &lt;_start&commat;&commat;Base+0x265fc&gt;</pre>
+<pre>   41b38:	e3500000 	cmp	r0, #0</pre>
+<pre>   41b3c:	0a000006 	beq	41b5c &lt;_start&commat;&commat;Base+0x37190&gt;</pre>
+<pre>   41b40:	e59f0394 	ldr	r0, [pc, #916]	; 41edc &lt;_start&commat;&commat;Base+0x37510&gt;</pre>
+<pre>   41b44:	ebff23d5 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   41b48:	e250a000 	subs	sl, r0, #0</pre>
+<pre>   41b4c:	0a000013 	beq	41ba0 &lt;_start&commat;&commat;Base+0x371d4&gt;</pre>
+<pre>   41b50:	ebffde07 	bl	39374 &lt;_start&commat;&commat;Base+0x2e9a8&gt;</pre>
+<pre>   41b54:	e3500000 	cmp	r0, #0</pre>
+<pre>   41b58:	1a00000d 	bne	41b94 &lt;_start&commat;&commat;Base+0x371c8&gt;</pre>
+<pre>   41b5c:	e1a00007 	mov	r0, r7</pre>
+<pre>   41b60:	e59f1378 	ldr	r1, [pc, #888]	; 41ee0 &lt;_start&commat;&commat;Base+0x37514&gt;</pre>
+<pre>   41b64:	ebff2f27 	bl	d808 &lt;_start&commat;&commat;Base+0x2e3c&gt;</pre>
+<pre>   41b68:	e3a00000 	mov	r0, #0</pre>
+<pre>   41b6c:	e28ddf55 	add	sp, sp, #340	; 0x154</pre>
+<pre>   41b70:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}</pre>
+<pre>   41b74:	e1a01004 	mov	r1, r4</pre>
+<pre>   41b78:	e59f0364 	ldr	r0, [pc, #868]	; 41ee4 &lt;_start&commat;&commat;Base+0x37518&gt;</pre>
+<pre><span class="red">   41b7c:	ebff2191 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   41b80:	e1a00004 	mov	r0, r4</pre>
+<pre>   41b84:	e59f1354 	ldr	r1, [pc, #852]	; 41ee0 &lt;_start&commat;&commat;Base+0x37514&gt;</pre>
+<pre>--</pre>
+<pre>   41ce4:	e58d001c 	str	r0, [sp, #28]</pre>
+<pre>   41ce8:	e59f0230 	ldr	r0, [pc, #560]	; 41f20 &lt;_start&commat;&commat;Base+0x37554&gt;</pre>
+<pre>   41cec:	ebff236b 	bl	aaa0 &lt;_start&commat;&commat;Base+0xd4&gt;</pre>
+<pre>   41cf0:	e59de018 	ldr	lr, [sp, #24]</pre>
+<pre>   41cf4:	e3500000 	cmp	r0, #0</pre>
+<pre>   41cf8:	11a0c000 	movne	ip, r0</pre>
+<pre>   41cfc:	01a0c00a 	moveq	ip, sl</pre>
+<pre>   41d00:	e1a0200b 	mov	r2, fp</pre>
+<pre>   41d04:	e59d3010 	ldr	r3, [sp, #16]</pre>
+<pre>   41d08:	e58de000 	str	lr, [sp]</pre>
+<pre>   41d0c:	e1a00009 	mov	r0, r9</pre>
+<pre>   41d10:	e59de01c 	ldr	lr, [sp, #28]</pre>
+<pre>   41d14:	e59f1208 	ldr	r1, [pc, #520]	; 41f24 &lt;_start&commat;&commat;Base+0x37558&gt;</pre>
+<pre>   41d18:	e58dc00c 	str	ip, [sp, #12]</pre>
+<pre>   41d1c:	e58de004 	str	lr, [sp, #4]</pre>
+<pre>   41d20:	e59de014 	ldr	lr, [sp, #20]</pre>
+<pre>   41d24:	e58de008 	str	lr, [sp, #8]</pre>
+<pre><span class="red">   41d28:	ebff22a9 	bl	a7d4 &lt;sprintf&commat;plt&gt</span></span></pre>
+<pre>   41d2c:	e1a01009 	mov	r1, r9</pre>
+<pre>   41d30:	e59f01f0 	ldr	r0, [pc, #496]	; 41f28 &lt;_start&commat;&commat;Base+0x3755c&gt;</pre>
+<pre><span class="red">   41d34:	ebff2123 	bl	a1c8 &lt;printf&commat;plt&gt</span></span></pre>
+<pre>   41d38:	e1a00009 	mov	r0, r9</pre>
+<pre>   41d3c:	ebff2178 	bl	a324 &lt;system&commat;plt&gt;</pre>
+<br />
+<pre></span></pre>
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">printf</span> used </span><span class="orange">42</span> times </span><span class="orange">httpd</span></pre>
+<br />
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

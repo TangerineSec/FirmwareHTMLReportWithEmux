@@ -1,0 +1,35 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/thunder/bin/runHttpCmd.sh line 10:[0m
+[0m    wget ${G_FULL_URL} -O /tmp/thunder/tmp_runhttpcmd_${uuid}[0m
+[32m         ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                      ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    wget "${G_FULL_URL}" -O /tmp/thunder/tmp_runhttpcmd_"${uuid}"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/thunder/bin/runHttpCmd.sh line 11:[0m
+[0m    ret=$(cat /tmp/thunder/tmp_runhttpcmd_${uuid})[0m
+[32m                                          ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ret=$(cat /tmp/thunder/tmp_runhttpcmd_"${uuid}")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/thunder/bin/runHttpCmd.sh line 12:[0m
+[0m    rm -f /tmp/thunder/tmp_runhttpcmd_${uuid}[0m
+[32m                                      ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    rm -f /tmp/thunder/tmp_runhttpcmd_"${uuid}"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/thunder/bin/runHttpCmd.sh line 13:[0m
+[0m    echo ${ret}[0m
+[32m         ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "${ret}"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

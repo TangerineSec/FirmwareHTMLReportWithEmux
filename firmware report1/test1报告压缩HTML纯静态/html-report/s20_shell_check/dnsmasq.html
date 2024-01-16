@@ -1,0 +1,694 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s20_shell_check.html" title="./../s20_shell_check.html" >&laquo; Back to s20_shell_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>#!/bin/sh /etc/rc.common</pre>
+<pre># Copyright (C) 2007-2012 OpenWrt.org</pre>
+<br />
+<pre>START=60</pre>
+<br />
+<pre>SERVICE_USE_PID=1</pre>
+<br />
+<pre>DNS_SERVERS=""</pre>
+<pre>DOMAIN=""</pre>
+<br />
+<pre>ADD_LOCAL_DOMAIN=1</pre>
+<pre>ADD_LOCAL_HOSTNAME=1</pre>
+<br />
+<pre>CONFIGFILE="/var/etc/dnsmasq.conf"</pre>
+<br />
+<pre>xappend() {</pre>
+<pre>	local value="$1"</pre>
+<br />
+<pre>	echo "${value#--}" &gt;&gt; $CONFIGFILE</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_calc() {</pre>
+<pre>	local ip="$1"</pre>
+<pre>	local res=0</pre>
+<br />
+<pre>	while [ -n "$ip" ]; do</pre>
+<pre>		part="${ip%%.*}"</pre>
+<pre>		res="$(($res * 256))"</pre>
+<pre>		res="$(($res + $part))"</pre>
+<pre>		[ "${ip%.*}" != "$ip" ] &amp;&amp; ip="${ip#*.}" || ip=</pre>
+<pre>	done</pre>
+<pre>	echo "$res"</pre>
+<pre>}</pre>
+<br />
+<pre>append_bool() {</pre>
+<pre>	local section="$1"</pre>
+<pre>	local option="$2"</pre>
+<pre>	local value="$3"</pre>
+<pre>	local _loctmp</pre>
+<pre>	config_get_bool _loctmp "$section" "$option" 0</pre>
+<pre>	[ $_loctmp -gt 0 ] &amp;&amp; xappend "$value"</pre>
+<pre>}</pre>
+<br />
+<pre>append_parm() {</pre>
+<pre>	local section="$1"</pre>
+<pre>	local option="$2"</pre>
+<pre>	local switch="$3"</pre>
+<pre>	local _loctmp</pre>
+<pre>	config_get _loctmp "$section" "$option"</pre>
+<pre>	[ -z "$_loctmp" ] &amp;&amp; return 0</pre>
+<pre>	xappend "$switch=$_loctmp"</pre>
+<pre>}</pre>
+<br />
+<pre>append_server() {</pre>
+<pre>	xappend "--server=$1"</pre>
+<pre>}</pre>
+<br />
+<pre>append_address() {</pre>
+<pre>	xappend "--address=$1"</pre>
+<pre>}</pre>
+<br />
+<pre>append_interface() {</pre>
+<pre>	local ifname=$(uci_get_state network "$1" ifname "$1")</pre>
+<pre>	xappend "--interface=$ifname"</pre>
+<pre>}</pre>
+<br />
+<pre>append_notinterface() {</pre>
+<pre>	local ifname=$(uci_get_state network "$1" ifname "$1")</pre>
+<pre>	xappend "--except-interface=$ifname"</pre>
+<pre>}</pre>
+<br />
+<pre>append_addnhosts() {</pre>
+<pre>	xappend "--addn-hosts=$1"</pre>
+<pre>}</pre>
+<br />
+<pre>append_bogusnxdomain() {</pre>
+<pre>       xappend "--bogus-nxdomain=$1"</pre>
+<pre>}</pre>
+<br />
+<pre>dnsmasq() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	append_bool "$cfg" authoritative "--dhcp-authoritative"</pre>
+<pre>	append_bool "$cfg" nodaemon "--no-daemon"</pre>
+<pre>	append_bool "$cfg" domainneeded "--domain-needed"</pre>
+<pre>	append_bool "$cfg" filterwin2k "--filterwin2k"</pre>
+<pre>	append_bool "$cfg" nohosts "--no-hosts"</pre>
+<pre>	append_bool "$cfg" nonegcache "--no-negcache"</pre>
+<pre>	append_bool "$cfg" strictorder "--strict-order"</pre>
+<pre>	append_bool "$cfg" logqueries "--log-queries"</pre>
+<pre>	append_bool "$cfg" noresolv "--no-resolv"</pre>
+<pre>	append_bool "$cfg" localise_queries "--localise-queries"</pre>
+<pre>	append_bool "$cfg" readethers "--read-ethers"</pre>
+<pre>	append_bool "$cfg" dbus "--enable-dbus"</pre>
+<pre>	append_bool "$cfg" boguspriv "--bogus-priv"</pre>
+<pre>	append_bool "$cfg" expandhosts "--expand-hosts"</pre>
+<pre>	append_bool "$cfg" enable_tftp "--enable-tftp"</pre>
+<pre>	append_bool "$cfg" nonwildcard "--bind-interfaces"</pre>
+<pre>	append_bool "$cfg" fqdn "--dhcp-fqdn"</pre>
+<pre>	append_bool "$cfg" proxydnssec "--proxy-dnssec"</pre>
+<br />
+<pre>	append_parm "$cfg" dhcpscript "--dhcp-script"</pre>
+<pre>	append_parm "$cfg" cachesize "--cache-size"</pre>
+<pre>	append_parm "$cfg" dnsforwardmax "--dns-forward-max"</pre>
+<pre>	append_parm "$cfg" port "--port"</pre>
+<pre>	append_parm "$cfg" ednspacket_max "--edns-packet-max"</pre>
+<pre>	append_parm "$cfg" dhcpleasemax "--dhcp-lease-max"</pre>
+<pre>	append_parm "$cfg" "queryport" "--query-port"</pre>
+<pre>	append_parm "$cfg" "domain" "--domain"</pre>
+<pre>	append_parm "$cfg" "local" "--server"</pre>
+<pre>	config_list_foreach "$cfg" "server" append_server</pre>
+<pre>	config_list_foreach "$cfg" "address" append_address</pre>
+<pre>	config_list_foreach "$cfg" "interface" append_interface</pre>
+<pre>	config_list_foreach "$cfg" "notinterface" append_notinterface</pre>
+<pre>	config_list_foreach "$cfg" "addnhosts" append_addnhosts</pre>
+<pre>	config_list_foreach "$cfg" "bogusnxdomain" append_bogusnxdomain</pre>
+<pre>	append_parm "$cfg" "leasefile" "--dhcp-leasefile"</pre>
+<pre>	append_parm "$cfg" "resolvfile" "--resolv-file"</pre>
+<pre>	append_parm "$cfg" "tftp_root" "--tftp-root"</pre>
+<pre>	append_parm "$cfg" "dhcp_boot" "--dhcp-boot"</pre>
+<pre>	append_parm "$cfg" "local_ttl" "--local-ttl"</pre>
+<br />
+<pre>	config_get DOMAIN "$cfg" domain</pre>
+<br />
+<pre>	config_get_bool ADD_LOCAL_DOMAIN "$cfg" add_local_domain 1</pre>
+<pre>	config_get_bool ADD_LOCAL_HOSTNAME "$cfg" add_local_hostname 1</pre>
+<br />
+<pre>	config_get_bool readethers "$cfg" readethers</pre>
+<pre>	[ "$readethers" = "1" -a \! -e "/etc/ethers" ] &amp;&amp; touch /etc/ethers</pre>
+<br />
+<pre>	config_get leasefile $cfg leasefile</pre>
+<pre>	[ -n "$leasefile" -a \! -e "$leasefile" ] &amp;&amp; touch "$leasefile"</pre>
+<pre>	config_get_bool cachelocal "$cfg" cachelocal 1</pre>
+<br />
+<pre>	config_get hostsfile "$cfg" dhcphostsfile</pre>
+<pre>	[ -e "$hostsfile" ] &amp;&amp; xappend "--dhcp-hostsfile=$hostsfile"</pre>
+<br />
+<pre>	mkdir -p /tmp/hosts</pre>
+<pre>	xappend "--addn-hosts=/tmp/hosts"</pre>
+<br />
+<pre>	local rebind</pre>
+<pre>	config_get_bool rebind "$cfg" rebind_protection 1</pre>
+<pre>	[ $rebind -gt 0 ] &amp;&amp; {</pre>
+<pre>		logger -t dnsmasq \</pre>
+<pre>			"DNS rebinding protection is active," \</pre>
+<pre>			"will discard upstream RFC1918 responses!"</pre>
+<pre>		xappend "--stop-dns-rebind"</pre>
+<br />
+<pre>		local rebind_localhost</pre>
+<pre>		config_get_bool rebind_localhost "$cfg" rebind_localhost 0</pre>
+<pre>		[ $rebind_localhost -gt 0 ] &amp;&amp; {</pre>
+<pre>			logger -t dnsmasq "Allowing 127.0.0.0/8 responses"</pre>
+<pre>			xappend "--rebind-localhost-ok"</pre>
+<pre>		}</pre>
+<br />
+<pre>		append_rebind_domain() {</pre>
+<pre>			logger -t dnsmasq "Allowing RFC1918 responses for domain $1"</pre>
+<pre>			xappend "--rebind-domain-ok=$1"</pre>
+<pre>		}</pre>
+<br />
+<pre>		config_list_foreach "$cfg" rebind_domain append_rebind_domain</pre>
+<pre>	}</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "" 0</pre>
+<br />
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_subscrid_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get subscriberid "$cfg" subscriberid</pre>
+<pre>	[ -n "$subscriberid" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-subscrid=$networkid,$subscriberid"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_remoteid_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get remoteid "$cfg" remoteid</pre>
+<pre>	[ -n "$remoteid" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-remoteid=$networkid,$remoteid"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_circuitid_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get circuitid "$cfg" circuitid</pre>
+<pre>	[ -n "$circuitid" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-circuitid=$networkid,$circuitid"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_userclass_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get userclass "$cfg" userclass</pre>
+<pre>	[ -n "$userclass" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-userclass=$networkid,$userclass"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_vendorclass_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get vendorclass "$cfg" vendorclass</pre>
+<pre>	[ -n "$vendorclass" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-vendorclass=$networkid,$vendorclass"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_host_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] &amp;&amp; dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<br />
+<pre>	config_get name "$cfg" name</pre>
+<pre>	config_get ip "$cfg" ip</pre>
+<pre>	[ -n "$ip" -o -n "$name" ] || return 0</pre>
+<br />
+<pre>	config_get mac "$cfg" mac</pre>
+<pre>	[ -z "$mac" ] &amp;&amp; {</pre>
+<pre>		[ -n "$name" ] || return 0</pre>
+<pre>		mac="$name"</pre>
+<pre>		name=""</pre>
+<pre>	}</pre>
+<br />
+<pre>	macs=""</pre>
+<pre>	for m in $mac; do append macs "$m" ","; done</pre>
+<br />
+<pre>	config_get tag "$cfg" tag</pre>
+<br />
+<pre>	xappend "--dhcp-host=$macs${networkid:+,net:$networkid}${tag:+,set:$tag}${ip:+,$ip}${name:+,$name}"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_tag_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	tag="$cfg"</pre>
+<br />
+<pre>	[ -n "$tag" ] || return 0</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<pre>	[ "$force" = "0" ] &amp;&amp; force=</pre>
+<br />
+<pre>	config_get option "$cfg" dhcp_option</pre>
+<pre>	for o in $option; do</pre>
+<pre>		xappend "--dhcp-option${force:+-force}=tag:$tag,$o"</pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_mac_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || return 0</pre>
+<br />
+<pre>	config_get mac "$cfg" mac</pre>
+<pre>	[ -n "$mac" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-mac=$networkid,$mac"</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_boot_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<br />
+<pre>	config_get filename "$cfg" filename</pre>
+<pre>	[ -n "$filename" ] || return 0</pre>
+<br />
+<pre>	config_get servername "$cfg" servername</pre>
+<pre>	[ -n "$servername" ] || return 0</pre>
+<br />
+<pre>	config_get serveraddress "$cfg" serveraddress</pre>
+<pre>	[ -n "$serveraddress" ] || return 0</pre>
+<br />
+<pre>	xappend "--dhcp-boot=${networkid:+net:$networkid,}$filename,$servername,$serveraddress"</pre>
+<br />
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid" "$force"</pre>
+<pre>}</pre>
+<br />
+<br />
+<pre>dhcp_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	config_get net "$cfg" interface</pre>
+<pre>	[ -n "$net" ] || return 0</pre>
+<br />
+<pre>	config_get networkid "$cfg" networkid</pre>
+<pre>	[ -n "$networkid" ] || networkid="$net"</pre>
+<br />
+<pre>	config_get ifname "$net" ifname</pre>
+<pre>	[ -n "$ifname" ] || return 0</pre>
+<br />
+<pre>	config_get dnsserver "$net" dns</pre>
+<pre>	[ "$cachelocal" = "0" -a -n "$dnsserver" ] &amp;&amp; {</pre>
+<pre>		DNS_SERVERS="$DNS_SERVERS $dnsserver"</pre>
+<pre>	}</pre>
+<br />
+<pre>	append_bool "$cfg" ignore "--no-dhcp-interface=$ifname" &amp;&amp; return 0</pre>
+<br />
+<pre>	config_get proto "$net" proto</pre>
+<pre>	[ static = "$proto" ] || return 0</pre>
+<br />
+<pre>	config_get ipaddr "$net" ipaddr</pre>
+<pre>	config_get netmask "$cfg" netmask</pre>
+<pre>	[ -n "$netmask" ] || config_get netmask "$net" netmask</pre>
+<br />
+<pre>	#check for an already active dhcp server on the interface, unless 'force' is set</pre>
+<pre>	config_get_bool force "$cfg" force 0</pre>
+<pre>	[ $force -gt 0 ] || {</pre>
+<pre>		udhcpc -n -q -s /bin/true -t 1 -i $ifname &gt;&amp;- &amp;&amp; {</pre>
+<pre>			logger -t dnsmasq \</pre>
+<pre>				"found already running DHCP-server on interface '$ifname'" \</pre>
+<pre>				"refusing to start, use 'option force 1' to override"</pre>
+<pre>			return 0</pre>
+<pre>		}</pre>
+<pre>	}</pre>
+<br />
+<pre>	config_get start "$cfg" start</pre>
+<pre>	config_get limit "$cfg" limit</pre>
+<pre>	config_get leasetime "$cfg" leasetime</pre>
+<pre>	config_get options "$cfg" options</pre>
+<pre>	config_get_bool dynamicdhcp "$cfg" dynamicdhcp 1</pre>
+<br />
+<pre>	leasetime="${leasetime:-12h}"</pre>
+<pre>	start="$(dhcp_calc "${start:-100}")"</pre>
+<pre>	limit="${limit:-150}"</pre>
+<pre>	[ "$limit" -gt 0 ] &amp;&amp; limit=$((limit-1))</pre>
+<pre><span class="green">	eval "$(ipcalc.sh $ipaddr $netmask $start $limit)"</span></pre>
+<pre>	if [ "$dynamicdhcp" = "0" ]; then END="static"; fi</pre>
+<pre>	xappend "--dhcp-range=$networkid,$START,$END,$NETMASK,$leasetime${options:+ $options}"</pre>
+<br />
+<pre>	dhcp_option_add "$cfg" "$networkid"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_option_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	local networkid="$2"</pre>
+<pre>	local force="$3"</pre>
+<br />
+<pre>	[ "$force" = "0" ] &amp;&amp; force=</pre>
+<br />
+<pre>	config_get dhcp_option "$cfg" dhcp_option</pre>
+<pre>	for o in $dhcp_option; do</pre>
+<pre>		xappend "--dhcp-option${force:+-force}=${networkid:+$networkid,}$o"</pre>
+<pre>	done</pre>
+<br />
+<pre>}</pre>
+<br />
+<pre>dhcp_domain_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	local ip name names</pre>
+<br />
+<pre>	config_get names "$cfg" name "$2"</pre>
+<pre>	[ -n "$names" ] || return 0</pre>
+<br />
+<pre>	config_get ip "$cfg" ip "$3"</pre>
+<pre>	[ -n "$ip" ] || return 0</pre>
+<br />
+<pre>	local oIFS="$IFS"; IFS="."; set -- $ip; IFS="$oIFS"</pre>
+<pre>	local raddr="${4:+$4.$3.$2.$1.in-addr.arpa}"</pre>
+<br />
+<pre>	for name in $names; do</pre>
+<pre>		local fqdn="$name"</pre>
+<br />
+<pre>		[ "${fqdn%.*}" == "$fqdn" ] &amp;&amp; \</pre>
+<pre>			fqdn="$fqdn${DOMAIN:+.$DOMAIN}"</pre>
+<br />
+<pre>		xappend "--address=/$fqdn/$ip"</pre>
+<br />
+<pre>		[ -n "$raddr" ] &amp;&amp; {</pre>
+<pre>			xappend "--ptr-record=$raddr,$fqdn"</pre>
+<pre>			raddr=""</pre>
+<pre>		}</pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_srv_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<br />
+<pre>	config_get srv "$cfg" srv</pre>
+<pre>	[ -n "$srv" ] || return 0</pre>
+<br />
+<pre>	config_get target "$cfg" target</pre>
+<pre>	[ -n "$target" ] || return 0</pre>
+<br />
+<pre>	config_get port "$cfg" port</pre>
+<pre>	[ -n "$port" ] || return 0</pre>
+<br />
+<pre>	config_get class "$cfg" class</pre>
+<pre>	config_get weight "$cfg" weight</pre>
+<br />
+<pre>	local service="$srv,$target,$port${class:+,$class${weight:+,$weight}}"</pre>
+<br />
+<pre>	xappend "--srv-host=$service"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_mx_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	local domain relay pref</pre>
+<br />
+<pre>	config_get domain "$cfg" domain</pre>
+<pre>	[ -n "$domain" ] || return 0</pre>
+<br />
+<pre>	config_get relay "$cfg" relay</pre>
+<pre>	[ -n "$relay" ] || return 0</pre>
+<br />
+<pre>	config_get pref "$cfg" pref 0</pre>
+<br />
+<pre>	local service="$domain,$relay,$pref"</pre>
+<br />
+<pre>	xappend "--mx-host=$service"</pre>
+<pre>}</pre>
+<br />
+<pre>dhcp_cname_add() {</pre>
+<pre>	local cfg="$1"</pre>
+<pre>	local cname target</pre>
+<br />
+<pre>	config_get cname "$cfg" cname</pre>
+<pre>	[ -n "$cname" ] || return 0</pre>
+<br />
+<pre>	config_get target "$cfg" target</pre>
+<pre>	[ -n "$target" ] || return 0</pre>
+<br />
+<pre>	xappend "--cname=${cname},${target}"</pre>
+<pre>}</pre>
+<br />
+<pre>start() {</pre>
+<pre>	include /lib/network</pre>
+<pre>	scan_interfaces</pre>
+<br />
+<pre>	local lanaddr</pre>
+<pre>	config_get lanaddr "lan" ipaddr</pre>
+<br />
+<pre>	config_load dhcp</pre>
+<br />
+<pre>	# before we can call xappend</pre>
+<pre>	mkdir -p $(dirname $CONFIGFILE)</pre>
+<br />
+<pre>	echo "# auto-generated config file from /etc/config/dhcp" &gt; $CONFIGFILE</pre>
+<br />
+<pre>	# if we did this last, we could override auto-generated config</pre>
+<pre>	[ -f /etc/dnsmasq.conf ] &amp;&amp; {</pre>
+<pre>		xappend "--conf-file=/etc/dnsmasq.conf"</pre>
+<pre>	}</pre>
+<br />
+<pre>	args=""</pre>
+<pre>	config_foreach dnsmasq dnsmasq</pre>
+<pre>	config_foreach dhcp_host_add host</pre>
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<pre>	config_foreach dhcp_boot_add boot</pre>
+<pre>	config_foreach dhcp_mac_add mac</pre>
+<pre>	config_foreach dhcp_tag_add tag</pre>
+<pre>	config_foreach dhcp_vendorclass_add vendorclass</pre>
+<pre>	config_foreach dhcp_userclass_add userclass</pre>
+<pre>	config_foreach dhcp_circuitid_add circuitid</pre>
+<pre>	config_foreach dhcp_remoteid_add remoteid</pre>
+<pre>	config_foreach dhcp_subscrid_add subscrid</pre>
+<pre>	config_foreach dhcp_domain_add domain</pre>
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<pre>	config_foreach dhcp_srv_add srvhost</pre>
+<pre>	config_foreach dhcp_mx_add mxhost</pre>
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<pre>	config_foreach dhcp_add dhcp</pre>
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<pre>	config_foreach dhcp_cname_add cname</pre>
+<pre>	echo &gt;&gt; $CONFIGFILE</pre>
+<br />
+<pre>	# add own hostname</pre>
+<pre>	[ $ADD_LOCAL_HOSTNAME -eq 1 ] &amp;&amp; [ -n "$lanaddr" ] &amp;&amp; {</pre>
+<pre>		local hostname="$(uci_get system.&commat;system[0].hostname)"</pre>
+<pre>		dhcp_domain_add "" "${hostname:-OpenWrt}" "$lanaddr"</pre>
+<pre>	}</pre>
+<br />
+<pre>	service_start /usr/sbin/dnsmasq -C $CONFIGFILE &amp;&amp; {</pre>
+<pre>		rm -f /tmp/resolv.conf</pre>
+<pre>		[ $ADD_LOCAL_DOMAIN -eq 1 ] &amp;&amp; [ -n "$DOMAIN" ] &amp;&amp; {</pre>
+<pre>			echo "search $DOMAIN" &gt;&gt; /tmp/resolv.conf</pre>
+<pre>		}</pre>
+<pre>		DNS_SERVERS="$DNS_SERVERS 127.0.0.1"</pre>
+<pre>		for DNS_SERVER in $DNS_SERVERS ; do</pre>
+<pre>			echo "nameserver $DNS_SERVER" &gt;&gt; /tmp/resolv.conf</pre>
+<pre>		done</pre>
+<pre>	}</pre>
+<pre>}</pre>
+<br />
+<pre>stop() {</pre>
+<pre>	service_stop /usr/sbin/dnsmasq &amp;&amp; {</pre>
+<pre>		[ -f /tmp/resolv.conf ] &amp;&amp; {</pre>
+<pre>			rm -f /tmp/resolv.conf</pre>
+<pre>			ln -s /tmp/resolv.conf.auto /tmp/resolv.conf</pre>
+<pre>		}</pre>
+<pre>	}</pre>
+<pre>}</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

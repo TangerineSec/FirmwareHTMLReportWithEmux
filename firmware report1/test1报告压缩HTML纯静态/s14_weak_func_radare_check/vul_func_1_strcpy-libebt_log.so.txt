@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibebt_log.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlibebt_log.so[0m
+
+lw v0, -0x7fb8(gp)
+lb v0, (v0)
+bnez v0, 0x7a4
+lw a2, 0x20(sp)
+lw s2, -0x7fb4(gp)
+lw t9, -sym.imp._ebt_check_inverse(gp)
+move a1, a2
+lw a0, (s2)
+jalr t9
+move a2, s3
+bnez v0, 0xbac
+lw gp, 0x10(sp)
+lw s2, (s2)
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move a0, s2
+sltiu v0, v0, 0x1e
+beqz v0, 0xbdc
+lw gp, 0x10(sp)
+lw t9, -sym.imp.strchr(gp)
+move a0, s2
+jalr t9
+addiu a1, zero, 0x22
+bnez v0, 0xb10
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+addiu a0, s1, 0x25
+move a1, s2
+jalr t9
+addiu s0, zero, 1
+lw ra, 0x3c(sp)
+move v0, s0
+lw s3, 0x38(sp)
+lw s2, 0x34(sp)
+lw s1, 0x30(sp)
+lw s0, 0x2c(sp)
+jr ra
+addiu sp, sp, 0x40
+sw a2, 0x20(sp)
+jalr t9
+addiu a1, zero, 0x10
+lw gp, 0x10(sp)
+addiu s0, zero, -1
+lw v0, -0x7fb8(gp)
+lb v0, (v0)
+bnez v0, 0x7a4
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m1[0m times [0;33mlibebt_log.so[0m
+

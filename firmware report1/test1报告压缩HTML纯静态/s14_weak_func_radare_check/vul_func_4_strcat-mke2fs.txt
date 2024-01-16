@@ -1,0 +1,158 @@
+[[0;33m*[0m] Binary protection state of [0;33mmke2fs[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mmke2fs[0m
+
+sw zero, 0x28(sp)
+beqz v0, 0x40880c
+addiu a0, zero, 0xc
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move a0, v0
+lw gp, 0x20(sp)
+addiu a0, v0, 0xc
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+nop
+move s0, v0
+bnez v0, 0x408830
+lw gp, 0x20(sp)
+lw a0, -0x7fe0(gp)
+b 0x40a2e4
+addiu a0, a0, -0xdfc
+lw a1, -0x7fe0(gp)
+lw t9, -sym.imp.strcpy(gp)
+move a0, v0
+jalr t9
+addiu a1, a1, -0xdd4
+beqz s1, 0x408878
+lw gp, 0x20(sp)
+lw a1, -0x7fe0(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+move a0, s0
+jalr t9
+addiu a1, a1, -0xdc8
+lw gp, 0x20(sp)
+move a0, s0
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+move a1, s1
+lw gp, 0x20(sp)
+lw t9, -sym.imp.putenv(gp)
+jalr t9
+move a0, s0
+lw gp, 0x20(sp)
+lw a0, -0x7fe0(gp)
+lw t9, -sym.imp.getenv(gp)
+jalr t9
+addiu a0, a0, -0xdc4
+sw v0, 0x38(sp)
+beqz v0, 0x4088bc
+lw gp, 0x20(sp)
+lw t9, -sym.imp.atoi(gp)
+jalr t9
+move a0, v0
+lw gp, 0x20(sp)
+lw v1, -obj.sync_kludge(gp)
+sw v0, (v1)
+--
+lw gp, 0x10(sp)
+addu s4, s4, v0
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+move a0, s4
+move s1, v0
+bnez v0, 0x40c3e0
+lw gp, 0x10(sp)
+lw t9, -0x7f34(gp)
+addiu t9, t9, -0x46f8
+bal 0x40b908
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.__errno_location(gp)
+jalr t9
+nop
+b 0x40c49c
+lw v0, (v0)
+beqz s5, 0x40c410
+move a0, v0
+lw t9, -sym.imp.strcpy(gp)
+jalr t9
+move a1, s5
+lw gp, 0x10(sp)
+move a0, s1
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+addiu a1, s3, 1
+b 0x40c424
+lw gp, 0x10(sp)
+lw t9, -sym.imp.memcpy(gp)
+move a1, s3
+jalr t9
+move a2, s4
+lw gp, 0x10(sp)
+lw a1, -0x7fe0(gp)
+lw t9, -sym.imp.strcmp(gp)
+sw s1, 4(s0)
+move a0, s1
+jalr t9
+addiu a1, a1, 0xa48
+beqz v0, 0x40c494
+lw gp, 0x10(sp)
+lw v0, 0xc(s0)
+andi v0, v0, 4
+bnel v0, zero, 0x40c498
+--
+addu gp, gp, t9
+addiu sp, sp, -0x48
+sw gp, 0x10(sp)
+sw s3, 0x40(sp)
+sw s2, 0x3c(sp)
+sw s1, 0x38(sp)
+sw s0, 0x34(sp)
+sw ra, 0x44(sp)
+move v0, a0
+move s1, a1
+move s0, a2
+move s2, a3
+beqz a0, 0x42a968
+lw s3, 0x58(sp)
+beqz a3, 0x42a970
+lw ra, 0x44(sp)
+beqz s3, 0x42a968
+lw t9, -sym.imp.strncpy(gp)
+move a0, a3
+move a2, s3
+jalr t9
+move a1, v0
+lw gp, 0x10(sp)
+move a0, s2
+lw a1, -0x7fe0(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+addiu a1, a1, 0x2f50
+lw gp, 0x10(sp)
+move a1, s0
+addiu a2, sp, 0x18
+lw t9, -sym.quota_get_qf_name(gp)
+bal sym.quota_get_qf_name
+move a0, s1
+lw gp, 0x10(sp)
+move a0, s2
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+sw v0, 0x28(sp)
+lw gp, 0x10(sp)
+lw a1, 0x28(sp)
+move a0, s2
+lw t9, -sym.imp.strncat(gp)
+jalr t9
+subu a2, s3, v0
+b 0x42a970
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m4[0m times [0;33mmke2fs[0m
+

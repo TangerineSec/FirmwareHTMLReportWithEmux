@@ -1,0 +1,49 @@
+#!/bin/sh
+#set -x
+
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_LastValue=""
+G_AppPath=`dirname $0`
+G_PathTmp="/opt"
+G_AppName=`basename $1`
+G_ID=""
+G_Parameter_all=$*
+
+xRouterLog 0 "GetIdByXipk" - "`basename $0` ${G_Parameter_all}"
+
+#参数错误
+if [ ${G_Parameter_num} -ne 1 ];then
+	xRouterLog 2 "GetIdByXipk" "-" "Parameter Err."
+	exit 1
+fi
+
+cd ${G_PathTmp}
+
+L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+mkdir -p ${G_PathTmp}/ipk/${L_TempPath}
+tar zxvf ${G_Parameter_one} -C ${G_PathTmp}/ipk/${L_TempPath}
+G_LastValue=$?
+
+#解压失败
+if [ ${G_LastValue} -ne 0 ];then
+	xRouterLog 2 "GetIdByXipk" "-" "Untar err. ${G_LastValue}."
+	exit 100
+fi
+
+cd -
+
+L_TempDir=`ls ${G_PathTmp}/ipk/${L_TempPath}`
+cd ${G_PathTmp}/ipk/${L_TempPath}/${L_TempDir}
+G_ID=`cat ./appinfo | grep "plugin_ID" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+rm -fr ${G_PathTmp}/ipk/${L_TempPath}
+echo "Success:Id ${G_ID}."
+xRouterLog 0 "GetIdByXipk" - "Success:Id ${G_ID}."
+exit ${G_ID}
+
+
+
+
+
+
+

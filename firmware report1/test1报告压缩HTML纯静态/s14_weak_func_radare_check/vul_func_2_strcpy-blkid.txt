@@ -1,0 +1,61 @@
+[[0;33m*[0m] Binary protection state of [0;33mblkid[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mblkid[0m
+
+addiu a2, sp, 0x24
+beqz v0, 0x403814
+lw gp, 0x18(sp)
+lw t9, -sym.imp.blkid_tag_iterate_end(gp)
+jalr t9
+move a0, s4
+lw gp, 0x18(sp)
+sb zero, 0x2c(sp)
+move a0, s2
+lw t9, -sym.check_mount_point(gp)
+addiu a1, sp, 0x20
+addiu a2, sp, 0x2c
+bal sym.check_mount_point
+addiu a3, zero, 0x50
+bnez v0, 0x40391c
+lw gp, 0x18(sp)
+lw v0, 0x20(sp)
+andi v1, v0, 1
+beqz v1, 0x4038f0
+andi v0, v0, 0x10
+lb v0, 0x2c(sp)
+bnel v0, zero, 0x403920
+lw t9, -segment.LOAD0(gp)
+lw a1, -segment.LOAD0(gp)
+addiu a0, sp, 0x2c
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+b 0x403910
+addiu a1, a1, 0x6048
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+beqz v0, 0x403908
+addiu a0, sp, 0x2c
+lw a1, -segment.LOAD0(gp)
+b 0x403910
+addiu a1, a1, 0x6060
+lw a1, -segment.LOAD0(gp)
+addiu a1, a1, 0x606c
+jalr t9
+nop
+lw gp, 0x18(sp)
+lw t9, -segment.LOAD0(gp)
+sw s3, 0x10(sp)
+move a0, s2
+move a1, s1
+move a2, s0
+addiu t9, t9, 0x344c
+bal 0x40344c
+addiu a3, sp, 0x2c
+lw ra, 0xac(sp)
+lw fp, 0xa8(sp)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33mblkid[0m
+

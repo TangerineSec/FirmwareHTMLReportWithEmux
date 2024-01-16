@@ -1,0 +1,165 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 22:[0m
+[0mbonjour_presentationURL=`/usr/sbin/userconfig -read Bonjour PresentationURL`[0m
+[32m                        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+bonjour_presentationURL=$(/usr/sbin/userconfig -read Bonjour PresentationURL)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 23:[0m
+[0mmac=`rtkmib mac|tr '[a-z]' '[A-Z]'`[0m
+[32m    ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                   ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                           ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+mac=$(rtkmib mac|tr '[a-z]' '[A-Z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 24:[0m
+[0mCameraName=`/usr/sbin/userconfig -read CAMSYSTEM CameraName|tr '[A-Z]' '[a-z]'`[0m
+[32m           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                               ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                                                       ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+CameraName=$(/usr/sbin/userconfig -read CAMSYSTEM CameraName|tr '[A-Z]' '[a-z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 25:[0m
+[0mModelName=`/usr/sbin/userconfig -read System ModelName`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ModelName=$(/usr/sbin/userconfig -read System ModelName)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 26:[0m
+[0mBrandName=`/usr/sbin/userconfig -read INFO BrandName`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+BrandName=$(/usr/sbin/userconfig -read INFO BrandName)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 28:[0m
+[0m	enable=`$configpath -read Bonjour Enable`[0m
+[32m               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	enable=$($configpath -read Bonjour Enable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 29:[0m
+[0m	if [ $enable == "0x01" ]; then[0m
+[32m             ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                     ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+	if [ "$enable" == "0x01" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 30:[0m
+[0m		echo -n "Launch $prog ..."[0m
+[33m                     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 34:[0m
+[0m		if [ $BrandName == "D-Link" ]; then[0m
+[32m                     ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+		if [ "$BrandName" == "D-Link" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 39:[0m
+[0m			if [ -z $CameraName ]; then[0m
+[32m                                ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			if [ -z "$CameraName" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 43:[0m
+[0m			Target2=$CameraName`echo $mac|cut -d: -f 5``echo $mac|cut -d: -f 6`[0m
+[32m                                           ^----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                 ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                   ^----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                                         ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			Target2=$CameraName$(echo "$mac"|cut -d: -f 5)$(echo "$mac"|cut -d: -f 6)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 45:[0m
+[0m			Target1=`echo $Target1|tr '[A-Z]' '[a-z]'`[0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                      ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                  ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                                          ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+			Target1=$(echo "$Target1"|tr '[A-Z]' '[a-z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 46:[0m
+[0m			Target2=`echo $Target2|tr '[A-Z]' '[a-z]'`[0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                      ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                  ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                                          ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+			Target2=$(echo "$Target2"|tr '[A-Z]' '[a-z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 47:[0m
+[0m			Target3=`echo $Target3|tr '[A-Z]' '[a-z]'`[0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                      ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                  ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                                          ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+			Target3=$(echo "$Target3"|tr '[A-Z]' '[a-z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 50:[0m
+[0m				$binpath -f $bonjour_http_service_file -h $Target1 -b[0m
+[32m                                                                          ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				$binpath -f $bonjour_http_service_file -h "$Target1" -b
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 51:[0m
+[0m				$binpath -f $bonjour_http_service_file -h $Target2 -b[0m
+[32m                                                                          ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				$binpath -f $bonjour_http_service_file -h "$Target2" -b
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 53:[0m
+[0m					$binpath -f $bonjour_http_service_file -h $Target3 -b[0m
+[32m                                                                                  ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					$binpath -f $bonjour_http_service_file -h "$Target3" -b
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 71:[0m
+[0m	echo -n "Stopping $prog: "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/bonjour-0 line 77:[0m
+[0m	echo -n "Reloading configuration $prog: "	[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...
+  https://www.shellcheck.net/wiki/SC2021 -- Don't use [] around classes in tr...

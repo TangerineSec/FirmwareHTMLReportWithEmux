@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibericstools.so.1[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlibericstools.so.1[0m
+
+lw gp, 0x10(sp)
+addiu s2, s2, 1
+addu s1, s1, fp
+addiu s1, s1, 1
+addu s3, s4, s1
+lb v0, (s3)
+bnez v0, 0x45f8
+lw t9, -sym.imp.strstr(gp)
+subu a0, s6, s5
+mul v0, s2, a0
+lw t9, -sym.safe_malloc(gp)
+addiu s1, s1, 1
+move s2, zero
+jalr t9
+addu a0, v0, s1
+move s3, v0
+lw gp, 0x10(sp)
+b 0x4694
+move s1, s4
+move a0, s1
+jalr t9
+move a1, s0
+lw gp, 0x10(sp)
+bne s1, v0, 0x4688
+addu a0, s3, s2
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s7
+jalr t9
+addu s2, s2, s6
+addu s1, s1, s5
+b 0x4694
+lw gp, 0x10(sp)
+sb fp, (a0)
+addiu s2, s2, 1
+addiu s1, s1, 1
+lb fp, (s1)
+bnez fp, 0x4654
+lw t9, -sym.imp.strstr(gp)
+lw t9, -sym.imp.free(gp)
+addu s2, s3, s2
+move a0, s4
+jalr t9
+sb zero, (s2)
+lw ra, 0x3c(sp)
+move v0, s3
+lw fp, 0x38(sp)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m1[0m times [0;33mlibericstools.so.1[0m
+

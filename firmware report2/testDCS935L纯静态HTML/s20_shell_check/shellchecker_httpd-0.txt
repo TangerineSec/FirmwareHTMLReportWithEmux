@@ -1,0 +1,68 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 15:[0m
+[0mhttp_port=`/usr/sbin/userconfig -read HTTP Port`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+http_port=$(/usr/sbin/userconfig -read HTTP Port)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 16:[0m
+[0mhttps_enable=`/usr/sbin/userconfig -read HTTPS Enable`[0m
+[33m^----------^ SC2034 (warning): https_enable appears unused. Verify use (or export if used externally).[0m
+[32m             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+https_enable=$(/usr/sbin/userconfig -read HTTPS Enable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 19:[0m
+[0m	echo -n "Starting httpd ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 21:[0m
+[0m		cd /web; ./httpd $http_port 1 1 1&[0m
+[33m                ^-----^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.[0m
+[32m                                 ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		cd /web || exit; ./httpd "$http_port" 1 1 1&
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 29:[0m
+[0m	echo -n "Stopping httpd ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 30:[0m
+[0m	kill `pidof httpd`[0m
+[33m             ^-----------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m             ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	kill $(pidof httpd)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 41:[0m
+[0m	echo -n "Reloading httpd ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 42:[0m
+[0m	kill -USR1 `pidof httpd` [0m
+[33m                   ^-----------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                   ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	kill -USR1 $(pidof httpd) 
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/httpd-0 line 59:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- https_enable appears unused. Veri...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2164 -- Use 'cd ... || exit' or 'cd ... |...

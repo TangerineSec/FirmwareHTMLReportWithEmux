@@ -1,0 +1,27 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xl2tpd line 4:[0m
+[0mSTART=60[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xl2tpd line 12:[0m
+[0m	[ -f $DEFAULT ] && . $DEFAULT[0m
+[33m                             ^------^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xl2tpd line 13:[0m
+[0m	$BIN $OPTIONS[0m
+[32m             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	$BIN "$OPTIONS"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xl2tpd line 17:[0m
+[0m	[ -f $PID_F ] && kill $(cat $PID_F)[0m
+[33m                              ^-----------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...

@@ -1,0 +1,231 @@
+[[0;33m*[0m] Binary protection state of [0;33mbulkagent[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [31mRPATH[0m        [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mbulkagent[0m
+
+lw t9, -sym.imp.stat(gp)
+addiu s0, s0, 0x323c
+jalr t9
+move a0, s0
+addiu v1, zero, -1
+lw gp, 0x18(sp)
+beq v0, v1, 0x4025a8
+lui a1, 0x40
+lw t9, -sym.imp.fopen(gp)
+move a0, s0
+jalr t9
+addiu a1, a1, 0x3254
+lw gp, 0x18(sp)
+beqz v0, 0x40132c
+move s0, v0
+lw t9, -sym.imp.fscanf(gp)
+addiu s1, sp, 0x38
+move a0, v0
+lui a1, 0x40
+move a2, s1
+jalr t9
+addiu a1, a1, 0x39c8
+lw gp, 0x18(sp)
+bne v0, s2, 0x40131c
+nop
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s1
+jalr t9
+addiu a0, sp, 0x28
+lw gp, 0x18(sp)
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+move a0, s0
+lw gp, 0x18(sp)
+lw t9, -sym.imp.sprintf(gp)
+addiu s0, sp, 0x6c
+lui a2, 0x40
+lui a1, 0x40
+move a0, s0
+addiu a2, a2, 0x323c
+jalr t9
+addiu a1, a1, 0x3258
+move a0, s0
+lw gp, 0x18(sp)
+lw t9, -sym.imp.system(gp)
+jalr t9
+addiu s0, sp, 0x4c
+lui a1, 0x40
+move a0, s0
+lw gp, 0x18(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+addiu a1, a1, 0x3264
+jal 0x400ea0
+move a0, s0
+lw gp, 0x18(sp)
+beqz v0, 0x4025a8
+addiu v1, zero, -1
+b 0x4025dc
+nop
+slti v0, a0, 5
+beqz v0, 0x40149c
+lui s3, 0x41
+lw t9, -sym.imp.printf(gp)
+b 0x401478
+lui a0, 0x40
+beq v0, s7, 0x4013cc
+lui a0, 0x40
+beq v0, s6, 0x401428
+addiu v1, zero, 0x50
+bne v0, v1, 0x401474
+nop
+b 0x4013f0
+lui a0, 0x40
+lw t9, -sym.imp.printf(gp)
+lw a1, (s0)
+jalr t9
+addiu a0, a0, 0x32e0
+lw gp, 0x18(sp)
+lw a0, 0x690(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+b 0x40141c
+nop
+lw a1, (s0)
+jalr t9
+addiu a0, a0, 0x32e8
+lw a0, (s0)
+jal 0x400ea0
+nop
+lw gp, 0x18(sp)
+lw a0, 0x68c(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+beqz v0, 0x4025a8
+addiu v1, zero, -1
+lw a1, (s0)
+b 0x401460
+nop
+lw t9, -sym.imp.puts(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x32f0
+move a0, s1
+lw gp, 0x18(sp)
+lw a1, (s0)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+sw s4, 0x3c10(s5)
+sw zero, 0x3c18(s3)
+sw zero, 4(s1)
+sw zero, 8(s1)
+sw zero, 0xc(s1)
+sw zero, 0x10(s1)
+jalr t9
+nop
+lw gp, 0x18(sp)
+b 0x4014c8
+nop
+lui a0, 0x40
+lui a1, 0x40
+addiu a0, a0, 0x3270
+jalr t9
+addiu a1, a1, 0x3288
+lui a0, 0x40
+lw gp, 0x18(sp)
+lw t9, -sym.imp.puts(gp)
+b 0x401524
+--
+b 0x40183c
+sw v1, 0x690(sp)
+jalr t9
+sw zero, (s0)
+lui a1, 0x40
+move a0, s5
+lw gp, 0x18(sp)
+addiu a1, a1, 0x33dc
+lw a2, 0x688(sp)
+lw t9, -sym.imp.sscanf(gp)
+lw a3, 0x690(sp)
+jalr t9
+sw s2, 0x10(sp)
+lw gp, 0x18(sp)
+blez v0, 0x401824
+nop
+lw v1, 0x20(sp)
+lhu v0, 0x26(sp)
+addiu v1, v1, 1
+sh v1, 0x3a(sp)
+bne v0, s7, 0x4017f8
+sh v0, 0x38(sp)
+lw v0, 0x3c10(s6)
+beqz v0, 0x4017f8
+move a0, s2
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a1, fp
+lui a2, 0x41
+move a0, s0
+move a1, s2
+jal 0x400f90
+addiu a2, a2, 0x3ab0
+lw gp, 0x18(sp)
+beqz v0, 0x402504
+lui v0, 0x41
+lhu v0, 0x3a(sp)
+addiu v0, v0, 4
+addu s3, v0, s3
+lw t9, -sym.imp.memset(gp)
+move a0, s5
+move a1, zero
+jalr t9
+addiu a2, zero, 0x80
+lw gp, 0x18(sp)
+lw t9, -sym.imp.fgets(gp)
+--
+move a1, s6
+sw v1, 0x69c(sp)
+jalr t9
+move a2, s7
+b 0x40233c
+nop
+lw t9, -sym.update_HWinfo(gp)
+b 0x4022d0
+addiu a1, s0, 0xc
+lw t9, -sym.update_WiFiDomain(gp)
+jalr t9
+addiu s2, zero, 1
+b 0x40237c
+nop
+lw t9, -sym.upgrade_firmware(gp)
+ori a0, zero, 0x8102
+move a3, s4
+lw a1, 0x688(sp)
+addiu a2, s0, 0xc
+addiu s3, zero, 8
+jalr t9
+addiu s2, zero, 1
+lw gp, 0x18(sp)
+b 0x402384
+move v1, v0
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a0, s4
+addiu a1, s0, 0xc
+sw v1, 0x69c(sp)
+jalr t9
+addiu s2, zero, 1
+lui a0, 0x40
+move a1, s4
+lw gp, 0x18(sp)
+lw t9, -sym.imp.printf(gp)
+jalr t9
+addiu a0, a0, 0x36bc
+lw gp, 0x18(sp)
+lw v1, 0x69c(sp)
+b 0x402384
+nop
+lw t9, -sym.upgrade_firmware(gp)
+addiu a2, s0, 0xc
+lw a1, 0x688(sp)
+move a3, zero
+jalr t9
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m7[0m times [0;33mbulkagent[0m
+

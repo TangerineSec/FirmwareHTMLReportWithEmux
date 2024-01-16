@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# llmnr: This starts and stops llmnr.
+#
+# chkconfig: 2345 90 10
+# description: llmnr
+#
+# processname: /usr/sbin/llmnr
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+prog="llmnr"
+binpath="/usr/sbin/llmnr"
+
+start(){
+	mac=`rtkmib mac|tr '[a-z]' '[A-Z]'`
+	CameraName=`/usr/sbin/userconfig -read CAMSYSTEM CameraName|tr '[A-Z]' '[a-z]'`
+	ModelName=`/usr/sbin/userconfig -read System ModelName`
+	Interfacce="br0"
+	echo -n "Launch $prog ..."
+	if [ -z "$CameraName" ]; then
+		$binpath $Interfacce $ModelName $mac &
+	else
+		$binpath $Interfacce $CameraName $mac &
+	fi
+	echo "."
+}
+
+stop(){
+	echo -n "Stopping $prog: "
+	killall $prog
+	echo "."
+}
+
+# See how we were called.
+case "$1" in
+	start)
+		stop
+		sleep 1
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		sleep 1
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0
+

@@ -1,0 +1,24 @@
+
+[1mIn /logs/firmware/squashfs-root/bin/dw line 6:[0m
+[0m	echo read $1 4 > /proc/rtl865x/memory[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo read "$1" 4 > /proc/rtl865x/memory
+
+
+[1mIn /logs/firmware/squashfs-root/bin/dw line 9:[0m
+[0m	echo read $1 `expr $2 \* $a` > /proc/rtl865x/memory[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                     ^-------------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                     ^-------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                      ^--^ SC2003 (style): expr is antiquated. Consider rewriting this using $((..)), ${} or [[ ]].[0m
+[32m                           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo read "$1" $(expr "$2" \* $a) > /proc/rtl865x/memory
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2003 -- expr is antiquated. Consider rewr...

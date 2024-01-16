@@ -1,0 +1,81 @@
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Initial strace run with [0;33mjchroot[0m on the command [0;33m./usr/local/thunder/portal[0m to identify missing areas
+
+[[0;33m*[0m] Emulating binary name: [0;33mportal[0m in [0;33mstrace[0m mode to identify missing areas (with [0;33mjchroot[0m)
+[[0;33m*[0m] Emulator used: [0;33mqemu-mipsel-static[0m
+[[0;33m*[0m] Chroot environment used: [0;33mjchroot[0m
+[[0;33m*[0m] Using root directory: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root[0m ([0;33m1/2[0m)
+[[0;33m*[0m] Using CPU config: [0;33mNONE[0m
+
+1  = 0x2b2c5000
+1 stat("/etc/ld.so.cache",0x2b1ae660) = -1 errno=2 (No such file or directory)
+1 open("/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/libgcc_s.so.1",O_RDONLY) = -1 errno=2 (No such file or directory)
+1 open("/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libgcc_s.so.1",O_RDONLY) = -1 errno=2 (No such file or directory)
+1 open("/lib/libgcc_s.so.1",O_RDONLY) = 3
+1 fstat(3,0x2b1adcc0) = 0
+1  = 0x2b2c6000
+1 read(3,0x2b2c6000,4096) = 4096
+1  = 0x2b2c7000
+1  = 0x2b2c7000
+1  = 0x2b2e9000
+1 close(3) = 0
+1 munmap(0x2b2c6000,4096) = 0
+1 open("/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/libc.so.0",O_RDONLY) = -1 errno=2 (No such file or directory)
+1 open("/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libc.so.0",O_RDONLY) = -1 errno=2 (No such file or directory)
+1 open("/lib/libc.so.0",O_RDONLY) = 3
+1 fstat(3,0x2b1adcb0) = 0
+1  = 0x2b2c6000
+1 read(3,0x2b2c6000,4096) = 4096
+1  = 0x2b2ea000
+1  = 0x2b2ea000
+1  = 0x2b350000
+1  = 0x2b352000
+1 close(3) = 0
+1 munmap(0x2b2c6000,4096) = 0
+1 open("/lib/libc.so.0",O_RDONLY) = 3
+1 fstat(3,0x2b1adca0) = 0
+1 close(3) = 0
+1 stat("/lib/ld-uClibc.so.0",0x2b1ae630) = 0
+1  = 0x2b2c6000
+1 set_thread_area(0x2b2cd440) = 0
+1 mprotect(0x2b350000,4096,PROT_READ) = 0
+1 mprotect(0x2b2c2000,4096,PROT_READ) = 0
+1 ioctl(0,TCGETS,0x2b1ae620) = -1 errno=25 (Inappropriate ioctl for device)
+1 ioctl(1,TCGETS,0x2b1ae620) = -1 errno=25 (Inappropriate ioctl for device)
+1 chdir("./usr/local/thunder") = 0
+1 clone(CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|0x12,child_stack=0x00000000,parent_tidptr=0x00000000,tls=0x00000000,child_tidptr=0x2b2c6068) = 0
+3 getcwd(0x2b1ae710,511) = 19
+3 brk(NULL) = 0x0042a000
+3 brk(0x0042b000) = 0x0042b000
+3 execve("/usr/local/thunder/lib/ETMDaemon",{"/usr/local/thunder/lib/ETMDaemon","/usr/local/thunder/lib/EmbedThunderManager","/dev/null","/dev/null",NULL}) = 3
+1 write(1,0x2b354000,49)initing...
+
+starting xunlei service...
+finished.
+ = 49
+1 exit_group(0)
+
+[[0;33m*[0m] Identification of missing filesytem areas.
+[[0;33m*[0m] Found missing area: [0;33m/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libc.so.0[0m
+[[0;33m*[0m] Trying to identify this missing file: [0;33mlibc.so.0[0m
+[[0;33m*[0m] Possible matching file found: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libc.so.0[0m
+[[0;33m*[0m] Creating directory [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib[0m
+[[0;33m*[0m] Copy file [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libc.so.0[0m to [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/[0m
+[[0;33m*[0m] Found missing area: [0;33m/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libgcc_s.so.1[0m
+[[0;33m*[0m] Trying to identify this missing file: [0;33mlibgcc_s.so.1[0m
+[[0;33m*[0m] Possible matching file found: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libgcc_s.so.1[0m
+[[0;33m*[0m] Copy file [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libgcc_s.so.1[0m to [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/[0m
+[[0;33m*[0m] Found missing area: [0;33m/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/libc.so.0[0m
+[[0;33m*[0m] Trying to identify this missing file: [0;33mlibc.so.0[0m
+[[0;33m*[0m] Possible matching file found: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libc.so.0[0m
+[[0;33m*[0m] Creating directory [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib[0m
+[[0;33m*[0m] Copy file [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/lib/libc.so.0[0m to [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/[0m
+[[0;33m*[0m] Found missing area: [0;33m/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/libgcc_s.so.1[0m
+[[0;33m*[0m] Trying to identify this missing file: [0;33mlibgcc_s.so.1[0m
+[[0;33m*[0m] Possible matching file found: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libgcc_s.so.1[0m
+[[0;33m*[0m] Copy file [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/home/liliang/thunder/media_center_dev2.0/build/xcloud.release.150733/lib/libgcc_s.so.1[0m to [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root/opt/platforms/xcloud/toolchain-mipsel_r2_gcc-4.6-linaro_uClibc-0.9.33.2/lib/[0m
+
+-----------------------------------------------------------------
+

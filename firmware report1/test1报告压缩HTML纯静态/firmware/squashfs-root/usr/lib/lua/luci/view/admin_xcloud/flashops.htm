@@ -1,0 +1,75 @@
+<%
+	local uci = require "luci.model.uci".cursor()
+	local lanip = uci:get('network','lan','ipaddr')
+%>
+<div class='setup_head'>
+	<h4 style="margin-left:35px;">备份与还原</h4>
+	<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+	<div class='clr'></div>
+	<div class='bottom_line'>
+	</div>
+</div>
+
+<div class="flashops_main">
+
+	<form method="post" action="<%=pcdata(luci.dispatcher.build_url("admin/system/flashops"))%>" id="flashops_form" enctype="multipart/form-data">
+		<table cellspacing="15">
+			<tr>
+				<td align="left">备份配置文件至本地</td>
+				<td align="right">
+					<input class="flashops_btn" type="submit" name="backup" value="立即备份" />
+				</td>
+			</tr>
+			<tr>
+				<td align="left">从本地备份文件恢复</td>
+				<td align="right">
+					<input type="button" class="flashops_btn" id="restore" value="立即恢复" />
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<input type="file" name="archive" id="archive" />
+				</td>
+				<td id="messageAlert" width="120px" align="right"></td>
+			</tr>
+			<tr>
+				<td align="left">恢复出厂设置</td>
+				<td align="right">
+					<input type="button" class="flashops_btn" id="reset" value="立即恢复" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	//恢复出厂设置
+	$('#reset').click(function(){
+		changePanel('flashops_reset');
+	});
+
+	//恢复配置
+	$('#restore').click(function(){
+		var archive = $('#archive').val();
+		if(getExt(archive) != 'gz'){
+			messageAlert('文件类型不正确', 3000);
+			return false;
+		}
+
+		$('#flashops_form').ajaxSubmit({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/flashops_restore"))%>',
+			type:'POST',
+			dataType:'html',
+			success:function(r){
+				tinyBox_init('正在恢复设置，请稍后...');
+
+				var interval = window.setInterval(function() {
+					window.location.href = 'http://<%=lanip or luci.http.getenv("SERVER_NAME")%>/';
+				}, 100000);
+
+				return false;
+			}
+		});
+	});
+});
+</script>

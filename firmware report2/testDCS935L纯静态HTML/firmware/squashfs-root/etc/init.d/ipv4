@@ -1,0 +1,179 @@
+#!/bin/sh
+# /etc/init.d/ipv4: start/stop the IPv4 setting
+# chkconfig: 2345 11 72
+
+set -a
+
+PATH=/sbin:/bin:/usr/bin:/usr/sbin
+
+RETVAL=0
+
+prog="ipv4"
+udhcpc_script="/etc/init.d/udhcpc.sh"
+udhcpd_script="/etc/init.d/udhcpd.sh"
+pppoe_script="/etc/init.d/pppoe.sh"
+service_script="/etc/init.d/service.sh"
+
+iface="br0"
+ip_policy=`userconfig -read NETWORK_V4 BootProto`
+ipaddr=`userconfig -read NETWORK_V4 IP`
+netmask=`userconfig -read NETWORK_V4 SubnetMask`
+gateway=`userconfig -read NETWORK_V4 Gateway`
+pri_dns=`userconfig -read NETWORK_V4 DNS0`
+sec_dns=`userconfig -read NETWORK_V4 DNS1`
+pppoe_enable=`userconfig -read NETWORK_V4 PPPoEEnable`
+
+if [ -z "$ipaddr" ] || [ -z "$netmask" ] || [ -z "$gateway" ]; then
+	ipaddr="192.168.0.20"
+	netmask="255.255.255.0"
+	gateway="192.168.0.1"
+fi
+
+dns_resolv="/etc/resolv.conf"
+
+set_route(){
+	new_gateway=""
+	cnt=1
+	while [ "$cnt" -lt 5 ]; do
+		i=`echo $ipaddr | cut -d. -f$cnt`
+		m=`echo $netmask | cut -d. -f$cnt`
+		g=`echo $gateway | cut -d. -f$cnt`
+		n1=`echo $(($i&$m))`
+		n2=`echo $(($g&$m))`
+
+		if [ $n1 -ne $n2 ]; then
+			new_gateway=$new_gateway$(($n1|$((~$m&$g))))
+		else
+			new_gateway=$new_gateway$g
+		fi
+
+		if [ "$cnt" -lt 4 ]; then
+			new_gateway=$new_gateway.
+		fi
+		cnt=$(($cnt+1))
+	done
+
+	gateway=$new_gateway
+	userconfig -write NETWORK_V4 Gateway $gateway
+	route add default gw $gateway metric 10
+}
+
+# set DNS manually
+set_dns(){
+	echo "" > $dns_resolv
+	if [ ! -z "$pri_dns" ]; then
+		echo "nameserver $pri_dns" >> $dns_resolv
+	fi
+	if [ ! -z "$sec_dns" ]; then
+		echo "nameserver $sec_dns" >> $dns_resolv
+	fi
+	if [ -z "$pri_dns" ] && [ -z "$sec_dns" ]; then
+		echo "nameserver $gateway" >> $dns_resolv
+	fi
+}
+
+# set network with fixed default values
+set_default_network(){
+	echo "Use default network"
+	ifconfig br0 $ipaddr netmask $netmask up
+	route add default gw $gateway metric 10
+	set_dns
+}
+
+init(){
+	ifconfig lo 127.0.0.1 netmask 255.0.0.0 up
+	set_default_network
+}
+
+start(){
+	echo -n "Starting $prog: "
+
+	netphy=`msger sinfo 1 net.phy 0|cut -d ' ' -f 4`
+	#echo "------IPv4------netphy = $netphy------"
+	udhcpd_enable=`userconfig -read DHCPD Enable`
+        
+	if [ "$netphy" == "4" ] && [ "$udhcpd_enable" == "0x01" ]; then
+		echo "IPv4 DHCP server ..."
+		$udhcpd_script start
+		$service_script restart &
+	elif [ "$netphy" == "8" ] && [ "$udhcpd_enable" == "0x00" ]; then
+		#echo "------IPV4------Ad-Hoc------"
+		if [ ! -z "$ipaddr" ] && [ ! -z "$netmask" ]; then
+			#echo "------Ad-Hoc------Get Web Ip OK------"
+			ifconfig $iface $ipaddr netmask $netmask
+			set_route
+			set_dns
+		else
+			#echo "------Ad-Hoc------Get Web Ip Fail------Set fo default IP------"
+			set_default_network
+			set_route
+			set_dns
+		fi
+		$service_script restart &
+	else
+		if [ "$ip_policy" == "0" ]; then
+			echo "fixed IPv4 Address ..."
+			if [ ! -z "$ipaddr" ] && [ ! -z "$netmask" ]; then
+				ifconfig $iface $ipaddr netmask $netmask
+				set_route
+			fi
+			set_dns
+			$service_script restart &
+		elif [ "$ip_policy" == "1" ]; then
+			if [ -f /usr/share/udhcpc/default.script ]; then
+				set_default_network
+				echo "IPv4 DHCP client ..."
+				$udhcpc_script start
+			fi
+		else
+			set_default_network
+			$service_script restart &
+		fi
+
+		if [ "$pppoe_enable" == "0x01" ]; then
+			if [ -x $pppoe_script ]; then
+				echo "IPv4 PPPoE connection ..."
+				$pppoe_script restart
+				if [ $? = 0 ]; then
+					msger eventd 0 estatusnotify 0 4
+				fi
+			fi
+		fi
+	fi
+
+	echo "."
+}
+
+stop(){
+	echo -n "Stopping $prog: "
+	$udhcpd_script stop
+	$udhcpc_script stop
+	$pppoe_script stop
+	echo "."
+}
+
+# See how we were called.
+case "$1" in
+	init)
+		init
+		;;
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		sleep 1
+		start
+		;;
+	default)
+		set_default_network
+		;;
+	*)
+		echo "Usage: $0 {init|start|stop|restart|default}"
+		exit 1
+esac
+
+exit 0

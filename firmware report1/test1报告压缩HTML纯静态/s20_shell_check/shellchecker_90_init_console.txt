@@ -1,0 +1,27 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/90_init_console line 6:[0m
+[0m    if [ "$pi_suppress_stderr" = "y" ]; then[0m
+[33m          ^-----------------^ SC2154 (warning): pi_suppress_stderr is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/90_init_console line 7:[0m
+[0m	exec <$M0 >$M1 2>&0[0m
+[32m              ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                   ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	exec <"$M0" >"$M1" 2>&0
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/90_init_console line 9:[0m
+[0m	exec <$M0 >$M1 2>$M2[0m
+[32m              ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                   ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                         ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	exec <"$M0" >"$M1" 2>"$M2"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2154 -- pi_suppress_stderr is referenced ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

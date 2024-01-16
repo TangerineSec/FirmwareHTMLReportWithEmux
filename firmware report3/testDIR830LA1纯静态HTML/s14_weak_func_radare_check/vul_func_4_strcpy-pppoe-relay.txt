@@ -1,0 +1,166 @@
+[[0;33m*[0m] Binary protection state of [0;33mpppoe-relay[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mpppoe-relay[0m
+
+sb t1, 0x602(sp)
+sb t0, 0x603(sp)
+sw v0, 0x5f8(sp)
+sb a2, 0x5fc(sp)
+sb a0, 0x5fd(sp)
+sh a1, 0x608(sp)
+sb s2, 0x607(sp)
+sh zero, 0x60a(sp)
+lw s3, 0xc14(sp)
+beqz v1, 0x4025b8
+addiu s1, sp, 0x5f8
+move a1, v1
+jal 0x4024d4
+move a0, s1
+lw gp, 0x10(sp)
+bltz v0, 0x40261c
+nop
+lw t9, -sym.imp.strlen(gp)
+addiu v0, zero, 0x203
+move a0, s3
+jalr t9
+sh v0, 0x18(sp)
+move a1, s3
+addiu a0, sp, 0x1c
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+sh v0, 0x1a(sp)
+move a0, s1
+jal 0x4024d4
+addiu a1, sp, 0x18
+lw gp, 0x10(sp)
+bltz v0, 0x40261c
+addiu v0, zero, 0xa7
+lhu a3, 0x60a(sp)
+beq s2, v0, 0x402638
+addiu a3, a3, 0x14
+lw a1, 0x18(s0)
+lw t9, -sym.sendPacket(gp)
+move a2, s1
+jalr t9
+move a0, zero
+lw ra, 0xbfc(sp)
+lw s3, 0xbf8(sp)
+lw s2, 0xbf4(sp)
+lw s1, 0xbf0(sp)
+--
+ori t0, t0, 0x1000
+sw v1, 0x5f8(sp)
+addiu v1, zero, -0x59
+sw t0, 0x604(sp)
+sh a3, 0x5fc(sp)
+sh a2, 0x602(sp)
+sb v1, 0x607(sp)
+sh v0, 0x608(sp)
+bnez a0, 0x4047c8
+sh zero, 0x18(s0)
+addiu s3, sp, 0x60c
+move s1, zero
+move s2, s3
+beqz a1, 0x404684
+move a0, a1
+lw t9, -sym.imp.strlen(gp)
+addiu s1, s1, 4
+jalr t9
+sw a1, 0xbe8(sp)
+addiu v1, zero, 0x203
+lw gp, 0x10(sp)
+andi s4, v0, 0xffff
+addiu a0, sp, 0x1c
+lw a1, 0xbe8(sp)
+addiu s5, v0, 4
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+addu s1, s1, s4
+sh v1, 0x18(sp)
+andi s1, s1, 0xffff
+jalr t9
+sh s4, 0x1a(sp)
+move a0, s2
+addiu a1, sp, 0x18
+lw gp, 0x10(sp)
+move a2, s5
+lw t9, -sym.imp.memcpy(gp)
+jalr t9
+addu s2, s2, s5
+lw gp, 0x10(sp)
+lhu v0, 0x48(s0)
+beqz v0, 0x4046f4
+nop
+lhu a2, 0x4a(s0)
+addiu a2, a2, 4
+subu v0, a2, s3
+addu v0, s2, v0
+--
+move a1, s0
+jal 0x40455c
+sb zero, 0x21b(sp)
+lw ra, 0x22c(sp)
+lw s1, 0x228(sp)
+lw s0, 0x224(sp)
+jr ra
+addiu sp, sp, 0x230
+addiu sp, sp, -0x28
+sw ra, 0x24(sp)
+sw s0, 0x20(sp)
+lui gp, 0x42
+addiu gp, gp, -0x1fb0
+sw gp, 0x10(sp)
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+sw a0, 0x18(sp)
+lw gp, 0x10(sp)
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+addiu a0, v0, 1
+lw gp, 0x10(sp)
+lw a1, 0x18(sp)
+beqz v0, 0x4048e4
+move s0, v0
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a0, s0
+move v0, s0
+lw ra, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x28
+lw t9, -sym.rp_fatal(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x5904
+lw gp, 0x10(sp)
+lw a1, 0x18(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a0, s0
+move v0, s0
+lw ra, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x28
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+sw s0, 0x18(sp)
+lui gp, 0x42
+addiu gp, gp, -0x1fb0
+sw gp, 0x10(sp)
+lw t9, -sym.imp.geteuid(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x40496c
+lui a0, 0x40
+lui v0, 0x41
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m4[0m times [0;33mpppoe-relay[0m
+

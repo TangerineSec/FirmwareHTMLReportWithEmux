@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# upnp: This starts and stops upnp.
+#
+# chkconfig: 2345 85 15
+# description: upnp
+#
+# processname: /usr/sbin/upnp
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+prog="upnp"
+binpath="/usr/sbin/upnp"
+args="br0 1>/dev/null 2>&1"
+configpath="/usr/sbin/userconfig"
+
+[ -f $binpath ] || exit
+
+start(){
+
+    enable=`$configpath -read UPnP Enable`
+    if [ $enable == "0x01" ]; then
+        echo -n "Starting $prog ... "
+	/usr/bin/logger -t ipcam "UPnP start"
+        $binpath $args&
+	echo "."
+    fi
+}
+
+#default --stop send signal 15 (SIGTERM)
+stop(){
+    echo -n "Stopping $prog ... "
+    /usr/bin/logger -t ipcam "UPnP stop"
+    /usr/bin/killall $prog
+    echo "."
+}
+
+# See how we are called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+	sleep 1
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+esac
+
+exit 0

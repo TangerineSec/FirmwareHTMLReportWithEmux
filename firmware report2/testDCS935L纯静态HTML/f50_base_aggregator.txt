@@ -1,0 +1,103 @@
+[[0;34m+[0m] [0;36m[1mFinal aggregator[0m
+[1m=================================================================[0m
+The main aggregator module compiles and summarizes results from various analysis modules into a comprehensive overview by processing and logging detailed information from each identified element.
+
+
+[[0;32m+[0m][0;32m Tested firmware:[0;33m /home/kali/logiot/testDCS935L/firmware/squashfs-root[0m[0m
+[[0;32m+[0m][0;32m EMBA start command:[0;33m ./emba -l /home/kali/logiot/testDCS935L -f /home/kali/Desktop/iothacking_firmware_qemu_emulation/squashfs-root -p ./scan-profiles/default-scan-long.emba[0m[0m
+[[0;32m+[0m][0;32m Detected architecture and endianness ([0;33mverified[0;32m):[0;33m MIPS / EB[0m[0m
+[[0;32m+[0m][0;32m Operating system detected ([0;33mverified[0;32m): [0;33mLinux / v2.6.30.9[0m[0m
+
+-----------------------------------------------------------------
+
+[[0;32m+[0m][0;32m [0;33m746[0;32m files and [0;33m87 [0;32mdirectories detected.[0m
+[[0;32m+[0m][0;32m Found [0;33m247 issues[0;32m in [0;33m52[0;32m shell scripts.[0m[0m
+[[0;32m+[0m][0;32m Found [0;33m207[0;32m yara rule matches in [0;33m746[0;32m files.[0m[0m
+[[0;32m+[0m][0;32m Found [0;33m15[0;32m successful emulated processes [0;33m([0;32muser mode emulation[0;33m)[0;32m.[0m[0m
+
+-----------------------------------------------------------------
+
+[[0;32m+[0m][0;32m Found the following configuration issues:[0m
+    [0;32mFound [0;33m2[0;32m authentication issues.[0m
+    [0;32mFound [0;33m19[0;32m password related details via STACS.[0m
+    [0;32mFound [0;33m53[0;32m outdated certificates and [0;33m6 expiring certificates in [0;33m2[0;32m certificate files and in a total of [0;33m154[0;32m certificates.[0m
+    [0;32mFound [0;33m3[0;32m kernel modules with [0;33m0[0;32m licensing issues.[0m
+    [0;32mFound [0;33m0[0;32m interesting files and [0;33m1[0;32m files that could be useful for post-exploitation.[0m
+
+-----------------------------------------------------------------
+
+[[0;32m+[0m][0;32m Found [0;33m203 (98%)[0;32m binaries without enabled RELRO in [0;33m207[0;32m binaries.[0m
+[[0;32m+[0m][0;32m Found [0;33m207 (100%)[0;32m binaries without enabled NX in [0;33m207[0;32m binaries.[0m
+[[0;32m+[0m][0;32m Found [0;33m161 (78%)[0;32m binaries without enabled PIE in [0;33m207[0;32m binaries.[0m
+[[0;32m+[0m][0;32m Found [0;33m198 (96%)[0;32m stripped binaries without symbols in [0;33m207[0;32m binaries.[0m
+
+-----------------------------------------------------------------
+
+[[0;32m+[0m][0;32m Found [0;33m657[0;32m usages of strcpy in [0;33m207[0;32m binaries.[0m[0m
+
+
+[[0;32m+[0m][0;32m STRCPY - top 10 results:[0m
+[32m	COUNT: BINARY NAME     : common linux file: y/n | CWE CNT / SEMGREP| RELRO     | CANARY     | NX state   | SYMBOLS    | NETWORKING    |[0m
+[33m	93   : wscd            : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [31mNetworking    |[0m
+[33m	71   : hnap_service    : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	55   : eventd          : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	54   : hnap_push_servi : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	41   : libFVwireless.s : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[32m	31   : iptables        : common linux file: yes | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[32m	30   : ip6tables       : common linux file: yes | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	29   : libuClibc-0.9.3 : common linux file: no  | Vulns: NA  / NA  | [32mRELRO    | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	29   : ddp             : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [31mNetworking    |[0m
+[33m	18   : rtspd           : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [31mNetworking    |[0m
+[0m
+
+
+[[0;32m+[0m][0;32m SYSTEM - top 10 results:[0m
+[32m	COUNT: BINARY NAME     : common linux file: y/n | CWE CNT / SEMGREP| RELRO     | CANARY     | NX state   | SYMBOLS    | NETWORKING    |[0m
+[33m	63   : param.cgi       : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	45   : hnap_service    : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	26   : hnap_push_servi : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	25   : ddp             : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [31mNetworking    |[0m
+[33m	20   : eventd          : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	18   : wscd            : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [31mNetworking    |[0m
+[33m	13   : dayMode.cgi     : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	12   : netmgr          : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	11   : icr.cgi         : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[33m	11   : httpd-manager   : common linux file: no  | Vulns: NA  / NA  | [31mNo RELRO | [32mCanary    | [31mNX disabled | [32mNo Symbols | [32mNo Networking |[0m
+[0m
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Identified the following software inventory, vulnerabilities and exploits:
+[[0;32m+[0m][0;32m Found version details: 	sed                 :   4.0            :   CVEs: 0         :   Exploits: 0    :   Source: STAT           [0m
+[[0;32m+[0m][0;32m Found version details: 	iperf               :   2.0.5          :   CVEs: 0         :   Exploits: 0    :   Source: STAT/UEMU      [0m
+[[0;32m+[0m][0;32m Found version details: 	upnp_controlpoint   :   1.0            :   CVEs: 0         :   Exploits: 0    :   Source: STAT/UEMU      [0m
+[[0;32m+[0m][0;32m Found version details: 	mkdosfs             :   3.0.16         :   CVEs: 0         :   Exploits: 0    :   Source: UEMU           [0m
+[[0;32m+[0m][0;32m Found version details: 	udhcp               :   1.22.1         :   CVEs: 0         :   Exploits: 0    :   Source: STAT           [0m
+[[0;32m+[0m][0;32m Found version details: 	pppoe               :   3.10           :   CVEs: 0         :   Exploits: 0    :   Source: UEMU           [0m
+[[0;32m+[0m][0;32m Found version details: 	mtd-utils           :   1.1            :   CVEs: 0         :   Exploits: 0    :   Source: STAT/UEMU      [0m
+[[0;32m+[0m][0;32m Found version details: 	realtek_camera_tool :   1.11.1         :   CVEs: 0         :   Exploits: 0    :   Source: STAT/UEMU      [0m
+[[0;33m+[0m][0;33m Found version details: 	iptables            :   1.4.4          :   CVEs: 1         :   Exploits: 0    :   Source: UEMU           [0m
+[[0;33m+[0m][0;33m Found version details: 	elog                :   1.0.1          :   CVEs: 8         :   Exploits: 0    :   Source: STAT/UEMU      [0m
+[[0;33m+[0m][0;33m Found version details: 	stunnel             :   4.21           :   CVEs: 5         :   Exploits: 0    :   Source: STAT           [0m
+[[0;35m+[0m][0;35m Found version details: 	wireless_tools      :   25             :   CVEs: 2         :   Exploits: 2    :   Source: UEMU           [0m
+[[0;35m+[0m][0;35m Found version details: 	busybox             :   1.22.1         :   CVEs: 19        :   Exploits: 7    :   Source: STAT/UEMU      [0m
+[[0;35m+[0m][0;35m Found version details: 	libcurl             :   7.37.0         :   CVEs: 34        :   Exploits: 1    :   Source: STAT           [0m
+[[0;35m+[0m][0;35m Found version details: 	curl                :   7.37.0         :   CVEs: 63        :   Exploits: 2    :   Source: STAT/UEMU      [0m
+[[0;35m+[0m][0;35m Found version details: 	openssl             :   0.9.8zc        :   CVEs: 40        :   Exploits: 2    :   Source: STAT           [0m
+[[0;35m+[0m][0;35m Found version details: 	openssl             :   0.9.8b         :   CVEs: 88        :   Exploits: 12   :   Source: STAT           [0m
+[[0;35m+[0m][0;35m Found version details: 	linux_kernel        :   2.6.30.9       :   CVEs: 31        :   Exploits: 4    :   Source: STAT           [0m
+
+
+[[0;32m+[0m][0;32m Identified [0;33m18[0;32m software components with version details.
+[0m
+
+
+[[0;32m+[0m][0;32m Identified [0;33m291[0;32m CVE entries.[0m
+    [0;32mIdentified [0;31m[1m98[0m[0;32m High rated CVE entries / Exploits: [0;33m12[0m[0m
+    [0;32mIdentified [0;33m[1m172[0m[0;32m Medium rated CVE entries / Exploits: [0;33m12[0m[0m
+    [0;32mIdentified [0;32m[1m21[0m[0;32m Low rated CVE entries /Exploits: [0;33m3[0m[0m
+    [0;32m[0;35m[1m27[0m[0;32m possible exploits available ([0;35m6[0;32m Metasploit modules).[0m
+    [0;32mRemote exploits: [0;35m[1m0[0m[0;32m / Local exploits: [0;35m[1m0[0m[0;32m / DoS exploits: [0;35m[1m4[0m[0;32m / Github PoCs: [0;35m[1m0[0m[0;32m / Known exploited vulnerabilities: [0;35m[1m0[0;32m / Verified Exploits: [0;35m[1m0[0m[0m
+
+-----------------------------------------------------------------
+

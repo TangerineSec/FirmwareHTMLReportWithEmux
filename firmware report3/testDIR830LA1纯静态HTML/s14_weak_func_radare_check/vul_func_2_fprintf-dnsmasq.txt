@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33mdnsmasq[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mdnsmasq[0m
+
+lw t9, -sym.die(gp)
+addiu a0, a0, 0x4368
+move a1, zero
+jalr t9
+addiu a2, zero, 5
+lw gp, 0x18(sp)
+lw v0, -loc.__bss_start(gp)
+lw v0, (v0)
+lw a0, 0x3c(v0)
+beqz a0, 0x40f668
+nop
+lw t9, -sym.imp.fopen(gp)
+lui a1, 0x41
+jalr t9
+addiu a1, a1, 0x438c
+lw gp, 0x18(sp)
+beqz v0, 0x40f668
+move s0, v0
+lw t9, -sym.imp.getpid(gp)
+jalr t9
+nop
+lui a1, 0x41
+move a0, s0
+lw gp, 0x18(sp)
+addiu a1, a1, 0x4390
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a2, v0
+lw gp, 0x18(sp)
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+move a0, s0
+lw gp, 0x18(sp)
+lw t9, -sym.imp.open(gp)
+lui a0, 0x41
+addiu a0, a0, 0x4394
+jalr t9
+addiu a1, zero, 2
+addiu a1, zero, 1
+lw gp, 0x18(sp)
+move a0, v0
+lw t9, -sym.imp.dup2(gp)
+jalr t9
+move s0, v0
+move a0, s0
+lw gp, 0x18(sp)
+--
+lui gp, 0x43
+addiu gp, gp, -0x2520
+sw gp, 0x10(sp)
+lw t9, -sym.imp.getpid(gp)
+move s3, a0
+sw a2, 0x48(sp)
+move s2, a1
+jalr t9
+sw a3, 0x4c(sp)
+lui v1, 0x42
+lw v1, 0x5ef0(v1)
+lw gp, 0x10(sp)
+beqz v1, 0x4111bc
+move s4, v0
+lw s0, -0x7f20(gp)
+lui a0, 0x41
+lw t9, -sym.imp.fputs(gp)
+lw a1, (s0)
+jalr t9
+addiu a0, a0, 0x4704
+addiu v0, sp, 0x48
+move a1, s2
+lw gp, 0x10(sp)
+move a2, v0
+lw a0, (s0)
+[31mlw t9, -sym.imp.vfprintf(gp)[0m
+jalr t9
+sw v0, 0x18(sp)
+lw a1, (s0)
+lw gp, 0x10(sp)
+lw v0, 0x34(a1)
+beqz v0, 0x4111ac
+nop
+lw v0, 0x10(a1)
+lw v1, 0x1c(a1)
+sltu v1, v0, v1
+beqz v1, 0x4111a0
+addiu v1, v0, 1
+addiu a0, zero, 0xa
+sb a0, (v0)
+b 0x4111bc
+sw v1, 0x10(a1)
+lw t9, -sym.imp.__fputc_unlocked(gp)
+b 0x4111b0
+nop
+lw t9, -sym.imp.fputc(gp)
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m2[0m times [0;33mdnsmasq[0m
+

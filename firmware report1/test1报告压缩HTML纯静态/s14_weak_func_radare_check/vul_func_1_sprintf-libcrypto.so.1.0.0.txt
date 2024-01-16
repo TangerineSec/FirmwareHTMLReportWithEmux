@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibcrypto.so.1.0.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibcrypto.so.1.0.0[0m
+
+lw t9, -sym.CRYPTO_malloc(gp)
+addiu a2, zero, 0x182
+jalr t9
+addiu a1, a1, 0x6544
+move s0, v0
+bnez v0, 0x7334c
+lw gp, 0x18(sp)
+lw t9, -sym.ERR_put_error(gp)
+sw zero, 0x10(sp)
+addiu a0, zero, 0x25
+addiu a1, zero, 0x7b
+addiu a2, zero, 0x6d
+bal sym.ERR_put_error
+move a3, zero
+b 0x733a8
+lw ra, 0x34(sp)
+beql s3, zero, 0x73398
+lw t9, -sym.imp.strcpy(gp)
+lw t9, -sym.DSO_flags(gp)
+bal sym.DSO_flags
+move a0, s2
+lw gp, 0x18(sp)
+andi v0, v0, 2
+move a0, s0
+bnez v0, 0x73380
+[31mlw t9, -sym.imp.sprintf(gp)[0m
+lw a1, -0x7f88(gp)
+b 0x73388
+addiu a1, a1, 0x6550
+lw a1, -0x7f88(gp)
+addiu a1, a1, 0x655c
+jalr t9
+move a2, s1
+b 0x733a8
+lw ra, 0x34(sp)
+move a0, v0
+jalr t9
+move a1, s1
+lw ra, 0x34(sp)
+move v0, s0
+lw s3, 0x30(sp)
+lw s2, 0x2c(sp)
+lw s1, 0x28(sp)
+lw s0, 0x24(sp)
+jr ra
+addiu sp, sp, 0x38
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m1[0m times [0;33mlibcrypto.so.1.0.0[0m
+

@@ -1,0 +1,52 @@
+#!/bin/sh
+#set -x
+
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_Parameter_two=$2
+G_LastValue=
+G_AppPath=`dirname $0`
+G_Url=""
+G_TmpFile="/tmp/urlfile"
+G_Parameter_all=$*
+
+#参数错误
+if [ ${G_Parameter_num} -ne 2 ];then
+	xRouterLog 2 "appInstallbyid" "-" "Parameter Err."
+	exit 1
+fi
+
+#参数错误
+if [ "$G_Parameter_one" != "update" ];then
+	xRouterLog 2 "appInstallbyid" "-" "Parameter Err."
+	exit 1
+fi
+
+wget -O ${G_TmpFile} "http://r.xcloud.cc/router/index.php?m=Index&a=getPluginsPath&id=${G_Parameter_two}"
+G_LastValue=$?
+if [ ${G_ValueLast} -ne 0 ];then 
+	xRouterLog 2 "appInstallbyid" "-" "wget Err."
+fi
+
+G_Url=`cat ${G_TmpFile}`
+
+#得到的地址为空
+if [ "${G_Url}" == "" ];then
+	xRouterLog 2 "appInstallbyid" "-" "Url is Null."
+	exit 2
+fi
+xRouterLog 0 "appInstallbyid" "-" "Url is ${G_Url}."
+
+cd ${G_AppPath}
+./xipk update ${G_Url}
+G_LastValue=$?
+rm ${G_TmpFile}
+cd -
+
+if [ ${G_ValueLast} -ne 0 ];then 
+	xRouterLog 2 "appInstallbyid" "-" "xipk update Err."
+fi
+
+exit ${G_LastValue}
+
+

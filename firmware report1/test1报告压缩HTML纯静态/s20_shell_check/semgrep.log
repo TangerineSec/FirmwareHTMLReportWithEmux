@@ -1,0 +1,1207 @@
+METRICS: Using configs from the Registry (like --config=p/ci) reports pseudonymous rule metrics to semgrep.dev.
+To disable Registry rule metrics, use "--metrics=off".
+Using configs only from local files (like --config=xyz.yml) does not enable metrics.
+
+More information: https://semgrep.dev/docs/metrics
+
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 2160 files tracked by git with 7 Code rules:
+  Scanning 49 files with 7 bash rules.
+                     
+                     
+┌───────────────────┐
+│ 364 Code Findings │
+└───────────────────┘
+                                               
+    /logs/firmware/squashfs-root/bin/ipcalc.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            3┆ awk -f - $* <<EOF
+                                             
+    /logs/firmware/squashfs-root/etc/diag.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           17┆ led_set_attr $preinit_led "trigger" "timer"
+            ⋮┆----------------------------------------
+           18┆ led_set_attr $preinit_led "delay_on" "$1"
+            ⋮┆----------------------------------------
+           19┆ led_set_attr $preinit_led "delay_off" "$2"
+            ⋮┆----------------------------------------
+           23┆ led_set_attr $preinit_led "trigger" "none"
+            ⋮┆----------------------------------------
+           24┆ led_set_attr $preinit_led "brightness" 0
+            ⋮┆----------------------------------------
+           36┆ led_set_attr $status_led "trigger" "timer"
+            ⋮┆----------------------------------------
+           37┆ led_set_attr $status_led "delay_on" "$1"
+            ⋮┆----------------------------------------
+           38┆ led_set_attr $status_led "delay_off" "$2"
+            ⋮┆----------------------------------------
+           42┆ led_set_attr $status_led "trigger" "none"
+            ⋮┆----------------------------------------
+           43┆ led_set_attr $status_led "brightness" 255
+            ⋮┆----------------------------------------
+           47┆ led_set_attr $status_led "trigger" "none"
+            ⋮┆----------------------------------------
+           48┆ led_set_attr $status_led "brightness" 0
+                                                   
+    /logs/firmware/squashfs-root/lib/config/uci.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           40┆ DATA="$(/sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} ${LOAD_STATE:+-P /var/state} -S -n export        
+  "$PACKAGE" 2>/dev/null)"                                                                                              
+            ⋮┆----------------------------------------
+           45┆ ${CONFIG_SECTION:+config_cb}
+            ⋮┆----------------------------------------
+           51┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} -q show "$PACKAGE" > /dev/null && return 0
+            ⋮┆----------------------------------------
+           52┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} import "$PACKAGE"
+            ⋮┆----------------------------------------
+           53┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit "$PACKAGE"
+            ⋮┆----------------------------------------
+           61┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} -P /var/state revert                                     
+  "$PACKAGE${CONFIG:+.$CONFIG}${OPTION:+.$OPTION}"                                                                      
+            ⋮┆----------------------------------------
+           71┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} -P /var/state set                                        
+  "$PACKAGE.$CONFIG${OPTION:+.$OPTION}=$VALUE"                                                                          
+            ⋮┆----------------------------------------
+           85┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set "$PACKAGE.$CONFIG.$OPTION=$VALUE"
+            ⋮┆----------------------------------------
+           99┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} ${STATE:+-P $STATE} -q get                               
+  "$PACKAGE${CONFIG:+.$CONFIG}${OPTION:+.$OPTION}"                                                                      
+            ⋮┆----------------------------------------
+          113┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set "$PACKAGE.$CONFIG=$TYPE"
+            ⋮┆----------------------------------------
+          123┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} rename "$PACKAGE.$CONFIG=$VALUE"
+            ⋮┆----------------------------------------
+          131┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} del "$PACKAGE.$CONFIG${OPTION:+.$OPTION}"
+            ⋮┆----------------------------------------
+          136┆ /sbin/uci ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit $PACKAGE
+                                                        
+    /logs/firmware/squashfs-root/lib/functions/block.sh 
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+          126┆ cat /tmp/fstab | grep -E -v "^$device[[:blank:]]" >>"$fstabnew"
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          129┆ rm -f $fstabnew
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+          149┆ cat /tmp/fstab | grep -E -v "^$device[[:blank:]]" | grep -v "$target" >>"$fstabnew"
+            ⋮┆----------------------------------------
+          149┆ cat /tmp/fstab | grep -E -v "^$device[[:blank:]]" | grep -v "$target" >>"$fstabnew"
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          152┆ rm -f $fstabnew
+                                                       
+    /logs/firmware/squashfs-root/lib/functions/boot.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           66┆ $func "$1" "$2"
+            ⋮┆----------------------------------------
+           83┆ magic=$(hexdump $mtdpart -n 4 -e '4/1 "%02x"')
+            ⋮┆----------------------------------------
+           88┆ cd $1
+            ⋮┆----------------------------------------
+           91┆ cd $2
+            ⋮┆----------------------------------------
+           95┆ cd $1
+            ⋮┆----------------------------------------
+          100┆ for file in $(cd $2; find . -xdev -type f;); do
+            ⋮┆----------------------------------------
+          104┆ ./usr/lib/opkg/info/*) cp -af $2/$file $file;;
+            ⋮┆----------------------------------------
+          105┆ *) ln -sf /rom/${file#./*} $file;;
+            ⋮┆----------------------------------------
+          108┆ for file in $(cd $2; find . -xdev -type l;); do
+            ⋮┆----------------------------------------
+          109┆ cp -af $2/${file#./*} $file
+            ⋮┆----------------------------------------
+          115┆ mount -o move /proc $1/proc && \
+            ⋮┆----------------------------------------
+          116┆ pivot_root $1 $1$2 && {
+            ⋮┆----------------------------------------
+          117┆ mount -o move $2/dev /dev
+            ⋮┆----------------------------------------
+          118┆ mount -o move $2/tmp /tmp
+            ⋮┆----------------------------------------
+          119┆ mount -o move $2/sys /sys 2>&-
+            ⋮┆----------------------------------------
+          120┆ mount -o move $2/overlay /overlay 2>&-
+            ⋮┆----------------------------------------
+          129┆ mount -t overlayfs -olowerdir=/,upperdir=$1 "overlayfs:$1" /mnt && root=/mnt
+            ⋮┆----------------------------------------
+          131┆ mount -t mini_fo -o base=/,sto=$1 "mini_fo:$1" /mnt 2>&- && root=/mnt
+            ⋮┆----------------------------------------
+          138┆ mount | grep "on $1 type" 2>&- 1>&- || mount -o bind $1 $1
+            ⋮┆----------------------------------------
+          139┆ dupe $1 $rom
+            ⋮┆----------------------------------------
+          142┆ pivot $root $2
+                                                           
+    /logs/firmware/squashfs-root/lib/functions/extmount.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           29┆ mount -o move /proc $1/proc && \
+            ⋮┆----------------------------------------
+           30┆ pivot_root $1 $1$2 && {
+            ⋮┆----------------------------------------
+           31┆ mount -o move $2/dev /dev
+            ⋮┆----------------------------------------
+           32┆ mount -o move $2/tmp /tmp
+            ⋮┆----------------------------------------
+           33┆ mount -o move $2/sys /sys 2>&-
+                                                       
+    /logs/firmware/squashfs-root/lib/functions/fsck.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           19┆ fsck_${known_type} "$device"
+                                                          
+    /logs/firmware/squashfs-root/lib/functions/service.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           74┆ $ssd${1:+ -- "$@"}
+            ⋮┆----------------------------------------
+          121┆ kill -TERM $pid 2>/dev/null && \
+            ⋮┆----------------------------------------
+          123┆ kill -KILL $pid 2>/dev/null && \
+                                                               
+    /logs/firmware/squashfs-root/lib/functions/uci-defaults.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           12┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+           31┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+           50┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+           68┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+           86┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+          107┆ uci -q get system.$cfg && return 0
+            ⋮┆----------------------------------------
+          130┆ uci -q get system.$cfg && return 0
+                                                  
+    /logs/firmware/squashfs-root/lib/functions.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            7┆ ${DEBUG:-:} "$@"
+            ⋮┆----------------------------------------
+           23┆ env -i ACTION=$1 INTERFACE=$2 /sbin/hotplug-call net
+            ⋮┆----------------------------------------
+           78┆ export ${NO_EXPORT:+-n} CONFIG_NUM_SECTIONS=$(($CONFIG_NUM_SECTIONS + 1))
+            ⋮┆----------------------------------------
+          101┆ len=$(($len + 1))
+            ⋮┆----------------------------------------
+          115┆ for oldvar in `set | grep ^CONFIG_${OLD}_ | \
+            ⋮┆----------------------------------------
+          137┆ for oldvar in `set | grep ^CONFIG_${SECTION:+${SECTION}_} | \
+            ⋮┆----------------------------------------
+          148┆ *)  eval export ${NO_EXPORT:+-n} -- "${1}=\${CONFIG_${2}_${3}:-\${4}}";;
+            ⋮┆----------------------------------------
+          204┆ c="$(($c + 1))"
+            ⋮┆----------------------------------------
+          211┆ sed 's/^[^#]/insmod &/' $* | ash 2>&- || :
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.best-practice.iteration-over-ls-output                
+          Iterating over ls output is fragile. Use globs, e.g. 'dir/*' instead of '$(ls dir)'.
+                                                                                              
+          218┆ for file in $(ls $1/*.sh 2>/dev/null); do
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          218┆ for file in $(ls $1/*.sh 2>/dev/null); do
+            ⋮┆----------------------------------------
+          219┆ . $file
+            ⋮┆----------------------------------------
+          254┆ return $count
+            ⋮┆----------------------------------------
+          273┆ ( . "./$(basename $file)" ) && rm -f "$file"
+            ⋮┆----------------------------------------
+          287┆ return $rc
+            ⋮┆----------------------------------------
+          291┆ grep -qs "^${1}:" ${IPKG_INSTROOT}/etc/group
+            ⋮┆----------------------------------------
+          308┆ return $rc
+            ⋮┆----------------------------------------
+          312┆ grep -qs "^${1}:" ${IPKG_INSTROOT}/etc/passwd
+                                                       
+    /logs/firmware/squashfs-root/lib/monitor_usbcam.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            5┆ /bin/kill -9 $PID
+                                                            
+    /logs/firmware/squashfs-root/lib/netifd/netifd-proto.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           31┆ case "$(type $1 2>/dev/null)" in
+            ⋮┆----------------------------------------
+          248┆ ubus $options call network.interface notify_proto "$(json_dump)"
+                                                          
+    /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           35┆ proto_run_command "$config" udhcpc \
+           36┆    -p                          
+  /var/run/udhcpc-$iface.pid \                
+           37┆    -s                       
+  /lib/netifd/dhcp.script \                
+           38┆    -f -t 0 -i        
+  "$iface" \                        
+           39┆    ${ipaddr:+-r        
+  $ipaddr} \                          
+           40┆    ${hostname:+-H          
+  $hostname} \                            
+           41┆    ${vendorid:+-V          
+  $vendorid} \                            
+           42┆    $clientid $broadcast       
+  $dhcpopts                                  
+                                                          
+    /logs/firmware/squashfs-root/lib/netifd/proto/l2tp.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           76┆ xl2tpd-control add l2tp-${config} pppoptfile=${optfile} lns=${server} redial=yes redial timeout=20
+            ⋮┆----------------------------------------
+           77┆ xl2tpd-control connect l2tp-${config}
+            ⋮┆----------------------------------------
+           95┆ xl2tpd-control disconnect l2tp-${interface}
+            ⋮┆----------------------------------------
+          101┆ xl2tpd-control remove l2tp-${interface}
+            ⋮┆----------------------------------------
+          102┆ rm -f ${optfile}
+                                                         
+    /logs/firmware/squashfs-root/lib/netifd/proto/ppp.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           43┆ rm -f $PPPD_LOG_FILE 2>/dev/null
+            ⋮┆----------------------------------------
+           44┆ proto_run_command "$config" /usr/sbin/pppd \
+           45┆    nodetach ipparam         
+  "$config" \                              
+           46┆    ifname                       
+  "${proto:-ppp}-$config" \                    
+           47┆    ${keepalive:+lcp-echo-interval $interval lcp-echo-failure ${keepalive%%[,    
+  ]*}} \                                                                                       
+           48┆                 
+  ${ipv6:++ipv6} \             
+           49┆                 
+  nodefaultroute \             
+           50┆             
+  usepeerdns \             
+           51┆    $demand maxfail 
+  1 \                             
+           52┆    ${username:+user "$username" password            
+  "$password"} \                                                   
+           53┆    ${connect:+connect           
+  "$connect"} \                                
+             [hid 7 additional lines, adjust with --max-lines-per-finding] 
+          116┆ /sbin/insmod $module 2>&- >&-
+            ⋮┆----------------------------------------
+          125┆ ppp_generic_setup "$config" \
+          126┆    plugin           
+  rp-pppoe.so \                    
+          127┆    ${ac:+rp_pppoe_ac      
+  "$ac"} \                               
+          128┆    ${service:+rp_pppoe_service           
+  "$service"} \                                         
+          129┆             
+  "nic-$iface"             
+            ⋮┆----------------------------------------
+          151┆ /sbin/insmod $module 2>&- >&-
+            ⋮┆----------------------------------------
+          161┆ ppp_generic_setup "$config" \
+          162┆    plugin          
+  pppoatm.so \                    
+          163┆                                          
+  ${atmdev:+$atmdev.}${vpi:-8}.${vci:-35} \             
+          164┆          
+  ${encaps}             
+            ⋮┆----------------------------------------
+          199┆ /sbin/insmod $module 2>&- >&-
+            ⋮┆----------------------------------------
+          204┆ ppp_generic_setup "$config" \
+          205┆    plugin       
+  pptp.so \                    
+          206┆    pptp_server       
+  $server \                         
+          207┆    file                   
+  /etc/ppp/options.pptp                  
+                                                       
+    /logs/firmware/squashfs-root/lib/network/config.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           12┆ json_load "$(ifstatus $interface)"
+                                                                    
+    /logs/firmware/squashfs-root/lib/preinit/04_set_iface_switch.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           48┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           51┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           54┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           57┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           60┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           63┆ config_rt305x_esw $1
+            ⋮┆----------------------------------------
+           66┆ config_mt76xx_esw $1
+            ⋮┆----------------------------------------
+           69┆ config_mt76xx_esw $1
+            ⋮┆----------------------------------------
+           72┆ config_mt76xx_esw $1
+                                               
+    /logs/firmware/squashfs-root/lib/ralink.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           76┆ echo $name
+                                                       
+    /logs/firmware/squashfs-root/lib/upgrade/common.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            5┆ ldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }
+            ⋮┆----------------------------------------
+            6┆ libs() { ldd $* | awk '{print $3}'; }
+            ⋮┆----------------------------------------
+           12┆ dir="$(dirname $dest)"
+            ⋮┆----------------------------------------
+           14┆ cp $file $dest
+            ⋮┆----------------------------------------
+           22┆ [ -x "$src" ] && files="$src $(libs $src)"
+            ⋮┆----------------------------------------
+           23┆ install_file $files
+            ⋮┆----------------------------------------
+           30┆ dir="$(dirname $dest)"
+            ⋮┆----------------------------------------
+           32┆ [ -f "$dest" ] || ln -s $src $dest
+            ⋮┆----------------------------------------
+           37┆ mount | grep "on $1 type" 2>&- 1>&- || mount -o bind $1 $1
+            ⋮┆----------------------------------------
+           38┆ mkdir -p $1$2 $1/proc $1/sys $1/dev $1/tmp $1/overlay && \
+            ⋮┆----------------------------------------
+           39┆ mount -o move /proc $1/proc && \
+            ⋮┆----------------------------------------
+           40┆ pivot_root $1 $1$2 || {
+            ⋮┆----------------------------------------
+           41┆ umount $1 $1
+            ⋮┆----------------------------------------
+           45┆ mount -o move $2/sys /sys
+            ⋮┆----------------------------------------
+           46┆ mount -o move $2/dev /dev
+            ⋮┆----------------------------------------
+           47┆ mount -o move $2/tmp /tmp
+            ⋮┆----------------------------------------
+           48┆ mount -o move $2/overlay /overlay 2>&-
+            ⋮┆----------------------------------------
+           61┆ install_bin $file
+            ⋮┆----------------------------------------
+           63┆ install_file /etc/resolv.conf /lib/functions.sh /lib/functions.sh /lib/upgrade/*.sh $RAMFS_COPY_DATA
+            ⋮┆----------------------------------------
+           65┆ pivot $RAM_ROOT /mnt || {
+            ⋮┆----------------------------------------
+          108┆ kill -$sig $pid 2>/dev/null
+            ⋮┆----------------------------------------
+          160┆ local magic="$(eval $cmd $from | dd bs=2 count=1 2>/dev/null | hexdump -n 2 -e '1/1 "%02x"')"
+                                                         
+    /logs/firmware/squashfs-root/lib/upgrade/platform.sh 
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+           12┆ cpu=`cat /proc/cpuinfo | awk '/system type/{print $5}'`
+            ⋮┆----------------------------------------
+           13┆ size=`cat /proc/mtd | awk '/fullflash/{print $2}'`
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           38┆ echo $result
+            ⋮┆----------------------------------------
+           44┆ result=`echo $cap | grep 'RY-1$'`
+            ⋮┆----------------------------------------
+           49┆ result=`echo $cap | grep 'RY-1A$'`
+            ⋮┆----------------------------------------
+           54┆ result=`echo $cap | grep 'RY-02$'`
+            ⋮┆----------------------------------------
+           57┆ echo $result
+                                                    
+    /logs/firmware/squashfs-root/lib/wifi/ralink.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           14┆ config_get channel $device channel
+            ⋮┆----------------------------------------
+           18┆ config_get mode $device mode
+            ⋮┆----------------------------------------
+           19┆ config_get wmm $device wmm
+            ⋮┆----------------------------------------
+           20┆ config_get txpower $device txpower
+            ⋮┆----------------------------------------
+           21┆ config_get ht $device ht
+            ⋮┆----------------------------------------
+           22┆ config_get country $device country
+            ⋮┆----------------------------------------
+           23┆ config_get hidessid $device hidessid
+            ⋮┆----------------------------------------
+           24┆ config_get macpolicy $device macpolicy
+            ⋮┆----------------------------------------
+           25┆ config_get maclist $device maclist
+            ⋮┆----------------------------------------
+          385┆ config_get cliname $vif cliname
+            ⋮┆----------------------------------------
+          386┆ [ -n "$cliname" ] && ifconfig $cliname down
+            ⋮┆----------------------------------------
+          387┆ ifconfig $ifname down
+            ⋮┆----------------------------------------
+          391┆ ifconfig $ifname up
+            ⋮┆----------------------------------------
+          392┆ [ -n "$cliname" ] && ifconfig $cliname up
+            ⋮┆----------------------------------------
+          403┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          404┆ ifconfig $ifname down
+            ⋮┆----------------------------------------
+          405┆ config_get cliname $vif cliname
+            ⋮┆----------------------------------------
+          406┆ [ -n "$cliname" ] && ifconfig $cliname down
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-command-substitution-in-command          
+          The result of command substitution $(...) or `...`, if unquoted, is split on whitespace or  
+          other separators specified by the IFS variable. You should surround it with double quotes to
+          avoid splitting the result.                                                                 
+                                                                                                      
+          410┆ $(killall ap_client 2>/dev/null) || true
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+          414┆ RT3X5X=`cat /proc/cpuinfo | egrep "(RT305)"`
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          418┆ brctl delif br-lan $1
+            ⋮┆----------------------------------------
+          423┆ brctl delif br-lan $1
+            ⋮┆----------------------------------------
+          431┆ prepare_config $device
+            ⋮┆----------------------------------------
+          432┆ config_get dmode $device mode
+            ⋮┆----------------------------------------
+          440┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          441┆ config_get cliname $vif cliname
+            ⋮┆----------------------------------------
+          442┆ config_get encryption $vif encryption
+            ⋮┆----------------------------------------
+          443┆ config_get key $vif key
+            ⋮┆----------------------------------------
+          444┆ config_get ssid $vif ssid
+            ⋮┆----------------------------------------
+          445┆ config_get wpa_crypto $vif wpa_crypto
+            ⋮┆----------------------------------------
+          446┆ config_get mode $vif mode
+            ⋮┆----------------------------------------
+          447┆ config_get wps $vif wps
+            ⋮┆----------------------------------------
+          448┆ config_get isolate $vif isolate
+            ⋮┆----------------------------------------
+          456┆ rt305x_fix_ioctl $ifname 0
+            ⋮┆----------------------------------------
+          465┆ config_get key $vif "key$key"
+            ⋮┆----------------------------------------
+          476┆ ifconfig $ifname up
+            ⋮┆----------------------------------------
+          495┆ iwpriv $ifname set AuthMode=$enc
+            ⋮┆----------------------------------------
+          496┆ iwpriv $ifname set EncrypType=$crypto
+            ⋮┆----------------------------------------
+          498┆ iwpriv $ifname set IEEE8021X=0
+            ⋮┆----------------------------------------
+          499┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          500┆ iwpriv $ifname set "WPAPSK=${key}"
+            ⋮┆----------------------------------------
+          501┆ iwpriv $ifname set DefaultKeyID=2
+            ⋮┆----------------------------------------
+          502┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          504┆ iwpriv $ifname set WscConfMode=7
+            ⋮┆----------------------------------------
+          506┆ iwpriv $ifname set WscConfMode=0
+            ⋮┆----------------------------------------
+          510┆ iwpriv $ifname set AuthMode=WEPAUTO
+            ⋮┆----------------------------------------
+          511┆ iwpriv $ifname set EncrypType=WEP
+            ⋮┆----------------------------------------
+          512┆ iwpriv $ifname set IEEE8021X=0
+            ⋮┆----------------------------------------
+          514┆ config_get keyn $vif key${idx}
+            ⋮┆----------------------------------------
+          515┆ [ -n "$keyn" ] && iwpriv $ifname set "Key${idx}=${keyn}"
+            ⋮┆----------------------------------------
+          517┆ iwpriv $ifname set DefaultKeyID=${key}
+            ⋮┆----------------------------------------
+          518┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          519┆ iwpriv $ifname set WscConfMode=0
+            ⋮┆----------------------------------------
+          522┆ iwpriv $ifname set AuthMode=OPEN
+            ⋮┆----------------------------------------
+          523┆ iwpriv $ifname set WscConfMode=0
+            ⋮┆----------------------------------------
+          524┆ iwpriv $ifname set EncrypType=NONE
+            ⋮┆----------------------------------------
+          547┆ rt305x_fix_ioctl $ifname 1
+            ⋮┆----------------------------------------
+          549┆ brctl addif br-lan $ifname
+            ⋮┆----------------------------------------
+          831┆ config_get type ra${i} type
+                                                           
+    /logs/firmware/squashfs-root/lib/wifi/ralink_common.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            7┆ echo $vifs >> /tmp/mt76xx.sh.log
+            ⋮┆----------------------------------------
+           14┆ netif=`uci -q get ${vif}.ifname`
+            ⋮┆----------------------------------------
+           15┆ nettype=`uci -q get ${vif}.network`
+            ⋮┆----------------------------------------
+           16┆ device=`uci -q get ${vif}.device`
+            ⋮┆----------------------------------------
+           28┆ ifn2g=$(( $ifn2g + 1 ))
+            ⋮┆----------------------------------------
+           32┆ ifn5g=$(( $ifn5g + 1 ))
+            ⋮┆----------------------------------------
+           44┆ uci -q set ${vif}.ifname=${netif_new}
+            ⋮┆----------------------------------------
+           49┆ uci -q set ${vif}.network=${nettype}
+            ⋮┆----------------------------------------
+           64┆ config_get channel $device channel
+            ⋮┆----------------------------------------
+           65┆ config_get hidessid $device hidessid
+            ⋮┆----------------------------------------
+           66┆ config_get macpolicy $device macpolicy
+            ⋮┆----------------------------------------
+           67┆ config_get maclist $device maclist
+            ⋮┆----------------------------------------
+           71┆ sed -i "s/Channel=.*$/Channel=${channel}/g" ${datpath}
+            ⋮┆----------------------------------------
+           73┆ sed -i "s/AutoChannelSelect=\([0-9]\)/AutoChannelSelect=2/g" ${datpath}
+            ⋮┆----------------------------------------
+           75┆ sed -i "s/AutoChannelSelect=\([0-9]\)/AutoChannelSelect=0/g" ${datpath}
+            ⋮┆----------------------------------------
+           77┆ sed -i "s/HideSSID=\([0-9]\)/HideSSID=${hidessid}/g" ${datpath}
+            ⋮┆----------------------------------------
+           85┆ sed -i "s/AccessPolicy0=\([0-9]\)/AccessPolicy0=${ra_macpolicy}/g" ${datpath}
+            ⋮┆----------------------------------------
+           86┆ sed -i "s/AccessControlList0=/AccessControlList0=${maclist}/g" ${datpath}
+            ⋮┆----------------------------------------
+           89┆ config_get ssid_uci $vif ssid
+            ⋮┆----------------------------------------
+           90┆ i=$(( $i + 1 ))
+            ⋮┆----------------------------------------
+           91┆ ssid_dat=`sed -n -r "s/SSID${i}=([0-9]*)/\1/p" ${datpath}`
+            ⋮┆----------------------------------------
+           94┆ sed -i "s/SSID${i}=.*$/SSID${i}=${ssid_uci}/g" ${datpath}
+            ⋮┆----------------------------------------
+           97┆ nn=`sed -n -r "s/(BssidNum=)([0-9]+)/\2/p" ${datpath}`
+            ⋮┆----------------------------------------
+           98┆ sed -i "s/BssidNum=\([0-9]\)/BssidNum=${i}/g" ${datpath}
+            ⋮┆----------------------------------------
+          116┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          117┆ ifconfig $ifname down
+            ⋮┆----------------------------------------
+          124┆ rmmod $2
+            ⋮┆----------------------------------------
+          126┆ insmod $2
+            ⋮┆----------------------------------------
+          128┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          129┆ config_get disabled $vif disabled
+            ⋮┆----------------------------------------
+          133┆ ifconfig $ifname up
+            ⋮┆----------------------------------------
+          146┆ config_get channel $device channel
+            ⋮┆----------------------------------------
+          147┆ config_get ssid $2 ssid
+            ⋮┆----------------------------------------
+          148┆ config_get mode $device mode
+            ⋮┆----------------------------------------
+          149┆ config_get ht $device ht
+            ⋮┆----------------------------------------
+          150┆ config_get country $device country
+            ⋮┆----------------------------------------
+          151┆ config_get regdom $device regdom
+            ⋮┆----------------------------------------
+          172┆ config_get type $device type
+            ⋮┆----------------------------------------
+          173┆ sync_uci_with_dat $device /etc/Wireless/$type/$type.dat
+            ⋮┆----------------------------------------
+          176┆ reinit_wifi $device $module
+            ⋮┆----------------------------------------
+          186┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          187┆ ifconfig $ifname down
+            ⋮┆----------------------------------------
+          197┆ config_get dmode $device mode
+            ⋮┆----------------------------------------
+          198┆ config_get channel $device channel
+            ⋮┆----------------------------------------
+          204┆ config_get ifname $vif ifname
+            ⋮┆----------------------------------------
+          205┆ [ "$ifname" == "ra0" ] &&  prepare_$device $device $vif
+            ⋮┆----------------------------------------
+          206┆ config_get encryption $vif encryption
+            ⋮┆----------------------------------------
+          207┆ config_get key $vif key
+            ⋮┆----------------------------------------
+          208┆ config_get ssid $vif ssid
+            ⋮┆----------------------------------------
+          210┆ config_get hidden $vif hidden
+            ⋮┆----------------------------------------
+          211┆ config_get mode $vif mode
+            ⋮┆----------------------------------------
+          212┆ config_get wps $vif wps
+            ⋮┆----------------------------------------
+          213┆ config_get isolate $vif isolate
+            ⋮┆----------------------------------------
+          214┆ config_get disabled $vif disabled
+            ⋮┆----------------------------------------
+          218┆ ifconfig $ifname up
+            ⋮┆----------------------------------------
+          230┆ config_get key $vif "key$key"
+            ⋮┆----------------------------------------
+          237┆ ifconfig $ifname up
+            ⋮┆----------------------------------------
+          252┆ iwpriv $ifname set AuthMode=$enc
+            ⋮┆----------------------------------------
+          253┆ iwpriv $ifname set EncrypType=$crypto
+            ⋮┆----------------------------------------
+          254┆ iwpriv $ifname set IEEE8021X=0
+            ⋮┆----------------------------------------
+          255┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          256┆ iwpriv $ifname set "WPAPSK=${key}"
+            ⋮┆----------------------------------------
+          258┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          272┆ iwpriv $ifname set AuthMode=$enc
+            ⋮┆----------------------------------------
+          273┆ iwpriv $ifname set EncrypType=$crypto
+            ⋮┆----------------------------------------
+          275┆ config_get keyn $vif key${idx}
+            ⋮┆----------------------------------------
+          278┆ [ -n "$keyn" ] && iwpriv $ifname set "Key${idx}=${keyn}"
+            ⋮┆----------------------------------------
+          280┆ iwpriv $ifname set DefaultKeyID=${key}
+            ⋮┆----------------------------------------
+          281┆ iwpriv $ifname set "SSID=${ssid}"
+            ⋮┆----------------------------------------
+          282┆ iwpriv $ifname set WscConfMode=0
+            ⋮┆----------------------------------------
+          283┆ iwpriv $ifname set WscModeOption=0
+            ⋮┆----------------------------------------
+          286┆ iwpriv $ifname set AuthMode=OPEN
+            ⋮┆----------------------------------------
+          287┆ iwpriv $ifname set EncrypType=NONE
+            ⋮┆----------------------------------------
+          288┆ iwpriv $ifname set WscConfMode=0
+            ⋮┆----------------------------------------
+          305┆ iwpriv $ifname set NoForwarding="${isolate:-0}"
+            ⋮┆----------------------------------------
+          306┆ iwpriv $ifname set NoForwardingBTNBSSID="${isolate:-0}"
+            ⋮┆----------------------------------------
+          310┆ iwpriv $ifname set Channel=$channel
+            ⋮┆----------------------------------------
+          322┆ config_get channel $device channel
+                                             
+    /logs/firmware/squashfs-root/sbin/led.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           10┆ config_get name $1 name
+            ⋮┆----------------------------------------
+           11┆ config_get sysfs $1 sysfs
+                                                                       
+    /logs/firmware/squashfs-root/usr/lib/ddns/dynamic_dns_functions.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           75┆ current_ip=$(ifconfig $ip_interface | grep -o 'inet addr:[0-9.]*' | grep -o "$ip_regex")
+            ⋮┆----------------------------------------
+           79┆ current_ip=$($ip_script)
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-command-substitution-in-command          
+          The result of command substitution $(...) or `...`, if unquoted, is split on whitespace or  
+          other separators specified by the IFS variable. You should surround it with double quotes to
+          avoid splitting the result.                                                                 
+                                                                                                      
+           88┆ current_ip=$(echo $( wget -O - $addr 2>/dev/null) | grep -o "$ip_regex")
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           88┆ current_ip=$(echo $( wget -O - $addr 2>/dev/null) | grep -o "$ip_regex")
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-command-substitution-in-command          
+          The result of command substitution $(...) or `...`, if unquoted, is split on whitespace or  
+          other separators specified by the IFS variable. You should surround it with double quotes to
+          avoid splitting the result.                                                                 
+                                                                                                      
+           95┆ current_ip=$(echo $( wget -O - http://checkip.dyndns.org 2>/dev/null) | grep -o "$ip_regex")
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          107┆ echo $1
+            ⋮┆----------------------------------------
+          127┆ /usr/lib/ddns/dynamic_dns_updater.sh $section 0 > /dev/null 2>&1 &
+                                                                     
+    /logs/firmware/squashfs-root/usr/lib/ddns/dynamic_dns_updater.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          127┆  ... cat $service_file |  grep "^[\t ]*[^#]" |  awk ' gsub("\x27", "\"") { if ($1~/^[^\"]*$/)            
+  $1="\""$1"\"" }; { if ( $NF~/^[^\"]*$/) $NF="\""$NF"\""  }; { print $0  ... [0m                                       
+            [shortened a long line from output, adjust with --max-chars-per-line]
+            ⋮┆----------------------------------------
+[32m       external.semgrep-rules.bash.lang.security.ifs-tampering                                      [0m
+          The special variable IFS affects how splitting takes place when expanding unquoted        
+          variables. Don't set it globally. Prefer a dedicated utility such as 'cut' or 'awk' if you
+          need to split input data. If you must use 'read', set IFS locally using e.g. 'IFS="," read
+          -a my_array'.                                                                             
+                                                                                                    
+          132┆ IFS=$NEWLINE_IFS
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          136┆ next_name=$(echo $service_line | grep -o "^[\t ]*\"[^\"]*\"" | xargs -r -n1 echo)
+            ⋮┆----------------------------------------
+          137┆ next_url=$(echo $service_line | grep -o "\"[^\"]*\"[\t ]*$" | xargs -r -n1 echo)
+            ⋮┆----------------------------------------
+[32m       external.semgrep-rules.bash.lang.security.ifs-tampering                                      [0m
+          The special variable IFS affects how splitting takes place when expanding unquoted        
+          variables. Don't set it globally. Prefer a dedicated utility such as 'cut' or 'awk' if you
+          need to split input data. If you must use 'read', set IFS locally using e.g. 'IFS="," read
+          -a my_array'.                                                                             
+                                                                                                    
+          144┆ IFS=$OLD_IFS
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          149┆ update_url=$(echo $update_url | sed -e 's/^http:/https:/')
+            ⋮┆----------------------------------------
+          170┆ force_interval_seconds=$(($force_interval*60*60*24))
+            ⋮┆----------------------------------------
+          173┆ force_interval_seconds=$(($force_interval*60*60))
+            ⋮┆----------------------------------------
+          176┆ force_interval_seconds=$(($force_interval*60))
+            ⋮┆----------------------------------------
+          183┆ force_interval_seconds=$(($force_interval*60*60))
+            ⋮┆----------------------------------------
+          192┆ check_interval_seconds=$(($check_interval*60*60*24))
+            ⋮┆----------------------------------------
+          195┆ check_interval_seconds=$(($check_interval*60*60))
+            ⋮┆----------------------------------------
+          198┆ check_interval_seconds=$(($check_interval*60))
+            ⋮┆----------------------------------------
+          214┆ retry_interval_seconds=$(($retry_interval*60*60*24))
+            ⋮┆----------------------------------------
+          217┆ retry_interval_seconds=$(($retry_interval*60*60))
+            ⋮┆----------------------------------------
+          220┆ retry_interval_seconds=$(($retry_interval*60))
+            ⋮┆----------------------------------------
+          242┆ old_pid=$(cat /var/run/dynamic_dns/$service_id.pid)
+            ⋮┆----------------------------------------
+          247┆ kill $old_pid
+            ⋮┆----------------------------------------
+          262┆ last_update=$(( $current_time - (2*$force_interval_seconds) ))
+            ⋮┆----------------------------------------
+          262┆ last_update=$(( $current_time - (2*$force_interval_seconds) ))
+            ⋮┆----------------------------------------
+          265┆ last_update=$(cat /var/run/dynamic_dns/$service_id.update)
+            ⋮┆----------------------------------------
+          267┆ time_since_update=$(($current_time - $last_update))
+            ⋮┆----------------------------------------
+          270┆ human_time_since_update=$(( $time_since_update / ( 60 * 60 ) ))
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-command-substitution-in-command          
+          The result of command substitution $(...) or `...`, if unquoted, is split on whitespace or  
+          other separators specified by the IFS variable. You should surround it with double quotes to
+          avoid splitting the result.                                                                 
+                                                                                                      
+          279┆ registered_ip=$(echo $(nslookup "$domain" 2>/dev/null) |  grep -o "Name:.*" | grep -o "$ip_regex")
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          284┆ time_since_update=$(($current_time - $last_update))
+            ⋮┆----------------------------------------
+          304┆ replace_value=$(echo $replace_value | sed -f /usr/lib/ddns/url_escape.sed)
+            ⋮┆----------------------------------------
+          305┆ final_url=$(echo $final_url | sed s^"$replace_name"^"$replace_value"^g )
+            ⋮┆----------------------------------------
+          308┆ final_url=$(echo $final_url | sed s^"\[HTTPAUTH\]"^"${username//^/\\^}${password:+:${password//^/\\^}}"^g
+  )                                                                                                                     
+            ⋮┆----------------------------------------
+          309┆ final_url=$(echo $final_url | sed s/"\[IP\]"/"$current_ip"/g )
+            ⋮┆----------------------------------------
+          315┆ update_output=$( $retrieve_prog "$final_url" )
+            ⋮┆----------------------------------------
+          319┆ sleep $retry_interval_seconds
+            ⋮┆----------------------------------------
+          339┆ human_time_since_update=$(( $time_since_update / ( 60 * 60 ) ))
+            ⋮┆----------------------------------------
+          346┆ sleep $check_interval_seconds
+                                                                          
+    /logs/firmware/squashfs-root/usr/local/thunder/bin/checkBindStatus.sh 
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+           17┆ ret=$(cat /tmp/thunder/getsysinfo_checkbindstatus | cut -d "," -f5 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           17┆ ret=$(cat /tmp/thunder/getsysinfo_checkbindstatus | cut -d "," -f5 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           18┆ bounduser=$(cat /tmp/thunder/getsysinfo_checkbindstatus | cut -d "," -f8 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           18┆ bounduser=$(cat /tmp/thunder/getsysinfo_checkbindstatus | cut -d "," -f8 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           36┆ echo $ret
+                                                                  
+    /logs/firmware/squashfs-root/usr/local/thunder/bin/getCode.sh 
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+           11┆ actcode=$(cat /tmp/thunder/getsysinfo | cut -d "," -f5 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           11┆ actcode=$(cat /tmp/thunder/getsysinfo | cut -d "," -f5 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           12┆ bounduser=$(cat /tmp/thunder/getsysinfo | cut -d "," -f8 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+           12┆ bounduser=$(cat /tmp/thunder/getsysinfo | cut -d "," -f8 | cut -d "\"" -f2)
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           30┆ echo $actcode
+                                                                     
+    /logs/firmware/squashfs-root/usr/local/thunder/bin/runHttpCmd.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           10┆ wget ${G_FULL_URL} -O /tmp/thunder/tmp_runhttpcmd_${uuid}
+            ⋮┆----------------------------------------
+           11┆ ret=$(cat /tmp/thunder/tmp_runhttpcmd_${uuid})
+            ⋮┆----------------------------------------
+           12┆ rm -f /tmp/thunder/tmp_runhttpcmd_${uuid}
+            ⋮┆----------------------------------------
+           13┆ echo ${ret}
+                                                                 
+    /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           15┆ sleep $sleeptime
+                                                                
+    /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           27┆ /bin/kill -9 $PID
+            ⋮┆----------------------------------------
+           34┆ /bin/kill -9 $PID
+                                                               
+    /logs/firmware/squashfs-root/usr/local/xcloud/bin/dcode.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            3┆ echo $cmd
+            ⋮┆----------------------------------------
+            4┆ /usr/local/xcloud/bin/qrencode $cmd$1
+                                                                         
+    /logs/firmware/squashfs-root/usr/local/xcloud/bin/searchSharePath.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+            8┆ VOLUME=`df -h| grep $1 | awk  '{print $6}' | sed -n '1p'`
+            ⋮┆----------------------------------------
+           13┆ mkdir -p ${VOLUME}/xcloud
+            ⋮┆----------------------------------------
+           17┆ mkdir -p ${VOLUME}/xcloud/music
+            ⋮┆----------------------------------------
+           21┆ mkdir -p ${VOLUME}/xcloud/video
+            ⋮┆----------------------------------------
+           25┆ mkdir -p ${VOLUME}/xcloud/docs
+            ⋮┆----------------------------------------
+           29┆ mkdir -p ${VOLUME}/xcloud/pic
+            ⋮┆----------------------------------------
+           33┆ mkdir -p ${VOLUME}/xcloud/pic/instant
+            ⋮┆----------------------------------------
+           43┆ mv $XCLOUD_SHARE_CONFIG_FILEI_TEMP $XCLOUD_SHARE_CONFIG_FILE
+            ⋮┆----------------------------------------
+           44┆ chmod 755 $XCLOUD_SHARE_CONFIG_FILE
+            ⋮┆----------------------------------------
+           54┆ mv $XCLOUD_SHARE_CONFIG_FILEI_TEMP $XCLOUD_SHARE_CONFIG_FILE
+            ⋮┆----------------------------------------
+           55┆ chmod 755 $XCLOUD_SHARE_CONFIG_FILE
+                                                           
+    /logs/firmware/squashfs-root/usr/sbin/update-usbids.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           13┆ if ! touch ${DEST} >&2 >/dev/null ; then
+            ⋮┆----------------------------------------
+           14┆ ${quiet} || echo "${DEST} is read-only, exiting."
+            ⋮┆----------------------------------------
+           20┆ ${quiet} && DL="$DL -q"
+            ⋮┆----------------------------------------
+           28┆ if ! $DL ; then
+            ⋮┆----------------------------------------
+           30┆ rm -f $DEST.new
+            ⋮┆----------------------------------------
+           34┆ if ! zcat $DEST.new | grep >/dev/null "^C " ; then
+            ⋮┆----------------------------------------
+           40┆ mv $DEST $DEST.old
+            ⋮┆----------------------------------------
+           42┆ chmod -f --reference=$DEST.old $DEST.new 2>/dev/null || true
+            ⋮┆----------------------------------------
+           44┆ mv $DEST.new $DEST
+            ⋮┆----------------------------------------
+           46┆ ${quiet} || echo "Done."
+                                                           
+    /logs/firmware/squashfs-root/usr/share/libubox/jshn.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-command-substitution-in-command          
+          The result of command substitution $(...) or `...`, if unquoted, is split on whitespace or  
+          other separators specified by the IFS variable. You should surround it with double quotes to
+          avoid splitting the result.                                                                 
+                                                                                                      
+          192┆ eval `jshn -r "$1"`
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+          196┆ jshn "$@" ${JSON_PREFIX:+-p "$JSON_PREFIX"} -w
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+Some files were skipped or only partially analyzed.
+  Partially scanned: 3 files only partially analyzed due to parsing or internal Semgrep errors
+
+Ran 7 rules on 49 files: 364 findings.
+

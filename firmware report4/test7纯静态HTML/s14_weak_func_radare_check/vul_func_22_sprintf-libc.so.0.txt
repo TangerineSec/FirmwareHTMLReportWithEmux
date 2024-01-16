@@ -1,0 +1,473 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibc.so.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[32mFull RELRO[0m     [32mCanary found[0m      [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibc.so.0[0m
+
+ble 0x20cd4
+add r3, r5, r2
+ldrb r3, [r3, -1]
+cmp r3, 0x2f
+beq 0x20cb8
+add r3, sl, 8
+add r3, r3, r2
+cmp r7, r3
+bhs 0x20cf8
+bl rsym.__errno_location
+mov r3, 0x16
+str r3, [r0]
+mvn r0, 0
+b 0x20d18
+ldr r1, [0x00020d28]
+mov r0, r6
+mov r3, r5
+str sl, [sp]
+str r8, [sp, 4]
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+mov r0, 0
+pop {r1, r2, r3, r4, r5, r6, r7, r8, sl, pc}
+--
+ldr r2, [r3, 4]
+lsl r2, r2, 3
+bl 0x2f1d8
+tst r6, 0x3f8
+ldreq r3, [0x0002f6c0]
+addeq r3, r4, r3
+ldreq r3, [r3, 4]
+orreq r6, r6, r3, lsl 3
+add r7, sp, 0x420
+add r8, sp, 0x14
+add r7, r7, 4
+mov r0, r7
+bl rsym.__GI_time
+mov r0, r7
+bl rsym.__GI_ctime
+ldr r1, [0x0002f6c4]
+add r3, r0, 4
+mov r2, r6
+mov r0, r8
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+ldr r3, [0x0002f6c8]
+add r8, r8, r0
+ldr r6, [r4, r3]
+mov r0, r6
+bl sym.strlen
+cmp r0, 0x3c0
+bhs 0x2f4a4
+ldr r1, [0x0002f6cc]
+mov r0, r8
+mov r2, r6
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+b 0x2f4b4
+ldr r1, [0x0002f6d0]
+mov r0, r8
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+ldr r3, [0x0002f6b8]
+add r7, r8, r0
+add r3, r4, r3
+ldr r3, [r3, 4]
+tst r3, 1
+beq 0x2f4e8
+bl rsym.__GI_getpid
+ldr r1, [0x0002f6d4]
+mov r2, r0
+mov r0, r7
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+add r7, r7, r0
+mov r6, r7
+--
+add r2, sp, 0x18
+mov r3, 0x100
+bl rsym.__GI_getpwuid_r
+cmp r0, 0
+bne 0x343dc
+ldr r3, [sp, 0x120]
+mov r0, r5
+ldr r1, [0x000343ec]
+ldr r2, [sp, 0x118]
+str r3, [sp]
+ldr r3, [sp, 0x124]
+add r1, r4, r1
+str r3, [sp, 4]
+ldr r3, [sp, 0x128]
+str r3, [sp, 8]
+ldr r3, [sp, 0x12c]
+str r3, [sp, 0xc]
+ldr r3, [sp, 0x130]
+str r3, [sp, 0x10]
+ldr r3, [sp, 0x11c]
+[31mbl rsym.__GI_sprintf[0m
+cmp r0, 0
+movge r0, 0
+--
+ldr r2, [sp, 0x10]
+str r3, [sp, 4]
+bl rsym.__GI_vsnprintf
+pop {r1, r2, r3, lr}
+add sp, sp, 8
+bx lr
+push {r1, r2, r3}
+push {r0, r1, lr}
+add r2, sp, 0x10
+ldr r1, [sp, 0xc]
+str r2, [sp, 4]
+bl rsym.__GI_vdprintf
+pop {r2, r3, lr}
+add sp, sp, 0xc
+bx lr
+push {r1, r2, r3}
+push {r0, r1, lr}
+add r2, sp, 0x10
+ldr r1, [sp, 0xc]
+str r2, [sp, 4]
+[31mbl rsym.__GI_vasprintf[0m
+pop {r2, r3, lr}
+add sp, sp, 0xc
+--
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x410
+sub sp, sp, 4
+ldr r6, [0x00041888]
+mov r4, r0
+mov r7, r1
+bl 0x41608
+subs r5, r0, 0
+add r6, pc, r6
+beq 0x41878
+ldr r3, [r4, 4]
+add r1, sp, 0x400
+mov r0, r4
+add r1, r1, 4
+ldr r3, [r3, 8]
+blx r3
+ldr r1, [0x0004188c]
+mov r2, r7
+mov r0, r5
+add r1, r6, r1
+[31mbl rsym.__GI_sprintf[0m
+add r4, r5, r0
+ldr r0, [sp, 0x404]
+--
+mov r7, 0
+ldr r1, [0x00041898]
+mov r0, r4
+add r1, r6, r1
+bl rsym.__GI_strcpy
+mov r0, r4
+bl sym.strlen
+cmp r7, 0
+add r4, r4, r0
+beq 0x41828
+mov r0, r4
+mov r1, r7
+bl rsym.__GI_strcpy
+mov r0, r4
+bl sym.strlen
+b 0x41864
+ldr r1, [0x0004189c]
+mov r0, r4
+ldr r2, [sp, 0x408]
+add r1, r6, r1
+[31mbl rsym.__GI_sprintf[0m
+b 0x41864
+mov r0, r4
+ldr r1, [0x000418a0]
+b 0x41854
+ldr r1, [0x000418a4]
+mov r0, r4
+add r1, r6, r1
+ldr r2, [sp, 0x408]
+ldr r3, [sp, 0x40c]
+[31mbl rsym.__GI_sprintf[0m
+add r4, r4, r0
+mov r3, 0xa
+--
+ldr r1, [r3]
+pop {r4, lr}
+b rsym.__GI_fputs
+andeq fp, r2, r8, lsr ip
+andeq r0, r0, ip, lsl 21
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x400
+sub sp, sp, 4
+ldr r4, [0x000419f0]
+mov r7, r0
+bl 0x41608
+subs r6, r0, 0
+add r4, pc, r4
+beq 0x419e0
+bl rsym.__GI___rpc_thread_createerr
+ldr r1, [0x000419f4]
+mov r2, r7
+mov r5, r0
+mov r0, r6
+add r1, r4, r1
+[31mbl rsym.__GI_sprintf[0m
+add r7, r6, r0
+ldr r0, [r5]
+--
+sub sp, sp, 0x19c
+ldr r5, [0x0004664c]
+mov r7, r0
+add r0, sp, 0x100
+str r2, [sp, 0x24]
+add sl, sp, 0x148
+str r2, [sp, 0x18]
+lsl r2, r1, 8
+ldrh r4, [r0, 0xc8]
+add r5, pc, r5
+orr r2, r2, r1, lsr 8
+ldr r1, [0x00046650]
+add r8, sp, 0x168
+str r3, [sp, 0x20]
+uxth r2, r2
+mov r0, sl
+add r1, r5, r1
+str r3, [sp, 0x1c]
+ldr sb, [sp, 0x1c4]
+mov r6, 1
+[31mbl rsym.__GI_sprintf[0m
+mov r0, r8
+mov r1, 0
+--
+mov r3, 2
+add r8, sp, 0x148
+str r3, [sp, 8]
+mov r0, sl
+ldr r1, [sp, 0x18c]
+mov r3, r2
+str r8, [sp]
+bl rsym.__GI_getnameinfo
+cmp r0, 0
+movne r8, 0
+bne 0x46484
+mov r0, r8
+bl rsym.__GI_atoi
+uxth r8, r0
+ldr r1, [0x00046664]
+add sl, sp, 0x128
+mov r2, r8
+mov r0, sl
+add fp, sp, 0x188
+add r1, r5, r1
+[31mbl rsym.__GI_sprintf[0m
+mov r0, sl
+bl sym.strlen
+--
+ldr r3, [r4]
+mov r0, r7
+blx r3
+subs r2, r0, 0
+bne 0x48318
+ldr r3, [0x000483c4]
+ldr r1, [r4, 0x10]
+ldr r3, [r5, r3]
+cmp r1, r3
+bne 0x483b4
+mov r0, r6
+ldr r1, [r4, 0x10]
+bl rsym.__GI_svc_sendreply
+cmp r0, 0
+bne 0x4834c
+ldr r1, [0x000483cc]
+add r0, sp, 0x2240
+add r0, r0, 0x24
+ldr r2, [r4, 4]
+add r1, r5, r1
+[31mbl rsym.__GI_asprintf[0m
+mov r0, 1
+bl rsym.__GI_exit
+ldr r3, [r6, 8]
+mov r0, r6
+ldr r1, [r4, 0xc]
+add r2, sp, 4
+ldr r3, [r3, 0x10]
+blx r3
+b 0x483b4
+ldr r4, [r4, 0x14]
+cmp r4, 0
+bne 0x48298
+ldr r1, [0x000483d0]
+add r0, sp, 0x2240
+mov r2, r8
+add r0, r0, 0x24
+add r1, r5, r1
+[31mbl rsym.__GI_asprintf[0m
+ldr r3, [0x000483d4]
+add r2, sp, 0x2000
+--
+add sp, sp, 0x2000
+pop {r4, r5, r6, r7, r8, pc}
+andeq r5, r2, r4, lsr 5
+andeq r0, r0, r4, ror 21
+invalid
+invalid
+invalid
+andeq r0, r0, ip, lsl 21
+push {r4, r5, r6, r7, r8, sl, lr}
+subs sl, r2, 0
+ldr r4, [0x00048508]
+sub sp, sp, 0x14
+mov r6, r0
+mov r7, r1
+mov r8, r3
+add r4, pc, r4
+bne 0x48410
+ldr r1, [0x0004850c]
+add r0, sp, 0xc
+add r1, r4, r1
+[31mbl rsym.__GI_asprintf[0m
+b 0x484e0
+bl rsym.__rpc_thread_variables
+--
+ldreq r0, [0x00048510]
+beq 0x484a0
+mov r1, r7
+mov r0, r6
+bl rsym.__GI_pmap_unset
+mov r3, 0x11
+mov r1, r6
+str r3, [sp]
+mov r2, r7
+ldr r3, [0x00048514]
+ldr r0, [r5, 0xc4]
+add r3, r4, r3
+bl rsym.__GI_svc_register
+cmp r0, 0
+bne 0x4848c
+ldr r1, [0x00048518]
+add r0, sp, 0xc
+mov r2, r6
+mov r3, r7
+add r1, r4, r1
+[31mbl rsym.__GI_asprintf[0m
+b 0x484e0
+mov r0, 0x18
+--
+bne 0x4e4e0
+ldr r4, [sp, 0xc]
+add r3, sp, 0x60
+rsb r2, r7, r3
+mov r1, r7
+sub r2, r2, 0x22
+add r0, r4, 0xc
+bl 0x4e1c0
+cmp r0, 0
+beq 0x4e570
+mov r0, r7
+bl sym.strlen
+add r7, r7, r0
+b 0x4e518
+add r1, sp, 0x60
+mov r0, r7
+add r3, r1, sl, lsl 2
+mov r1, r4
+ldr r2, [r3, -0x20]
+str ip, [sp, 4]
+[31mbl rsym.__GI_sprintf[0m
+ldr ip, [sp, 4]
+add r7, r7, r0
+--
+add fp, ip, r3
+mov r1, r4
+add r0, fp, 8
+mov r2, r6
+str r0, [ip, r3]
+mov r3, 0
+str r3, [fp, 4]
+add r7, fp, 0x18
+bl memcpy
+cmp sb, 2
+bne 0x504a8
+ldrb r1, [r4, 1]
+mov r0, r7
+ldrb r2, [r4, 3]
+ldrb r3, [r4, 2]
+str r1, [sp]
+ldrb r1, [r4]
+str r1, [sp, 4]
+ldr r1, [0x00050664]
+add r1, sl, r1
+[31mbl rsym.__GI_sprintf[0m
+b 0x5052c
+sub r3, r6, 1
+mov ip, r7
+add r3, r4, r3
+str fp, [sp, 0x24]
+str r3, [sp, 0x18]
+mov fp, r7
+ldr r3, [0x00050668]
+mov r7, r6
+mov r6, r5
+mov r5, ip
+add r3, sl, r3
+str r3, [sp, 0x20]
+ldr r2, [sp, 0x18]
+mov r0, r5
+ldr r1, [sp, 0x20]
+ldrb r3, [r2], -1
+str r2, [sp, 0x18]
+and r2, r3, 0xf
+lsr r3, r3, 4
+[31mbl rsym.__GI_sprintf[0m
+ldr r3, [sp, 0x18]
+add r5, r5, r0
+--
+b rsym.__GI_ether_aton_r
+andeq fp, r1, ip, lsl r1
+andeq r4, r0, r8, asr 26
+push {r0, r1, r2, r3, r4, lr}
+mov r4, r1
+ldrb r1, [r0, 2]
+ldrb r2, [r0]
+ldrb r3, [r0, 1]
+str r1, [sp]
+ldrb r1, [r0, 3]
+ldr ip, [0x0005243c]
+str r1, [sp, 4]
+ldrb r1, [r0, 4]
+add ip, pc, ip
+str r1, [sp, 8]
+ldrb r1, [r0, 5]
+mov r0, r4
+str r1, [sp, 0xc]
+ldr r1, [0x00052440]
+add r1, ip, r1
+[31mbl rsym.__GI_sprintf[0m
+mov r0, r4
+add sp, sp, 0x10
+--
+orr r0, r2, r3, lsl 20
+mov r2, 0
+ldr r3, [0x0005583c]
+bl 0x5a598
+strd r0, r1, [r4]
+mov r0, 0
+pop {r3, r4, r5, pc}
+mvn r0, 0
+pop {r3, r4, r5, pc}
+svclo 0xf00000
+ldr ip, sym.__GI___fcntl_nocancel
+cmp r2, 0x11
+movge r2, 0x11
+push {r0, r1, r4, lr}
+mov r4, r3
+strd r0, r1, [sp]
+mov r0, r3
+add ip, pc, ip
+ldr r1, [0x00055878]
+add r1, ip, r1
+[31mbl rsym.__GI_sprintf[0m
+mov r0, r4
+pop {r2, r3, r4, pc}
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m22[0m times [0;33mlibc.so.0[0m
+

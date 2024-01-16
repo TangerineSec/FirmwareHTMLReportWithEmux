@@ -1,0 +1,77 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibc.so.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[32mFull RELRO[0m     [32mCanary found[0m      [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mlibc.so.0[0m
+
+[31mbl rsym.__GI_mmap[0m
+str r0, [r4]
+mov r0, r5
+bl rsym.__GI_close
+ldr r0, [r4]
+cmn r0, 1
+movne r0, 0
+b 0x14e40
+mvn r0, 0
+pop {r1, r2, r3, r4, r5, r6, r7, pc}
+andeq r8, r5, r8, ror r7
+andeq r0, r0, r4, lsl 29
+invalid
+ldr r3, [0x00014e74]
+ldr r2, [0x00014e78]
+add r3, pc, r3
+add ip, r3, r2
+ldr r3, [r3, r2]
+ldr ip, [ip, 8]
+lsl r1, r1, ip
+strb r0, [r1, r3]
+--
+[31mbl rsym.__GI_mmap[0m
+cmn r0, 1
+beq 0x52f28
+ands r2, r0, 7
+rsbne r2, r2, 8
+moveq r3, r0
+strne r2, [r0, r2]
+addne r3, r0, r2
+rsbne r2, r2, r6
+streq r2, [r3]
+orrne r2, r2, 2
+orreq r2, r6, 2
+str r2, [r3, 4]
+ldr r2, [0x00053260]
+ldr r2, [r5, r2]
+ldr r1, [r2, 0x350]
+ldr r0, [r2, 0x358]
+add r1, r1, 1
+cmp r1, r0
+str r1, [r2, 0x350]
+strgt r1, [r2, 0x358]
+--
+[31mbl rsym.__GI_mmap[0m
+cmn r0, 1
+mov fp, r0
+beq 0x53228
+ldr r3, [0x00053260]
+add r0, r0, r6
+ldr r3, [r5, r3]
+ldr r2, [r3, 0x360]
+bic r2, r2, 1
+str r2, [r3, 0x360]
+cmn fp, 1
+beq 0x53228
+ldr r3, [0x00053260]
+add r1, r8, r7
+cmp fp, r1
+cmneq r0, 1
+ldr r3, [r5, r3]
+ldr r2, [r3, 0x368]
+add r2, r6, r2
+addeq r6, r6, r7
+orreq r6, r6, 1
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m3[0m times [0;33mlibc.so.0[0m
+

@@ -1,0 +1,72 @@
+<div class="setup_head">
+	<h4 style="margin-left:28px;">修改登录密码</h4>
+	<a class="setup_return" href="javascript:void(0)"><span class="setup_return_img"></span>&nbsp;返回</a>
+	<div class="clr"></div>
+	<div class="bottom_line">
+	</div>
+</div>
+<div class="setpassword_main">
+	<div class="setpassword_title">本页设置路由器登陆密码</div>
+	<table cellspacing="15px" class="setpassword_table">
+		<tr>
+			<td width="130px" align="left">原密码</td>
+			<td width="201px"><input type='input' id="oldPasswd" name="oldPasswd" class="table-input" /></td>
+		</tr>
+		<tr>
+			<td width="130px" align="left">新密码</td>
+			<td width="201px"><input type='input' id="newPasswd" name="newPasswd" class="table-input"></td>
+		</tr>
+		<tr>
+			<td width="130px" align="left">确认新密码</td>
+			<td width="201px"><input type='input' id="renewPasswd" name="renewPasswd" class="table-input"></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<a href="javascript:void(0);" class="subbtn" id="setNewPasswd" style="color:#fff;margin-top:0;line-height:26px;">保存</a>
+				<p id="savePwdwarning" style="float:right;color:red;font-size: 12px;padding-top: 3px;padding-right:5px;"></p>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script language="javscript">
+/*************修改密码***********/
+$('#setNewPasswd').die().live('click',function(){
+	var oldPwd = $("#oldPasswd").val();
+	var newPwd = $("#newPasswd").val();
+	var renewPwd = $("#renewPasswd").val();
+	if(oldPwd == "" || newPwd=="" || renewPwd ==""){
+		$('#savePwdwarning').html('密码不能为空');
+		setTimeout("$('#savePwdwarning').html('')",3000);
+		return ;
+	}
+
+	if(newPwd != renewPwd){
+		$('#savePwdwarning').html('新密码不一直，请重试');
+		return ;
+	}
+	
+	tinyBox_init('保存中...');
+	
+	$.ajax({
+		url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/setpasswd/change"))%>',
+		data:{oldPasswd:oldPwd,newPasswd:newPwd},
+		dataType:'json',  
+		type:'post',
+		timeOut:600000,
+		success:function(r){
+			if(r.status == 1){
+				tinyBox_change(r.msg, 0);
+			}else if(r.status == 2){
+				tinyBox_change(r.msg, 0);
+			}else{
+				tinyBox_change(r.msg, 1);
+			}
+
+			tinyBox_hide(2000);
+			return false;
+		}
+	});
+});
+</script>

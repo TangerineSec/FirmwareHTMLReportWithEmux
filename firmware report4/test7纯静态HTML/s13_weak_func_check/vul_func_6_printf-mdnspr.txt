@@ -1,0 +1,154 @@
+[[0;33m*[0m] Binary protection state of [0;33mmdnspr[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mmdnspr[0m
+
+   23030:	00028270 	.word	0x00028270
+   23034:	0002829e 	.word	0x0002829e
+
+00023038 <NoSuchServiceCallback>:
+   23038:	e3520000 	cmp	r2, #0
+   2303c:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+   23040:	e24dded2 	sub	sp, sp, #3360	; 0xd20
+   23044:	e1a09000 	mov	r9, r0
+   23048:	e24dd008 	sub	sp, sp, #8
+   2304c:	e1a04001 	mov	r4, r1
+   23050:	e591a198 	ldr	sl, [r1, #408]	; 0x198
+   23054:	1a000009 	bne	23080 <NoSuchServiceCallback+0x48>
+   23058:	e28d5e7f 	add	r5, sp, #2032	; 0x7f0
+   2305c:	e591000c 	ldr	r0, [r1, #12]
+   23060:	e2855008 	add	r5, r5, #8
+   23064:	e3a0205c 	mov	r2, #92	; 0x5c
+   23068:	e1a01005 	mov	r1, r5
+   2306c:	ebffcb6f 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   23070:	e1a01005 	mov	r1, r5
+   23074:	e59f00c8 	ldr	r0, [pc, #200]	; 23144 <NoSuchServiceCallback+0x10c>
+[31m   23078:	ebff96e4 	bl	8c10 <printf@plt>[0m
+   2307c:	ea00002d 	b	23138 <NoSuchServiceCallback+0x100>
+   23080:	e59f30c0 	ldr	r3, [pc, #192]	; 23148 <NoSuchServiceCallback+0x110>
+--
+   230e4:	e1a01004 	mov	r1, r4
+   230e8:	e28d5018 	add	r5, sp, #24
+   230ec:	e1a00009 	mov	r0, r9
+   230f0:	e58d7000 	str	r7, [sp]
+   230f4:	e5933000 	ldr	r3, [r3]
+   230f8:	e58da004 	str	sl, [sp, #4]
+   230fc:	e58d3008 	str	r3, [sp, #8]
+   23100:	e59f3048 	ldr	r3, [pc, #72]	; 23150 <NoSuchServiceCallback+0x118>
+   23104:	e58d300c 	str	r3, [sp, #12]
+   23108:	e3a03000 	mov	r3, #0
+   2310c:	e58d3010 	str	r3, [sp, #16]
+   23110:	e1a03006 	mov	r3, r6
+   23114:	ebfffca0 	bl	2239c <mDNS_RegisterNoSuchService>
+   23118:	e1a01005 	mov	r1, r5
+   2311c:	e3a0205c 	mov	r2, #92	; 0x5c
+   23120:	e594000c 	ldr	r0, [r4, #12]
+   23124:	ebffcb41 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   23128:	e59f0024 	ldr	r0, [pc, #36]	; 23154 <NoSuchServiceCallback+0x11c>
+   2312c:	e1a01008 	mov	r1, r8
+   23130:	e1a02005 	mov	r2, r5
+[31m   23134:	ebff96b5 	bl	8c10 <printf@plt>[0m
+   23138:	e28ddf4a 	add	sp, sp, #296	; 0x128
+   2313c:	e28ddb03 	add	sp, sp, #3072	; 0xc00
+--
+   23174:	e1a00005 	mov	r0, r5
+   23178:	e2841e56 	add	r1, r4, #1376	; 0x560
+   2317c:	ebfff91a 	bl	215ec <mDNS_Deregister>
+   23180:	e3e00000 	mvn	r0, #0
+   23184:	ebff9725 	bl	8e20 <exit@plt>
+
+00023188 <ServiceCallback>:
+   23188:	e3520000 	cmp	r2, #0
+   2318c:	e92d4070 	push	{r4, r5, r6, lr}
+   23190:	e1a05000 	mov	r5, r0
+   23194:	e24dde7e 	sub	sp, sp, #2016	; 0x7e0
+   23198:	e1a04001 	mov	r4, r1
+   2319c:	1a000008 	bne	231c4 <ServiceCallback+0x3c>
+   231a0:	e28d5e3f 	add	r5, sp, #1008	; 0x3f0
+   231a4:	e5910cbc 	ldr	r0, [r1, #3260]	; 0xcbc
+   231a8:	e3a0205c 	mov	r2, #92	; 0x5c
+   231ac:	e1a01005 	mov	r1, r5
+   231b0:	ebffcb1e 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   231b4:	e1a01005 	mov	r1, r5
+   231b8:	e59f0060 	ldr	r0, [pc, #96]	; 23220 <ServiceCallback+0x98>
+[31m   231bc:	ebff9693 	bl	8c10 <printf@plt>[0m
+   231c0:	ea000014 	b	23218 <ServiceCallback+0x90>
+   231c4:	e59f3058 	ldr	r3, [pc, #88]	; 23224 <ServiceCallback+0x9c>
+   231c8:	e1520003 	cmp	r2, r3
+   231cc:	1a000011 	bne	23218 <ServiceCallback+0x90>
+   231d0:	e28d6e3f 	add	r6, sp, #1008	; 0x3f0
+   231d4:	e5910cbc 	ldr	r0, [r1, #3260]	; 0xcbc
+   231d8:	e3a0205c 	mov	r2, #92	; 0x5c
+   231dc:	e1a01006 	mov	r1, r6
+   231e0:	ebffcb12 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   231e4:	e1a00005 	mov	r0, r5
+   231e8:	e1a01004 	mov	r1, r4
+   231ec:	e3a02000 	mov	r2, #0
+   231f0:	e1a0500d 	mov	r5, sp
+   231f4:	ebfffe14 	bl	22a4c <mDNS_RenameAndReregisterService>
+   231f8:	e1a0100d 	mov	r1, sp
+   231fc:	e3a0205c 	mov	r2, #92	; 0x5c
+   23200:	e5940cbc 	ldr	r0, [r4, #3260]	; 0xcbc
+   23204:	ebffcb09 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   23208:	e59f0018 	ldr	r0, [pc, #24]	; 23228 <ServiceCallback+0xa0>
+   2320c:	e1a01006 	mov	r1, r6
+   23210:	e1a0200d 	mov	r2, sp
+[31m   23214:	ebff967d 	bl	8c10 <printf@plt>[0m
+   23218:	e28dde7e 	add	sp, sp, #2016	; 0x7e0
+   2321c:	e8bd8070 	pop	{r4, r5, r6, pc}
+--
+   23578:	e2800028 	add	r0, r0, #40	; 0x28
+   2357c:	e28d5d9a 	add	r5, sp, #9856	; 0x2680
+   23580:	ebffc9e8 	bl	15d28 <MakeDomainLabelFromLiteralString>
+   23584:	e28d0dbe 	add	r0, sp, #12160	; 0x2f80
+   23588:	e1a0100a 	mov	r1, sl
+   2358c:	e2800028 	add	r0, r0, #40	; 0x28
+   23590:	e2855038 	add	r5, r5, #56	; 0x38
+   23594:	ebffc9f4 	bl	15d6c <MakeDomainNameFromDNSNameString>
+   23598:	e28d0dba 	add	r0, sp, #11904	; 0x2e80
+   2359c:	e59f1210 	ldr	r1, [pc, #528]	; 237b4 <main+0x588>
+   235a0:	e2800028 	add	r0, r0, #40	; 0x28
+   235a4:	ebffc9f0 	bl	15d6c <MakeDomainNameFromDNSNameString>
+   235a8:	ea00000d 	b	235e4 <main+0x3b8>
+   235ac:	e599b000 	ldr	fp, [r9]
+   235b0:	e2477001 	sub	r7, r7, #1
+   235b4:	e1a0000b 	mov	r0, fp
+   235b8:	ebff9621 	bl	8e44 <strlen@plt>
+   235bc:	e1a0100b 	mov	r1, fp
+   235c0:	e1a0a000 	mov	sl, r0
+   235c4:	e59f0208 	ldr	r0, [pc, #520]	; 237d4 <main+0x5a8>
+[31m   235c8:	ebff9590 	bl	8c10 <printf@plt>[0m
+   235cc:	e1a00005 	mov	r0, r5
+   235d0:	e4c0a001 	strb	sl, [r0], #1
+--
+   23634:	e0633005 	rsb	r3, r3, r5
+   23638:	e6ff3073 	uxth	r3, r3
+   2363c:	e28d5daa 	add	r5, sp, #10880	; 0x2a80
+   23640:	e1a01004 	mov	r1, r4
+   23644:	e58d7014 	str	r7, [sp, #20]
+   23648:	e58d3010 	str	r3, [sp, #16]
+   2364c:	e2855038 	add	r5, r5, #56	; 0x38
+   23650:	e59f3180 	ldr	r3, [pc, #384]	; 237d8 <main+0x5ac>
+   23654:	e58d7018 	str	r7, [sp, #24]
+   23658:	e58d7024 	str	r7, [sp, #36]	; 0x24
+   2365c:	e58d3020 	str	r3, [sp, #32]
+   23660:	e28d3dbe 	add	r3, sp, #12160	; 0x2f80
+   23664:	e2833028 	add	r3, r3, #40	; 0x28
+   23668:	ebfffb87 	bl	2248c <mDNS_RegisterService>
+   2366c:	e1a01005 	mov	r1, r5
+   23670:	e5940cbc 	ldr	r0, [r4, #3260]	; 0xcbc
+   23674:	e3a0205c 	mov	r2, #92	; 0x5c
+   23678:	ebffc9ec 	bl	15e30 <ConvertDomainNameToCString_withescape>
+   2367c:	e59f0158 	ldr	r0, [pc, #344]	; 237dc <main+0x5b0>
+   23680:	e1a01005 	mov	r1, r5
+[31m   23684:	ebff9561 	bl	8c10 <printf@plt>[0m
+   23688:	e28d8daa 	add	r8, sp, #10880	; 0x2a80
+   2368c:	e28d4dc3 	add	r4, sp, #12480	; 0x30c0
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m6[0m times [0;33mmdnspr[0m
+

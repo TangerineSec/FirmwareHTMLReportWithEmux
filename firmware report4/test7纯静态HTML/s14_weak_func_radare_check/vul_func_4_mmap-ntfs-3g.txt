@@ -1,0 +1,99 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mntfs-3g[0m
+
+[31mbl sym.mmap[0m
+cmn r0, 1
+beq 0x1940c
+ldr r1, [sp, 0x18]
+mov ip, r4
+ldr r3, [sp, 0x2c]
+mov r4, r5
+mov r5, sl
+ldr sl, [sp, 0xc]
+cmp ip, r1
+add r3, r4, r3
+str r3, [sp, 0xc]
+beq 0x19354
+ldr r8, [r6, 0x14]
+mvn r2, 0
+str r2, [sp]
+mov r2, fp
+str fp, [sp, 4]
+rsb ip, r8, r3
+mov r1, r8
+mov r0, ip
+--
+[31mbl sym.mmap[0m
+cmn r0, 1
+ldr ip, [sp, 8]
+bne 0x1935c
+mov r8, fp
+mov ip, r8
+mov r1, 0
+mov r2, 0x160
+mov r0, r4
+str ip, [sp, 8]
+bl sym.__GI_memset
+ldr r3, [0x000197e4]
+add r0, r4, 0x48
+str r0, [r4, 0x44]
+add r0, r4, 0x50
+str r0, [r4, 0x4c]
+ldr r3, [r5, r3]
+ldr r0, [0x000197ac]
+ldr fp, [sb, 8]
+ldr r2, [r3]
+ldr r0, [r5, r0]
+--
+[31mbl sym.mmap[0m
+cmn r0, 1
+beq 0x5f798
+ands r2, r0, 7
+rsbne r2, r2, 8
+moveq r3, r0
+strne r2, [r0, r2]
+addne r3, r0, r2
+rsbne r2, r2, r6
+streq r2, [r3]
+orrne r2, r2, 2
+orreq r2, r6, 2
+str r2, [r3, 4]
+ldr r2, [0x0005fad0]
+ldr r2, [r5, r2]
+ldr r1, [r2, 0x350]
+ldr r0, [r2, 0x358]
+add r1, r1, 1
+cmp r1, r0
+str r1, [r2, 0x350]
+strgt r1, [r2, 0x358]
+--
+[31mbl sym.mmap[0m
+cmn r0, 1
+mov fp, r0
+beq 0x5fa98
+ldr r3, [0x0005fad0]
+add r0, r0, r6
+ldr r3, [r5, r3]
+ldr r2, [r3, 0x360]
+bic r2, r2, 1
+str r2, [r3, 0x360]
+cmn fp, 1
+beq 0x5fa98
+ldr r3, [0x0005fad0]
+add r1, r8, r7
+cmp fp, r1
+cmneq r0, 1
+ldr r3, [r5, r3]
+ldr r2, [r3, 0x368]
+add r2, r6, r2
+addeq r6, r6, r7
+orreq r6, r6, 1
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m4[0m times [0;33mntfs-3g[0m
+

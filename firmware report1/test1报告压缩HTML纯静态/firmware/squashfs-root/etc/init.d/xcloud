@@ -1,0 +1,28 @@
+#!/bin/sh /etc/rc.common
+
+
+
+START=52
+export LD_LIBRARY_PATH=/usr/local/xcloud/lib:$LD_LIBRARY_PATH
+start() {
+	xRouterLog 0 "xcloud" "-" "start xCloudClient  Server.sh"
+	service_start /usr/local/xcloud/bin/xCloudClient
+	if [ ! -f /etc/rc.d/S95miniupnpd ]
+	then
+		ln -s /etc/init.d/miniupnpd /etc/rc.d/S95miniupnpd
+	fi
+	/etc/init.d/miniupnpd restart &
+	/usr/local/xcloud/bin/Server.sh start &
+}
+
+stop() {
+	xRouterLog 0 "xcloud" "-" "stop xCloudClient  Server.sh"
+	for PID in `/bin/ps | grep xCloudClient | grep -v grep | awk  '{print $1}'`
+	do
+		/bin/kill -9 $PID
+	done
+	/usr/local/xcloud/bin/Server.sh stop
+	sleep 2
+}
+
+

@@ -1,0 +1,36 @@
+[[0;33m*[0m] Binary protection state of [0;33mpppd[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mpppd[0m
+
+   2ff5c:	eb0001fd 	bl	30758 <SHA1_Init>
+   2ff60:	e1a00007 	mov	r0, r7
+   2ff64:	e1a01009 	mov	r1, r9
+   2ff68:	e3a02014 	mov	r2, #20
+   2ff6c:	eb00020d 	bl	307a8 <SHA1_Update>
+   2ff70:	e1a00007 	mov	r0, r7
+   2ff74:	e1a0100b 	mov	r1, fp
+   2ff78:	e3a02008 	mov	r2, #8
+   2ff7c:	eb000209 	bl	307a8 <SHA1_Update>
+   2ff80:	e1a00007 	mov	r0, r7
+   2ff84:	e28d1070 	add	r1, sp, #112	; 0x70
+   2ff88:	e3a02029 	mov	r2, #41	; 0x29
+   2ff8c:	eb000205 	bl	307a8 <SHA1_Update>
+   2ff90:	e1a00009 	mov	r0, r9
+   2ff94:	e1a01007 	mov	r1, r7
+   2ff98:	eb000849 	bl	320c4 <SHA1_Final>
+   2ff9c:	e5f52001 	ldrb	r2, [r5, #1]!
+   2ffa0:	e1a00004 	mov	r0, r4
+   2ffa4:	e59f1018 	ldr	r1, [pc, #24]	; 2ffc4 <GenerateAuthenticatorResponse+0x144>
+   2ffa8:	e2844002 	add	r4, r4, #2
+[31m   2ffac:	ebff7786 	bl	ddcc <sprintf@plt>[0m
+   2ffb0:	e1550006 	cmp	r5, r6
+   2ffb4:	1afffff8 	bne	2ff9c <GenerateAuthenticatorResponse+0x11c>
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m1[0m times [0;33mpppd[0m
+

@@ -1,0 +1,432 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 26:[0m
+[0mprefix=/mnt/source/rtl8881ab/source/open/pppoe/build[0m
+[33m^----^ SC2034 (warning): prefix appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 28:[0m
+[0mlocalstatedir=/var[0m
+[33m^-----------^ SC2034 (warning): localstatedir appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 35:[0m
+[0mLOGGER="/usr/bin/logger -t `basename $0`"[0m
+[32m                           ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+LOGGER="/usr/bin/logger -t $(basename "$0")"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 42:[0m
+[0mif test "`/usr/bin/id -u`" != 0 ; then[0m
+[32m         ^--------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+if test "$(/usr/bin/id -u)" != 0 ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 70:[0m
+[0m. $CONFIG[0m
+[33m  ^-----^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+[32m  ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+. "$CONFIG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 93:[0m
+[0mPPPD_PID=0[0m
+[33m^------^ SC2034 (warning): PPPD_PID appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 107:[0m
+[0m    echo "* The following section identifies your Ethernet interface" >> $DEBUG[0m
+[32m    ^-- SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+[32m                                                                         ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* The following section identifies your Ethernet interface" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 108:[0m
+[0m    echo "* and user name.  Some ISP's need 'username'; others" >> $DEBUG[0m
+[32m                                                                   ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* and user name.  Some ISP's need 'username'; others" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 109:[0m
+[0m    echo "* need 'username@isp.com'.  Try both" >> $DEBUG[0m
+[32m                                                   ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* need 'username@isp.com'.  Try both" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 110:[0m
+[0m    echo "ETH=$ETH; USER=$USER" >> $DEBUG[0m
+[32m                                   ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "ETH=$ETH; USER=$USER" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 111:[0m
+[0m    echo "---------------------------------------------" >> $DEBUG[0m
+[32m                                                            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "---------------------------------------------" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 117:[0m
+[0mif test `uname -s` = Linux ; then[0m
+[33m        ^--------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m        ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+if test $(uname -s) = Linux ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 118:[0m
+[0m    $IFCONFIG $ETH up mtu 1500[0m
+[32m              ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    $IFCONFIG "$ETH" up mtu 1500
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 133:[0m
+[0m    if test `uname -s` = Linux ; then[0m
+[33m            ^--------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m            ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    if test $(uname -s) = Linux ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 191:[0m
+[0m    . /etc/ppp/firewall-standalone[0m
+[32m      ^--------------------------^ SC1091 (info): Not following: /etc/ppp/firewall-standalone was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 194:[0m
+[0m    . /etc/ppp/firewall-masq[0m
+[32m      ^--------------------^ SC1091 (info): Not following: /etc/ppp/firewall-masq was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 237:[0m
+[0m    echo "* The following section shows the pppd command we will invoke" >> $DEBUG[0m
+[32m    ^-- SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+[32m                                                                            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* The following section shows the pppd command we will invoke" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 238:[0m
+[0m    echo "pppd invocation" >> $DEBUG[0m
+[32m                              ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "pppd invocation" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 239:[0m
+[0m    echo "$SETSID $PPPD pty '$PPPOE_CMD' $PPP_STD_OPTIONS $PPPD_SYNC debug" >> $DEBUG[0m
+[32m                                                                               ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "$SETSID $PPPD pty '$PPPOE_CMD' $PPP_STD_OPTIONS $PPPD_SYNC debug" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 240:[0m
+[0m    echo "---------------------------------------------" >> $DEBUG[0m
+[32m                                                            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "---------------------------------------------" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 242:[0m
+[0m	$PPP_STD_OPTIONS \[0m
+[32m        ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	"$PPP_STD_OPTIONS" \
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 244:[0m
+[0m	debug >> $DEBUG 2>&1[0m
+[32m                 ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	debug >> "$DEBUG" 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 245:[0m
+[0m    echo "---------------------------------------------" >> $DEBUG[0m
+[32m                                                            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "---------------------------------------------" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 246:[0m
+[0m    echo "* The following section is an extract from your log." >> $DEBUG[0m
+[32m                                                                   ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* The following section is an extract from your log." >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 247:[0m
+[0m    echo "* Look for error messages from pppd, such as" >> $DEBUG[0m
+[32m                                                           ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* Look for error messages from pppd, such as" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 248:[0m
+[0m    echo "* a lack of kernel support for PPP, authentication failure" >> $DEBUG[0m
+[32m                                                                         ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* a lack of kernel support for PPP, authentication failure" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 249:[0m
+[0m    echo "* etc." >> $DEBUG[0m
+[32m                     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* etc." >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 251:[0m
+[0m	echo "Extract from /var/log/messages" >> $DEBUG[0m
+[32m                                                 ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo "Extract from /var/log/messages" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 252:[0m
+[0m	grep 'ppp' /var/log/messages | tail -150 >> $DEBUG[0m
+[32m                                                    ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	grep 'ppp' /var/log/messages | tail -150 >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 254:[0m
+[0m	echo "Extract from /var/adm/messages" >> $DEBUG[0m
+[32m                                                 ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo "Extract from /var/adm/messages" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 255:[0m
+[0m	grep 'ppp' /var/adm/messages | tail -150 >> $DEBUG[0m
+[32m                                                    ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	grep 'ppp' /var/adm/messages | tail -150 >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 257:[0m
+[0m        echo "Can't find messages file (looked for /var/{log,adm}/messages" >> $DEBUG[0m
+[32m                                                                               ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+        echo "Can't find messages file (looked for /var/{log,adm}/messages" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 259:[0m
+[0m    date >> $DEBUG[0m
+[32m    ^------------^ SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+[32m            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    date >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 260:[0m
+[0m    echo "---------------------------------------------" >> $DEBUG[0m
+[32m                                                            ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "---------------------------------------------" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 261:[0m
+[0m    echo "* The following section is a dump of the packets" >> $DEBUG[0m
+[32m                                                               ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* The following section is a dump of the packets" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 262:[0m
+[0m    echo "* sent and received by rp-pppoe.  If you don't see" >> $DEBUG[0m
+[32m                                                                 ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* sent and received by rp-pppoe.  If you don't see" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 263:[0m
+[0m    echo "* any output, it's an Ethernet driver problem.  If you only" >> $DEBUG[0m
+[32m                                                                          ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* any output, it's an Ethernet driver problem.  If you only" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 264:[0m
+[0m    echo "* see three PADI packets and nothing else, check your cables" >> $DEBUG[0m
+[32m                                                                           ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* see three PADI packets and nothing else, check your cables" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 265:[0m
+[0m    echo "* and modem.  Make sure the modem lights flash when you try" >> $DEBUG[0m
+[32m                                                                          ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* and modem.  Make sure the modem lights flash when you try" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 266:[0m
+[0m    echo "* to connect.  Check that your Ethernet card is in" >> $DEBUG[0m
+[32m                                                                 ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* to connect.  Check that your Ethernet card is in" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 267:[0m
+[0m    echo "* half-duplex, 10Mb/s mode.  If all else fails," >> $DEBUG[0m
+[32m                                                              ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* half-duplex, 10Mb/s mode.  If all else fails," >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 268:[0m
+[0m    echo "* try using pppoe-sniff." >> $DEBUG[0m
+[32m                                       ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "* try using pppoe-sniff." >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 269:[0m
+[0m    echo "rp-pppoe debugging dump" >> $DEBUG[0m
+[32m                                      ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    echo "rp-pppoe debugging dump" >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 270:[0m
+[0m    cat $DEBUG-0 >> $DEBUG[0m
+[32m        ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                    ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    cat "$DEBUG"-0 >> "$DEBUG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 271:[0m
+[0m    rm -f $DEBUG-0[0m
+[32m          ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    rm -f "$DEBUG"-0
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 272:[0m
+[0m    for i in 1 2 3 4 5 6 7 8 9 10 ; do[0m
+[33m    ^-^ SC2034 (warning): i appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 288:[0m
+[0mecho $$ > $PIDFILE[0m
+[32m          ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+echo $$ > "$PIDFILE"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 290:[0m
+[0mwhile [ true ] ; do[0m
+[32m        ^--^ SC2160 (style): Instead of '[ true ]', just use 'true'.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 292:[0m
+[0m	$SETSID $OVERRIDE_PPPD_COMMAND &[0m
+[32m                ^--------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	$SETSID "$OVERRIDE_PPPD_COMMAND" &
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 293:[0m
+[0m	echo "$!" > $PPPD_PIDFILE[0m
+[32m                    ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo "$!" > "$PPPD_PIDFILE"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 295:[0m
+[0m	$SETSID $PPPD $PPP_STD_OPTIONS $DEMAND &[0m
+[32m                      ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                       ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	$SETSID $PPPD "$PPP_STD_OPTIONS" "$DEMAND" &
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 296:[0m
+[0m	echo "$!" > $PPPD_PIDFILE[0m
+[32m                    ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo "$!" > "$PPPD_PIDFILE"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 299:[0m
+[0m	    $PPP_STD_OPTIONS \[0m
+[32m            ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	    "$PPP_STD_OPTIONS" \
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 300:[0m
+[0m	    $DEMAND \[0m
+[32m            ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	    "$DEMAND" \
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-connect line 302:[0m
+[0m	echo "$!" > $PPPD_PIDFILE[0m
+[32m                    ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	echo "$!" > "$PPPD_PIDFILE"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2034 -- PPPD_PID appears unused. Verify u...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...

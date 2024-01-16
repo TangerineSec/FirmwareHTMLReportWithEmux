@@ -1,0 +1,27 @@
+#!/bin/sh
+
+. /lib/functions/uci-defaults.sh
+. /lib/ralink.sh
+
+set_usb_led() {
+	ucidef_set_led_usbdev "usb" "USB" "$1" "1-1"
+}
+
+set_wifi_led() {
+	ucidef_set_led_netdev "wifi_led" "wifi" "$1" "wlan0"
+}
+
+board=$(ralink_board_name)
+
+case $board in
+	fonera20n)
+		set_usb_led "fonera20n:amber:usb"
+		;;
+	nw718)
+		set_usb_led "nw718:amber:usb"
+		;;
+esac
+
+ucidef_commit_leds
+
+exit 0

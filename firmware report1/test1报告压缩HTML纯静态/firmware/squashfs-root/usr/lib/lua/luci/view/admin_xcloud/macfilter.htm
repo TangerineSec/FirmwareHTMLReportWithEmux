@@ -1,0 +1,128 @@
+<%
+	local uci = require "luci.model.uci".cursor()
+	require "luci.sys"
+	local macfstatus = uci:get('wireless','ra0','macpolicy') or '0'
+	local macdata	=  uci:get('user','mfilter','macdata')
+
+	function Split(szFullString, szSeparator)  
+		local nFindStartIndex = 1  
+		local nSplitIndex = 1  
+		local nSplitArray = {}  
+		while true do  
+		   local nFindLastIndex = string.find(szFullString, szSeparator, nFindStartIndex)  
+		   if not nFindLastIndex then  
+		    nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, string.len(szFullString))  
+		    break  
+		   end  
+		   nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, nFindLastIndex - 1)  
+		   nFindStartIndex = nFindLastIndex + string.len(szSeparator)  
+		   nSplitIndex = nSplitIndex + 1  
+		end  
+		return nSplitArray  
+	end
+
+	local nmacdata = {}
+	local t = {}
+	local t1 = {}
+	if macdata and macdata ~= " " then
+		t = Split(macdata,"||||")
+		if #t == 1 then
+			t1 = Split(t[1],"|||")
+			table.insert(nmacdata,t1)
+		else
+			for _,v in ipairs(t) do
+				t1 = Split(v,"|||")
+				table.insert(nmacdata,t1)
+			end
+		end
+	end
+%>
+<div class='macfilterPanel'>
+	<div class='setup_head'>
+		<h4 style="margin-left:24px;">无线MAC过滤</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+	<div class='macfiltermain'>
+		<div class='macfilterTurn'>
+			<% if macfstatus ~= '0' then %>
+				<input type='checkbox' class='macfilter_check' id="mf_check" checked='checked'>
+			<% else %>
+				<input type='checkbox' class='macfilter_check' id="mf_check">
+			<% end %>
+			<span><label style="cursor:pointer;" for="mf_check">启用无线MAC过滤</label></span>
+		</div>
+		<div class='clr'></div>
+		<div class='macfileterContent'>
+			<%if macfstatus ~= '0' then%>
+			<div class='macfilterShow' style='display:block'>
+			<%else%>
+			<div class='macfilterShow' style='display:none'>
+			<%end%>
+				<div class='macfilterAllow'>
+					<% if macfstatus == 'allow' then %>
+						<input type='radio' name='macfilterAllow' class='allowmac' checked='checked'>
+						<span>只允许列表中生效的设备访问无线网络</span><br>
+						<input type='radio' name='macfilterAllow' class='rejectmac'>
+						<span>禁止列表中生效的设备访问无线网络</span>
+					<% elseif  macfstatus == 'reject' then %>
+						<input type='radio' name='macfilterAllow' class='allowmac'>
+						<span>只允许列表中生效的设备访问无线网络</span><br>
+						<input type='radio' name='macfilterAllow' class='rejectmac' checked='checked'>
+						<span>禁止列表中生效的设备访问无线网络</span>				
+					<% else %>
+						<input type='radio' name='macfilterAllow' class='allowmac' checked='checked'>
+						<span>只允许列表中生效的设备访问无线网络</span><br>
+						<input type='radio' name='macfilterAllow' class='rejectmac'>
+						<span>禁止列表中生效的设备访问无线网络</span>
+					<% end %>
+				</div>
+				<div class='macfilterTable'>
+					<table cellpadding=0 cellspacing=0 class='macfilterT'>
+						<tr class='firstmacfilter'>
+							<th style='width:60px;border-left:1px solid white;'><p>序号</p></th>
+							<th style='width:260px'><p>Mac地址</p></th>
+							<th><p>备注</p></th>
+							<th style='width:50px;border-right: 1px solid white;'>生效</th>
+						</tr>
+						<% for i,v in ipairs(nmacdata) do%>
+							<tr>
+								<td><p><%=i%></p></td>
+								<td><p><input type='text' value='<%=v[1]%>' class='macfilterCodes'></p></td>
+								<td><p><input type='text' value='<%=v[2]%>' class='macfilterBack'></p></td>
+								<td>
+									<% if v[3] == '0' then%>
+										<input type='checkbox' class='savemacfilter'>
+									<% else %>
+										<input type='checkbox' checked='checked' class='savemacfilter'>
+									<% end %>
+								</td>
+								<td class='deletefilter'><span></span></td>
+							</tr>
+						<%end%>
+					</table>
+				</div>
+				<div class='macfilterAdd'>
+					<a href="javascript:void(0)" class="addstatic"><span class="addimg"></span><span class="addmacfilter">添加设备</span></a>
+				</div>
+			</div>
+		</div>
+		<!--<div class='macfilterFooter'>-->
+		<a href='javascript:void(0)' class='subbtn macfiltersave'><b>保存</b></a>
+		<p class='macfiltermention'></p>
+		<!--</div>-->
+	</div>
+	<table class='addfilter'>
+		<tr>
+			<td style='border-left:1px solid white;'><p></p></td>
+			<td><p><input type='text' value='' class='macfilterCodes'></p></td>
+			<td><p><input type='text' value='' class='macfilterBack'></p></td>
+			<td>
+				<input type='checkbox' checked='checked' class='savemacfilter'>
+			</td>
+			<td class='deletefilter'><span></span></td>
+		</tr>
+	</table>	
+</div>

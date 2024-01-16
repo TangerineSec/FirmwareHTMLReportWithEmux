@@ -1,0 +1,1089 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./index.html"><img class="inherit" id="logoImage" src="./style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./index.html">&laquo; Back to main</a>
+      <!-- navigation start --><a class="modul" href="#check_binaries_for_critical_functions" title="#check_binaries_for_critical_functions" >Check binaries for critical functions</a>
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>[</span><span class="blue">+</span>] </span><span class="cyan"><span class="bold"><a id="check_binaries_for_critical_functions">Check binaries for critical functions</a></span></pre>
+<pre><span class="bold"><hr class="double" /></span></pre>
+<pre>This module identifies the usage of critical binary functions in firmware via </span><span class="orange">readelf</span>.</pre>
+<pre>Examples of binary functions are system, strcpy, printf and strcat. These functions are listed in the configuration</pre>
+<pre>file config/functions.cfg.</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Interesting functions: fprintf mmap popen printf sprintf strcat strcpy system</pre>
+<br />
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/bin/flash_eraseall (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	004014f0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	36:	00401480	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/bin/iwpriv (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00404ce0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	48:	00404bb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	67:	00404af0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	70:	00404ad0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/md5sum (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	14:	00400b30	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/hnap_push_service (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	35:	0040d210	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	74:	0040d030	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	76:	0040d010	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	100:	0040cf10	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	118:	0040ce40	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	121:	0040ce10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/upnp (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	35:	0040be50	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	101:	0040bbe0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	106:	0040bbc0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/dlinkpsk (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	16:	00400ae0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/getpreviewimg (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	36:	0041d720	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	87:	0041d630	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	89:	0041d620	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	113:	0041d5c0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	138:	0041d540	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	140:	0041d530	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/netmgr (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	43:	00404080	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	73:	00403f40	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	94:	00403e50	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	119:	00403d20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	124:	00403cd0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/twinkling (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00400b70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/userconfig (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00402810	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	42:	00402710	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	49:	004026c0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	56:	00402670	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	58:	00402650	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/fw_upgrade (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	17:	004013c0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	27:	00401340	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	004012f0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/wanip_detect (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00400e20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	28:	00400e00	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	33:	00400dd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/llmnr (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00402a60	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	44:	00402950	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	65:	00402870	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ntpclient (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	41:	004041e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	55:	00404140	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	69:	00404090	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/sysmgr (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	004015a0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	34:	00401520	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/msger (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00401770	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	36:	004016f0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	38:	004016d0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ddp (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	56:	00413fe0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	111:	00413e00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	136:	00413d20	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	165:	00413c10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/rtsp/rtspd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	98:	0041b9c0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	188:	0041b6d0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	191:	0041b6b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	292:	0041b340	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	302:	0041b2f0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ipfind (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	004029e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	44:	004028c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	55:	00402840	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/makeBonjourFile (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	00401140	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	27:	00401120	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/mDNSClientPosix (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	68:	00424350	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	137:	00424190	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	210:	00424080	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/rscam_uvc (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	292:	00416dc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	337:	00416d20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/eventd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	71:	0041c270	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	160:	0041bf00	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	162:	0041bee0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	202:	0041bd90	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	241:	0041bc20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	246:	0041bbf0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/hwmon (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	26:	00404090	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	74:	00403ef0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	88:	00403e80	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/pppd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	249:	0042ced0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	385:	0042cb80	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	549:	0042c890	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	567:	0042c840	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/mdb (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	34:	00409e60	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	72:	00409c40	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	73:	00409c30	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	96:	00409ae0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	114:	00409a30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/schboot (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	42:	00401850	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	51:	004017f0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/upnp_igd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	45:	00415890	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	130:	004155c0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	136:	004155a0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/mDNSResponderPosix (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	134:	00424ad0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	207:	00424990	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/swdog (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00400c30	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/httpd-manager (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	31:	00401240	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	36:	00401210	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ddns (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00402480	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	52:	004022e0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/elog (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00400e30	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	00400e00	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/factory_reset (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	16:	00400ea0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	21:	00400e70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	25:	00400e50	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/cfg (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	17:	00400d10	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	22:	00400ce0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	23:	00400cd0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	00400ca0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/set_passwd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	29:	00400fc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/mkdosfs (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	004051e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	43:	004050d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	65:	00404fe0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/rtkmib (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00400e30	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	32:	00400dd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/hnap_tool_wifi_sitesurvey (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	29:	004019b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	00401990	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVnetwork.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	49:	00002f60	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	65:	00002ea0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	74:	00002e30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libUserConfig.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	39:	00001d40	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	44:	00001d00	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libcrypto.so.0.9.8 (-r-xr-xr-x root root) found:</span></pre>
+<pre>    	1392:	0010ee70	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	1872:	0010ed20	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	1941:	0010ecd0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	2933:	0010e970	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libEventLog.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	38:	00001280	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libEMail.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	27:	00002a80	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	38:	000029d0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	52:	00002930	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	53:	00002920	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libutl.so.0 (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	57:	00003330	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	79:	00003220	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	80:	00003210	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	86:	000031e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	99:	00003190	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libcfg.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	44:	000041a0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	63:	000040d0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	65:	000040c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	74:	00004080	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	86:	00004030	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	87:	00004020	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVwireless.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	83:	000082b0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	104:	000081f0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	105:	000081e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	113:	000081a0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	130:	000080f0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	133:	000080c0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libnet.so.0 (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	50:	00003af0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	64:	00003a40	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVbase64.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00000c20	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFtp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	29:	00002850	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	59:	000026d0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	60:	000026c0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libProfile.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000fd0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	31:	00000f50	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libweb.so.0 (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	131:	0000d890	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	177:	0000d6b0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	178:	0000d6a0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	202:	0000d5a0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	236:	0000d450	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVsystem.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	37:	00006f00	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	56:	00006df0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	67:	00006d70	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	78:	00006ce0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libcfgbackup.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	00000ec0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	32:	00000e20	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	35:	00000e10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libssl.so.0.9.8 (-r-xr-xr-x root root) found:</span></pre>
+<pre>    	167:	0003f370	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	336:	0003edc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libHttpNotify.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	26:	00001d50	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	32:	00001cf0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	44:	00001c70	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	45:	00001c60	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVmtd.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	000015a0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	31:	00001520	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	35:	00001500	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libFVconfig.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	32:	00000e00	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libasp.so.0 (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	31:	00001050	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libMsgctrl.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	65:	00001bc0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libRingBuf.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	49:	000030b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	61:	00003030	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/httpd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	47:	0040e530	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	90:	0040e2b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	98:	0040e250	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	107:	0040e1d0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	130:	0040e080	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/wps.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	19:	00400c20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/upnp.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00401020	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/irled.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00400f00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00400ee0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/video.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	17:	00401f10	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	25:	00401eb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	29:	00401e90	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/system_reset.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400db0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	23:	00400d80	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/wireless.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00402cd0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	27:	00402c60	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	00402c40	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	36:	00402c10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/rtspurl.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401030	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00401010	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/wlansignal.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	19:	00400bc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/system_reboot.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400d70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/audio.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00400f70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00400f50	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/group_list.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	004014d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	33:	00401480	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/camera_info.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401060	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00401040	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/icr.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	15:	00401760	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	23:	00401700	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	27:	004016e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/ddns.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	004016b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	27:	00401690	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	32:	00401660	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/httpport.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00400fc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00400fa0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/notify.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	004016c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/https.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00401030	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00401010	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/event_log.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	14:	00400ed0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	23:	00400e60	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/datetime.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00402870	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	33:	004027c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	39:	00402780	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/mic.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	00401100	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	25:	004010e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/network.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	26:	004028c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	004028a0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	35:	00402870	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/stream_auth.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00401200	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	004011e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/pppoe.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401190	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00401170	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/sensor_info.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	19:	00400f50	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/stream_info.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	17:	00401a20	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	24:	004019d0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	25:	004019c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/sensor_reset.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	004010b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00401080	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/audio_detection.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401170	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00401150	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/wireless_ap.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401360	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	27:	00401330	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/led.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00400ef0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00400ed0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/notify_stream.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	16:	00401fa0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/firmwareupgrade.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	31:	00401540	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	37:	00401500	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/sensor.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	00401b10	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	25:	00401af0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/user_del.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00400df0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	26:	00400dd0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	30:	00400db0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/user_mod.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	00401220	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	27:	00401200	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	32:	004011d0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/scheduled_reboot.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	00401e30	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	33:	00401d90	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	39:	00401d50	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	48:	00401ce0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/user_list.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00401230	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	26:	004011d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	00401190	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/timestamp.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00400fa0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00400f80	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/motion.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	004015c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	00401590	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/video_type.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400be0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/wlansurvey.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	29:	004015d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/config/sensor_output.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400be0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/hnap/hnap_service (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	45:	00414270	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	88:	004140e0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	90:	004140c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	113:	00413fe0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	132:	00413f20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	137:	00413ed0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/users/verify.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	00400d00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/users/env_sound_lv.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400bc0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/localrecording/queryconf.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00400fd0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/localrecording/autodiscover.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00400cc0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	28:	00400cb0	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/localrecording/unbindsetting.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00402910	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	38:	00402860	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	57:	00402770	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	58:	00402760	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	59:	00402750	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/localrecording/setconf.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	004035f0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	39:	00403530	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	59:	00403430	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	60:	00403420	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	61:	00403410	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/common/info.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	004014e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/hardfactorydefault.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00400c90	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/wireless.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00401600	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/audiovideo.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00401b60	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/eventsnapshot.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00401770	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	25:	00401720	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	004016e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	39:	00401680	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/ddns.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00401160	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/serverreport.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401230	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/testserv.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	23:	004024f0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	40:	00402400	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	46:	004023c0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/ftp.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	004012d0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/admin/adv_snapshot_cont.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	19:	00404190	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	30:	00404100	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	36:	004040c0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	44:	00404060	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/admin/videoclip.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	19:	004047e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	30:	00404750	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	36:	00404710	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	44:	004046b0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/restore.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	15:	00400f70	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	22:	00400f20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/serverSetting.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00401080	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/RTS5826.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	30:	00400cf0	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/camera.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	004011d0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/param.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	31:	0041e130	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	53:	0041dff0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	54:	0041dfe0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	64:	0041df60	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/finish.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400bb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/network.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00401ef0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/smartwizard.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	33:	00405700	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	40:	004056b0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/ad.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	26:	004013e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	004013c0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/query/query.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	21:	00400f00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/wifichannel.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00400ff0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	24:	00400fb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/firmwareupgrade.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	34:	00401760	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	40:	00401720	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/wdatetime.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	32:	00401700	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	40:	004016a0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/factorydefault.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	26:	00401020	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/wpwdgrp.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	30:	00401710	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	004016f0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/dayMode.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00401250	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	27:	00401200	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/scheduleReboot.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	004012e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	25:	00401290	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	00401250	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	39:	004011f0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/viewer.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00401500	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/tools.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	20:	00400d80	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	24:	00400d60	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/whardfactorydefault.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00400d80	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/eventrecording.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00401830	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	25:	004017e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	004017a0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	39:	00401740	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/motion.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	26:	004016b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	00401680	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/email.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	24:	00401620	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/update.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	22:	00401740	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	32:	004016c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	39:	00401670	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	46:	00401620	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /web/cgi-bin/cgi/unittest.cgi (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	25:	00401f60	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	39:	00401ea0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	40:	00401e90	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	49:	00401e20	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	57:	00401dd0	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/stunnel (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	13:	00411f40	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	85:	00411c20	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	254:	00411440	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/wscd (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	81:	00436cc0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	183:	00436ac0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	185:	00436aa0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	253:	004369e0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	311:	00436940	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	324:	00436920	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/curl (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	14:	00413530	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	33:	00413470	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /server/camsvr (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	108:	0042e560	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	219:	0042e3a0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	253:	0042e320	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	342:	0042e1d0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/reboot (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	00400ab0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/ip6tables (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	82:	0042c060	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	160:	0042be60	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	164:	0042be30	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	249:	0042bc20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	255:	0042bc00	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/iwcontrol (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	34:	00406d00	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	61:	00406bb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	88:	00406aa0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	91:	00406a70	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/pppoe (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	30:	00406190	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	63:	00406020	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	100:	00405f00	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	106:	00405ec0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/pppoe-sniff (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	28:	00403190	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	46:	004030d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	70:	00403000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	74:	00402fd0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/pppoe-server (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	35:	004097b0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	75:	004095a0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	118:	00409440	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	125:	00409400	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/pppoe-relay (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	30:	004055c0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	62:	00405460	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	99:	00405300	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/iptables (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	88:	00430b90	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	170:	00430980	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	174:	00430950	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	265:	00430730	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	272:	00430710	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libcrypt-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00002220	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	20:	00002200	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libutil-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	40:	00000d10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libdl-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	27:	000016f0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libcurl.so.4.3.0 (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	56:	00038cf0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	115:	000389f0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libpthread-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	270:	0000c7c0	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libm-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	150:	000192d0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root) found:</span></pre>
+<pre>    	18:	00034760	40	FUNC	GLOBAL	DEFAULT	7	strcpy</pre>
+<pre>    	59:	0002b108	576	FUNC	GLOBAL	DEFAULT	7	popen</pre>
+<pre>    	61:	0002a940	84	FUNC	GLOBAL	DEFAULT	7	printf</pre>
+<pre>    	268:	000525b0	480	FUNC	WEAK	DEFAULT	7	system</pre>
+<pre>    	387:	0000ad50	132	FUNC	GLOBAL	DEFAULT	7	mmap</pre>
+<pre>    	517:	00034510	52	FUNC	GLOBAL	DEFAULT	7	strcat</pre>
+<pre>    	870:	0002ab00	76	FUNC	GLOBAL	DEFAULT	7	sprintf</pre>
+<pre>    	1247:	0002aa00	64	FUNC	GLOBAL	DEFAULT	7	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Found </span><span class="orange">165</span> binaries with interesting functions in </span><span class="orange">207</span> files (vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system)</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<a href="./s12_binary_protection.html" title="./s12_binary_protection.html" ><div id="buttonBack" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+<a href="./s09_firmware_base_version_check.html" title="./s09_firmware_base_version_check.html" ><div id="buttonForward" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div> </a>
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

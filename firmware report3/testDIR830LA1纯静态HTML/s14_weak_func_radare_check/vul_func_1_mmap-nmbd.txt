@@ -1,0 +1,33 @@
+[[0;33m*[0m] Binary protection state of [0;33mnmbd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mnmbd[0m
+
+[31mlw t9, -sym.lp_use_mmap(gp)[0m
+sw a0, 0x28(sp)
+sw a1, 0x2c(sp)
+sw a2, 0x30(sp)
+jalr t9
+sw a3, 0x34(sp)
+lw a2, 0x30(sp)
+lw gp, 0x20(sp)
+ori v1, a2, 8
+lw a0, 0x28(sp)
+movz a2, v1, v0
+lw v0, 0x50(sp)
+lw t9, -sym.tdb_open_ex(gp)
+sw v0, 0x10(sp)
+lui v0, 0x44
+lw a1, 0x2c(sp)
+addiu v0, v0, 0x4344
+lw a3, 0x34(sp)
+sw v0, 0x14(sp)
+jalr t9
+sw zero, 0x18(sp)
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m1[0m times [0;33mnmbd[0m
+

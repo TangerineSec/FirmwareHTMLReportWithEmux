@@ -1,0 +1,134 @@
+<%#
+LuCI - Lua Configuration Interface
+Copyright 2008 Steven Barth <steven@midlink.org>
+Copyright 2008-2012 Jo-Philipp Wich <xm@subsignal.org>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+$Id: sysauth.htm 8327 2012-03-04 15:03:05Z jow $
+
+-%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>如意·云</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">   
+	<script src='<%=resource%>/jquery-1.8.2.min.js'></script>
+	<script src='<%=resource%>/jquery.placeholder.js'></script>
+	<link rel="shortcut icon" href="<%=media%>/logo.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="<%=media%>/nxcloud.css">
+</head>
+<body>
+<div class="container">
+	<div class="main_bg">
+		<div class="logo"></div>
+		<form method='post' action="<%=pcdata(luci.http.getenv('REQUEST_URI'))%>" class="login_form">
+			<input id="focus_password" type='password' class='login_password' name='password' maxlength="20" size="20" placeholder="请输入路由器密码" /><span id="showmsg"></span>
+			<input type='hidden' name='getcontent' class='getcontent' value='0' />
+			<input type='hidden' name='username' value='root' />
+			<img src="<%=media%>/submit_1.png" />
+		</form>
+		<div class="remined" id="click_nav">
+			<div class="remined_img" style="display: none;"><img src="<%=media%>/2wei.png?<%=os.time()%>" width="103px" height="103px" /></div>
+		</div>
+		<%- if fuser then %>
+			<script type='text/javascript'>
+				$('#focus_password').removeClass();
+				$('#focus_password').addClass('login_password_error');
+				$('#focus_password').focus();
+				$('#showmsg').html('密码错误请重试');
+				setTimeout(function(){
+					$('#showmsg').html('');
+				}, 3000);
+			</script>
+		<%end%>
+	</div>
+</div>
+<div class="footer_bg">
+	<div class="bg_nav">
+		<div class="nav_1">
+			<p class="nav_blue">小云手机端</p>
+			<p class="nav_black">贴心的私有云存储工具</p>
+			<div class="nav_iphone"><a href="https://itunes.apple.com/cn/app/xiao-yun/id543856562?mt=8">iPhone</a></div>
+			<div class="nav_android"><a href="http://www.xcloud.cc/download-273.html">Android</a></div>
+		</div>
+
+		<div class="nav_1">
+			<p class="nav_blue">小云电脑端</p>
+			<p class="nav_black">安全方便的个人文件管家</p>
+			<div class="nav_mac"><a href="#">Mac</a></div>
+			<div class="nav_windows"><a href="http://www.xcloud.cc/download-262.html">Windows</a></div>
+		</div>
+
+		<div class="nav_1">
+			<p class="nav_blue">路由器刷机精灵</p>
+			<p class="nav_black">最强大的一键刷路由工具</p>
+			<div class="nav_update"><a href="#">即将开放</a></div>
+		</div>
+	</div>
+</div>
+<%
+	require "luci.sys"
+	local versionflag = luci.sys.exec('/usr/local/localshell/getcapability')
+	versionflag = string.sub(versionflag,1,string.len(versionflag)-1)
+%>
+<version data="{'ROMVersion':'<%=pcdata(luci.version.xcloud_update)%>','uBootVersion':'1.0.0.0','Platform':'<%=versionflag%>'}"></version>
+<script language="javascript">
+$(document).ready(function(){
+	//占位符
+	$('input').placeholder();
+	
+	//输入框获取焦点
+	if($.browser.msie === undefined && $.browser.safari === undefined){
+		$('#focus_password').focus();
+	}
+	
+	//按钮切换
+	$('.login_form img').hover(
+		function(){
+			$(this).attr('src', '<%=media%>/submit_2.png');
+		},
+		function(){
+			$(this).attr('src', '<%=media%>/submit_1.png');
+		}
+	);
+
+	//按钮点击
+	$('.login_form img').live('click', function(){
+		$('.login_form').submit();
+	});
+
+	//回车提交
+	$(document).keydown(function(enent){
+	     if(event.keyCode == 13){
+	        $('.login_form').submit();
+	     }
+	});
+
+
+	//下拉切换
+	$('#click_nav').hover(
+		function(){
+			$(this).removeClass();
+			$(this).addClass('remined_clicked');
+			$('.remined_img').css('display', '');
+			return false;
+		},
+		function(){
+			$(this).removeClass();
+			$(this).addClass('remined');
+			$('.remined_img').css('display', 'none');
+			return false;
+		}
+	);
+});
+</script>
+</body>
+</html>

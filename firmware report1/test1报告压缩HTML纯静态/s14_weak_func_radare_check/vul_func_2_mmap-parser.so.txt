@@ -1,0 +1,55 @@
+[[0;33m*[0m] Binary protection state of [0;33mparser.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mparser.so[0m
+
+[31mlw t9, -sym.imp.mmap(gp)[0m
+lw v0, (s1)
+sw a1, 4(s1)
+move a0, zero
+sw v0, 0x10(sp)
+sw zero, 0x14(sp)
+addiu a2, zero, 1
+jalr t9
+addiu a3, zero, 2
+lw gp, 0x18(sp)
+sw v0, 8(s1)
+lw v0, 0x3a40(s0)
+lw v1, 8(v0)
+beq v1, s2, 0x1138
+lw t9, -sym.template_close(gp)
+sw v1, 0xc(v0)
+sw zero, 0x3c(v0)
+sw v1, 0x34(v0)
+b 0x1144
+sw v1, 0x38(v0)
+lw t9, -sym.template_close(gp)
+--
+[31mlw t9, -sym.imp.mmap(gp)[0m
+sw v0, 0x10(sp)
+sw zero, 0x14(sp)
+move a0, zero
+addiu a2, zero, 1
+jalr t9
+addiu a3, zero, 1
+lw gp, 0x18(sp)
+beq v0, s2, 0x290c
+sw v0, 0x10(s0)
+lw a0, 8(s0)
+addu a1, v0, a0
+lw v1, -4(a1)
+sll a3, v1, 0x18
+srl a2, v1, 0x18
+or a2, a3, a2
+srl a3, v1, 8
+andi a3, a3, 0xff00
+andi v1, v1, 0xff00
+or a2, a2, a3
+sll v1, v1, 8
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m2[0m times [0;33mparser.so[0m
+

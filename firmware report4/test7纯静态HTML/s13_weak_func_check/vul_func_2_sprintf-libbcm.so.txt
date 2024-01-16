@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibbcm.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibbcm.so[0m
+
+ dec:	000090e8 	andeq	r9, r0, r8, ror #1
+ df0:	00000f60 	andeq	r0, r0, r0, ror #30
+ df4:	00000f8c 	andeq	r0, r0, ip, lsl #31
+ df8:	00000f4c 	andeq	r0, r0, ip, asr #30
+
+00000dfc <bcmgpio_getpin>:
+ dfc:	e59f3104 	ldr	r3, [pc, #260]	; f08 <bcmgpio_getpin+0x10c>
+ e00:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ e04:	e1a06000 	mov	r6, r0
+ e08:	e1a0a001 	mov	sl, r1
+ e0c:	e24dd010 	sub	sp, sp, #16
+ e10:	e28d8004 	add	r8, sp, #4
+ e14:	e3a07000 	mov	r7, #0
+ e18:	e8930007 	ldm	r3, {r0, r1, r2}
+ e1c:	e1a03008 	mov	r3, r8
+ e20:	e8a30003 	stmia	r3!, {r0, r1}
+ e24:	e5c32000 	strb	r2, [r3]
+ e28:	e59f10dc 	ldr	r1, [pc, #220]	; f0c <bcmgpio_getpin+0x110>
+ e2c:	e1a02007 	mov	r2, r7
+ e30:	e1a00008 	mov	r0, r8
+[31m e34:	ebfffe44 	bl	74c <sprintf@plt>[0m
+ e38:	e1a00008 	mov	r0, r8
+ e3c:	ebfffe36 	bl	71c <nvram_get@plt>
+--
+ e78:	e3a0102c 	mov	r1, #44	; 0x2c
+ e7c:	e1a00009 	mov	r0, r9
+ e80:	ebfffe43 	bl	794 <strchr@plt>
+ e84:	e2504000 	subs	r4, r0, #0
+ e88:	e0693004 	rsb	r3, r9, r4
+ e8c:	1afffff6 	bne	e6c <bcmgpio_getpin+0x70>
+ e90:	e1a00009 	mov	r0, r9
+ e94:	e1a01006 	mov	r1, r6
+ e98:	ebfffe25 	bl	734 <strcmp@plt>
+ e9c:	e3500000 	cmp	r0, #0
+ ea0:	0a000015 	beq	efc <bcmgpio_getpin+0x100>
+ ea4:	e2877001 	add	r7, r7, #1
+ ea8:	e3570020 	cmp	r7, #32
+ eac:	1affffdd 	bne	e28 <bcmgpio_getpin+0x2c>
+ eb0:	e37a0001 	cmn	sl, #1
+ eb4:	01a0000a 	moveq	r0, sl
+ eb8:	0a000010 	beq	f00 <bcmgpio_getpin+0x104>
+ ebc:	e59f1048 	ldr	r1, [pc, #72]	; f0c <bcmgpio_getpin+0x110>
+ ec0:	e1a0200a 	mov	r2, sl
+ ec4:	e1a00008 	mov	r0, r8
+[31m ec8:	ebfffe1f 	bl	74c <sprintf@plt>[0m
+ ecc:	e1a00008 	mov	r0, r8
+ ed0:	ebfffe11 	bl	71c <nvram_get@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m2[0m times [0;33mlibbcm.so[0m
+

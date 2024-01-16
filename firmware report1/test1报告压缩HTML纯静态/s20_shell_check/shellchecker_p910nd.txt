@@ -1,0 +1,84 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 3:[0m
+[0mSTART=50[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 6:[0m
+[0m	local section="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 7:[0m
+[0m	local option="$2"[0m
+[33m        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 8:[0m
+[0m	local value="$3"[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 9:[0m
+[0m	local _val[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 15:[0m
+[0m	local section="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 16:[0m
+[0m	local option="$2"[0m
+[33m        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 17:[0m
+[0m	local value="$3"[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m              ^---^ SC2034 (warning): value appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 18:[0m
+[0m	local _val[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 24:[0m
+[0m	local section="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 31:[0m
+[0m	[ "$enabled" -gt 0 ] && /usr/sbin/p910nd $args[0m
+[33m           ^------^ SC2154 (warning): enabled is referenced but not assigned.[0m
+[32m                                                 ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ "$enabled" -gt 0 ] && /usr/sbin/p910nd "$args"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 35:[0m
+[0m	local section="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 38:[0m
+[0m	PID_F=/var/run/p910${port}d.pid[0m
+[33m                           ^-----^ SC2154 (warning): port is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/p910nd line 39:[0m
+[0m	[ -f $PID_F ] && kill $(cat $PID_F)[0m
+[32m             ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                              ^-----------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                                    ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -f "$PID_F" ] && kill $(cat "$PID_F")
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2154 -- enabled is referenced but not ass...

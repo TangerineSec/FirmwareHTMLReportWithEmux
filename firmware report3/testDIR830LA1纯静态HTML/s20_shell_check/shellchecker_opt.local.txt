@@ -1,0 +1,53 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 4:[0m
+[0mend=$2[0m
+[33m^-^ SC2034 (warning): end appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 15:[0m
+[0m  pid=`ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' `[0m
+[33m  ^-^ SC2034 (warning): pid appears unused. Verify use (or export if used externally).[0m
+[32m      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m       ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+  pid=$(ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' )
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 16:[0m
+[0m  pids=`ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' `[0m
+[32m       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m        ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+  pids=$(ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' )
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 19:[0m
+[0m    kill -9 $p[0m
+[32m            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    kill -9 "$p"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 31:[0m
+[0m  pids=`ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' `[0m
+[32m       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m        ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+  pids=$(ps | grep mydlink-watch-dog | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' )
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/opt.local line 34:[0m
+[0m    kill -9 $p[0m
+[32m            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    kill -9 "$p"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- end appears unused. Verify use (o...
+  https://www.shellcheck.net/wiki/SC2009 -- Consider using pgrep instead of g...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

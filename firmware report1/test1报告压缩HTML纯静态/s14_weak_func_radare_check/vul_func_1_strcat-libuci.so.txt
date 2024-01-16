@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibuci.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibuci.so[0m
+
+lw v1, -0x7fc4(gp)
+b 0x2370
+addiu v1, v1, -0x7d88
+lw v0, -0x7fc4(gp)
+addiu v0, v0, -0x7c58
+move v1, v0
+sll s2, s2, 2
+addiu s5, s5, -0x7a90
+addu s2, s2, s5
+lw a0, (s2)
+lw t9, -sym.imp.asprintf(gp)
+addiu s3, s3, -0x7880
+sw a0, 0x18(sp)
+sw v0, 0x10(sp)
+sw v1, 0x14(sp)
+sw s3, 0x1c(sp)
+move a0, s4
+addiu a1, s6, -0x7d68
+jalr t9
+move a2, s0
+bltzl v0, 0x2450
+sw zero, (s4)
+b 0x2454
+lw ra, 0x44(sp)
+lw a1, -0x7fc4(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+addiu a0, s3, -0x7880
+jalr t9
+addiu a1, a1, -0x7d58
+lw gp, 0x20(sp)
+lw v0, -sym.imp.longjmp(gp)
+bnez s0, 0x23ec
+lw a0, (v0)
+lw s0, -0x7fc4(gp)
+addiu s0, s0, -0x7c58
+b 0x23f4
+move a3, s0
+lw a3, -0x7fc4(gp)
+addiu a3, a3, -0x7d88
+beqz s1, 0x2414
+lw v0, -0x7fc4(gp)
+lw v0, 0x30(s1)
+beqz v0, 0x2410
+lw v1, -0x7fc4(gp)
+b 0x241c
+addiu v1, v1, -0x7d88
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m1[0m times [0;33mlibuci.so[0m
+

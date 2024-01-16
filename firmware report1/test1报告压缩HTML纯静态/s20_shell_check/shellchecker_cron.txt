@@ -1,0 +1,21 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/cron line 4:[0m
+[0mSTART=50[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/cron line 6:[0m
+[0mSERVICE_USE_PID=1[0m
+[33m^-------------^ SC2034 (warning): SERVICE_USE_PID appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/cron line 13:[0m
+[0m	service_start /usr/sbin/crond -c /etc/crontabs -l ${loglevel:-5}[0m
+[32m                                                          ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	service_start /usr/sbin/crond -c /etc/crontabs -l "${loglevel:-5}"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- SERVICE_USE_PID appears unused. V...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

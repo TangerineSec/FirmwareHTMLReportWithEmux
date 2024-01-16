@@ -1,0 +1,59 @@
+[[0;34m+[0m] [0;36m[1mCheck binaries for weak functions (intense)[0m
+[1m=================================================================[0m
+This module identifies the usage of critical binary functions in firmware via [0;33mobjdump[0m.
+Examples of binary functions are system, strcpy, printf and strcat. These functions are configured in the configuration
+file config/functions.cfg. The module counts the usages per binary. For strcpy functions it also counts strlen functions
+right before the strcpy function. Additionally it checks if the binary is a known Linux binary or unknown and probably
+a vendor binary.
+
+
+[[0;33m*[0m] Vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system
+
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libhistory.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libhistory.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libhistory.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 32 [0m/ [0;33mstrlen: 24 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libreadline.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 14 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libreadline.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libreadline.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libreadline.so.5.2 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 87 [0m/ [0;33mstrlen: 74 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+
+[0;34m==>[0m [0;36mTop 10 legacy C functions - Objdump disasm mode[0m
+-----------------------------------------------------------------
+
+
+[[0;32m+[0m][0;32m fprintf - top 10 results:[0m
+[0;32m	14    : libreadline.so. : common linux file: yes[0m
+[0;32m	1     : libhistory.so.5 : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m sprintf - top 10 results:[0m
+[0;32m	5     : libreadline.so. : common linux file: yes[0m
+[0;32m	2     : libhistory.so.5 : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcat - top 10 results:[0m
+[0;32m	2     : libreadline.so. : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcpy - top 10 results:[0m
+[0;32m	87    : libreadline.so. : common linux file: yes[0m
+[0;32m	32    : libhistory.so.5 : common linux file: yes[0m
+
+
+
+[*] Statistics:119:416
+
+[*] Statistics1:MIPS

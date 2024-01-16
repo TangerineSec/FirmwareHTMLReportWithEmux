@@ -1,0 +1,201 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibshared.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibshared.so[0m
+
+    8898:	e1a00004 	mov	r0, r4
+    889c:	ebffeb6b 	bl	3650 <strcpy@plt>
+    88a0:	e1a00004 	mov	r0, r4
+    88a4:	ebffec95 	bl	3b00 <strlen@plt>
+    88a8:	e1a01007 	mov	r1, r7
+    88ac:	e0840000 	add	r0, r4, r0
+    88b0:	e3a0200a 	mov	r2, #10
+    88b4:	ebffebad 	bl	3770 <memcpy@plt>
+    88b8:	e59dc014 	ldr	ip, [sp, #20]
+    88bc:	e1a00004 	mov	r0, r4
+    88c0:	e085100c 	add	r1, r5, ip
+    88c4:	ebffebf7 	bl	38a8 <nvram_set@plt>
+    88c8:	e2888001 	add	r8, r8, #1
+    88cc:	e3580c01 	cmp	r8, #256	; 0x100
+    88d0:	0a000081 	beq	8adc <convert_deprecated+0x648>
+    88d4:	e59d3004 	ldr	r3, [sp, #4]
+    88d8:	e1a02008 	mov	r2, r8
+    88dc:	e1a00006 	mov	r0, r6
+    88e0:	e085a00b 	add	sl, r5, fp
+    88e4:	e0851003 	add	r1, r5, r3
+[31m    88e8:	ebffec54 	bl	3a40 <sprintf@plt>[0m
+    88ec:	e1a01006 	mov	r1, r6
+    88f0:	e1a00004 	mov	r0, r4
+--
+    9c50:	e28d6c01 	add	r6, sp, #256	; 0x100
+    9c54:	e59f90d0 	ldr	r9, [pc, #208]	; 9d2c <get_pid_by_name+0x108>
+    9c58:	e1a0800d 	mov	r8, sp
+    9c5c:	e085a00a 	add	sl, r5, sl
+    9c60:	e0859009 	add	r9, r5, r9
+    9c64:	e1a00004 	mov	r0, r4
+    9c68:	ebffe6ea 	bl	3818 <readdir@plt>
+    9c6c:	e2507000 	subs	r7, r0, #0
+    9c70:	0a000022 	beq	9d00 <get_pid_by_name+0xdc>
+    9c74:	ebffe77d 	bl	3a70 <__ctype_b_loc@plt>
+    9c78:	e5d7300b 	ldrb	r3, [r7, #11]
+    9c7c:	e5902000 	ldr	r2, [r0]
+    9c80:	e1a03083 	lsl	r3, r3, #1
+    9c84:	e19230b3 	ldrh	r3, [r2, r3]
+    9c88:	e3130008 	tst	r3, #8
+    9c8c:	0afffff4 	beq	9c64 <get_pid_by_name+0x40>
+    9c90:	e287700b 	add	r7, r7, #11
+    9c94:	e1a0100a 	mov	r1, sl
+    9c98:	e1a02007 	mov	r2, r7
+    9c9c:	e1a00006 	mov	r0, r6
+[31m    9ca0:	ebffe766 	bl	3a40 <sprintf@plt>[0m
+    9ca4:	e1a01009 	mov	r1, r9
+    9ca8:	e1a00006 	mov	r0, r6
+--
+    9db4:	13a00000 	movne	r0, #0
+    9db8:	03a00001 	moveq	r0, #1
+    9dbc:	eafffff9 	b	9da8 <ether_atoe+0x74>
+
+00009dc0 <ether_etoa>:
+    9dc0:	e92d4ff8 	push	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+    9dc4:	e1a0b001 	mov	fp, r1
+    9dc8:	e59f3074 	ldr	r3, [pc, #116]	; 9e44 <ether_etoa+0x84>
+    9dcc:	e1a0a000 	mov	sl, r0
+    9dd0:	e1a05001 	mov	r5, r1
+    9dd4:	e3a07001 	mov	r7, #1
+    9dd8:	e59f8068 	ldr	r8, [pc, #104]	; 9e48 <ether_etoa+0x88>
+    9ddc:	e3a04000 	mov	r4, #0
+    9de0:	e08f3003 	add	r3, pc, r3
+    9de4:	e3a0903a 	mov	r9, #58	; 0x3a
+    9de8:	e0838008 	add	r8, r3, r8
+    9dec:	ea000008 	b	9e14 <ether_etoa+0x54>
+    9df0:	e4c69001 	strb	r9, [r6], #1
+    9df4:	e1a00006 	mov	r0, r6
+    9df8:	e7da2004 	ldrb	r2, [sl, r4]
+[31m    9dfc:	ebffe70f 	bl	3a40 <sprintf@plt>[0m
+    9e00:	e3570005 	cmp	r7, #5
+    9e04:	e0865000 	add	r5, r6, r0
+    9e08:	ca00000b 	bgt	9e3c <ether_etoa+0x7c>
+    9e0c:	e2844001 	add	r4, r4, #1
+    9e10:	e2877001 	add	r7, r7, #1
+    9e14:	e3540000 	cmp	r4, #0
+    9e18:	e1a06005 	mov	r6, r5
+    9e1c:	e1a01008 	mov	r1, r8
+    9e20:	e1a00005 	mov	r0, r5
+    9e24:	1afffff1 	bne	9df0 <ether_etoa+0x30>
+    9e28:	e1a01008 	mov	r1, r8
+    9e2c:	e7da2004 	ldrb	r2, [sl, r4]
+[31m    9e30:	ebffe702 	bl	3a40 <sprintf@plt>[0m
+    9e34:	e0855000 	add	r5, r5, r0
+    9e38:	eafffff3 	b	9e0c <ether_etoa+0x4c>
+--
+    c124:	e58d2008 	str	r2, [sp, #8]
+    c128:	e58de00c 	str	lr, [sp, #12]
+    c12c:	e1a0e005 	mov	lr, r5
+    c130:	e893000f 	ldm	r3, {r0, r1, r2, r3}
+    c134:	e8ae0007 	stmia	lr!, {r0, r1, r2}
+    c138:	e1a0000c 	mov	r0, ip
+    c13c:	e1a0c823 	lsr	ip, r3, #16
+    c140:	e1ce30b0 	strh	r3, [lr]
+    c144:	e1a01007 	mov	r1, r7
+    c148:	e5c5c00e 	strb	ip, [r5, #14]
+    c14c:	ebffde38 	bl	3a34 <ether_etoa@plt>
+    c150:	e59f30e8 	ldr	r3, [pc, #232]	; c240 <get_wlname_by_mac+0x150>
+    c154:	e08b3003 	add	r3, fp, r3
+    c158:	e58d3000 	str	r3, [sp]
+    c15c:	e59f30e0 	ldr	r3, [pc, #224]	; c244 <get_wlname_by_mac+0x154>
+    c160:	e08b3003 	add	r3, fp, r3
+    c164:	e58d3004 	str	r3, [sp, #4]
+    c168:	e59d1000 	ldr	r1, [sp]
+    c16c:	e1a02006 	mov	r2, r6
+    c170:	e1a00008 	mov	r0, r8
+[31m    c174:	ebffde31 	bl	3a40 <sprintf@plt>[0m
+    c178:	e59d1004 	ldr	r1, [sp, #4]
+    c17c:	e1a02006 	mov	r2, r6
+    c180:	e1a00005 	mov	r0, r5
+[31m    c184:	ebffde2d 	bl	3a40 <sprintf@plt>[0m
+    c188:	e1a00005 	mov	r0, r5
+    c18c:	ebffde07 	bl	39b0 <nvram_get@plt>
+    c190:	e3500000 	cmp	r0, #0
+    c194:	0a000004 	beq	c1ac <get_wlname_by_mac+0xbc>
+    c198:	e1a01007 	mov	r1, r7
+    c19c:	e3a02012 	mov	r2, #18
+    c1a0:	ebffdda5 	bl	383c <strncasecmp@plt>
+    c1a4:	e3500000 	cmp	r0, #0
+    c1a8:	0a00001e 	beq	c228 <get_wlname_by_mac+0x138>
+    c1ac:	e59d2008 	ldr	r2, [sp, #8]
+    c1b0:	e3a04001 	mov	r4, #1
+    c1b4:	e59d300c 	ldr	r3, [sp, #12]
+    c1b8:	e08ba002 	add	sl, fp, r2
+    c1bc:	e08b9003 	add	r9, fp, r3
+    c1c0:	e1a03004 	mov	r3, r4
+    c1c4:	e1a0100a 	mov	r1, sl
+    c1c8:	e1a02006 	mov	r2, r6
+    c1cc:	e1a00008 	mov	r0, r8
+[31m    c1d0:	ebffde1a 	bl	3a40 <sprintf@plt>[0m
+    c1d4:	e1a01009 	mov	r1, r9
+    c1d8:	e1a02006 	mov	r2, r6
+    c1dc:	e1a03004 	mov	r3, r4
+    c1e0:	e1a00005 	mov	r0, r5
+[31m    c1e4:	ebffde15 	bl	3a40 <sprintf@plt>[0m
+    c1e8:	e1a00005 	mov	r0, r5
+    c1ec:	ebffddef 	bl	39b0 <nvram_get@plt>
+--
+    c3bc:	1a000012 	bne	c40c <get_ifname_by_wlmac+0x168>
+    c3c0:	e59d0008 	ldr	r0, [sp, #8]
+    c3c4:	ebffdd79 	bl	39b0 <nvram_get@plt>
+    c3c8:	e1a0b000 	mov	fp, r0
+    c3cc:	e59d000c 	ldr	r0, [sp, #12]
+    c3d0:	ebffdd76 	bl	39b0 <nvram_get@plt>
+    c3d4:	e2509000 	subs	r9, r0, #0
+    c3d8:	e1a01007 	mov	r1, r7
+    c3dc:	e1a0000b 	mov	r0, fp
+    c3e0:	0a000007 	beq	c404 <get_ifname_by_wlmac+0x160>
+    c3e4:	ebffdc93 	bl	3638 <find_in_list@plt>
+    c3e8:	e3500000 	cmp	r0, #0
+    c3ec:	e1a01006 	mov	r1, r6
+    c3f0:	e1a0000b 	mov	r0, fp
+    c3f4:	1affffc7 	bne	c318 <get_ifname_by_wlmac+0x74>
+    c3f8:	ebffdc8e 	bl	3638 <find_in_list@plt>
+    c3fc:	e3500000 	cmp	r0, #0
+    c400:	1affffc4 	bne	c318 <get_ifname_by_wlmac+0x74>
+    c404:	e2888001 	add	r8, r8, #1
+    c408:	eaffffe7 	b	c3ac <get_ifname_by_wlmac+0x108>
+[31m    c40c:	ebffdd8b 	bl	3a40 <sprintf@plt>[0m
+    c410:	e59d1004 	ldr	r1, [sp, #4]
+    c414:	e3a02001 	mov	r2, #1
+    c418:	e1a00005 	mov	r0, r5
+[31m    c41c:	ebffdd87 	bl	3a40 <sprintf@plt>[0m
+    c420:	e1a0000a 	mov	r0, sl
+    c424:	ebffdd61 	bl	39b0 <nvram_get@plt>
+--
+    d22c:	ebffd96d 	bl	37e8 <strtoul@plt>
+    d230:	e59d1028 	ldr	r1, [sp, #40]	; 0x28
+    d234:	e586000c 	str	r0, [r6, #12]
+    d238:	e59d001c 	ldr	r0, [sp, #28]
+    d23c:	ebffd903 	bl	3650 <strcpy@plt>
+    d240:	e59d001c 	ldr	r0, [sp, #28]
+    d244:	ebffda2d 	bl	3b00 <strlen@plt>
+    d248:	e59dc01c 	ldr	ip, [sp, #28]
+    d24c:	e3a02004 	mov	r2, #4
+    d250:	e0841005 	add	r1, r4, r5
+    d254:	e08c0000 	add	r0, ip, r0
+    d258:	ebffd944 	bl	3770 <memcpy@plt>
+    d25c:	e59d001c 	ldr	r0, [sp, #28]
+    d260:	ebffd9d2 	bl	39b0 <nvram_get@plt>
+    d264:	e2502000 	subs	r2, r0, #0
+    d268:	0a000030 	beq	d330 <get_wsec+0xe50>
+    d26c:	e59f11b8 	ldr	r1, [pc, #440]	; d42c <get_wsec+0xf4c>
+    d270:	e28d5f5d 	add	r5, sp, #372	; 0x174
+    d274:	e1a00005 	mov	r0, r5
+    d278:	e0841001 	add	r1, r4, r1
+[31m    d27c:	ebffd9ef 	bl	3a40 <sprintf@plt>[0m
+    d280:	e59d1028 	ldr	r1, [sp, #40]	; 0x28
+    d284:	e59d001c 	ldr	r0, [sp, #28]
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m11[0m times [0;33mlibshared.so[0m
+

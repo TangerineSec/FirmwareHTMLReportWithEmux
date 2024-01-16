@@ -1,0 +1,136 @@
+#!/bin/sh
+#set -x
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_SuccessFlag=0   #0 ,表示全部开启成功，非零数字表示有几个程序没有开启成功
+G_APP_INSTALLED_DIR=""
+G_ConfigFilename="config"
+G_ConfigFile="/usr/local/app/ConfigFile" #用于存放app的config，格式为KEY1，VALUE1//KEY2，VALUE2//KEY3，VALUE3
+G_Path=""  #配置文件的路径
+G_Parameter_all=$*
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 1 ];then
+		xRouterLog 2 "appGetConfig" "FunParamLegal" "Parameter Err."
+		exit 1
+	fi
+}
+
+#删掉ConfigFile文件
+FunDelConfigFile()
+{
+	rm -f ${G_ConfigFile}
+}
+
+FunGetConfigPath()
+{
+	local Path=""
+
+	OfficeAppPath="/usr/local/app/appinstalled/"
+	AllOfficeAppFile=`ls $OfficeAppPath`
+		
+	for EachOfficeAppFile in ${AllOfficeAppFile}
+	do 
+		if [ ${G_Parameter_one} = "$EachOfficeAppFile" ];then
+				isOfficeApp="YES"
+				break
+		fi
+	done
+		
+	if [ ${isOfficeApp} = "YES" ];then
+		isOfficeApp="NO"
+		G_APP_INSTALLED_DIR="/usr/local/app/appinstalled/"
+	else
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		mkdir -p /opt/app/appinstalled
+	fi
+		
+	
+	xRouterLog 0 "appGetConfig" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+	
+	cd ${G_APP_INSTALLED_DIR}
+	#指定ID的文件不存在  检查插件是否安装
+	if [ ! -f "${G_Parameter_one}" ];then
+		cd -
+		xRouterLog 2 "appGetConfig" "FunGetConfigPath" "App not installed."
+		exit 1
+	else
+		Path=`cat ${G_Parameter_one} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`	
+		#没有找到路径
+		if [ "${Path}" == "" ];then
+			cd -
+			xRouterLog 2 "appGetConfig" "FunGetConfigPath" "Get path fail."
+			exit 2
+		else
+			G_Path="${Path}etc/${G_ConfigFilename}"
+		fi
+	fi
+}
+
+#获取插件配置文件内容
+FunGetConfig()
+{
+	local Tmp=""
+	local line=""
+	local Key=""
+	local Value=""
+	
+	Num="1"
+	CurLine=`printf "%sp" "$num"`
+
+	if [ -f ${G_Path} ];then
+		while [ "null" = "null" ]; do
+			line=`sed -n $CurLine $G_Path`
+		
+			let Num=$Num+1
+			CurLine=`printf "%sp" "$Num"`
+
+			if [ -z $line ]; then
+		  		 break	
+			fi
+
+			Key=`echo ${line} | awk -F "=" '{print $1}' | awk -F " " '{print $1}'`
+			Value=`echo ${line} | awk -F "=" '{print $2}' | awk -F " " '{print $1}'`
+			#echo "key = $Key Value = $Value"
+			if [ "${Key}" == "" ];then
+				continue
+			elif [ "${Value}" == "" ];then
+				continue
+			fi
+			
+			if [ "${Tmp}" == "" ];then
+				Tmp="${Key},${Value}"
+			else
+				Tmp="${Tmp}//${Key},${Value}"
+			fi	
+			
+		done < ${G_Path}
+		echo ${Tmp} > ${G_ConfigFile}
+		xRouterLog 0 "appGetConfig" "FunGetConfig" "${Tmp}."
+		exit 0
+	else
+		xRouterLog 2 "appGetConfig" "FunGetConfig" "No config file."
+		exit 3		
+	fi
+}
+
+
+############## 开始执行程序，程序入口
+
+xRouterLog 0 "GetConfig" - "`basename $0` ${G_Parameter_all}"
+
+############## 检查参数合法性
+FunParamLegal
+
+#删掉ConfigFile文件
+FunDelConfigFile
+
+#获取配置文件路径
+FunGetConfigPath
+
+#获取配置文件内容
+FunGetConfig

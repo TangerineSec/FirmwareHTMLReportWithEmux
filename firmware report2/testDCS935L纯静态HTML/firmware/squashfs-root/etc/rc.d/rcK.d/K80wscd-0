@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# chkconfig: 2345 20 80
+
+IFACE="wlan0-vxd"
+CONFIG_FILE="wscd.conf"
+WSCD_FIFO="wscd-$IFACE.fifo"
+PID_FILE="/var/run/wscd-$IFACE.pid"
+
+start()
+{
+	cp -f /etc/Wireless/$CONFIG_FILE /var/$CONFIG_FILE
+	mkdir -p /var/wps
+	cp -f /etc/simplecfgservice.xml /var/wps/simplecfgservice.xml
+
+	wscd -mode 2 -c /var/$CONFIG_FILE -w $IFACE -fi /var/$WSCD_FIFO -daemon
+	echo "start wscd ($IFACE) ..."
+	cnt=10
+	while [ $cnt -gt 0 ]; do
+		if [ -e /var/$WSCD_FIFO ]; then
+			iwcontrol $IFACE
+			echo "success"
+			exit 0
+		fi
+		echo -n "."
+		sleep 1
+		cnt=$(($cnt-1))
+	done
+}
+
+stop()
+{
+	pid=`cat $PID_FILE`
+	if [ "$pid" != "" ]; then
+		kill $pid
+	fi
+	killall iwcontrol
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		sleep 1
+		start
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

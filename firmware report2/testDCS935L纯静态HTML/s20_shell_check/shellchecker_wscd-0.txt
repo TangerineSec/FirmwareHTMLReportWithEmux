@@ -1,0 +1,35 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/wscd-0 line 25:[0m
+[0m		echo -n "."[0m
+[33m                     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/wscd-0 line 27:[0m
+[0m		cnt=$(($cnt-1))[0m
+[32m                       ^--^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/wscd-0 line 33:[0m
+[0m	pid=`cat $PID_FILE`[0m
+[32m            ^-------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	pid=$(cat $PID_FILE)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/wscd-0 line 35:[0m
+[0m		kill $pid[0m
+[32m                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		kill "$pid"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/wscd-0 line 53:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

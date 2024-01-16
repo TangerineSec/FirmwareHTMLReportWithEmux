@@ -1,0 +1,266 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 9:[0m
+[0mRETVAL=0[0m
+[33m^----^ SC2034 (warning): RETVAL appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 18:[0m
+[0mip_policy=`userconfig -read NETWORK_V4 BootProto`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ip_policy=$(userconfig -read NETWORK_V4 BootProto)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 19:[0m
+[0mipaddr=`userconfig -read NETWORK_V4 IP`[0m
+[32m       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ipaddr=$(userconfig -read NETWORK_V4 IP)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 20:[0m
+[0mnetmask=`userconfig -read NETWORK_V4 SubnetMask`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+netmask=$(userconfig -read NETWORK_V4 SubnetMask)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 21:[0m
+[0mgateway=`userconfig -read NETWORK_V4 Gateway`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+gateway=$(userconfig -read NETWORK_V4 Gateway)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 22:[0m
+[0mpri_dns=`userconfig -read NETWORK_V4 DNS0`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+pri_dns=$(userconfig -read NETWORK_V4 DNS0)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 23:[0m
+[0msec_dns=`userconfig -read NETWORK_V4 DNS1`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+sec_dns=$(userconfig -read NETWORK_V4 DNS1)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 24:[0m
+[0mpppoe_enable=`userconfig -read NETWORK_V4 PPPoEEnable`[0m
+[32m             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+pppoe_enable=$(userconfig -read NETWORK_V4 PPPoEEnable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 38:[0m
+[0m		i=`echo $ipaddr | cut -d. -f$cnt`[0m
+[32m                  ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                        ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		i=$(echo "$ipaddr" | cut -d. -f$cnt)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 39:[0m
+[0m		m=`echo $netmask | cut -d. -f$cnt`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                        ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		m=$(echo "$netmask" | cut -d. -f$cnt)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 40:[0m
+[0m		g=`echo $gateway | cut -d. -f$cnt`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                        ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		g=$(echo "$gateway" | cut -d. -f$cnt)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 41:[0m
+[0m		n1=`echo $(($i&$m))`[0m
+[32m                   ^---------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                   ^---------------^ SC2116 (style): Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.[0m
+[32m                            ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+[32m                               ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+[1mDid you mean: [0m
+		n1=$(echo $(($i&$m)))
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 42:[0m
+[0m		n2=`echo $(($g&$m))`[0m
+[32m                   ^---------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                   ^---------------^ SC2116 (style): Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.[0m
+[32m                            ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+[32m                               ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+[1mDid you mean: [0m
+		n2=$(echo $(($g&$m)))
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 44:[0m
+[0m		if [ $n1 -ne $n2 ]; then[0m
+[32m                     ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                             ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ "$n1" -ne "$n2" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 45:[0m
+[0m			new_gateway=$new_gateway$(($n1|$((~$m&$g))))[0m
+[32m                                                   ^-^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+[32m                                                           ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+[32m                                                              ^-- SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 53:[0m
+[0m		cnt=$(($cnt+1))[0m
+[32m                       ^--^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 57:[0m
+[0m	userconfig -write NETWORK_V4 Gateway $gateway[0m
+[32m                                             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	userconfig -write NETWORK_V4 Gateway "$gateway"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 58:[0m
+[0m	route add default gw $gateway metric 10[0m
+[32m                             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	route add default gw "$gateway" metric 10
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 64:[0m
+[0m	if [ ! -z "$pri_dns" ]; then[0m
+[32m             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 67:[0m
+[0m	if [ ! -z "$sec_dns" ]; then[0m
+[32m             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 78:[0m
+[0m	ifconfig br0 $ipaddr netmask $netmask up[0m
+[32m                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	ifconfig br0 "$ipaddr" netmask "$netmask" up
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 79:[0m
+[0m	route add default gw $gateway metric 10[0m
+[32m                             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	route add default gw "$gateway" metric 10
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 89:[0m
+[0m	echo -n "Starting $prog: "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 91:[0m
+[0m	netphy=`msger sinfo 1 net.phy 0|cut -d ' ' -f 4`[0m
+[32m               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	netphy=$(msger sinfo 1 net.phy 0|cut -d ' ' -f 4)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 93:[0m
+[0m	udhcpd_enable=`userconfig -read DHCPD Enable`[0m
+[32m                      ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	udhcpd_enable=$(userconfig -read DHCPD Enable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 95:[0m
+[0m	if [ "$netphy" == "4" ] && [ "$udhcpd_enable" == "0x01" ]; then[0m
+[33m                       ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+[33m                                                      ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 99:[0m
+[0m	elif [ "$netphy" == "8" ] && [ "$udhcpd_enable" == "0x00" ]; then[0m
+[33m                         ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+[33m                                                        ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 101:[0m
+[0m		if [ ! -z "$ipaddr" ] && [ ! -z "$netmask" ]; then[0m
+[32m                     ^-- SC2236 (style): Use -n instead of ! -z.[0m
+[32m                                           ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 103:[0m
+[0m			ifconfig $iface $ipaddr netmask $netmask[0m
+[32m                                        ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                        ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			ifconfig $iface "$ipaddr" netmask "$netmask"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 114:[0m
+[0m		if [ "$ip_policy" == "0" ]; then[0m
+[33m                                  ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 116:[0m
+[0m			if [ ! -z "$ipaddr" ] && [ ! -z "$netmask" ]; then[0m
+[32m                             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+[32m                                                   ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 117:[0m
+[0m				ifconfig $iface $ipaddr netmask $netmask[0m
+[32m                                                ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				ifconfig $iface "$ipaddr" netmask "$netmask"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 122:[0m
+[0m		elif [ "$ip_policy" == "1" ]; then[0m
+[33m                                    ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 133:[0m
+[0m		if [ "$pppoe_enable" == "0x01" ]; then[0m
+[33m                                     ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 137:[0m
+[0m				if [ $? = 0 ]; then[0m
+[32m                                     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/ipv4 line 148:[0m
+[0m	echo -n "Stopping $prog: "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- RETVAL appears unused. Verify use...
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...

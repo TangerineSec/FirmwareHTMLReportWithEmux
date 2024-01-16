@@ -1,0 +1,31 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/99_10_run_init line 8:[0m
+[0m    if [ "$pi_init_suppress_stderr" = "y" ]; then[0m
+[33m          ^----------------------^ SC2154 (warning): pi_init_suppress_stderr is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/99_10_run_init line 9:[0m
+[0m	exec env - PATH=$pi_init_path $pi_init_env $pi_init_cmd 2>&0[0m
+[33m                        ^-----------^ SC2154 (warning): pi_init_path is referenced but not assigned.[0m
+[32m                        ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                      ^----------^ SC2154 (warning): pi_init_env is referenced but not assigned.[0m
+[32m                                      ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                                   ^----------^ SC2154 (warning): pi_init_cmd is referenced but not assigned.[0m
+[32m                                                   ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	exec env - PATH="$pi_init_path" "$pi_init_env" "$pi_init_cmd" 2>&0
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/99_10_run_init line 11:[0m
+[0m	exec env - PATH=$pi_init_path $pi_init_env $pi_init_cmd[0m
+[32m                        ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                      ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                   ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	exec env - PATH="$pi_init_path" "$pi_init_env" "$pi_init_cmd"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2154 -- pi_init_cmd is referenced but not...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

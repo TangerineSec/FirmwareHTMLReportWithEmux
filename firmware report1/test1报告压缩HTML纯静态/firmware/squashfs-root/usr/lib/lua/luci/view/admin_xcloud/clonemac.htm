@@ -1,0 +1,78 @@
+<%
+require "luci.http"
+require "luci.sys"
+local uci = require "luci.model.uci".cursor()
+
+--当前访问IP地址
+local curip = luci.http.getenv("REMOTE_ADDR")
+
+-- 获取默认地址
+local defip = uci.get('user','wan','macaddr') or ''
+
+-- 获取当前的MAC
+local nowmac = uci.get('network','wan','macaddr') or ''
+%>
+<script type='text/javascript'>
+	var data = null;
+	var tmp  = null;
+	var tmp1 = null;
+	var tmp2 = null;
+	$.ajax({
+		url:'<%=luci.dispatcher.build_url("admin", "xcloud", "clonemac","getcurmac")%>',
+		dataType:'json',
+		success:function(r){
+			data = r.result;
+			tmp = data.split("\n");
+			for(var i=1;i<tmp.length;i++){
+				if (tmp[i] != ""){
+					tmp1 = tmp[i].replace(/\s+/g,"|||");
+					tmp2 = tmp1.split("|||");
+					if (tmp2[0] == '<%=curip%>'){
+						$('.clone_cur_mac').html(tmp2[3]);
+						break;
+					}
+				}
+			}
+		}
+	})
+</script>
+<div class='clone_mac'>
+	<div class='setup_head'>
+		<h4>MAC克隆</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+
+	<div class='clone_macPanel'>
+		<div class='clone_macContent'>
+			<h4>管理设备的MAC地址</h4>
+			<div class='clone_macdiv clone_macdiv1'>
+				<span class='clone_cur_mac'></span>
+				<a class='clone_addr' href='javascript:void(0)'>克隆MAC地址</a>
+			</div>
+			<h4>路由器的广域网MAC地址</h4>
+			<div class='clone_macdiv clone_macdiv2'>
+				<input class='clone_cur_inputmac' type='text' value='<%=nowmac%>'>
+				<a class='clone_reset' href='javascript:void(0)'>恢复默认MAC地址</a>
+			</div>
+			<div class='clone_whitespace'></div>
+			<a class='subbtn macsave' href='javascript:void(0)'><b>保存</b></a>
+			<span class='macmention'></span>
+			<div class='clr'></div>
+			<p>此地址一般不需要更改。若运营商限制路由器或连接设备数，可使用"克隆MAC地址"功能解决。仅局域网中的设备可使用克隆功能。</p>
+		</div>
+	</div>
+</div>
+<script type='text/javascript'>
+
+$('.clone_addr').live('click',function(){
+	$('.clone_cur_inputmac').val($('.clone_cur_mac').html());
+})
+
+$('.clone_reset').live('click',function(){
+	$('.clone_cur_inputmac').val('<%=defip%>');
+})
+
+</script>

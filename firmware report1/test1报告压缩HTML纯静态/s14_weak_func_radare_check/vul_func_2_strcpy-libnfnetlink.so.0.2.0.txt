@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibnfnetlink.so.0.2.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlibnfnetlink.so.0.2.0[0m
+
+lhu v0, 0x12(s0)
+sw v0, 0xc(s3)
+lw v0, 0x18(s0)
+sw v0, 0x14(s3)
+lw a1, 0x1c(sp)
+beqz a1, 0x38e0
+addiu a0, s3, 0x18
+lhu v0, (a1)
+addiu a2, zero, 8
+addiu a1, a1, 4
+addiu v0, v0, -4
+sltiu v1, v0, 9
+sw v0, 0x10(s3)
+movn a2, v0, v1
+b 0x38f0
+lw t9, -sym.imp.memcpy(gp)
+lw t9, -sym.imp.memset(gp)
+sw zero, 0x10(s3)
+move a1, zero
+addiu a2, zero, 8
+jalr t9
+addiu s1, zero, 1
+lw gp, 0x10(sp)
+lw a1, 0x24(sp)
+addiu a0, s3, 0x20
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+addiu a1, a1, 4
+bnez s4, 0x3930
+lw ra, 0xa4(sp)
+lw v0, (s2)
+sw s3, 4(v0)
+sw v0, (s3)
+sw s2, 4(s3)
+sw s3, (s2)
+lw ra, 0xa4(sp)
+move v0, s1
+lw s4, 0xa0(sp)
+lw s3, 0x9c(sp)
+lw s2, 0x98(sp)
+lw s1, 0x94(sp)
+lw s0, 0x90(sp)
+jr ra
+addiu sp, sp, 0xa8
+addiu a0, zero, 0x30
+jalr t9
+--
+addiu a0, a0, 0x4ad0
+b 0x39c4
+addiu a1, a1, 0x4ae4
+bnez a2, 0x39d4
+addiu a2, zero, 0x9d
+lw a0, -0x7fe8(gp)
+lw a1, -0x7fe8(gp)
+addiu a0, a0, 0x4af0
+addiu a1, a1, 0x4ae4
+lw a3, -0x7fe8(gp)
+lw t9, -sym.imp.__assert(gp)
+jalr t9
+addiu a3, a3, 0x4b20
+bnez a1, 0x39e8
+andi v1, a1, 0xf
+lw a1, -0x7fe8(gp)
+b 0x3a04
+addiu a1, a1, 0x4b04
+sll v1, v1, 3
+addu v0, v0, v1
+b 0x3a18
+lw v1, (v0)
+bnel a2, a1, 0x3a18
+lw v1, (v1)
+addiu a1, v1, 0x20
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+nop
+b 0x3a38
+addiu v0, zero, 1
+bnel v1, v0, 0x39f8
+lw a2, 8(v1)
+lw t9, -sym.imp.__errno_location(gp)
+jalr t9
+nop
+addiu v1, zero, 2
+sw v1, (v0)
+addiu v0, zero, -1
+lw ra, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x20
+lui gp, 2
+addiu gp, gp, -0x6ee4
+addu gp, gp, t9
+addiu sp, sp, -0x20
+sw gp, 0x10(sp)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33mlibnfnetlink.so.0.2.0[0m
+

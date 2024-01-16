@@ -1,0 +1,169 @@
+<%+xcmob_header%>
+<style type='text/css'>
+	.xcmod_lansetup{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		right:10px;
+		background: url('<%=media%>/mobile/lansetup.png') no-repeat center;
+	}
+
+	.xcmod_back{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		cursor: pointer;
+		left:10px;
+		background: url('<%=media%>/mobile/navreturn.png') no-repeat center;
+	}
+
+	.xcmod_lancontent{
+		width:270px;
+		margin:0px auto;
+		padding-top:50px;
+	}
+
+	.xcmod_lancontent ul li span{
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 10px;
+		width:88px;
+		height:34px;
+		background: url('<%=media%>/mobile/title.png') no-repeat center;
+	}
+
+	.xcmod_lancontent ul li{
+		margin-bottom:10px;
+	}
+
+	.xcmod_lancontent ul li span b{
+		display: block;
+		width: 70px;
+		margin: 0px auto;
+		padding-top:8px;
+		font-size:16px;
+		color:#50BBBC;
+	}
+
+	.xcmod_lancontent h3{
+		font-size:18px;
+		font-weight: 700;
+		color:#50BBBC;
+		width:74px;
+		margin:30px auto 0px auto;
+	}
+
+	.xcmob_laninput{
+		display: inline-block;
+		border: none;
+		vertical-align: middle;
+		width:159px;
+		height:34px;
+		padding-left:5px;
+		padding-right:5px;
+		background: url('<%=media%>/mobile/laninput.png') no-repeat center;
+	}	
+</style>
+<div class='xcmod_nav'>
+	<h2>new wifi</h2>
+	<a class='xcmod_back' href='<%=data%>'></a>
+</div>
+<%
+	local uci = require "luci.model.uci".cursor()
+
+	local ipaddr = uci.get('user','tmpstatic','ipaddr') or ''
+	local netmask= uci.get('user','tmpstatic','netmask') or ''
+	local gateway= uci.get('user','tmpstatic','gateway') or ''
+	local dns 	 = uci.get('user','tmpstatic','dns') or ''
+	local dnsback= uci.get('user','tmpstatic','dnsback') or ''
+%>
+<div class='xcmod_content'>
+	<div class='xcmod_lancontent'>
+		<ul>
+			<li><span><b>IP地址</b></span><input type='text' class='xcmob_laninput' id='ipaddr' value='<%=ipaddr%>'></li>
+			<li><span><b>子网掩码</b></span><input type='text' class='xcmob_laninput' id='netmask' value='<%=netmask%>'></li>
+			<li><span><b>网关</b></span><input type='text' class='xcmob_laninput' id='getway' value='<%=gateway%>'></li>
+			<li><span><b>DNS主机</b></span><input type='text' class='xcmob_laninput' id='dns' value='<%=dns%>'></li>
+			<li><span><b>DNS备份</b></span><input type='text' class='xcmob_laninput' id='backdns' value='<%=dnsback%>'></li>
+		</ul>
+
+		<h3>手动设置</h3>
+		<input type='submit' name='submit' class='loginsubmit' id='pppoepass' value='下一步'>
+		<input type='submit' name='submit' class='loginsubmit' value='返回' onclick="window.location.href='<%=data%>'">
+	</div>
+	<div style='height:50px;'>
+	</div>
+</div>
+<script type='text/javascript'>
+	$('#netmask').focus(function(){
+		$(this).val('255.255.255.0');
+	})
+
+	$('#pppoepass').click(function(){
+		var o = {};
+
+		var wan_ip = $('#ipaddr').val();
+		var wan_netmask = $('#netmask').val();
+		var wan_gateway = $('#getway').val();
+		var wan_dns = $('#dns').val();		
+		var wan_dns_back = $('#backdns').val();
+
+		if (wan_ip == '' || wan_gateway == '' || wan_dns == ''|| wan_netmask ==''){
+			alert('请输入必要信息');
+			return false;
+		}
+
+		var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;		
+
+		var reg = wan_ip.match(exp);
+
+		if(reg==null){
+			alert('请输入正确IP地址');
+			return false;
+		}
+
+		var reg0 = wan_netmask.match(exp);
+		if (reg0==null){
+			alert('请输入正确子网掩码');
+			return false;
+		}
+
+		var reg1 = wan_gateway.match(exp);
+
+		if (reg1==null){
+			alert('请输入正确网关');
+			return false;
+		}
+		var reg2 = wan_dns.match(exp);
+		if (reg2==null){
+			alert('请输入正确DNS');
+			return false;
+		}
+		if (wan_dns_back != ""){
+			var reg3 = wan_dns_back.match(exp);
+			if (reg3==null){
+				alert('请输入正确备份DNS');
+				return false;
+			}
+		}
+
+		o = {type:"static",ipads:wan_ip,gateway:wan_gateway,dns:wan_dns,netmask:wan_netmask,dnsb:wan_dns_back};
+
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/wanstaticsetup"))%>',
+			data:o,
+			dataType:'json',
+			type:'post',
+			success:function(r){
+				//alert(r.result);
+				window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudpwdsetup"))%>';
+				//xcloudtocheck
+			}
+		})
+	})
+</script>
+<%+xcmob_footer%>

@@ -1,0 +1,542 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 22:[0m
+[0m		uci set samba.@sambashare[-1].name=xRouter_MNT_$samba_dev[0m
+[32m                                                               ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		uci set samba.@sambashare[-1].name=xRouter_MNT_"$samba_dev"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 23:[0m
+[0m		uci set samba.@sambashare[-1].path=$samba_path[0m
+[32m                                                   ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		uci set samba.@sambashare[-1].path="$samba_path"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 33:[0m
+[0m		uci delete samba.@samba[$samba_index][0m
+[32m                                        ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		uci delete samba.@samba["$samba_index"]
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 34:[0m
+[0m		uci delete samba.@sambashare[$samba_index][0m
+[32m                                             ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		uci delete samba.@sambashare["$samba_index"]
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 39:[0m
+[0m		del_samba_index=`uci show samba | grep $samba_path | awk -F "]" '{print $1}' | awk -F "[" '{print $2}'`[0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                       ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		del_samba_index=$(uci show samba | grep "$samba_path" | awk -F "]" '{print $1}' | awk -F "[" '{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 60:[0m
+[0m		/usr/local/xcloud/bin/searchSharePath.sh $1[0m
+[32m                                                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		/usr/local/xcloud/bin/searchSharePath.sh "$1"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 62:[0m
+[0m	samba_config add $1 /mnt/$1[0m
+[32m                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	samba_config add "$1" /mnt/"$1"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 88:[0m
+[0m	capbility=`/usr/local/localshell/getcapability`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	capbility=$(/usr/local/localshell/getcapability)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 91:[0m
+[0m		echo 255 > /sys/class/leds/usb\:blue/brightness[0m
+[32m                                              ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 93:[0m
+[0m		echo 255 > /sys/class/leds/ry01\:usb/brightness[0m
+[32m                                               ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 100:[0m
+[0m	check_mount=`mount | grep /dev/sd`[0m
+[32m                    ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	check_mount=$(mount | grep /dev/sd)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 102:[0m
+[0m	if [ ! -z "$check_mount" ]; then[0m
+[32m             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 107:[0m
+[0m	capbility=`/usr/local/localshell/getcapability`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	capbility=$(/usr/local/localshell/getcapability)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 110:[0m
+[0m		echo 0 > /sys/class/leds/usb\:blue/brightness[0m
+[32m                                            ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 111:[0m
+[0m		echo 255 > /sys/class/leds/usb\:yellow/brightness[0m
+[32m                                              ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 122:[0m
+[0m	samba_config search /mnt/$1[0m
+[32m                                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	samba_config search /mnt/"$1"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 123:[0m
+[0m	samba_config del $del_samba_index[0m
+[32m                         ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	samba_config del "$del_samba_index"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 129:[0m
+[0m	delete_samba_share $1	[0m
+[32m                           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	delete_samba_share "$1"	
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 133:[0m
+[0m	PIDS=`fuser -m $1`[0m
+[32m             ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                       ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	PIDS=$(fuser -m "$1")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 135:[0m
+[0m	 if [ ! -z "$PIDS" ];then[0m
+[32m              ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 142:[0m
+[0m  			kill -9 $line [0m
+[32m                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+  			kill -9 "$line" 
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 151:[0m
+[0m		AllFile=`ls $Path`[0m
+[32m                        ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		AllFile=$(ls $Path)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 154:[0m
+[0m			OneFilePath=`printf "%s%s" "$Path" "$EachFile"`[0m
+[32m                                    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			OneFilePath=$(printf "%s%s" "$Path" "$EachFile")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 155:[0m
+[0m			AutoRun=`cat ${OneFilePath} | grep "plugin_Autorun" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`[0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                     ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			AutoRun=$(cat "${OneFilePath}" | grep "plugin_Autorun" |awk -F ":" '{print $2}' | awk -F " " '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 157:[0m
+[0m				AppInstallPath=`cat ${OneFilePath} | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`[0m
+[32m                                               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                    ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				AppInstallPath=$(cat "${OneFilePath}" | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 158:[0m
+[0m				AppShellCtl=`printf "%sappshell %s" "$AppInstallPath" "$1"`[0m
+[32m                                            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+				AppShellCtl=$(printf "%sappshell %s" "$AppInstallPath" "$1")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 167:[0m
+[0mUSB_PATITION_TMP="/tmp/usbdev"[0m
+[33m^--------------^ SC2034 (warning): USB_PATITION_TMP appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 171:[0m
+[0mlocal dev_detcet=0[0m
+[33m^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 182:[0m
+[0m		cur_line=`printf "%sp" "$num"`[0m
+[32m                         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		cur_line=$(printf "%sp" "$num")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 184:[0m
+[0m		while [ "null" = "null" ]; do[0m
+[33m                               ^-- SC2050 (warning): This expression is constant. Did you forget the $ on a variable?[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 185:[0m
+[0m		line=`sed -n $cur_line /tmp/usbdev`[0m
+[32m                     ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		line=$(sed -n "$cur_line" /tmp/usbdev)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 187:[0m
+[0m		let num=$num+1[0m
+[33m                ^------------^ SC3039 (warning): In POSIX sh, 'let' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 188:[0m
+[0m		cur_line=`printf "%sp" "$num"`[0m
+[32m                         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		cur_line=$(printf "%sp" "$num")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 194:[0m
+[0m		dev_sdxx=`echo $line | grep $device`[0m
+[32m                         ^-------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                            ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		dev_sdxx=$(echo "$line" | grep "$device")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 196:[0m
+[0m		if [ ! -z "$dev_sdxx" ] ;then[0m
+[32m                     ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 199:[0m
+[0m		sdxx=`echo $line | awk -F ":" '{print $2}'`[0m
+[32m                     ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		sdxx=$(echo "$line" | awk -F ":" '{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 202:[0m
+[0m		devicedir=`cat ${USB_MNT_TMP} | grep $sdxx 2>/dev/null`[0m
+[32m                          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		devicedir=$(cat ${USB_MNT_TMP} | grep "$sdxx" 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 204:[0m
+[0m			mount_check=$(mount | grep -w $sdxx )[0m
+[32m                                                      ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			mount_check=$(mount | grep -w "$sdxx" )
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 205:[0m
+[0m			if [ ! -z "$mount_check" ]; then[0m
+[32m                             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 207:[0m
+[0m				kill_all /mnt/$sdxx 1>/dev/null 2>&1[0m
+[32m                                              ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				kill_all /mnt/"$sdxx" 1>/dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 209:[0m
+[0m				if [ -f /dev/${sdxx}/swapfile ]; then[0m
+[32m                                             ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				if [ -f /dev/"${sdxx}"/swapfile ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 210:[0m
+[0m				swapoff /dev/${sdxx}/swapfile[0m
+[32m                                             ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				swapoff /dev/"${sdxx}"/swapfile
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 213:[0m
+[0m				umount_device_ret=$(umount /mnt/$sdxx 2>&1 ) [0m
+[32m                                                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				umount_device_ret=$(umount /mnt/"$sdxx" 2>&1 ) 
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 215:[0m
+[0m				umount_device_ret_erro=`echo $umount_device_ret | grep "can't"`[0m
+[32m                                                       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                             ^----------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				umount_device_ret_erro=$(echo "$umount_device_ret" | grep "can't")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 218:[0m
+[0m					delete_samba_share ${sdxx}[0m
+[32m                                                           ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					delete_samba_share "${sdxx}"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 219:[0m
+[0m					unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`[0m
+[32m                                                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+					unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 222:[0m
+[0m				unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`[0m
+[32m                                                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+				unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 226:[0m
+[0m		  stop_all ${sdxx}  [0m
+[32m                           ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		  stop_all "${sdxx}"  
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 228:[0m
+[0m	 	  kill_all /mnt/$sdxx 1>/dev/null 2>&1[0m
+[32m                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	 	  kill_all /mnt/"$sdxx" 1>/dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 231:[0m
+[0m		  if [ -f /dev/${sdxx}/swapfile ]; then[0m
+[32m                               ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		  if [ -f /dev/"${sdxx}"/swapfile ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 232:[0m
+[0m			swapoff /dev/${sdxx}/swapfile[0m
+[32m                                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			swapoff /dev/"${sdxx}"/swapfile
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 235:[0m
+[0m		  	check_opt=`mount | grep /opt`[0m
+[32m                                  ^-----------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		  	check_opt=$(mount | grep /opt)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 237:[0m
+[0m		  if [ ! -z "$check_opt" ];then[0m
+[32m                       ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 239:[0m
+[0m				umount_ret=$(umount /opt 2>&1)[0m
+[33m                                ^--------^ SC2034 (warning): umount_ret appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 241:[0m
+[0m		 		 umount_ret_erro=`echo $umount_ret | grep can't `	[0m
+[32m                                                                     ^-- SC1009 (info): The mentioned syntax error was in this simple command.[0m
+[31m                                                                             ^-- SC1073 (error): Couldn't parse this single quoted string. Fix to allow more checks.[0m
+[31m                                                                                ^-- SC1072 (error): Expected end of single quoted string. Fix any mentioned problems and try again.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 247:[0m
+[0m		   			  losetup_ret_erro=`echo $losetup_ret | grep failed `[0m
+[32m                                                           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                                 ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		   			  losetup_ret_erro=$(echo "$losetup_ret" | grep failed )
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 249:[0m
+[0m		    		 	  if [ ! -z "$losetup_ret_erro" ]; then[0m
+[32m                                               ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 250:[0m
+[0m						start_all $sdxx [0m
+[32m                                                          ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+						start_all "$sdxx" 
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 257:[0m
+[0m				        start_all $sdxx[0m
+[32m                                                  ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				        start_all "$sdxx"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 264:[0m
+[0m		  	check_sdxx=`mount | grep -w /mnt/$sdxx`[0m
+[32m                                   ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                         ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		  	check_sdxx=$(mount | grep -w /mnt/"$sdxx")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 266:[0m
+[0m			if [ ! -z "$check_sdxx" ];then[0m
+[32m                             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 268:[0m
+[0m				umount_device_ret=$(umount /mnt/$sdxx 2>&1 )[0m
+[32m                                                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				umount_device_ret=$(umount /mnt/"$sdxx" 2>&1 )
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 270:[0m
+[0m		  				umount_device_ret_erro=`echo $umount_device_ret | grep "can't"`[0m
+[32m                                                                       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                                             ^----------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		  				umount_device_ret_erro=$(echo "$umount_device_ret" | grep "can't")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 273:[0m
+[0m           	  	    				rm -r /mnt/$sdxx 1>/dev/null 2>&1[0m
+[33m                                                              ^--------^ SC2115 (warning): Use "${var:?}" to ensure this never expands to /mnt .[0m
+[32m                                                                   ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+           	  	    				rm -r /mnt/"$sdxx" 1>/dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 277:[0m
+[0m			    				unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`[0m
+[32m                                                                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			    				unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 279:[0m
+[0m		 	  			 	start_all $sdxx[0m
+[32m                                                                  ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		 	  			 	start_all "$sdxx"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 295:[0m
+[0m			 if [ ! -z "$unmounted_dev_xx" ] ;then[0m
+[32m                              ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 307:[0m
+[0m				   rm -r /mnt/$sdxx 1>/dev/null 2>&1[0m
+[33m                                         ^--------^ SC2115 (warning): Use "${var:?}" to ensure this never expands to /mnt .[0m
+[32m                                              ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				   rm -r /mnt/"$sdxx" 1>/dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 311:[0m
+[0m				   mount_check_all=`mount | grep $device`[0m
+[32m                                                   ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                                 ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				   mount_check_all=$(mount | grep "$device")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 319:[0m
+[0m					check_all_mount=`cat /tmp/usbdev 2>/dev/null ` [0m
+[32m                                                        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+					check_all_mount=$(cat /tmp/usbdev 2>/dev/null ) 
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 321:[0m
+[0m				    if [ ! -z "$check_all_mount" ]; then[0m
+[32m                                         ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 323:[0m
+[0m					start_samba $device  1>/dev/null 2>&1[0m
+[32m                                                    ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					start_samba "$device"  1>/dev/null 2>&1
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- USB_PATITION_TMP appears unused. ...
+  https://www.shellcheck.net/wiki/SC2050 -- This expression is constant. Did ...
+  https://www.shellcheck.net/wiki/SC2115 -- Use "${var:?}" to ensure this nev...

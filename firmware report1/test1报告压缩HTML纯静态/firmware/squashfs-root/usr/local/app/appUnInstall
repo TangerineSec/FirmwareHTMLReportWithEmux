@@ -1,0 +1,84 @@
+#!/bin/sh 
+#set -x
+
+G_APP_INSTALLED_DIR=""
+UNINSTALL_TMP="/tmp/uninstall"
+G_Parameter_all=$*
+G_ValueLast=
+
+#获取配置文件的路径
+FunGetConfigPath()
+{
+
+	OfficeAppPath="/usr/local/app/appinstalled/"
+	AllOfficeAppFile=`ls $OfficeAppPath`
+		
+	for EachOfficeAppFile in ${AllOfficeAppFile}
+	do 
+		if [ ${G_Parameter_one} = "$EachOfficeAppFile" ];then
+					isOfficeApp="YES"
+					break
+		fi
+	done
+		
+	if [ ${isOfficeApp} = "YES" ];then
+		isOfficeApp="NO"
+		G_APP_INSTALLED_DIR="/usr/local/app/appinstalled/"
+	else
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		mkdir -p /opt/app/appinstalled
+	fi
+	
+	xRouterLog 0 "appUnInstall" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+}
+
+FindApp()
+{ 
+	AppID=`cat $1 | grep "plugin_ID" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`	#根据ID查找要卸载的软件
+	if  [ "$AppID"  =  "$2" ];then
+		InstallPath=`cat $1 | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		InstallAppInfo=`printf "%sappshell uninstall" "$InstallPath"`
+		echo ${InstallAppInfo} 
+		${InstallAppInfo}
+		ValueLast=$?
+		if [ ${ValueLast} -ne 0 ];then
+			xRouterLog 2 "appUninstall" "FindApp" "${InstallAppInfo} fail.${ValueLast}"
+			exit 1
+		fi 
+	
+		#rm -rf $InstallPath
+		InstalledAppPath=`printf "%s%s" "$G_APP_INSTALLED_DIR" "$2"`
+		
+		#echo "${InstalledAppPath}"
+		rm ${InstalledAppPath}
+		ValueLast=$?
+		if [ ${ValueLast} -ne 0 ];then
+			xRouterLog 1 "appUninstall" "FindApp" "Rm ${InstalledAppPath} fail.${ValueLast}"
+		fi 		
+		
+		xRouterLog 2 "appUninstall" "FindApp" "${InstallAppInfo} success."
+		exit 0
+	fi
+}
+Ergodic ()
+{
+	for file in ` ls $1`
+	do
+		if [ -d $1"/"$file ];then
+			echo -n "$file"
+			xRouterLog 1 "appUninstall" "Ergodic" "$1"/"$file."
+		else
+			FindApp ${G_APP_INSTALLED_DIR}${file} $2
+		fi
+	
+	done
+}
+
+xRouterLog 0 "appUninstall" - "`basename $0` ${G_Parameter_all}."
+
+#获取配置文件路径
+FunGetConfigPath
+
+Ergodic ${G_APP_INSTALLED_DIR} $1
+echo "1"
+exit 1

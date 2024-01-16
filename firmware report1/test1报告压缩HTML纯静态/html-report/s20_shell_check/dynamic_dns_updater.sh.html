@@ -1,0 +1,510 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s20_shell_check.html" title="./../s20_shell_check.html" >&laquo; Back to s20_shell_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>#!/bin/sh</pre>
+<pre># /usr/lib/dynamic_dns/dynamic_dns_updater.sh</pre>
+<pre>#</pre>
+<pre># Written by Eric Paul Bishop, Janary 2008</pre>
+<pre># Distributed under the terms of the GNU General Public License (GPL) version 2.0</pre>
+<pre>#</pre>
+<pre># This script is (loosely) based on the one posted by exobyte in the forums here:</pre>
+<pre># <a href="http://forum.openwrt.org/viewtopic.php?id=14040" title="http://forum.openwrt.org/viewtopic.php?id=14040" target="_blank" >http://forum.openwrt.org/viewtopic.php?id=14040</a></pre>
+<pre>#</pre>
+<br />
+<pre>. /usr/lib/ddns/dynamic_dns_functions.sh</pre>
+<br />
+<br />
+<pre>service_id=$1</pre>
+<pre>if [ -z "$service_id" ]</pre>
+<pre>then</pre>
+<pre>	echo "ERRROR: You must specify a service id (the section name in the /etc/config/ddns file) to initialize dynamic DNS."</pre>
+<pre>	return 1</pre>
+<pre>fi</pre>
+<br />
+<pre>#default mode is verbose_mode, but easily turned off with second parameter</pre>
+<pre>verbose_mode="1"</pre>
+<pre>if [ -n "$2" ]</pre>
+<pre>then</pre>
+<pre>	verbose_mode="$2"</pre>
+<pre>fi</pre>
+<br />
+<pre>###############################################################</pre>
+<pre># Leave this comment here, to clearly document variable names</pre>
+<pre># that are expected/possible</pre>
+<pre>#</pre>
+<pre># Now use load_all_config_options to load config</pre>
+<pre># options, which is a much more flexible solution.</pre>
+<pre>#</pre>
+<pre>#</pre>
+<pre>#config_load "ddns"</pre>
+<pre>#</pre>
+<pre>#config_get enabled $service_id enabled</pre>
+<pre>#config_get service_name $service_id service_name</pre>
+<pre>#config_get update_url $service_id update_url</pre>
+<pre>#</pre>
+<pre>#</pre>
+<pre>#config_get username $service_id username</pre>
+<pre>#config_get password $service_id password</pre>
+<pre>#config_get domain $service_id domain</pre>
+<pre>#</pre>
+<pre>#</pre>
+<pre>#config_get use_https $service_id use_https</pre>
+<pre>#config_get cacert $service_id cacert</pre>
+<pre>#</pre>
+<pre>#config_get ip_source $service_id ip_source</pre>
+<pre>#config_get ip_interface $service_id ip_interface</pre>
+<pre>#config_get ip_network $service_id ip_network</pre>
+<pre>#config_get ip_url $service_id ip_url</pre>
+<pre>#</pre>
+<pre>#config_get force_interval $service_id force_interval</pre>
+<pre>#config_get force_unit $service_id force_unit</pre>
+<pre>#</pre>
+<pre>#config_get check_interval $service_id check_interval</pre>
+<pre>#config_get check_unit $service_id check_unit</pre>
+<pre>#########################################################</pre>
+<pre>load_all_config_options "ddns" "$service_id"</pre>
+<br />
+<br />
+<pre>#some defaults</pre>
+<pre>if [ -z "$check_interval" ]</pre>
+<pre>then</pre>
+<pre>	check_interval=600</pre>
+<pre>fi</pre>
+<br />
+<pre>if [ -z "$retry_interval" ]</pre>
+<pre>then</pre>
+<pre>	retry_interval=60</pre>
+<pre>fi</pre>
+<br />
+<pre>if [ -z "$check_unit" ]</pre>
+<pre>then</pre>
+<pre>	check_unit="seconds"</pre>
+<pre>fi</pre>
+<br />
+<br />
+<pre>if [ -z "$force_interval" ]</pre>
+<pre>then</pre>
+<pre>	force_interval=72</pre>
+<pre>fi</pre>
+<br />
+<pre>if [ -z "$force_unit" ]</pre>
+<pre>then</pre>
+<pre>	force_unit="hours"</pre>
+<pre>fi</pre>
+<br />
+<pre>if [ -z "$use_https" ]</pre>
+<pre>then</pre>
+<pre>	use_https=0</pre>
+<pre>fi</pre>
+<br />
+<br />
+<br />
+<pre>#some constants</pre>
+<br />
+<pre>if [ "x$use_https" = "x1" ]</pre>
+<pre>then</pre>
+<pre>	retrieve_prog="/usr/bin/curl "</pre>
+<pre>	if [ -f "$cacert" ]</pre>
+<pre>	then</pre>
+<pre>		retrieve_prog="${retrieve_prog}--cacert $cacert "</pre>
+<pre>	elif [ -d "$cacert" ]</pre>
+<pre>	then</pre>
+<pre>		retrieve_prog="${retrieve_prog}--capath $cacert "</pre>
+<pre>	fi</pre>
+<pre>else</pre>
+<pre>	retrieve_prog="/usr/bin/wget -O - ";</pre>
+<pre>fi</pre>
+<br />
+<pre>service_file="/usr/lib/ddns/services"</pre>
+<br />
+<pre>ip_regex="[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}"</pre>
+<br />
+<pre>NEWLINE_IFS='</pre>
+<pre>'</pre>
+<br />
+<br />
+<pre>#determine what update url we're using if the service_name is supplied</pre>
+<pre>if [ -n "$service_name" ]</pre>
+<pre>then</pre>
+<pre>	#remove any lines not containing data, and then make sure fields are enclosed in double quotes</pre>
+<pre>	quoted_services=$(cat $service_file |  grep "^[\t ]*[^#]" |  awk ' gsub("\x27", "\"") { if ($1~/^[^\"]*$/) $1="\""$1"\"" }; { if ( $NF~/^[^\"]*$/) $NF="\""$NF"\""  }; { print $0 }' )</pre>
+<br />
+<br />
+<pre>	#echo "quoted_services = $quoted_services"</pre>
+<pre>	OLD_IFS=$IFS</pre>
+<pre>	IFS=$NEWLINE_IFS</pre>
+<pre>	for service_line in $quoted_services</pre>
+<pre>	do</pre>
+<pre>		#grep out proper parts of data and use echo to remove quotes</pre>
+<pre>		next_name=$(echo $service_line | grep -o "^[\t ]*\"[^\"]*\"" | xargs -r -n1 echo)</pre>
+<pre>		next_url=$(echo $service_line | grep -o "\"[^\"]*\"[\t ]*$" | xargs -r -n1 echo)</pre>
+<br />
+<pre>		if [ "$next_name" = "$service_name" ]</pre>
+<pre>		then</pre>
+<pre>			update_url=$next_url</pre>
+<pre>		fi</pre>
+<pre>	done</pre>
+<pre>	IFS=$OLD_IFS</pre>
+<pre>fi</pre>
+<br />
+<pre>if [ "x$use_https" = x1 ]</pre>
+<pre>then</pre>
+<pre>	update_url=$(echo $update_url | sed -e 's/^http:/https:/')</pre>
+<pre>fi</pre>
+<br />
+<br />
+<pre>verbose_echo "update_url=$update_url"</pre>
+<br />
+<br />
+<br />
+<pre>#if this service isn't enabled then quit</pre>
+<pre>if [ "$enabled" != "1" ] </pre>
+<pre>then</pre>
+<pre>	return 0</pre>
+<pre>fi</pre>
+<br />
+<br />
+<br />
+<br />
+<br />
+<pre>#compute update interval in seconds</pre>
+<pre>case "$force_unit" in</pre>
+<pre>	"days" )</pre>
+<pre>		force_interval_seconds=$(($force_interval*60*60*24))</pre>
+<pre>		</span>;</pre>
+<pre>	"hours" )</pre>
+<pre>		force_interval_seconds=$(($force_interval*60*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"minutes" )</pre>
+<pre>		force_interval_seconds=$(($force_interval*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"seconds" )</pre>
+<pre>		force_interval_seconds=$force_interval</pre>
+<pre>		</span>;</pre>
+<pre>	* )</pre>
+<pre>		#default is hours</pre>
+<pre>		force_interval_seconds=$(($force_interval*60*60))</pre>
+<pre>		</span>;</pre>
+<pre>esac</pre>
+<br />
+<br />
+<br />
+<pre>#compute check interval in seconds</pre>
+<pre>case "$check_unit" in</pre>
+<pre>	"days" )</pre>
+<pre>		check_interval_seconds=$(($check_interval*60*60*24))</pre>
+<pre>		</span>;</pre>
+<pre>	"hours" )</pre>
+<pre>		check_interval_seconds=$(($check_interval*60*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"minutes" )</pre>
+<pre>		check_interval_seconds=$(($check_interval*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"seconds" )</pre>
+<pre>		check_interval_seconds=$check_interval</pre>
+<pre>		</span>;</pre>
+<pre>	* )</pre>
+<pre>		#default is seconds</pre>
+<pre>		check_interval_seconds=$check_interval</pre>
+<pre>		</span>;</pre>
+<pre>esac</pre>
+<br />
+<br />
+<br />
+<pre>#compute retry interval in seconds</pre>
+<pre>case "$retry_unit" in</pre>
+<pre>	"days" )</pre>
+<pre>		retry_interval_seconds=$(($retry_interval*60*60*24))</pre>
+<pre>		</span>;</pre>
+<pre>	"hours" )</pre>
+<pre>		retry_interval_seconds=$(($retry_interval*60*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"minutes" )</pre>
+<pre>		retry_interval_seconds=$(($retry_interval*60))</pre>
+<pre>		</span>;</pre>
+<pre>	"seconds" )</pre>
+<pre>		retry_interval_seconds=$retry_interval</pre>
+<pre>		</span>;</pre>
+<pre>	* )</pre>
+<pre>		#default is seconds</pre>
+<pre>		retry_interval_seconds=$retry_interval</pre>
+<pre>		</span>;</pre>
+<pre>esac</pre>
+<br />
+<br />
+<br />
+<pre>verbose_echo "force seconds = $force_interval_seconds"</pre>
+<pre>verbose_echo "check seconds = $check_interval_seconds"</pre>
+<br />
+<pre>#kill old process if it exists &amp; set new pid file</pre>
+<pre>if [ -d /var/run/dynamic_dns ]</pre>
+<pre>then</pre>
+<pre>	#if process is already running, stop it</pre>
+<pre>	if [ -e "/var/run/dynamic_dns/$service_id.pid" ]</pre>
+<pre>	then</pre>
+<pre>		old_pid=$(cat /var/run/dynamic_dns/$service_id.pid)</pre>
+<pre>		test_match=$(ps | grep "^[\t ]*$old_pid")</pre>
+<pre>		verbose_echo "old process id (if it exists) = \"$test_match\""</pre>
+<pre>		if [ -n  "$test_match" ]</pre>
+<pre>		then</pre>
+<pre>			kill $old_pid</pre>
+<pre>		fi</pre>
+<pre>	fi</pre>
+<br />
+<pre>else</pre>
+<pre>	#make dir since it doesn't exist</pre>
+<pre>	mkdir /var/run/dynamic_dns</pre>
+<pre>fi</pre>
+<pre>echo $$ &gt; /var/run/dynamic_dns/$service_id.pid</pre>
+<br />
+<br />
+<br />
+<br />
+<pre>#determine when the last update was</pre>
+<pre>current_time=$(monotonic_time)</pre>
+<pre>last_update=$(( $current_time - (2*$force_interval_seconds) ))</pre>
+<pre>if [ -e "/var/run/dynamic_dns/$service_id.update" ]</pre>
+<pre>then</pre>
+<pre>	last_update=$(cat /var/run/dynamic_dns/$service_id.update)</pre>
+<pre>fi</pre>
+<pre>time_since_update=$(($current_time - $last_update))</pre>
+<br />
+<br />
+<pre>human_time_since_update=$(( $time_since_update / ( 60 * 60 ) ))</pre>
+<pre>verbose_echo "time_since_update = $human_time_since_update hours"</pre>
+<br />
+<br />
+<br />
+<pre>#do update and then loop endlessly, checking ip every check_interval and forcing an updating once every force_interval</pre>
+<br />
+<pre>while [ true ]</pre>
+<pre>do</pre>
+<pre>	registered_ip=$(echo $(nslookup "$domain" 2&gt;/dev/null) |  grep -o "Name:.*" | grep -o "$ip_regex")</pre>
+<pre>	current_ip=$(get_current_ip)</pre>
+<br />
+<br />
+<pre>	current_time=$(monotonic_time)</pre>
+<pre>	time_since_update=$(($current_time - $last_update))</pre>
+<br />
+<br />
+<pre>	verbose_echo "Running IP check..."</pre>
+<pre>	verbose_echo "current system ip = $current_ip"</pre>
+<pre>	verbose_echo "registered domain ip = $registered_ip"</pre>
+<br />
+<br />
+<pre>	if [ "$current_ip" != "$registered_ip" ]  || [ $force_interval_seconds -lt $time_since_update ]</pre>
+<pre>	then</pre>
+<pre>		verbose_echo "update necessary, performing update ..."</pre>
+<br />
+<pre>		#do replacement</pre>
+<pre>		final_url=$update_url</pre>
+<pre>		for option_var in $ALL_OPTION_VARIABLES</pre>
+<pre>		do</pre>
+<pre>			if [ "$option_var" != "update_url" ]</pre>
+<pre>			then</pre>
+<pre>				replace_name=$(echo "\[$option_var\]" | tr 'a-z' 'A-Z')</pre>
+<pre><span class="green">				replace_value=$(eval echo "\$$option_var")</span></pre>
+<pre>				replace_value=$(echo $replace_value | sed -f /usr/lib/ddns/url_escape.sed)</pre>
+<pre>				final_url=$(echo $final_url | sed s^"$replace_name"^"$replace_value"^g )</pre>
+<pre>			fi</pre>
+<pre>		done</pre>
+<pre>		final_url=$(echo $final_url | sed s^"\[HTTPAUTH\]"^"${username//^/\\^}${password:+:${password//^/\\^}}"^g )</pre>
+<pre>		final_url=$(echo $final_url | sed s/"\[IP\]"/"$current_ip"/g )</pre>
+<br />
+<br />
+<pre>		verbose_echo "updating with url=\"$final_url\""</pre>
+<br />
+<pre>		#here we actually connect, and perform the update</pre>
+<pre>		update_output=$( $retrieve_prog "$final_url" )</pre>
+<pre>		if [ $? -gt 0 ]</pre>
+<pre>		then</pre>
+<pre>			verbose_echo "update failed"</pre>
+<pre>			sleep $retry_interval_seconds</pre>
+<pre>			continue</pre>
+<pre>		fi</pre>
+<br />
+<pre>		verbose_echo "Update Output:"</pre>
+<pre>		verbose_echo "$update_output"</pre>
+<pre>		verbose_echo ""</pre>
+<br />
+<pre>		#save the time of the update</pre>
+<pre>		current_time=$(monotonic_time)</pre>
+<pre>		last_update=$current_time</pre>
+<pre>		time_since_update='0'</pre>
+<pre>		registered_ip=$current_ip</pre>
+<br />
+<pre>		human_time=$(date)</pre>
+<pre>		verbose_echo "update complete, time is: $human_time"</pre>
+<br />
+<pre>		echo "$last_update" &gt; "/var/run/dynamic_dns/$service_id.update"</pre>
+<pre>	else</pre>
+<pre>		human_time=$(date)</pre>
+<pre>		human_time_since_update=$(( $time_since_update / ( 60 * 60 ) ))</pre>
+<pre>		verbose_echo "update unnecessary"</pre>
+<pre>		verbose_echo "time since last update = $human_time_since_update hours"</pre>
+<pre>		verbose_echo "the time is now $human_time"</pre>
+<pre>	fi</pre>
+<br />
+<pre>	#sleep for 10 minutes, then re-check ip &amp;&amp; time since last update</pre>
+<pre>	sleep $check_interval_seconds</pre>
+<pre>done</pre>
+<br />
+<pre>#should never get here since we're a daemon, but I'll throw it in anyway</pre>
+<pre>return 0</pre>
+<br />
+<br />
+<br />
+<br />
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

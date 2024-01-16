@@ -1,0 +1,133 @@
+#!/bin/sh /etc/rc.common
+
+START=20
+STOP=90
+
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+
+start() {
+	stop
+	sleep 1
+	if [ -n "$(uci get wireless.wds.enable 2>/dev/null)" ] && [ "$(uci get wireless.wds.enable 2>/dev/null)" = "1" ];then
+		if [ -n "$(uci get network.wan.proto 2>/dev/null)" ] && [ "$(uci get network.wan.proto 2>/dev/null)" = "pppoe" ];then
+			/usr/local/localshell/wds stop 2>/dev/null
+		fi
+	fi
+	[ -e /proc/sys/kernel/core_pattern ] && {
+		ulimit -c unlimited
+		echo '/tmp/%e.%p.%s.%t.core' > /proc/sys/kernel/core_pattern
+	}
+	if [ "$(uci get wireless.@wifi-iface[0].ssid 2>/dev/null)" = "xCloud_0001" ] || [ "$(uci get wireless.@wifi-iface[1].ssid 2>/dev/null)" = "xCloud_AC_0001" ];then
+		service_start /sbin/netifd
+
+		setup_switch() { return 0; }
+
+		include /lib/network
+		setup_switch
+
+		sleep 5
+
+		/etc/init.d/setssid
+        	/sbin/wifi up
+	else
+		setup_switch() { return 0; }
+
+		include /lib/network
+		setup_switch
+
+		/sbin/wifi down
+		if [ -z "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+			tmp_name="$(uci get wireless.@wifi-iface[0].device 2>/dev/null)"
+			[ -n "$tmp_name" ] || tmp_name="ra0"
+        		/sbin/wifi up $tmp_name
+        	fi
+		if [ -z "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" = "1" ];then
+			tmp_name="$(uci get wireless.@wifi-iface[1].device 2>/dev/null)"
+			[ -n "$tmp_name" ] || tmp_name="rai0"
+        		/sbin/wifi up $tmp_name
+        	fi
+
+		service_start /sbin/netifd
+	
+		sleep 5
+
+		if [ -z "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+        		brctl addif br-lan $(uci get wireless.@wifi-iface[0].ifname)
+        	fi
+		if [ -z "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" = "1" ];then
+        		brctl addif br-lan $(uci get wireless.@wifi-iface[1].ifname)
+        	fi
+	fi
+	#/sbin/uci del wireless.@wifi-iface[0].disabled
+	#/sbin/uci commit
+	
+	exit 0
+}
+
+wan_reconn(){
+	ifdown -w wan
+	sleep 1
+	
+	stop
+	#sleep 1
+	if [ -n "$(uci get wireless.wds.enable 2>/dev/null)" ] && [ "$(uci get wireless.wds.enable 2>/dev/null)" = "1" ];then
+		if [ -n "$(uci get network.wan.proto 2>/dev/null)" ] && [ "$(uci get network.wan.proto 2>/dev/null)" = "pppoe" ];then
+			/usr/local/localshell/wds stop 2>/dev/null
+		fi
+	fi
+	[ -e /proc/sys/kernel/core_pattern ] && {
+		ulimit -c unlimited
+		echo '/tmp/%e.%p.%s.%t.core' > /proc/sys/kernel/core_pattern
+	}
+	service_start /sbin/netifd
+
+	setup_switch() { return 0; }
+
+	include /lib/network
+	setup_switch
+
+	sleep 5
+
+	if [ -z "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+        	brctl addif br-lan $(uci get wireless.@wifi-iface[0].ifname)
+        fi
+	if [ -z "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" = "1" ];then
+        	brctl addif br-lan $(uci get wireless.@wifi-iface[1].ifname)
+        fi
+	exit 0
+}
+
+restart() {
+	ifdown -a
+	sleep 1
+	start
+}
+
+shutdown() {
+	ifdown -a
+	stop
+}
+
+stop() {
+	service_stop /sbin/netifd
+	#/sbin/uci set wireless.@wifi-iface[0].disabled=1
+	#/sbin/uci commit
+}
+
+reload() {
+	ubus call network reload
+	/sbin/wifi down
+	if [ -z "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+		tmp_name="$(uci get wireless.@wifi-iface[0].device 2>/dev/null)"
+		[ -n "$tmp_name" ] || tmp_name="ra0"
+        	/sbin/wifi up $tmp_name
+        fi
+	if [ -z "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[1].disabled 2>/dev/null)" = "1" ];then
+		tmp_name="$(uci get wireless.@wifi-iface[1].device 2>/dev/null)"
+		[ -n "$tmp_name" ] || tmp_name="rai0"
+        	/sbin/wifi up $tmp_name
+        fi
+	#/sbin/uci del wireless.@wifi-iface[0].disabled
+	/sbin/uci commit
+}

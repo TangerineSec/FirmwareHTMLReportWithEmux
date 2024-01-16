@@ -1,0 +1,116 @@
+#!/bin/sh
+set +x
+
+Parameter_num=$#
+Parameter_one=$1
+PathNow=`dirname $0`  #当前执行appshell的路径
+
+
+#1，判断参数是否合法
+FunParamLegal()
+{
+	if [ ${Parameter_num} -ne 1 ];then
+		echo "Fail:Parameter Err."
+		exit 1
+	fi
+}
+
+
+#安装函数
+Install()
+{
+	exit 0
+}
+
+#卸载函数
+unInstall()
+{
+	exit 0
+}
+
+#启动函数
+Start()
+{
+	local L_ExitStatus=0
+	
+	/etc/init.d/mjpg-streamer start
+	exit ${L_ExitStatus}	
+}
+
+#停止函数
+Stop()
+{
+	local L_ExitStatus=0
+	/etc/init.d/mjpg-streamer stop
+	exit ${L_ExitStatus}	
+}
+
+
+#重新启动函数
+Restart()
+{
+	local L_ExitStatus=0
+	/etc/init.d/mjpg-streamer stop
+	sleep 2
+	/etc/init.d/mjpg-streamer start
+	exit ${L_ExitStatus}	
+}
+
+#查看运行状态函数
+CheckRunStatus()
+{
+	local L_ExitStatus=0
+	local servername=""
+	
+	 servername=`ps | grep mjpg-streamer | grep -v grep | awk '{print $NF}'`
+    if [ "/usr/bin/mjpg_streamer" != "$servername" ]
+    then
+        echo "Success."
+		L_ExitStatus=1	
+	else
+		echo "Success."
+		L_ExitStatus=0		
+	fi	
+
+	exit ${L_ExitStatus}	
+}
+
+#主函数
+Main()
+{
+	#安装
+	if [ "${Parameter_one}" = "install" ];then
+		Install
+	
+	#卸载
+	elif [ "${Parameter_one}" = "uninstall" ];then
+		unInstall
+	
+	#启动
+	elif [ "${Parameter_one}" = "start" ];then
+		Start
+	
+	#停止
+	elif [ "${Parameter_one}" = "stop" ];then
+		Stop	
+	
+	#重启
+	elif [ "${Parameter_one}" = "restart" ];then
+		Restart
+		
+	#查看运行状态
+	elif [ "${Parameter_one}" = "runstatus" ];then
+		CheckRunStatus
+		
+	#输入参数错误
+	else
+		echo "ERR:Parameter Err."
+		exit 1	
+	fi
+}
+
+#检查参数是否合法
+FunParamLegal
+
+#执行主函数
+Main

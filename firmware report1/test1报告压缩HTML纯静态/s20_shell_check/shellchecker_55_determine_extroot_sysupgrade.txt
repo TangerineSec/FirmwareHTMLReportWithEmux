@@ -1,0 +1,114 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 8:[0m
+[0m	local er_md5sum_file[0m
+[33m        ^------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 10:[0m
+[0m	local er_disabled[0m
+[33m        ^---------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 17:[0m
+[0m	local er_extroot_md5sum[0m
+[33m        ^---------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 18:[0m
+[0m	if [ -f $md5sum_file ]; then[0m
+[33m                ^----------^ SC2154 (warning): md5sum_file is referenced but not assigned.[0m
+[32m                ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ -f "$md5sum_file" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 19:[0m
+[0m		er_extroot_md5sum="$(cat $er_md5sum_file)"[0m
+[32m                                         ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		er_extroot_md5sum="$(cat "$er_md5sum_file")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 22:[0m
+[0m	local er_overlay_file="${ER_OVERLAY_ROM}/etc/extroot.md5sum"[0m
+[33m        ^-------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 24:[0m
+[0m	local er_extroot_overlay_md5sum[0m
+[33m        ^-----------------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 26:[0m
+[0m		er_extroot_overlay_md5sum="$(cat $er_overlay_file)"[0m
+[32m                                                 ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		er_extroot_overlay_md5sum="$(cat "$er_overlay_file")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 30:[0m
+[0m		cat $er_md5sum_file >$er_overlay_file[0m
+[32m                    ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		cat "$er_md5sum_file" >"$er_overlay_file"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 33:[0m
+[0m		mkdir -p $er_disabled[0m
+[32m                         ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mkdir -p "$er_disabled"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 34:[0m
+[0m		mount --move ${ER_OVERLAY_ROM} $er_disabled[0m
+[32m                             ^---------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                               ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mount --move "${ER_OVERLAY_ROM}" "$er_disabled"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 42:[0m
+[0m	local er_md5sum_file[0m
+[33m        ^------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 45:[0m
+[0m	local er_extroot_md5sum[0m
+[33m        ^---------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 46:[0m
+[0m	if [ -f $er_md5sum_file ]; then[0m
+[32m                ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ -f "$er_md5sum_file" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 47:[0m
+[0m		er_extroot_md5sum="$(cat $er_md5sum_file)"[0m
+[32m                                         ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		er_extroot_md5sum="$(cat "$er_md5sum_file")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/55_determine_extroot_sysupgrade line 50:[0m
+[0m		dd if=/dev/urandom count=32 bs=1k 2>/dev/null | md5sum | cut -f1 -d\  >$er_md5sum_file[0m
+[32m                                                                                       ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		dd if=/dev/urandom count=32 bs=1k 2>/dev/null | md5sum | cut -f1 -d\  >"$er_md5sum_file"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2154 -- md5sum_file is referenced but not...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

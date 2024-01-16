@@ -1,0 +1,2311 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s14_weak_func_radare_check.html" title="./../s14_weak_func_radare_check.html" >&laquo; Back to s14_weak_func_radare_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<a class="reference" href="./vul_func_61_sprintf-libleopard/s12_binary_protection.html" title="./vul_func_61_sprintf-libleopard/s12_binary_protection.html" ><pre>[</span><span class="orange">*</span>] Binary protection state of </span><span class="orange">libleopard.so</span></pre></a>
+
+<br />
+<pre>  </pre>
+<pre>  	<span class="red">No RELRO</span>       <span class="red">No Canary found</span>   <span class="red">NX disabled</span>  <span class="orange">DSO</span>          <span class="green">No RPATH</span>     <span class="green">No RUNPATH</span>   <span class="green">No Symbols</pre>
+<br />
+<pre></span></pre>
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">sprintf</span> tear down of </span><span class="orange">libleopard.so</span></pre>
+<br />
+<pre>sll a0, a0, 1</pre>
+<pre>addu a0, v1, a0</pre>
+<pre>lhu a0, (a0)</pre>
+<pre>andi a0, a0, 0x20</pre>
+<pre>bnez a0, 0x7f90</pre>
+<pre>addiu v0, v0, 1</pre>
+<pre>lw t9, -sym.imp.index(gp)</pre>
+<pre>addiu a1, zero, 0x3a</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s6</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sb zero, (v0)</pre>
+<pre>move a0, s6</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move s7, v0</pre>
+<pre>addu v0, v0, s7</pre>
+<pre>sltu v0, v0, s4</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>beqz v0, 0x8018</pre>
+<pre>addu a0, s1, s7</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>move a2, s6</pre>
+<pre>jalr t9</pre>
+<pre>move a1, s2</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>b 0x80d0</pre>
+<pre>nop</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6d80</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>beqz v0, 0x80bc</pre>
+<pre>move s1, v0</pre>
+<pre>lw t9, -sym.my_gettid(gp)</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>addiu a2, zero, 0x28</pre>
+<pre>move a0, s1</pre>
+<pre>--</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x1c(sp)</pre>
+<pre>move a1, s0</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fputs(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, a0, -0x6864</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw t9, -sym.imp.fclose(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s0</pre>
+<pre>b 0x8d1c</pre>
+<pre>addiu v1, zero, 1</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>move a0, a1</pre>
+<pre>jalr t9</pre>
+<pre>move a1, zero</pre>
+<pre>srl v1, s0, 8</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>andi v1, v1, 0xff</pre>
+<pre>andi v0, s0, 0xff</pre>
+<pre>sw v1, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>srl a3, s0, 0x10</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>move a0, s1</pre>
+<pre>addiu a1, a1, -0x6848</pre>
+<pre>srl a2, s0, 0x18</pre>
+<pre>sw v0, 0x14(sp)</pre>
+<pre>jalr t9</pre>
+<pre>andi a3, a3, 0xff</pre>
+<pre>move v1, zero</pre>
+<pre>lw ra, 0x34(sp)</pre>
+<pre>move v0, v1</pre>
+<pre>lw s1, 0x30(sp)</pre>
+<pre>lw s0, 0x2c(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x38</pre>
+<pre>nop</pre>
+<pre>nop</pre>
+<pre>nop</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x48f0</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>lw t9, -sym.imp.syscall(gp)</pre>
+<pre>--</pre>
+<pre>jr t9</pre>
+<pre>nop</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x490c</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0xb8</pre>
+<pre>sw ra, 0xb4(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.stat(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, sp, 0x18</pre>
+<pre>nor v0, zero, v0</pre>
+<pre>lw ra, 0xb4(sp)</pre>
+<pre>srl v0, v0, 0x1f</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0xb8</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x4944</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x448</pre>
+<pre>sw ra, 0x444(sp)</pre>
+<pre>sw s1, 0x440(sp)</pre>
+<pre>sw s0, 0x43c(sp)</pre>
+<pre>sw gp, 0x20(sp)</pre>
+<pre>move v1, a0</pre>
+<pre><span class="red">lw t9, -sym.imp.vsprintf(gp)</span></pre>
+<pre>addiu v0, sp, 0x44c</pre>
+<pre>addiu s1, sp, 0x2c</pre>
+<pre>move a0, s1</pre>
+<pre>sw a1, 0x44c(sp)</pre>
+<pre>sw a2, 0x450(sp)</pre>
+<pre>move a1, v1</pre>
+<pre>move a2, v0</pre>
+<pre>sw a3, 0x454(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x28(sp)</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>sw v0, 0x430(sp)</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6d80</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>beqz v0, 0x8e94</pre>
+<pre>--</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>move v0, s0</pre>
+<pre>lw ra, 0x64(sp)</pre>
+<pre>lw s2, 0x60(sp)</pre>
+<pre>lw s1, 0x5c(sp)</pre>
+<pre>lw s0, 0x58(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x68</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x519c</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>lw t9, -sym.imp.pclose(gp)</pre>
+<pre>jr t9</pre>
+<pre>nop</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x51b4</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x428</pre>
+<pre>sw ra, 0x424(sp)</pre>
+<pre>sw s0, 0x420(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>move v1, a0</pre>
+<pre>addiu v0, sp, 0x42c</pre>
+<pre>addiu s0, sp, 0x1c</pre>
+<pre><span class="red">lw t9, -sym.imp.vsprintf(gp)</span></pre>
+<pre>move a0, s0</pre>
+<pre>sw a3, 0x434(sp)</pre>
+<pre>sw a1, 0x42c(sp)</pre>
+<pre>move a1, v1</pre>
+<pre>sw a2, 0x430(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x18(sp)</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.fflush(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, zero</pre>
+<pre>move a0, s0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.popen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6590</pre>
+<pre>lw ra, 0x424(sp)</pre>
+<pre>lw s0, 0x420(sp)</pre>
+<pre>--</pre>
+<pre>move a0, s1</pre>
+<pre>b 0x9758</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.kill(gp)</pre>
+<pre>lw ra, 0x24(sp)</pre>
+<pre>lw s1, 0x20(sp)</pre>
+<pre>lw s0, 0x1c(sp)</pre>
+<pre>jr t9</pre>
+<pre>addiu sp, sp, 0x28</pre>
+<pre>lw ra, 0x24(sp)</pre>
+<pre>addiu v0, zero, -1</pre>
+<pre>lw s1, 0x20(sp)</pre>
+<pre>lw s0, 0x1c(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x28</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x5320</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x428</pre>
+<pre>sw ra, 0x424(sp)</pre>
+<pre>sw s0, 0x420(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>addiu v0, sp, 0x438</pre>
+<pre>addiu s0, sp, 0x1c</pre>
+<pre>move a1, a3</pre>
+<pre><span class="red">lw t9, -sym.imp.vsprintf(gp)</span></pre>
+<pre>move a2, v0</pre>
+<pre>move a0, s0</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x18(sp)</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.system(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s0</pre>
+<pre>lw ra, 0x424(sp)</pre>
+<pre>lw s0, 0x420(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x428</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x537c</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x28</pre>
+<pre>sw ra, 0x24(sp)</pre>
+<pre>sw s1, 0x20(sp)</pre>
+<pre>sw s0, 0x1c(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>--</pre>
+<pre>sw s7, 0x460(sp)</pre>
+<pre>sw s6, 0x45c(sp)</pre>
+<pre>sw s5, 0x458(sp)</pre>
+<pre>sw s4, 0x454(sp)</pre>
+<pre>sw s3, 0x450(sp)</pre>
+<pre>sw s2, 0x44c(sp)</pre>
+<pre>sw s1, 0x448(sp)</pre>
+<pre>sw s0, 0x444(sp)</pre>
+<pre>sw gp, 0x28(sp)</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>addiu s2, sp, 0x34</pre>
+<pre>move s3, a0</pre>
+<pre>move s5, a1</pre>
+<pre>move a1, zero</pre>
+<pre>move a0, s2</pre>
+<pre>lw s0, 0x47c(sp)</pre>
+<pre>move s7, a2</pre>
+<pre>addiu a2, zero, 0x400</pre>
+<pre>jalr t9</pre>
+<pre>move s6, a3</pre>
+<pre>addiu v0, sp, 0x484</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>lw a1, 0x480(sp)</pre>
+<pre>move a0, s2</pre>
+<pre><span class="red">lw t9, -sym.imp.vsprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x30(sp)</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>lw t9, -sym.my_gettid(gp)</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>move s4, v0</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6d80</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>beqz v0, 0x9ca0</pre>
+<pre>move s1, v0</pre>
+<pre>move a0, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addiu a2, zero, 0x28</pre>
+<pre>--</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x5a00</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x1d8</pre>
+<pre>sw ra, 0x1d4(sp)</pre>
+<pre>sw s4, 0x1d0(sp)</pre>
+<pre>sw s3, 0x1cc(sp)</pre>
+<pre>sw s2, 0x1c8(sp)</pre>
+<pre>sw s1, 0x1c4(sp)</pre>
+<pre>sw s0, 0x1c0(sp)</pre>
+<pre>sw gp, 0x18(sp)</pre>
+<pre>sltiu v0, a0, 8</pre>
+<pre>move s4, a1</pre>
+<pre>beqz v0, 0x9f9c</pre>
+<pre>move s3, a2</pre>
+<pre>addiu a2, zero, 0x108</pre>
+<pre>addiu v1, zero, 1</pre>
+<pre>mult a0, a2</pre>
+<pre>lw v0, -obj.logList(gp)</pre>
+<pre>mflo a0</pre>
+<pre>addu s0, v0, a0</pre>
+<pre>lw a1, 0x104(s0)</pre>
+<pre>bne a1, v1, 0x9f9c</pre>
+<pre>addiu a3, a0, 0x40</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a2, a0, 0x80</pre>
+<pre>addiu s1, sp, 0x20</pre>
+<pre>addu a3, v0, a3</pre>
+<pre>move a0, s1</pre>
+<pre>addiu a1, a1, -0x651c</pre>
+<pre>jalr t9</pre>
+<pre>addu a2, v0, a2</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6514</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>beqz v0, 0x9f9c</pre>
+<pre>move s2, v0</pre>
+<pre>lw t9, -sym.imp.time(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, zero</pre>
+<pre>move a2, s4</pre>
+<pre>--</pre>
+<pre>sw v0, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fprintf(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6510</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lhu v0, 0x100(s0)</pre>
+<pre>lw t9, -sym.imp.fclose(gp)</pre>
+<pre>addiu v0, v0, 1</pre>
+<pre>jalr t9</pre>
+<pre>sh v0, 0x100(s0)</pre>
+<pre>addiu v0, zero, 0x80</pre>
+<pre>lhu v1, 0x100(s0)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>bne v1, v0, 0x9f9c</pre>
+<pre>move a0, zero</pre>
+<pre>lw t9, -sym.imp.time(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu s2, sp, 0xe4</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>move a3, v0</pre>
+<pre>move a2, s1</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6504</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.rename(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a1, s2</pre>
+<pre>sh zero, 0x100(s0)</pre>
+<pre>lw ra, 0x1d4(sp)</pre>
+<pre>lw s4, 0x1d0(sp)</pre>
+<pre>lw s3, 0x1cc(sp)</pre>
+<pre>lw s2, 0x1c8(sp)</pre>
+<pre>lw s1, 0x1c4(sp)</pre>
+<pre>lw s0, 0x1c0(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x1d8</pre>
+<pre>lui gp, 3</pre>
+<pre>addiu gp, gp, -0x5b6c</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x100</pre>
+<pre>sw ra, 0xfc(sp)</pre>
+<pre>sw s6, 0xf8(sp)</pre>
+<pre>sw s5, 0xf4(sp)</pre>
+<pre>sw s4, 0xf0(sp)</pre>
+<pre>sw s3, 0xec(sp)</pre>
+<pre>sw s2, 0xe8(sp)</pre>
+<pre>sw s1, 0xe4(sp)</pre>
+<pre>sw s0, 0xe0(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>addiu s0, zero, -2</pre>
+<pre>move s1, a1</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addiu s4, sp, 0x18</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>move a3, s1</pre>
+<pre>addiu a1, a1, -0x651c</pre>
+<pre>move s3, a0</pre>
+<pre>move a0, s4</pre>
+<pre>jalr t9</pre>
+<pre>move s2, a2</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a0, s4</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x64fc</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>beqz v0, 0xa148</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.fclose(gp)</pre>
+<pre>move a0, v0</pre>
+<pre>jalr t9</pre>
+<pre>move s0, zero</pre>
+<pre>addiu a0, zero, -1</pre>
+<pre>--</pre>
+<pre>addiu t9, t9, -0x5c9c</pre>
+<pre>jalr t9</pre>
+<pre>addiu s4, zero, 2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addiu s3, v0, 0x3c</pre>
+<pre>lw s2, -0x7fdc(gp)</pre>
+<pre>b 0xc4f8</pre>
+<pre>addiu s2, s2, -0x5d18</pre>
+<pre>jalr t9</pre>
+<pre>addiu s1, s1, 1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>move a1, zero</pre>
+<pre>move s0, v0</pre>
+<pre>addiu a2, zero, 0x80</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>beqz v0, 0xc6ec</pre>
+<pre>move a0, v0</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>addiu v0, s0, 0x30</pre>
+<pre>move a1, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addiu a0, s0, 4</pre>
+<pre>move a2, s1</pre>
+<pre>sw v0, 0x30(s0)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sw s4, (s0)</pre>
+<pre>sh s1, 0x24(s0)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x34(s0)</pre>
+<pre>addiu a0, s0, 0x28</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.list_add_tail(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a1, s3</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>slt v0, s1, s5</pre>
+<pre>lw t9, -sym.imp.malloc(gp)</pre>
+<pre>bnez v0, 0xc488</pre>
+<pre>addiu a0, zero, 0x80</pre>
+<pre>b 0xc6f0</pre>
+<pre>move v1, zero</pre>
+<pre>lw t0, -0x7fdc(gp)</pre>
+<pre>lw v1, 8(s0)</pre>
+<pre>ori v0, v0, 0x4240</pre>
+<pre>lw t9, -sym.add_class(gp)</pre>
+<pre>--</pre>
+<pre>move s1, a0</pre>
+<pre>move s0, zero</pre>
+<pre>jalr t9</pre>
+<pre>addiu s4, zero, 6</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw s3, -0x7fe8(gp)</pre>
+<pre>lw s2, -0x7fdc(gp)</pre>
+<pre>addiu s3, s3, -0x3ce0</pre>
+<pre>addiu s2, s2, -0x6aec</pre>
+<pre>srav v0, s5, s0</pre>
+<pre>andi v0, v0, 1</pre>
+<pre>beqz v0, 0xc824</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>move a1, s0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a0, s3</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move s6, v0</pre>
+<pre>addu a0, s1, s6</pre>
+<pre>move a1, s2</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>move a2, v0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>addiu s0, s0, 1</pre>
+<pre>bne s0, s4, 0xc7d8</pre>
+<pre>srav v0, s5, s0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>addu v0, s1, v0</pre>
+<pre>sb zero, (v0)</pre>
+<pre>lw ra, 0x34(sp)</pre>
+<pre>lw s6, 0x30(sp)</pre>
+<pre>lw s5, 0x2c(sp)</pre>
+<pre>lw s4, 0x28(sp)</pre>
+<pre>lw s3, 0x24(sp)</pre>
+<pre>lw s2, 0x20(sp)</pre>
+<pre>lw s1, 0x1c(sp)</pre>
+<pre>lw s0, 0x18(sp)</pre>
+<pre>jr ra</pre>
+<pre>--</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lbu v1, 0xa(s0)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>bne v1, v0, 0xce24</pre>
+<pre>nop</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s3</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addu a0, s3, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5b60</pre>
+<pre>b 0xce5c</pre>
+<pre>nop</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s3</pre>
+<pre>lbu v1, 0xc(s0)</pre>
+<pre>addu a0, s3, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lbu a2, 0xb(s0)</pre>
+<pre>lbu a3, 0xd(s0)</pre>
+<pre>sw v1, 0x10(sp)</pre>
+<pre>lbu v0, 0xe(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sw v0, 0x14(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5b3c</pre>
+<pre>lbu v0, 9(s0)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>andi v0, v0, 0x7f</pre>
+<pre>beqz v0, 0xcf50</pre>
+<pre>nop</pre>
+<pre>addiu s5, sp, 0x20</pre>
+<pre>move s3, zero</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s5</pre>
+<pre>addiu s7, zero, 7</pre>
+<pre>jalr t9</pre>
+<pre>move s4, s5</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addu a0, s5, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5b14</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw s6, -0x7fe8(gp)</pre>
+<pre>lw s5, -0x7fdc(gp)</pre>
+<pre>addiu s6, s6, -0x3ca8</pre>
+<pre>addiu s5, s5, -0x6aec</pre>
+<pre>lbu v0, 9(s0)</pre>
+<pre>srav v0, v0, s3</pre>
+<pre>andi v0, v0, 1</pre>
+<pre>beqz v0, 0xcf0c</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>move a1, s3</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>move a0, s6</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move fp, v0</pre>
+<pre>addu a0, s4, fp</pre>
+<pre>move a1, s5</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>move a2, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addiu s3, s3, 1</pre>
+<pre>bne s3, s7, 0xceb8</pre>
+<pre>nop</pre>
+<pre>addiu s0, sp, 0x20</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s0</pre>
+<pre>addiu v1, zero, 0x20</pre>
+<pre>move a0, s0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addu v0, s0, v0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sb v1, -1(v0)</pre>
+<pre>addu v0, s0, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>sb zero, (v0)</pre>
+<pre>--</pre>
+<pre>addiu a2, zero, 0x80</pre>
+<pre>addiu a0, sp, 0x150</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a1, zero</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a2, zero, 0x80</pre>
+<pre>addiu a2, zero, 0x400</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addiu a0, sp, 0x1d0</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a1, zero</pre>
+<pre>move a1, zero</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a0, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, a0, -0x3e68</pre>
+<pre>move a0, s5</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a3, v0</pre>
+<pre>sw s4, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw a2, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x5834</pre>
+<pre>jalr t9</pre>
+<pre>addiu a2, a2, -0x5820</pre>
+<pre>lw v0, 0xc(s0)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>andi v0, v0, 0x100</pre>
+<pre>beqz v0, 0xe428</pre>
+<pre>nop</pre>
+<pre>lw v1, 0x48(s0)</pre>
+<pre>sltiu a0, v1, 5</pre>
+<pre>beqz a0, 0xed50</pre>
+<pre>move v0, zero</pre>
+<pre>lw v0, -0x7fdc(gp)</pre>
+<pre>sll v1, v1, 2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu v0, v0, -0x4fb4</pre>
+<pre>addu v1, v0, v1</pre>
+<pre>lw v0, (v1)</pre>
+<pre>addu v0, v0, gp</pre>
+<pre>jr v0</pre>
+<pre>nop</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5814</pre>
+<pre>lhu a2, 0x4c(s0)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz a2, 0xe070</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x4e(s0)</pre>
+<pre>beqz a3, 0xe070</pre>
+<pre>move a0, s2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x580c</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lhu a2, 0x50(s0)</pre>
+<pre>beqz a2, 0xe0c0</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x52(s0)</pre>
+<pre>beqz a3, 0xe0c0</pre>
+<pre>addiu s1, sp, 0xd0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s1</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x57fc</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lbu a1, 0x54(s0)</pre>
+<pre>beqz a1, 0xe428</pre>
+<pre>addiu s1, zero, 1</pre>
+<pre>lbu v0, 0x55(s0)</pre>
+<pre>beqz v0, 0xe428</pre>
+<pre>addiu a2, sp, 0x90</pre>
+<pre>lw s5, -0x7fd4(gp)</pre>
+<pre>move a0, a2</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>addiu s2, sp, 0xb0</pre>
+<pre>addiu s5, s5, -0x3894</pre>
+<pre>move t9, s5</pre>
+<pre>jalr t9</pre>
+<pre>addiu s4, sp, 0xd0</pre>
+<pre>lbu a1, 0x55(s0)</pre>
+<pre>move t9, s5</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>move a3, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe3c8</pre>
+<pre>addiu a1, a1, -0x57ec</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x57d8</pre>
+<pre>lhu a2, 0x4c(s0)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz a2, 0xe1a8</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x4e(s0)</pre>
+<pre>beqz a3, 0xe1a8</pre>
+<pre>move a0, s2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x580c</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lhu a2, 0x50(s0)</pre>
+<pre>beqz a2, 0xe428</pre>
+<pre>addiu s1, zero, 1</pre>
+<pre>lhu a3, 0x52(s0)</pre>
+<pre>beqz a3, 0xe428</pre>
+<pre>addiu s2, sp, 0xd0</pre>
+<pre>b 0xe398</pre>
+<pre>nop</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5814</pre>
+<pre>lhu a2, 0x4c(s0)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz a2, 0xe238</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x4e(s0)</pre>
+<pre>beqz a3, 0xe238</pre>
+<pre>move a0, s2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x580c</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lhu a2, 0x50(s0)</pre>
+<pre>beqz a2, 0xe288</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x52(s0)</pre>
+<pre>beqz a3, 0xe288</pre>
+<pre>addiu s1, sp, 0xd0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s1</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x57fc</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lbu a1, 0x54(s0)</pre>
+<pre>beqz a1, 0xe304</pre>
+<pre>nop</pre>
+<pre>lbu v0, 0x55(s0)</pre>
+<pre>beqz v0, 0xe304</pre>
+<pre>addiu a2, sp, 0x90</pre>
+<pre>lw s4, -0x7fd4(gp)</pre>
+<pre>move a0, a2</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>addiu s1, sp, 0xb0</pre>
+<pre>addiu s4, s4, -0x3894</pre>
+<pre>move t9, s4</pre>
+<pre>jalr t9</pre>
+<pre>addiu s2, sp, 0xd0</pre>
+<pre>lbu a1, 0x55(s0)</pre>
+<pre>move t9, s4</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>move a3, s1</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x57ec</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s1, sp, 0x150</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x57d8</pre>
+<pre>lhu a2, 0x4c(s0)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz a2, 0xe37c</pre>
+<pre>nop</pre>
+<pre>lhu a3, 0x4e(s0)</pre>
+<pre>beqz a3, 0xe37c</pre>
+<pre>move a0, s1</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x580c</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lhu a2, 0x50(s0)</pre>
+<pre>beqz a2, 0xe428</pre>
+<pre>addiu s1, zero, 2</pre>
+<pre>lhu a3, 0x52(s0)</pre>
+<pre>beqz a3, 0xe428</pre>
+<pre>addiu s2, sp, 0x150</pre>
+<pre>addiu s1, zero, 2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s2</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a3, 0x9dc(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a2, 0x9e8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw a3, 0x9dc(sp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x57fc</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0xe424</pre>
+<pre>nop</pre>
+<pre>move a0, s2</pre>
+<pre>jalr t9</pre>
+<pre>addiu s1, zero, 1</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>b 0xe41c</pre>
+<pre>addiu a1, a1, -0x57d0</pre>
+<pre>move a0, s2</pre>
+<pre>jalr t9</pre>
+<pre>addiu s1, zero, 1</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>--</pre>
+<pre>move s2, zero</pre>
+<pre>sw t0, 0x9d8(sp)</pre>
+<pre>lw v1, 0xc(s0)</pre>
+<pre>addiu v0, zero, 1</pre>
+<pre>sllv v0, v0, s2</pre>
+<pre>and v0, v0, v1</pre>
+<pre>beqz v0, 0xe910</pre>
+<pre>sltiu v0, s2, 0xb</pre>
+<pre>beqz v0, 0xe894</pre>
+<pre>sll v0, s2, 2</pre>
+<pre>lw t9, -0x7fdc(gp)</pre>
+<pre>addiu t9, t9, -0x4fa0</pre>
+<pre>addu v0, t9, v0</pre>
+<pre>lw v0, (v0)</pre>
+<pre>addu v0, v0, gp</pre>
+<pre>jr v0</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lw a2, 0x9d0(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe884</pre>
+<pre>addiu a1, a1, -0x57bc</pre>
+<pre>lw s4, 0x28(s0)</pre>
+<pre>beqz s4, 0xe624</pre>
+<pre>nop</pre>
+<pre>lw v1, 0x2c(s0)</pre>
+<pre>beqz v1, 0xe624</pre>
+<pre>nop</pre>
+<pre>lw t0, 0x30(s0)</pre>
+<pre>beqz t0, 0xe5e0</pre>
+<pre>addiu a1, sp, 0x1d0</pre>
+<pre>lw a2, 0x34(s0)</pre>
+<pre>beqz a2, 0xe5e0</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, a1</pre>
+<pre>sw v1, 0x9e4(sp)</pre>
+<pre>sw a1, 0x9e0(sp)</pre>
+<pre>sw a2, 0x9e8(sp)</pre>
+<pre>jalr t9</pre>
+<pre>--</pre>
+<pre>srl t3, t0, 8</pre>
+<pre>andi a3, a3, 0xff</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, a1, v0</pre>
+<pre>srl v0, a2, 0x10</pre>
+<pre>srl t2, a2, 8</pre>
+<pre>sw a3, 0x1c(sp)</pre>
+<pre>andi v0, v0, 0xff</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>andi a3, t3, 0xff</pre>
+<pre>sw v0, 0x3c(sp)</pre>
+<pre>sw a3, 0x30(sp)</pre>
+<pre>andi v0, v1, 0xff</pre>
+<pre>addiu a1, a1, -0x57a4</pre>
+<pre>andi a3, t2, 0xff</pre>
+<pre>sw v0, 0x24(sp)</pre>
+<pre>srl t5, t0, 0x10</pre>
+<pre>sw a3, 0x40(sp)</pre>
+<pre>andi v0, a2, 0xff</pre>
+<pre>sw t1, 0x10(sp)</pre>
+<pre>andi a3, t0, 0xff</pre>
+<pre>sw v0, 0x44(sp)</pre>
+<pre>srl t4, v1, 8</pre>
+<pre>sw a3, 0x34(sp)</pre>
+<pre>andi t4, t4, 0xff</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>andi t1, t5, 0xff</pre>
+<pre>sw t4, 0x20(sp)</pre>
+<pre>srl a3, s4, 0x10</pre>
+<pre>sw t1, 0x2c(sp)</pre>
+<pre>andi v0, s4, 0xff</pre>
+<pre>srl v1, v1, 0x18</pre>
+<pre>sw v0, 0x14(sp)</pre>
+<pre>srl t0, t0, 0x18</pre>
+<pre>sw v1, 0x18(sp)</pre>
+<pre>srl a2, a2, 0x18</pre>
+<pre>sw t0, 0x28(sp)</pre>
+<pre>sw a2, 0x38(sp)</pre>
+<pre>andi a3, a3, 0xff</pre>
+<pre>jalr t9</pre>
+<pre>srl a2, s4, 0x18</pre>
+<pre>b 0xe90c</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, a1</pre>
+<pre>sw v1, 0x9e4(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a1, 0x9e0(sp)</pre>
+<pre>srl t0, s4, 8</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a1, 0x9e0(sp)</pre>
+<pre>lw v1, 0x9e4(sp)</pre>
+<pre>addu a0, a1, v0</pre>
+<pre>andi v0, t0, 0xff</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>srl a2, v1, 0x10</pre>
+<pre>srl a3, v1, 8</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe67c</pre>
+<pre>addiu a1, a1, -0x5750</pre>
+<pre>lw s4, 0x30(s0)</pre>
+<pre>beqz s4, 0xe910</pre>
+<pre>nop</pre>
+<pre>lw v1, 0x34(s0)</pre>
+<pre>beqz v1, 0xe910</pre>
+<pre>addiu a1, sp, 0x1d0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, a1</pre>
+<pre>sw v1, 0x9e4(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw a1, 0x9e0(sp)</pre>
+<pre>srl t0, s4, 8</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a1, 0x9e0(sp)</pre>
+<pre>lw v1, 0x9e4(sp)</pre>
+<pre>addu a0, a1, v0</pre>
+<pre>andi v0, t0, 0xff</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>srl a2, v1, 0x10</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>srl a3, v1, 8</pre>
+<pre>addiu a1, a1, -0x5720</pre>
+<pre>sw v0, 0x10(sp)</pre>
+<pre>andi a3, a3, 0xff</pre>
+<pre>andi v0, v1, 0xff</pre>
+<pre>sw a3, 0x20(sp)</pre>
+<pre>andi a2, a2, 0xff</pre>
+<pre>sw v0, 0x24(sp)</pre>
+<pre>srl a3, s4, 0x10</pre>
+<pre>sw a2, 0x1c(sp)</pre>
+<pre>andi v0, s4, 0xff</pre>
+<pre>srl v1, v1, 0x18</pre>
+<pre>sw v0, 0x14(sp)</pre>
+<pre>sw v1, 0x18(sp)</pre>
+<pre>srl a2, s4, 0x18</pre>
+<pre>jalr t9</pre>
+<pre>andi a3, a3, 0xff</pre>
+<pre>b 0xe90c</pre>
+<pre>nop</pre>
+<pre>lw v0, 0x38(s0)</pre>
+<pre>beqz v0, 0xe6dc</pre>
+<pre>addiu v1, zero, 1</pre>
+<pre>beq v0, v1, 0xe708</pre>
+<pre>nop</pre>
+<pre>b 0xe914</pre>
+<pre>addiu s2, s2, 1</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lbu a2, 0x3c(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe884</pre>
+<pre>addiu a1, a1, -0x56f0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a1, 0x3c(s0)</pre>
+<pre>lw a0, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>addiu a0, a0, -0x3e50</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x9e4(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>lw v1, 0x9e4(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addu a0, s4, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe884</pre>
+<pre>addiu a1, a1, -0x56d8</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a1, 0x40(s0)</pre>
+<pre>lw a0, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>addiu a0, a0, -sym.bm_start</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x9e4(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>lw v1, 0x9e4(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addu a0, s4, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lbu a3, 0x44(s0)</pre>
+<pre>b 0xe820</pre>
+<pre>addiu a1, a1, -0x56bc</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw a1, 0x5c(s0)</pre>
+<pre>lw v1, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>addiu a0, v1, -0x3d68</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x9e4(sp)</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>lw v1, 0x9e4(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addu a0, s4, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe884</pre>
+<pre>addiu a1, a1, -0x5698</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lw a2, 0x58(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>andi a3, a2, 0xffff</pre>
+<pre>addiu a1, a1, -0x5680</pre>
+<pre>srl a2, a2, 0x10</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0xe90c</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lw a2, 0x9d4(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe884</pre>
+<pre>addiu a1, a1, -0x5664</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s4, v0</pre>
+<pre>lw a2, 0x9d8(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x564c</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0xe90c</pre>
+<pre>nop</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>move a1, fp</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz v0, 0xe910</pre>
+<pre>move s4, v0</pre>
+<pre>lw t9, -sym.__stdprintf_info__(gp)</pre>
+<pre>move a3, s6</pre>
+<pre>addiu a2, zero, 0x448</pre>
+<pre>move a0, v0</pre>
+<pre>jalr t9</pre>
+<pre>move a1, s7</pre>
+<pre>move a0, s5</pre>
+<pre>--</pre>
+<pre>addiu a1, a1, -0x5634</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lw t9, -sym.imp.fclose(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addiu s2, s2, 1</pre>
+<pre>addiu v0, zero, 0xb</pre>
+<pre>bne s2, v0, 0xe464</pre>
+<pre>addiu v1, zero, 2</pre>
+<pre>lw v0, 0xc(s0)</pre>
+<pre>andi v0, v0, 3</pre>
+<pre>beq v0, v1, 0xe968</pre>
+<pre>addiu v1, zero, 3</pre>
+<pre>beq v0, v1, 0xe9a0</pre>
+<pre>addiu v1, zero, 1</pre>
+<pre>bne v0, v1, 0xe9d4</pre>
+<pre>addiu s2, sp, 0x1d0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lhu a2, 0x12(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0xe990</pre>
+<pre>addiu a1, a1, -0x5620</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s2, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lbu a2, 0x10(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x5608</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0xe9d0</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>addiu s2, sp, 0x1d0</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lhu a2, 0x12(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lbu a3, 0x10(s0)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x55f0</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>lbu s2, 0x260(s0)</pre>
+<pre>beqz s2, 0xea9c</pre>
+<pre>addiu s4, sp, 0x1d0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s4</pre>
+<pre>addiu a2, zero, 0x3ff</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>subu a2, a2, v0</pre>
+<pre>lw t9, -sym.get_sched_str(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addu a1, s4, v0</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>bnez v0, 0xea9c</pre>
+<pre>nop</pre>
+<pre>--</pre>
+<pre>sllv v1, s6, s2</pre>
+<pre>and v0, v1, v0</pre>
+<pre>beqz v0, 0xed3c</pre>
+<pre>addiu s4, sp, 0x5d0</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>move a0, s4</pre>
+<pre>move a1, zero</pre>
+<pre>jalr t9</pre>
+<pre>addiu a2, zero, 0x400</pre>
+<pre>addiu v0, zero, 2</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beq s2, v0, 0xeb68</pre>
+<pre>sltiu v0, s2, 3</pre>
+<pre>beqz v0, 0xeb04</pre>
+<pre>addiu v0, zero, 3</pre>
+<pre>beq s2, s6, 0xeb2c</pre>
+<pre>nop</pre>
+<pre>b 0xeb14</pre>
+<pre>nop</pre>
+<pre>beq s2, v0, 0xebd0</pre>
+<pre>addiu v0, zero, 4</pre>
+<pre>beq s2, v0, 0xec10</pre>
+<pre>nop</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addiu a0, sp, 0x5d0</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lhu a2, 0x268(s0)</pre>
+<pre>b 0xebc0</pre>
+<pre>addiu a1, a1, -0x5570</pre>
+<pre>lw a0, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>lw a1, 0x26c(s0)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, a0, -sym.bm_start</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>lbu a3, 0x270(s0)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5554</pre>
+<pre>b 0xec7c</pre>
+<pre>nop</pre>
+<pre>lw v0, 0x26c(s0)</pre>
+<pre>beqz v0, 0xeb84</pre>
+<pre>move a0, s4</pre>
+<pre>beq v0, s6, 0xeb98</pre>
+<pre>nop</pre>
+<pre>b 0xed40</pre>
+<pre>addiu s2, s2, 1</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>lbu a2, 0x270(s0)</pre>
+<pre>b 0xebc0</pre>
+<pre>addiu a1, a1, -0x5528</pre>
+<pre>lw a0, -0x7fe8(gp)</pre>
+<pre>lw t9, -sym.TxtMapById(gp)</pre>
+<pre>lw a1, 0x270(s0)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, a0, -0x3e50</pre>
+<pre>move a0, s4</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>move a2, v0</pre>
+<pre>move a1, fp</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0xec7c</pre>
+<pre>nop</pre>
+<pre>lw t0, -0x7fdc(gp)</pre>
+<pre>addiu a0, sp, 0x5d0</pre>
+<pre>lw t9, -0x7fdc(gp)</pre>
+<pre>lbu v0, 0x278(s0)</pre>
+<pre>addiu t0, t0, -0x62bc</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addiu t9, t9, -0x54f4</pre>
+<pre>movn t0, t9, v0</pre>
+<pre>lhu a2, 0x276(s0)</pre>
+<pre>addiu a1, a1, -0x54e8</pre>
+<pre>lbu a3, 0x274(s0)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>sw t0, 0x10(sp)</pre>
+<pre>b 0xec7c</pre>
+<pre>nop</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw v0, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, v0, -0x6d80</pre>
+<pre>lw gp, 0x48(sp)</pre>
+<pre>beqz v0, 0xec80</pre>
+<pre>move s4, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>move a0, v0</pre>
+<pre>addiu a2, zero, 0x345</pre>
+<pre>lw a3, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.__stdprintf_info__(gp)</pre>
+<pre>addiu a1, a1, -0x5be0</pre>
+<pre>jalr t9</pre>
+<pre>--</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>move a3, s0</pre>
+<pre>sw s2, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fprintf(gp)</pre>
+<pre>addiu a1, a1, -0x52bc</pre>
+<pre>jalr t9</pre>
+<pre>sw s0, 0x14(sp)</pre>
+<pre>addiu a2, s3, -0x5820</pre>
+<pre>move a3, s2</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>move a0, s1</pre>
+<pre>sw s2, 0x14(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fprintf(gp)</pre>
+<pre>addiu a1, a1, -0x5288</pre>
+<pre>sw s4, 0x1c(sp)</pre>
+<pre>sw s0, 0x10(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw s0, 0x18(sp)</pre>
+<pre>move a2, s2</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>move a0, s6</pre>
+<pre>move a3, s0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5244</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw s2, (s5)</pre>
+<pre>lw s3, -0x7fd4(gp)</pre>
+<pre>b 0xf148</pre>
+<pre>addiu s3, s3, -0x2138</pre>
+<pre>move a0, s1</pre>
+<pre>move t9, s3</pre>
+<pre>jalr t9</pre>
+<pre>move a2, s7</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>lw s2, (s2)</pre>
+<pre>bne s2, s5, 0xf130</pre>
+<pre>move a1, s2</pre>
+<pre>lw t9, -sym.get_automark_value(gp)</pre>
+<pre>move a0, s0</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, sp, 0x28</pre>
+<pre>lw gp, 0x20(sp)</pre>
+<pre>--</pre>
+<pre>lw s0, 0x60(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x88</pre>
+<pre>lui gp, 2</pre>
+<pre>addiu gp, gp, 0x524c</pre>
+<pre>addu gp, gp, t9</pre>
+<pre>addiu sp, sp, -0x78</pre>
+<pre>sw ra, 0x74(sp)</pre>
+<pre>sw s3, 0x70(sp)</pre>
+<pre>sw s2, 0x6c(sp)</pre>
+<pre>sw s1, 0x68(sp)</pre>
+<pre>sw s0, 0x64(sp)</pre>
+<pre>sw gp, 0x18(sp)</pre>
+<pre>move a1, zero</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>addiu s0, sp, 0x20</pre>
+<pre>move s1, a0</pre>
+<pre>addiu a2, zero, 0x40</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s0</pre>
+<pre>move a0, s0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>move a3, s1</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw a2, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x5244</pre>
+<pre>jalr t9</pre>
+<pre>addiu a2, a2, -0x51e8</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.find_rule_list_by_name(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>bnez v0, 0xf2e4</pre>
+<pre>move s3, v0</pre>
+<pre>lw a0, -0x7fdc(gp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addiu a0, a0, -0x6d90</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x6d80</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>beqz v0, 0xf424</pre>
+<pre>move s0, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>--</pre>
+<pre>move s2, a2</pre>
+<pre>move s0, a0</pre>
+<pre>jalr t9</pre>
+<pre>move s3, a1</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>beqz v0, 0x12028</pre>
+<pre>move s4, v0</pre>
+<pre>lw t9, -sym.imp.strncpy(gp)</pre>
+<pre>addiu s1, sp, 0x18</pre>
+<pre>move a1, s0</pre>
+<pre>subu s5, v0, s0</pre>
+<pre>move a0, s1</pre>
+<pre>move a2, s5</pre>
+<pre>jalr t9</pre>
+<pre>addu s5, s1, s5</pre>
+<pre>move a0, s3</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sb zero, (s5)</pre>
+<pre>move a2, s2</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>addu a3, s4, v0</pre>
+<pre>move a0, s5</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x5244</pre>
+<pre>move a1, s1</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a0, s0</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sb zero, (s0)</pre>
+<pre>move a0, s0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a1, s3</pre>
+<pre>lw t9, -sym.j_replace(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a2, s2</pre>
+<pre>lw ra, 0x1034(sp)</pre>
+<pre>lw s5, 0x1030(sp)</pre>
+<pre>lw s4, 0x102c(sp)</pre>
+<pre>lw s3, 0x1028(sp)</pre>
+<pre>lw s2, 0x1024(sp)</pre>
+<pre>lw s1, 0x1020(sp)</pre>
+<pre>--</pre>
+<pre>nop</pre>
+<pre>slti v0, v1, 0x38</pre>
+<pre>beqz v0, 0x12858</pre>
+<pre>sll v0, v1, 1</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s1</pre>
+<pre>jalr t9</pre>
+<pre>sw v1, 0x30(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw v1, 0x30(sp)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>move a0, v1</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x30(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a1, 0x20(sp)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>lb a0, (a1)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x40(sp)</pre>
+<pre>move a1, s3</pre>
+<pre>lw a2, 0x40(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw v1, 0x30(sp)</pre>
+<pre>sll a2, a2, 4</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>or a2, a2, v0</pre>
+<pre>b 0x12c40</pre>
+<pre>addu a0, s1, v1</pre>
+<pre>lw a0, (s2)</pre>
+<pre>addu v0, a0, v0</pre>
+<pre>lh v0, (v0)</pre>
+<pre>beq v0, fp, 0x12874</pre>
+<pre>nop</pre>
+<pre>bne v0, s5, 0x12924</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, v1</pre>
+<pre>lw v1, 0x20(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lb a0, (v1)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x40(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lb a0, 4(s0)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x3c(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lb a0, 5(s0)</pre>
+<pre>addiu s0, s0, 3</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x38(sp)</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x30(sp)</pre>
+<pre>lw a2, 0x40(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw a3, 0x38(sp)</pre>
+<pre>lw a1, 0x3c(sp)</pre>
+<pre>sll a2, a2, 4</pre>
+<pre>lw v1, 0x30(sp)</pre>
+<pre>sll a3, a3, 4</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>or a2, a2, a1</pre>
+<pre>or a3, a3, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sll a2, a2, 0x18</pre>
+<pre>sll a3, a3, 0x18</pre>
+<pre>sra a2, a2, 0x18</pre>
+<pre>sra a3, a3, 0x18</pre>
+<pre>jalr t9</pre>
+<pre>move a1, s7</pre>
+<pre>b 0x12c48</pre>
+<pre>nop</pre>
+<pre>addiu a0, zero, 0x45</pre>
+<pre>bne v0, a0, 0x12a68</pre>
+<pre>nop</pre>
+<pre>lb v0, 4(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu a1, s0, 4</pre>
+<pre>lb v0, 5(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu a3, s0, 5</pre>
+<pre>lb v0, 7(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu t0, s0, 7</pre>
+<pre>--</pre>
+<pre>addiu s0, s0, 6</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x2c(sp)</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x34(sp)</pre>
+<pre>lw t1, 0x2c(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw t0, 0x34(sp)</pre>
+<pre>lw a2, 0x40(sp)</pre>
+<pre>sll t1, t1, 4</pre>
+<pre>lw a3, 0x38(sp)</pre>
+<pre>or t0, t1, t0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>sll a2, a2, 4</pre>
+<pre>lw a1, 0x3c(sp)</pre>
+<pre>sll a3, a3, 4</pre>
+<pre>lw v1, 0x30(sp)</pre>
+<pre>sll t0, t0, 0x18</pre>
+<pre>or a2, a2, a1</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>or a3, a3, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sra t0, t0, 0x18</pre>
+<pre>addiu a1, a1, -0x4c30</pre>
+<pre>sll a2, a2, 0x18</pre>
+<pre>sw t0, 0x10(sp)</pre>
+<pre>sll a3, a3, 0x18</pre>
+<pre>sra a2, a2, 0x18</pre>
+<pre>b 0x12c10</pre>
+<pre>sra a3, a3, 0x18</pre>
+<pre>addiu a0, zero, 0x46</pre>
+<pre>bne v0, a0, 0x12c20</pre>
+<pre>nop</pre>
+<pre>lb v0, 4(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu a1, s0, 4</pre>
+<pre>lb v0, 5(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu a3, s0, 5</pre>
+<pre>lb v0, 7(s0)</pre>
+<pre>beqz v0, 0x12c20</pre>
+<pre>addiu t2, s0, 7</pre>
+<pre>--</pre>
+<pre>sw v0, 0x28(sp)</pre>
+<pre>move a0, s1</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x34(sp)</pre>
+<pre>lw t3, 0x24(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw t2, 0x28(sp)</pre>
+<pre>lw t1, 0x2c(sp)</pre>
+<pre>sll t3, t3, 4</pre>
+<pre>lw t0, 0x34(sp)</pre>
+<pre>sll t2, t2, 4</pre>
+<pre>lw a2, 0x40(sp)</pre>
+<pre>or t3, t3, t1</pre>
+<pre>lw a3, 0x38(sp)</pre>
+<pre>or t2, t2, t0</pre>
+<pre>lw a1, 0x3c(sp)</pre>
+<pre>sll a2, a2, 4</pre>
+<pre>lw v1, 0x30(sp)</pre>
+<pre>sll a3, a3, 4</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>or a2, a2, a1</pre>
+<pre>or a3, a3, v1</pre>
+<pre>sll t3, t3, 0x18</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sll t2, t2, 0x18</pre>
+<pre>sra t3, t3, 0x18</pre>
+<pre>sra t2, t2, 0x18</pre>
+<pre>sw t3, 0x10(sp)</pre>
+<pre>sll a2, a2, 0x18</pre>
+<pre>sw t2, 0x14(sp)</pre>
+<pre>sll a3, a3, 0x18</pre>
+<pre>sra a2, a2, 0x18</pre>
+<pre>sra a3, a3, 0x18</pre>
+<pre>move a1, s6</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0x12c48</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>move a1, s3</pre>
+<pre>addiu a2, zero, 0x25</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addu a0, s1, v0</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>b 0x12c80</pre>
+<pre>addiu s0, s0, 2</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s1</pre>
+<pre>jalr t9</pre>
+<pre>sw a2, 0x40(sp)</pre>
+<pre>move a1, s3</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a2, 0x40(sp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addu a0, s1, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addiu s0, s0, 1</pre>
+<pre>lb a2, (s0)</pre>
+<pre>bnez a2, 0x12754</pre>
+<pre>addiu v0, zero, 0x25</pre>
+<pre>move v0, s4</pre>
+<pre>lw ra, 0x6c(sp)</pre>
+<pre>lw fp, 0x68(sp)</pre>
+<pre>lw s7, 0x64(sp)</pre>
+<pre>lw s6, 0x60(sp)</pre>
+<pre>lw s5, 0x5c(sp)</pre>
+<pre>lw s4, 0x58(sp)</pre>
+<pre>lw s3, 0x54(sp)</pre>
+<pre>lw s2, 0x50(sp)</pre>
+<pre>lw s1, 0x4c(sp)</pre>
+<pre>lw s0, 0x48(sp)</pre>
+<pre>jr ra</pre>
+<pre>addiu sp, sp, 0x70</pre>
+<pre>--</pre>
+<pre>move s2, a0</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>sll v0, v0, 2</pre>
+<pre>lw t9, -sym.imp.malloc(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a0, v0, 1</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move s1, v0</pre>
+<pre>beqz v0, 0x12e64</pre>
+<pre>move s3, v0</pre>
+<pre>lw s7, -0x7fdc(gp)</pre>
+<pre>move s0, zero</pre>
+<pre>addiu fp, zero, 0x5f</pre>
+<pre>addiu s6, zero, 0x2e</pre>
+<pre>addiu s7, s7, -0x4c1c</pre>
+<pre>lw s5, -0x7cf0(gp)</pre>
+<pre>b 0x12e50</pre>
+<pre>addiu s4, zero, 0x7e</pre>
+<pre>bgez a0, 0x12d78</pre>
+<pre>andi a2, a0, 0xff</pre>
+<pre>addu a0, s1, s0</pre>
+<pre>move a1, s7</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>b 0x12df0</pre>
+<pre>addiu s0, s0, 3</pre>
+<pre>lw v1, (s5)</pre>
+<pre>sll v0, a0, 1</pre>
+<pre>addu v0, v1, v0</pre>
+<pre>lhu v0, (v0)</pre>
+<pre>andi v0, v0, 0x800</pre>
+<pre>bnez v0, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x2d</pre>
+<pre>beq a0, v0, 0x12ddc</pre>
+<pre>nop</pre>
+<pre>beq a0, fp, 0x12ddc</pre>
+<pre>nop</pre>
+<pre>beq a0, s6, 0x12ddc</pre>
+<pre>nop</pre>
+<pre>beq a0, s4, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x21</pre>
+<pre>beq a0, v0, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x2a</pre>
+<pre>beq a0, v0, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x28</pre>
+<pre>beq a0, v0, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x29</pre>
+<pre>beq a0, v0, 0x12ddc</pre>
+<pre>addiu v0, zero, 0x27</pre>
+<pre>bne a0, v0, 0x12e00</pre>
+<pre>nop</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>addu a0, s1, s0</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu s0, s0, 1</pre>
+<pre>addiu a1, a1, -0x4c10</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>b 0x12e48</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.to_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sra a0, a0, 4</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lbu a0, (s2)</pre>
+<pre>lw t9, -sym.to_hex(gp)</pre>
+<pre>andi a0, a0, 0xf</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x18(sp)</pre>
+<pre>addu a0, s1, s0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a3, v0</pre>
+<pre>addiu s0, s0, 3</pre>
+<pre>lw a2, 0x18(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x4c14</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>addiu s2, s2, 1</pre>
+<pre>lb a0, (s2)</pre>
+<pre>bnez a0, 0x12d5c</pre>
+<pre>nop</pre>
+<pre>addu s0, s1, s0</pre>
+<pre>sb zero, (s0)</pre>
+<pre>move v0, s3</pre>
+<pre>lw ra, 0x44(sp)</pre>
+<pre>lw fp, 0x40(sp)</pre>
+<pre>lw s7, 0x3c(sp)</pre>
+<pre>lw s6, 0x38(sp)</pre>
+<pre>lw s5, 0x34(sp)</pre>
+<pre>lw s4, 0x30(sp)</pre>
+<pre>lw s3, 0x2c(sp)</pre>
+<pre>lw s2, 0x28(sp)</pre>
+<pre>lw s1, 0x24(sp)</pre>
+<pre>lw s0, 0x20(sp)</pre>
+<pre>--</pre>
+<pre>lb a2, (v0)</pre>
+<pre>sh zero, 0x20(sp)</pre>
+<pre>beq a2, v1, 0x13d38</pre>
+<pre>sb zero, 0x22(sp)</pre>
+<pre>addiu a0, zero, 0x2b</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>bne a2, a0, 0x13d08</pre>
+<pre>addiu a1, zero, 1</pre>
+<pre>move a0, s2</pre>
+<pre>jalr t9</pre>
+<pre>sw a1, 0x284(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.strcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x62bc</pre>
+<pre>b 0x13d2c</pre>
+<pre>nop</pre>
+<pre>move a0, s2</pre>
+<pre>jalr t9</pre>
+<pre>sw a2, 0x298(sp)</pre>
+<pre>move a1, s6</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a2, 0x298(sp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>jalr t9</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>b 0x14204</pre>
+<pre>addiu s3, s3, 1</pre>
+<pre>lb v1, 1(v0)</pre>
+<pre>beqz v1, 0x14204</pre>
+<pre>addiu v0, s0, 2</pre>
+<pre>addu v0, s1, v0</pre>
+<pre>sw v0, 0x280(sp)</pre>
+<pre>lb v0, (v0)</pre>
+<pre>beqz v0, 0x14204</pre>
+<pre>sll v0, v1, 1</pre>
+<pre>lw a0, (s7)</pre>
+<pre>addu v0, a0, v0</pre>
+<pre>lb v0, 1(v0)</pre>
+<pre>slti a0, v0, 0x38</pre>
+<pre>beqz a0, 0x13de0</pre>
+<pre>addiu a0, v0, -0x63</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>move a0, s2</pre>
+<pre>addiu s3, s3, 1</pre>
+<pre>jalr t9</pre>
+<pre>sw v1, 0x2a4(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw v1, 0x2a4(sp)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>move a0, v1</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x2a4(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a1, 0x280(sp)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>lb a0, (a1)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x298(sp)</pre>
+<pre>move a1, s6</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a2, 0x298(sp)</pre>
+<pre>lw v1, 0x2a4(sp)</pre>
+<pre>sll a2, a2, 4</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addu a0, s2, v1</pre>
+<pre>jalr t9</pre>
+<pre>or a2, a2, v0</pre>
+<pre>b 0x141f4</pre>
+<pre>nop</pre>
+<pre>andi a0, a0, 0xff</pre>
+<pre>sltiu a0, a0, 2</pre>
+<pre>beqz a0, 0x13ed4</pre>
+<pre>addiu a3, s0, 4</pre>
+<pre>addu a3, s1, a3</pre>
+<pre>lb v0, (a3)</pre>
+<pre>beqz v0, 0x141fc</pre>
+<pre>addiu a0, zero, 1</pre>
+<pre>addiu a1, s0, 5</pre>
+<pre>addu a1, s1, a1</pre>
+<pre>lb v0, (a1)</pre>
+<pre>beqz v0, 0x141fc</pre>
+<pre>nop</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>move a0, v1</pre>
+<pre>--</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x2a4(sp)</pre>
+<pre>lw a1, 0x29c(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lb a0, (a1)</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x2a0(sp)</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x29c(sp)</pre>
+<pre>lw a3, 0x2a0(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw a1, 0x29c(sp)</pre>
+<pre>sll a3, a3, 4</pre>
+<pre>lw a2, 0x298(sp)</pre>
+<pre>lw v1, 0x2a4(sp)</pre>
+<pre>or a3, a3, a1</pre>
+<pre>sll a2, a2, 4</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>or a2, a2, v1</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>or a2, a2, s4</pre>
+<pre>addiu a1, a1, -0x4c24</pre>
+<pre>jalr t9</pre>
+<pre>or a3, a3, s4</pre>
+<pre>b 0x141f4</pre>
+<pre>nop</pre>
+<pre>bne v0, fp, 0x1402c</pre>
+<pre>addiu a0, zero, 0x66</pre>
+<pre>addiu t1, s0, 4</pre>
+<pre>addu t1, s1, t1</pre>
+<pre>lb v0, (t1)</pre>
+<pre>beqz v0, 0x141fc</pre>
+<pre>addiu a0, zero, 1</pre>
+<pre>addiu a3, s0, 5</pre>
+<pre>addu a3, s1, a3</pre>
+<pre>lb v0, (a3)</pre>
+<pre>beqz v0, 0x141fc</pre>
+<pre>addiu t0, s0, 7</pre>
+<pre>addu t0, s1, t0</pre>
+<pre>lb v0, (t0)</pre>
+<pre>--</pre>
+<pre>lw t9, -sym.from_hex(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x294(sp)</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x29c(sp)</pre>
+<pre>lw t0, 0x294(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw a1, 0x29c(sp)</pre>
+<pre>sll t0, t0, 4</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>or a1, t0, a1</pre>
+<pre>lw v1, 0x2a4(sp)</pre>
+<pre>lw t1, 0x290(sp)</pre>
+<pre>or a1, a1, s4</pre>
+<pre>lw a2, 0x298(sp)</pre>
+<pre>sll v1, v1, 4</pre>
+<pre>lw a3, 0x2a0(sp)</pre>
+<pre>sll t1, t1, 4</pre>
+<pre>sw a1, 0x10(sp)</pre>
+<pre>or a2, v1, a2</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>or a3, t1, a3</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>or a2, a2, s4</pre>
+<pre>or a3, a3, s4</pre>
+<pre>b 0x141ec</pre>
+<pre>addiu a1, a1, -0x4c30</pre>
+<pre>bne v0, a0, 0x141f8</pre>
+<pre>addiu t3, s0, 4</pre>
+<pre>addu t3, s1, t3</pre>
+<pre>lb v0, (t3)</pre>
+<pre>beqz v0, 0x141f8</pre>
+<pre>addiu a3, s0, 5</pre>
+<pre>addu a3, s1, a3</pre>
+<pre>lb v0, (a3)</pre>
+<pre>beqz v0, 0x141f8</pre>
+<pre>addiu t2, s0, 7</pre>
+<pre>addu t2, s1, t2</pre>
+<pre>lb v0, (t2)</pre>
+<pre>beqz v0, 0x141f8</pre>
+<pre>addiu t1, s0, 8</pre>
+<pre>addu t1, s1, t1</pre>
+<pre>lb v0, (t1)</pre>
+<pre>--</pre>
+<pre>sw v0, 0x288(sp)</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x29c(sp)</pre>
+<pre>lw t1, 0x290(sp)</pre>
+<pre>addu a0, s2, v0</pre>
+<pre>lw t2, 0x288(sp)</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>sll t1, t1, 4</pre>
+<pre>lw a1, 0x29c(sp)</pre>
+<pre>sll t2, t2, 4</pre>
+<pre>lw t0, 0x294(sp)</pre>
+<pre>lw v1, 0x2a4(sp)</pre>
+<pre>or t2, t2, a1</pre>
+<pre>lw t3, 0x28c(sp)</pre>
+<pre>or t1, t1, t0</pre>
+<pre>lw a2, 0x298(sp)</pre>
+<pre>sll v1, v1, 4</pre>
+<pre>lw a3, 0x2a0(sp)</pre>
+<pre>sll t3, t3, 4</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>or a2, v1, a2</pre>
+<pre>or a3, t3, a3</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>or t1, t1, s4</pre>
+<pre>addiu a1, a1, -0x4c28</pre>
+<pre>or t2, t2, s4</pre>
+<pre>sw t1, 0x10(sp)</pre>
+<pre>sw t2, 0x14(sp)</pre>
+<pre>or a2, a2, s4</pre>
+<pre>or a3, a3, s4</pre>
+<pre>jalr t9</pre>
+<pre>nop</pre>
+<pre>lw gp, 0x18(sp)</pre>
+<pre>addiu a0, zero, 1</pre>
+<pre>addiu s0, s0, 2</pre>
+<pre>sw a0, 0x284(sp)</pre>
+<pre>addiu s0, s0, 1</pre>
+<pre>slt v0, s0, s5</pre>
+<pre>bnez v0, 0x13cb8</pre>
+<pre>addu v0, s1, s0</pre>
+<pre>lw a1, 0x284(sp)</pre>
+<pre>beqz a1, 0x14248</pre>
+<pre>move a1, zero</pre>
+<pre>--</pre>
+<pre>addiu sp, sp, -0xb0</pre>
+<pre>sw ra, 0xac(sp)</pre>
+<pre>sw s4, 0xa8(sp)</pre>
+<pre>sw s3, 0xa4(sp)</pre>
+<pre>sw s2, 0xa0(sp)</pre>
+<pre>sw s1, 0x9c(sp)</pre>
+<pre>sw s0, 0x98(sp)</pre>
+<pre>sw gp, 0x10(sp)</pre>
+<pre>move a1, zero</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>addiu s2, sp, 0x18</pre>
+<pre>move s3, a0</pre>
+<pre>addiu a2, zero, 0x80</pre>
+<pre>move a0, s2</pre>
+<pre>jalr t9</pre>
+<pre>move s1, zero</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.time(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, zero</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>move a3, v0</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw a2, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>addiu a1, a1, -0x4868</pre>
+<pre>jalr t9</pre>
+<pre>addiu a2, a2, -0x485c</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre>lw t9, -sym.imp.fopen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>addiu a1, a1, -0x64fc</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>beqz v0, 0x15454</pre>
+<pre>move s0, v0</pre>
+<pre>lw t9, -sym.printfXmlDoc(gp)</pre>
+<pre>move a1, s3</pre>
+<pre>jalr t9</pre>
+<pre>move a0, v0</pre>
+<pre>move a1, zero</pre>
+<pre>move a0, s0</pre>
+<pre>lw gp, 0x10(sp)</pre>
+<pre>lw t9, -sym.imp.fseek(gp)</pre>
+<pre>--</pre>
+<pre>sw ra, 0x6c(sp)</pre>
+<pre>sw s2, 0x68(sp)</pre>
+<pre>sw s1, 0x64(sp)</pre>
+<pre>sw s0, 0x60(sp)</pre>
+<pre>sw gp, 0x28(sp)</pre>
+<pre>addiu a2, zero, 0x30</pre>
+<pre>addiu s1, sp, 0x30</pre>
+<pre>move s0, a0</pre>
+<pre>lw t9, -sym.imp.memset(gp)</pre>
+<pre>move s2, a1</pre>
+<pre>move a1, zero</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>move a0, s1</pre>
+<pre>lhu a1, 4(s0)</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>lhu a3, 2(s0)</pre>
+<pre>lhu t2, 6(s0)</pre>
+<pre>lhu t1, 8(s0)</pre>
+<pre>lhu t0, 0xa(s0)</pre>
+<pre>lhu v1, 0xc(s0)</pre>
+<pre>lhu a2, (s0)</pre>
+<pre>lhu v0, 0xe(s0)</pre>
+<pre>sw a1, 0x10(sp)</pre>
+<pre>lw a1, -0x7fdc(gp)</pre>
+<pre><span class="red">lw t9, -sym.imp.sprintf(gp)</span></pre>
+<pre>sw t2, 0x14(sp)</pre>
+<pre>addiu a1, a1, -0x459c</pre>
+<pre>sw t1, 0x18(sp)</pre>
+<pre>sw t0, 0x1c(sp)</pre>
+<pre>sw v1, 0x20(sp)</pre>
+<pre>jalr t9</pre>
+<pre>sw v0, 0x24(sp)</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>lw t9, -sym.imp.strlen(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a0, s1</pre>
+<pre>move a0, s2</pre>
+<pre>lw gp, 0x28(sp)</pre>
+<pre>move a1, s1</pre>
+<pre>lw t9, -sym.imp.memcpy(gp)</pre>
+<pre>jalr t9</pre>
+<pre>move a2, v0</pre>
+<pre>move v0, zero</pre>
+<pre>lw ra, 0x6c(sp)</pre>
+<pre>lw s2, 0x68(sp)</pre>
+<br />
+<pre>[</span><span class="orange">*</span>] Function </span><span class="orange">sprintf</span> used </span><span class="orange">61</span> times </span><span class="orange">libleopard.so</span></pre>
+<br />
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+[[0;33m*[0m] Binary protection state of [0;33msmbd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msystem[0m tear down of [0;33msmbd[0m
+
+andi s2, s2, 1
+ori s2, s2, 0x10
+lw a0, 0x64(s0)
+lw v0, 0x60(s0)
+srl a1, a0, 0x17
+lw v1, 0x38(s0)
+sll v0, v0, 9
+or v0, a1, v0
+slt a1, v0, v1
+bnez a1, 0x420bb8
+sll a0, a0, 9
+bne v1, v0, 0x420bbc
+move v0, zero
+lw v0, 0x3c(s0)
+sltu a0, a0, v0
+beqz a0, 0x420bbc
+move v0, zero
+addiu v0, zero, 0x200
+or v0, v0, s2
+lw ra, 0x2c(sp)
+lw s2, 0x28(sp)
+lw s1, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x30
+[31mlw t9, -sym.lp_map_system(gp)[0m
+lw a0, 0x10(s1)
+jalr t9
+nop
+lw gp, 0x10(sp)
+bnez v0, 0x420b44
+ori v0, s2, 4
+lw t9, -sym.lp_map_hidden(gp)
+lw a0, 0x10(s1)
+jalr t9
+nop
+bnez v0, 0x420b54
+ori v0, s2, 2
+b 0x420b60
+nop
+addiu sp, sp, -0x38
+sw ra, 0x34(sp)
+sw s3, 0x30(sp)
+sw s2, 0x2c(sp)
+sw s1, 0x28(sp)
+sw s0, 0x24(sp)
+--
+addiu a0, zero, -1
+lw gp, 0x10(sp)
+beqz s0, 0x420ed0
+move s2, v0
+lw a0, 0x10(s0)
+lw t9, -sym.lp_force_dir_mode(gp)
+ori s3, s1, 0x49
+jalr t9
+and s3, s2, s3
+b 0x420fb8
+or s3, v0, s3
+beqz s0, 0x420ef4
+addiu a0, zero, -1
+lw a0, 0x10(s0)
+lw t9, -sym.lp_map_archive(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x420f14
+andi v1, s1, 0x20
+ori v0, s3, 0x40
+movn s3, v0, v1
+beqz s0, 0x420f20
+addiu a0, zero, -1
+lw a0, 0x10(s0)
+[31mlw t9, -sym.lp_map_system(gp)[0m
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x420f40
+andi v1, s1, 4
+ori v0, s3, 8
+movn s3, v0, v1
+beqz s0, 0x420f4c
+addiu a0, zero, -1
+lw a0, 0x10(s0)
+lw t9, -sym.lp_map_hidden(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x420f6c
+andi s1, s1, 2
+ori v0, s3, 1
+movn s3, v0, s1
+beqz s2, 0x420f7c
+andi s2, s2, 0x1b6
+--
+lw t9, -sym.unbecome_root(gp)
+jalr t9
+move s5, v0
+lw gp, 0x20(sp)
+lw t9, -sym.close_file_fchmod(gp)
+jalr t9
+move a0, s3
+beqz s5, 0x4213bc
+nop
+lw a3, 0x1f8(sp)
+move a0, s0
+addiu s3, zero, 0xe40
+move a1, s4
+jal sym.unix_mode
+move a2, s2
+lw gp, 0x20(sp)
+beqz s0, 0x421278
+move s5, v0
+lw t9, -sym.lp_map_archive(gp)
+lw a0, 0x10(s0)
+jalr t9
+nop
+addiu v1, zero, 0xe00
+lw gp, 0x20(sp)
+lw a0, 0x10(s0)
+[31mlw t9, -sym.lp_map_system(gp)[0m
+jalr t9
+movn s3, v1, v0
+lw gp, 0x20(sp)
+bnez v0, 0x421280
+nop
+beqz s0, 0x421298
+ori s3, s3, 8
+lw t9, -sym.lp_map_hidden(gp)
+lw a0, 0x10(s0)
+jalr t9
+nop
+bnez v0, 0x42129c
+nop
+ori s3, s3, 1
+lw v0, 0x18(s1)
+and s3, s3, v0
+andi v1, v0, 0x124
+beqz v1, 0x4212bc
+or s3, s3, s5
+addiu a0, zero, -0x125
+--
+addiu s4, zero, 0x300
+lw t0, 0xd4(sp)
+lw v0, 0x28(sp)
+andi t0, t0, 0x7f
+beqz v0, 0x4238d8
+sw t0, 0x80(sp)
+addiu s2, s2, -4
+sltiu s2, s2, 2
+beqz s2, 0x4238d8
+addiu v0, zero, -0x21
+lw t1, 0xd4(sp)
+and v0, s0, v0
+bnez v0, 0x423810
+andi v1, t1, 0x5f
+bnez v1, 0x42381c
+nop
+b 0x42382c
+sw zero, 0x7c(sp)
+and v1, v0, v1
+bne v1, v0, 0x423828
+nop
+lw v0, 0x78(sp)
+b 0x42382c
+sw v0, 0x7c(sp)
+sw zero, 0x7c(sp)
+[31mlw t9, -sym.lp_map_system(gp)[0m
+lw a0, 0x10(s1)
+jalr t9
+nop
+lw gp, 0x20(sp)
+bnez v0, 0x423864
+andi v0, s0, 4
+lw t9, -sym.lp_store_dos_attributes(gp)
+lw a0, 0x10(s1)
+jalr t9
+nop
+lw gp, 0x20(sp)
+beqz v0, 0x42387c
+andi v0, s0, 4
+beqz v0, 0x42387c
+nop
+lw v1, 0x80(sp)
+andi v0, v1, 4
+beqz v0, 0x4238cc
+nop
+lw t9, -sym.lp_map_hidden(gp)
+--
+sb zero, 0x28(s0)
+sb zero, 0x30(s0)
+sw s1, (v1)
+lw ra, 0x2c(sp)
+lw s3, 0x28(sp)
+lw s2, 0x24(sp)
+lw s1, 0x20(sp)
+lw s0, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x30
+addiu sp, sp, -0x30
+sw ra, 0x2c(sp)
+sw s1, 0x28(sp)
+sw s0, 0x24(sp)
+lui gp, 0x4e
+addiu gp, gp, 0x66a0
+sw gp, 0x10(sp)
+lui v0, 0x4e
+lw v1, 0x1908(v0)
+beqz v1, 0x435384
+move s0, a0
+lw t9, 0x2c(v1)
+jalr t9
+addiu a0, v0, 0x1908
+lw gp, 0x10(sp)
+[31mlw t9, -sym.make_auth_context_subsystem(gp)[0m
+lui s1, 0x4e
+addiu a0, sp, 0x18
+jalr t9
+addiu a1, s1, 0x1908
+lw v0, 0x18(sp)
+lw gp, 0x10(sp)
+beqz v0, 0x4353b4
+lui a0, 0x4c
+lw t9, -sym.smb_panic(gp)
+jalr t9
+addiu a0, a0, -0x3b34
+lw a0, 0x1908(s1)
+lw t9, 0x20(a0)
+jalr t9
+nop
+move a0, s0
+addiu a2, zero, 8
+lw gp, 0x10(sp)
+move a1, v0
+lw ra, 0x2c(sp)
+--
+bne v0, a0, 0x47324c
+addiu v1, zero, 1
+move v1, zero
+lw ra, 0x3c(sp)
+move v0, v1
+jr ra
+addiu sp, sp, 0x40
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+lui gp, 0x4e
+addiu gp, gp, 0x66a0
+sw gp, 0x10(sp)
+lw t9, -sym.decrement_smbd_process_count(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+lw t9, -sym.lp_panic_action(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x4732b4
+nop
+lb v1, (v0)
+beqz v1, 0x4732b4
+nop
+[31mlw t9, -sym.imp.system(gp)[0m
+jalr t9
+move a0, v0
+lw gp, 0x10(sp)
+lw t9, -sym.dump_core(gp)
+jalr t9
+nop
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+lui gp, 0x4e
+addiu gp, gp, 0x66a0
+sw gp, 0x10(sp)
+lw t9, -sym.talloc_check_name(gp)
+jalr t9
+nop
+beqz v0, 0x4732f4
+lui a0, 0x4c
+lw ra, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x20
+jal sym.smb_panic
+--
+b 0x48e310
+sw zero, (s2)
+lui v0, 0xc000
+ori v0, v0, 0x17
+sw v0, (s2)
+move v0, s2
+lw ra, 0x3c(sp)
+lw s4, 0x38(sp)
+lw s3, 0x34(sp)
+lw s2, 0x30(sp)
+lw s1, 0x2c(sp)
+lw s0, 0x28(sp)
+jr ra
+addiu sp, sp, 0x40
+addiu sp, sp, -0x58
+sw ra, 0x54(sp)
+sw s5, 0x50(sp)
+sw s4, 0x4c(sp)
+sw s3, 0x48(sp)
+sw s2, 0x44(sp)
+sw s1, 0x40(sp)
+sw s0, 0x3c(sp)
+lui gp, 0x4e
+addiu gp, gp, 0x66a0
+sw gp, 0x20(sp)
+[31mlw t9, -sym.make_auth_context_subsystem(gp)[0m
+addiu s3, sp, 0x30
+move s0, a0
+addiu s2, sp, 0x28
+move s4, a1
+sw a2, 0x60(sp)
+move a0, s3
+sw a3, 0x64(sp)
+move a1, s2
+sw zero, 0x28(sp)
+jalr t9
+sw zero, 0x2c(sp)
+lw s5, 0x30(sp)
+bnez s5, 0x48e440
+nop
+lw a0, 0x28(sp)
+lw t9, 0x20(a0)
+jalr t9
+addiu s1, sp, 0x2c
+lw gp, 0x20(sp)
+lw t9, -sym.lp_workgroup(gp)
+--
+bnez v0, 0x48e984
+sw v0, (s0)
+lw t9, -sym.talloc_free(gp)
+jalr t9
+move a0, s2
+lui v0, 0xc000
+b 0x48e9e4
+ori v0, v0, 0x17
+sw zero, (v0)
+addiu s3, sp, 0x18
+sw zero, 0xc(v0)
+move a0, s3
+sw zero, 4(v0)
+sw zero, 8(v0)
+lw v0, (s0)
+lw t9, -sym.ntlmssp_server_start(gp)
+sw s2, (v0)
+lw a1, (s0)
+jalr t9
+addiu a1, a1, 0xc
+lw v0, 0x18(sp)
+lw gp, 0x10(sp)
+bnez v0, 0x48e9e4
+move a0, s3
+lw a1, (s0)
+[31mlw t9, -sym.make_auth_context_subsystem(gp)[0m
+jalr t9
+addiu a1, a1, 4
+lw v0, 0x18(sp)
+lw gp, 0x10(sp)
+beqz v0, 0x48e9ec
+nop
+b 0x48ea64
+sw v0, (s1)
+lw v0, (s0)
+lw t9, -sym.lp_server_role(gp)
+lw v1, 0xc(v0)
+sw v0, 0x70(v1)
+lui v1, 0x49
+lw v0, (s0)
+addiu v1, v1, -0x1820
+lw v0, 0xc(v0)
+sw v1, 0x74(v0)
+lui v1, 0x49
+lw v0, (s0)
+addiu v1, v1, -0x180c
+--
+lw v0, 0x44(sp)
+sw v0, 0x14(sp)
+lw v0, 0x48(sp)
+sw v0, 0x18(sp)
+lw v0, 0x4c(sp)
+sw v0, 0x1c(sp)
+lw v0, 0x50(sp)
+sw v0, 0x20(sp)
+lw v0, 0x54(sp)
+jalr t9
+sw v0, 0x24(sp)
+lw s4, 0xd18(sp)
+lw gp, 0x28(sp)
+bnez s4, 0x4a34e4
+move s5, s4
+lw a1, (s3)
+move a0, s2
+lw a2, 0x30(sp)
+lw t9, 0x24(a1)
+jalr t9
+addiu a3, sp, 0x34
+lw gp, 0x28(sp)
+lw s5, 0xd18(sp)
+b 0x4a34e4
+nop
+[31mlw t9, -sym.make_auth_context_subsystem(gp)[0m
+addiu s2, sp, 0x38
+move a0, s3
+sw zero, 0x38(sp)
+jalr t9
+move a1, s2
+lw s4, 0xd18(sp)
+lw gp, 0x28(sp)
+bnez s4, 0x4a34e4
+move s5, s4
+lw a0, 0x38(sp)
+lw t9, 0x20(a0)
+jalr t9
+nop
+addiu a0, sp, 0x30
+move a3, v0
+lw v0, 0x58(sp)
+addiu a1, sp, 0x114
+lw gp, 0x28(sp)
+addiu a2, sp, 0x314
+sw v0, 0x10(sp)
+
+[[0;33m*[0m] Function [0;33msystem[0m used [0;33m9[0m times [0;33msmbd[0m
+

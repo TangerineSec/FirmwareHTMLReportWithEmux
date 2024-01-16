@@ -1,0 +1,23 @@
+#!/bin/sh
+echo "setssid"
+
+WIRELESS_PATH="/etc/config/wireless"
+
+iface=$(/sbin/ifconfig eth2.1|sed -n '/HWaddr/ s/^.*HWaddr *//pg')
+
+mac0=`expr substr "$iface" 16 2`
+
+mac1=`expr substr "$iface" 13 2`
+
+mac2=`expr substr "$iface" 10 2`
+
+echo "${mac2}${mac1}${mac0}"
+
+echo "${iface}"
+sed -i "s/xCloud_0001/xCloud_${mac2}${mac1}${mac0}/g" ${WIRELESS_PATH}
+sed -i "s/xCloud_AC_0001/xCloud_AC_${mac2}${mac1}${mac0}/g" ${WIRELESS_PATH}
+#wifi down
+#if [ -z "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" ] || [ ! "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+#	wifi up
+#fi
+

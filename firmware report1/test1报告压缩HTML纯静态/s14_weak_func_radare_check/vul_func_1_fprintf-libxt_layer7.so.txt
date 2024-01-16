@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibxt_layer7.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mlibxt_layer7.so[0m
+
+beq a2, v0, 0x11b0
+lw a1, 0x238(sp)
+slti v0, a2, 0x2f
+beqz v0, 0x1190
+slti v0, a2, 0x5f
+slti v0, a2, 0x2c
+beql v0, zero, 0x1218
+move fp, s4
+slti v0, a2, 0x28
+beqz v0, 0x11b4
+lw v0, -0x7f9c(gp)
+bnez a2, 0x11a8
+addiu v0, zero, 0x24
+b 0x11e0
+lw v0, -0x7f9c(gp)
+beqz v0, 0x11a8
+addiu v0, zero, 0x7c
+slti v0, a2, 0x5b
+beql v0, zero, 0x11b4
+lw v0, -0x7f9c(gp)
+addiu v0, zero, 0x3f
+bnel a2, v0, 0x1218
+move fp, s4
+lw v0, -0x7f9c(gp)
+lb a3, (a1)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+lw a0, (v0)
+lb v0, (v1)
+move a1, s6
+sw a2, 0x14(sp)
+sw v0, 0x10(sp)
+jalr t9
+sw a2, 0x18(sp)
+b 0x11f4
+lw gp, 0x20(sp)
+lw t9, -sym.imp.fputs(gp)
+move a0, s5
+jalr t9
+lw a1, (v0)
+lw gp, 0x20(sp)
+b 0x1218
+move fp, s4
+addu v0, s0, fp
+lb v0, (v0)
+lw v1, (v1)
+sll v0, v0, 1
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m1[0m times [0;33mlibxt_layer7.so[0m
+

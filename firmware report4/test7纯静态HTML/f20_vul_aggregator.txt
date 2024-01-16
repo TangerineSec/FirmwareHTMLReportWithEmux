@@ -1,0 +1,325 @@
+[[0;34m+[0m] [0;36m[1mFinal vulnerability aggregator[0m
+[1m=================================================================[0m
+This module aggregates all found version numbers together from S06, S08, S09, S24, S25 and S115 and searches with cve-search for known vulnerabilities.
+Additionally, the identified CVE details are matched with public exploit databases.
+
+
+[[0;33m*[0m] Aggregate vulnerability details
+[[0;33m*[0m] Collect version details of module s25_kernel_check.csv.
+[[0;33m*[0m] Collect version details of module s24_kernel_bin_identifier.csv.
+[[0;33m*[0m] Collect version details of module s06_distribution_identification.csv.
+[[0;33m*[0m] Collect version details of module s09_firmware_base_version_check.csv.
+[[0;33m*[0m] Collect version details of module s116_qemu_version_detection.csv.
+
+[0;34m==>[0m [0;36mSoftware inventory generation.[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] Software inventory initial overview:
+[[0;32m+[0m][0;32m Found Version details ([0;33mstatical check[0;32m): [0;33mbusybox:1.7.2[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mstatical check[0;32m): [0;33mdnsmasq:2.40[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mstatical check[0;32m): [0;33mgnu:sed:4.0[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mstatical check[0;32m): [0;33mssleay:0.8.1[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mstatical check[0;32m): [0;33mudhcp:0.9.8[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mbridge-utils:1.0.6[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mbusybox:1.7.2[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mdnsmasq:2.40[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33miproute2:120521[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33misc:dhcp_client:4.1-ESV-R8[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mntfs-3g:2012.1.15[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mpoint-to-point_protocol:2.4.5[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33memulator[0;32m): [0;33mradvd:0.9.1[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33mkernel[0;32m): [0;33mlinux_kernel:2.6.36.4[0m[0m
+
+
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Software inventory aggregated:
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mlinux_kernel:2.6.36.4:[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mbridge-utils:1.0.6[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mbusybox:1.7.2[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mdnsmasq:2.40[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mgnu:sed:4.0[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33miproute2:120521[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33misc:dhcp_client:4.1-ESV-R8[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mntfs-3g:2012.1.15[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mpoint-to-point_protocol:2.4.5[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mradvd:0.9.1[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mssleay:0.8.1[0m[0m
+[[0;32m+[0m][0;32m Found Version details ([0;33maggregated[0;32m): [0;33mudhcp:0.9.8[0m[0m
+
+-----------------------------------------------------------------
+
+
+[0;34m==>[0m [0;36mCollect CVE and exploit details from versions.[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] CVE database lookup with version information: [0;33mlinux_kernel:2.6.36.4:[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mbusybox:1.7.2[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mgnu:sed:4.0[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mbridge-utils:1.0.6[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mdnsmasq:2.40[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33misc:dhcp_client:4.1-ESV-R8[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33miproute2:120521[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mudhcp:0.9.8[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mntfs-3g:2012.1.15[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mpoint-to-point_protocol:2.4.5[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mradvd:0.9.1[0m
+[[0;33m*[0m] CVE database lookup with version information: [0;33mssleay:0.8.1[0m
+[[0;33m*[0m] Vulnerability details for [0;33msed[0m / version [0;33m4.0[0m / source [0;33mSTAT[0m:
+[[0;33m*[0m] Vulnerability details for [0;33mradvd[0m / version [0;33m0.9.1[0m / source [0;33mUEMU[0m:
+[[0;33m*[0m] Vulnerability details for [0;33mudhcp[0m / version [0;33m0.9.8[0m / source [0;33mSTAT[0m:
+[[0;33m*[0m] Vulnerability details for [0;33mbridge-utils[0m / version [0;33m1.0.6[0m / source [0;33mUEMU[0m:
+
+
+
+
+
+
+
+
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33msed[0;32m with version [0;33m4.0[0;32m (source [0;33mSTAT[0;32m).[0m[0m
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33mudhcp[0;32m with version [0;33m0.9.8[0;32m (source [0;33mSTAT[0;32m).[0m[0m
+
+
+
+
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33mradvd[0;32m with version [0;33m0.9.1[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33mbridge-utils[0;32m with version [0;33m1.0.6[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+
+
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mdhcp_client[0m / version [0;33m4.1-ESV-R8[0m / source [0;33mUEMU[0m:
+[[0;33m*[0m] Vulnerability details for [0;33miproute2[0m / version [0;33m120521[0m / source [0;33mUEMU[0m:
+
+
+
+
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33mdhcp_client[0;32m with version [0;33m4.1-ESV-R8[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+
+
+[[0;32m+[0m][0;32m Found [0;33m[1mNO[0m[0;32m CVEs and [0;33m[1mNO[0m[0;32m exploits (including POC's) in [0;33miproute2[0;32m with version [0;33m120521[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mssleay[0m / version [0;33m0.8.1[0m / source [0;33mSTAT[0m:
+
+
+[0;33m	ssleay              :   0.8.1       :   CVE-2001-1141     :   5.0 (v2)  :   STAT           :   No exploit available[0m
+[0;33m	ssleay              :   0.8.1       :   CVE-1999-0007     :   5.0 (v2)  :   STAT           :   No exploit available[0m
+
+[[0;32m+[0m][0;32m Found [0;33m[1m2[0;32m CVEs and [0;33m[1m0[0;32m exploits (including POC's) in [0;33mssleay[0;32m with version [0;33m0.8.1[0;32m (source [0;33mSTAT[0;32m).[0m[0m
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mpoint-to-point_protocol[0m / version [0;33m2.4.5[0m / source [0;33mUEMU[0m:
+
+
+[0;31m	point-to-point_proto:   2.4.5       :   CVE-2018-11574    :   9.8       :   UEMU           :   No exploit available[0m
+[0;35m	point-to-point_proto:   2.4.5       :   CVE-2020-8597     :   9.8       :   UEMU           :   Exploit (PSS: 156662/pppd-2.4.8-Buffer-Overflow.html (P) 156802/pppd-2.4.8-Buffer-Overflow.html (P))[0m
+[0;33m	point-to-point_proto:   2.4.5       :   CVE-2015-3310     :   4.3 (v2)  :   UEMU           :   No exploit available[0m
+[0;31m	point-to-point_proto:   2.4.5       :   CVE-2014-3158     :   7.5 (v2)  :   UEMU           :   No exploit available[0m
+
+[[0;32m+[0m][0;32m Found [0;31m[1m4[0;32m CVEs and [0;31m[1m1[0;32m exploits (including POC's) in [0;33mpoint-to-point_protocol[0;32m with version [0;33m2.4.5[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mbusybox[0m / version [0;33m1.7.2[0m / source [0;33mSTAT/UEMU[0m:
+
+
+[0;31m	busybox             :   1.7.2       :   CVE-2022-48174    :   9.8       :   STAT/UEMU      :   No exploit available[0m
+[0;32m	busybox             :   1.7.2       :   CVE-2014-9645     :   2.1 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2019-5747     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2018-1000500  :   8.1       :   STAT/UEMU      :   No exploit available[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2018-1000517  :   9.8       :   STAT/UEMU      :   No exploit available[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2018-20679    :   5.0 (v2)  :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2011-2716     :   6.8 (v2)  :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2013-1813     :   7.2 (v2)  :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2011-5325     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2017-16544    :   8.8       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 167552/Nexans-FTTO-GigaSwitch-Outdated-Components-Hardcoded-Backdoor.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2015-9261     :   5.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 167552/Nexans-FTTO-GigaSwitch-Outdated-Components-Hardcoded-Backdoor.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2022-28391    :   8.8       :   STAT/UEMU      :   No exploit available[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2016-6301     :   7.8 (v2)  :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2016-2148     :   9.8       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;35m	busybox             :   1.7.2       :   CVE-2016-2147     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+
+[[0;32m+[0m][0;32m Found [0;31m[1m15[0;32m CVEs and [0;31m[1m10[0;32m exploits (including POC's) in [0;33mbusybox[0;32m with version [0;33m1.7.2[0;32m (source [0;33mSTAT/UEMU[0;32m).[0m[0m
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mntfs-3g[0m / version [0;33m2012.1.15[0m / source [0;33mUEMU[0m:
+
+
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39255    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39252    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-35267    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-33287    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39261    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2022-30788    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-35268    :   7.8       :   UEMU           :   No exploit available[0m
+[0;33m	ntfs-3g             :   2012.1.15   :   CVE-2022-30785    :   6.7       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-33289    :   7.8       :   UEMU           :   No exploit available[0m
+[0;33m	ntfs-3g             :   2012.1.15   :   CVE-2022-30783    :   6.7       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-46790    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2022-30784    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39254    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39262    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39256    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2022-30789    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39253    :   7.8       :   UEMU           :   No exploit available[0m
+[0;33m	ntfs-3g             :   2012.1.15   :   CVE-2021-39257    :   5.5       :   UEMU           :   No exploit available[0m
+[0;33m	ntfs-3g             :   2012.1.15   :   CVE-2022-30787    :   6.7       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-33285    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39251    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39260    :   7.8       :   UEMU           :   No exploit available[0m
+[0;33m	ntfs-3g             :   2012.1.15   :   CVE-2007-5159     :   4.6 (v2)  :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-33286    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39259    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-35266    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-35269    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2022-30786    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2022-40284    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39263    :   7.8       :   UEMU           :   No exploit available[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2021-39258    :   7.8       :   UEMU           :   No exploit available[0m
+[0;35m	ntfs-3g             :   2012.1.15   :   CVE-2017-0358     :   7.2 (v2)  :   UEMU           :   Exploit (EDB ID: 41240 / MSF: ntfs3g_priv_esc (L) / PSS: 141056/NTFS-3G-Illicit-Modprobe-Execution.html (P))[0m
+
+[[0;33m*[0m] Vulnerability details for [0;33mdnsmasq[0m / version [0;33m2.40[0m / source [0;33mSTAT/UEMU[0m:
+[[0;32m+[0m][0;32m Found [0;31m[1m32[0;32m CVEs and [0;31m[1m1[0;32m exploits (including POC's) in [0;33mntfs-3g[0;32m with version [0;33m2012.1.15[0;32m (source [0;33mUEMU[0;32m).[0m[0m
+
+
+
+
+[0;31m	dnsmasq             :   2.40        :   CVE-2019-14513    :   7.5       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2012-3411     :   5.0 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2017-13704    :   5.0 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2020-25683    :   5.9       :   STAT/UEMU      :   No exploit available[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2020-25682    :   8.1       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2013-0198     :   5.0 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;32m	dnsmasq             :   2.40        :   CVE-2019-14834    :   3.7       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2021-3448     :   4.0       :   STAT/UEMU      :   No exploit available[0m
+[0;32m	dnsmasq             :   2.40        :   CVE-2020-25685    :   3.7       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2020-25687    :   5.9       :   STAT/UEMU      :   No exploit available[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2020-25681    :   8.1       :   STAT/UEMU      :   No exploit available[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2022-0934     :   7.5       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2015-8899     :   5.0 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2015-3294     :   6.4 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14496    :   7.8 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42946 / PSS: 144462/Dnsmasq-Integer-Underflow.html (P))[0m
+[0;32m	dnsmasq             :   2.40        :   CVE-2020-25684    :   3.7       :   STAT/UEMU      :   No exploit available[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2023-28450    :   7.5       :   STAT/UEMU      :   No exploit available[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2017-15107    :   5.0 (v2)  :   STAT/UEMU      :   No exploit available[0m
+[0;32m	dnsmasq             :   2.40        :   CVE-2020-25686    :   3.7       :   STAT/UEMU      :   No exploit available[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14493    :   7.5 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42943 / PSS: 144473/Dnsmasq-Stack-Based-Overflow.html (P))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14492    :   7.5 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42942 / PSS: 144479/Dnsmasq-Heap-Based-Overflow.html (P))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14491    :   9.8       :   STAT/UEMU      :   Exploit (EDB ID: 42941 / PSS: 144480/Dnsmasq-2-Byte-Heap-Based-Overflow.html (P))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2009-2958     :   4.3 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 9617 / PSS: 80896/Core-Security-Technologies-Advisory-2009.0820.html (P))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14495    :   5.0 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42945 / PSS: 144468/Dnsmasq-Lack-Of-Free-Denial-Of-Service.html (D))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2017-14494    :   4.3 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42944 / PSS: 144471/Dnsmasq-Information-Leak.html (P))[0m
+[0;35m	dnsmasq             :   2.40        :   CVE-2009-2957     :   6.8 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 9617 / PSS: 80896/Core-Security-Technologies-Advisory-2009.0820.html (P))[0m
+
+[[0;32m+[0m][0;32m Found [0;31m[1m26[0;32m CVEs and [0;31m[1m8[0;32m exploits (including POC's) in [0;33mdnsmasq[0;32m with version [0;33m2.40[0;32m (source [0;33mSTAT/UEMU[0;32m).[0m[0m
+
+
+[[0;33m*[0m] Vulnerability details for [0;33mlinux_kernel[0m / version [0;33m2.6.36.4[0m / source [0;33mSTAT[0m:
+
+
+[0;31m	linux_kernel        :   2.6.36.4    :   CVE-2011-1495     :   7.2 (v2)  :   STAT           :   No exploit available[0m
+[0;32m	linux_kernel        :   2.6.36.4    :   CVE-2011-1172     :   2.1 (v2)  :   STAT           :   No exploit available[0m
+[0;33m	linux_kernel        :   2.6.36.4    :   CVE-2011-1090     :   4.9 (v2)  :   STAT           :   No exploit available[0m
+[0;32m	linux_kernel        :   2.6.36.4    :   CVE-2011-0726     :   2.1 (v2)  :   STAT           :   No exploit available[0m
+[0;32m	linux_kernel        :   2.6.36.4    :   CVE-2011-1170     :   2.1 (v2)  :   STAT           :   No exploit available[0m
+[0;32m	linux_kernel        :   2.6.36.4    :   CVE-2011-1171     :   2.1 (v2)  :   STAT           :   No exploit available[0m
+[0;33m	linux_kernel        :   2.6.36.4    :   CVE-2011-1577     :   4.9 (v2)  :   STAT           :   No exploit available[0m
+[0;33m	linux_kernel        :   2.6.36.4    :   CVE-2011-1494     :   6.9 (v2)  :   STAT           :   No exploit available[0m
+
+[[0;32m+[0m][0;32m Found [0;33m[1m8[0;32m CVEs and [0;33m[1m0[0;32m exploits (including POC's) in [0;33mlinux_kernel[0;32m with version [0;33m2.6.36.4[0;32m (source [0;33mSTAT[0;32m).[0m[0m
+
+
+
+[0;34m==>[0m [0;36mMinimal report of exploits and CVE's.[0m
+-----------------------------------------------------------------
+
+
+[[0;33m*[0m] CVE log file generated.
+
+
+[[0;33m*[0m] CVE details for [0;32mssleay 0.8.1[0m:
+
+CVE-1999-0007,CVE-2001-1141
+
+
+[[0;33m*[0m] CVE details for [0;32mlinux kernel 2.6.36.4[0m:
+
+CVE-2011-0726,CVE-2011-1090,CVE-2011-1170,CVE-2011-1171,CVE-2011-1172,CVE-2011-1494,CVE-2011-1495,CVE-2011-1577
+
+
+[[0;33m*[0m] CVE details for [0;32mbusybox 1.7.2[0m:
+
+CVE-2011-2716,CVE-2013-1813,CVE-2011-5325,CVE-2016-6301,CVE-2014-9645,CVE-2016-2148,CVE-2018-1000500,CVE-2016-2147,CVE-2017-16544,CVE-2015-9261,CVE-2019-5747,CVE-2018-1000517,CVE-2018-20679,CVE-2022-28391,CVE-2022-48174
+
+
+[[0;33m*[0m] CVE details for [0;32mpoint-to-point protocol 2.4.5[0m:
+
+CVE-2015-3310,CVE-2014-3158,CVE-2018-11574,CVE-2020-8597
+
+
+[[0;33m*[0m] CVE details for [0;32mntfs-3g 2012.1.15[0m:
+
+CVE-2017-0358,CVE-2021-33287,CVE-2021-33286,CVE-2021-35266,CVE-2021-33289,CVE-2021-33285,CVE-2021-35269,CVE-2007-5159,CVE-2021-35267,CVE-2021-35268,CVE-2021-39254,CVE-2021-39252,CVE-2021-39251,CVE-2021-39255,CVE-2021-39253,CVE-2021-39257,CVE-2021-39258,CVE-2021-39256,CVE-2021-39261,CVE-2021-39260,CVE-2021-39259,CVE-2021-39262,CVE-2021-39263,CVE-2021-46790,CVE-2022-30783,CVE-2022-30785,CVE-2022-30787,CVE-2022-30784,CVE-2022-30789,CVE-2022-30786,CVE-2022-30788,CVE-2022-40284
+
+
+[[0;33m*[0m] CVE details for [0;32mdnsmasq 2.40[0m:
+
+CVE-2009-2957,CVE-2009-2958,CVE-2012-3411,CVE-2013-0198,CVE-2015-8899,CVE-2017-14491,CVE-2017-13704,CVE-2015-3294,CVE-2017-14492,CVE-2017-14495,CVE-2017-14494,CVE-2019-14513,CVE-2017-14493,CVE-2017-15107,CVE-2019-14834,CVE-2017-14496,CVE-2020-25681,CVE-2020-25682,CVE-2020-25683,CVE-2020-25684,CVE-2020-25685,CVE-2020-25686,CVE-2021-3448,CVE-2020-25687,CVE-2022-0934,CVE-2023-28450
+
+
+
+
+[[0;33m*[0m] Minimal exploit summary file generated.
+
+
+[0;31m	point-to-point_proto:   2.4.5       :   CVE-2020-8597     :   9.8       :   UEMU           :   Exploit (PSS: 156662/pppd-2.4.8-Buffer-Overflow.html (P) 156802/pppd-2.4.8-Buffer-Overflow.html (P))[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2017-14491    :   9.8       :   STAT/UEMU      :   Exploit (EDB ID: 42941 / PSS: 144480/Dnsmasq-2-Byte-Heap-Based-Overflow.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2016-2148     :   9.8       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2017-16544    :   8.8       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 167552/Nexans-FTTO-GigaSwitch-Outdated-Components-Hardcoded-Backdoor.html (P))[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2017-14496    :   7.8 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42946 / PSS: 144462/Dnsmasq-Integer-Underflow.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2016-6301     :   7.8 (v2)  :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2017-14493    :   7.5 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42943 / PSS: 144473/Dnsmasq-Stack-Based-Overflow.html (P))[0m
+[0;31m	dnsmasq             :   2.40        :   CVE-2017-14492    :   7.5 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42942 / PSS: 144479/Dnsmasq-Heap-Based-Overflow.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2019-5747     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2016-2147     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2011-5325     :   7.5       :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;31m	ntfs-3g             :   2012.1.15   :   CVE-2017-0358     :   7.2 (v2)  :   UEMU           :   Exploit (EDB ID: 41240 / MSF: ntfs3g_priv_esc (L) / PSS: 141056/NTFS-3G-Illicit-Modprobe-Execution.html (P))[0m
+[0;31m	busybox             :   1.7.2       :   CVE-2013-1813     :   7.2 (v2)  :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2009-2957     :   6.8 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 9617 / PSS: 80896/Core-Security-Technologies-Advisory-2009.0820.html (P))[0m
+[0;33m	busybox             :   1.7.2       :   CVE-2011-2716     :   6.8 (v2)  :   STAT/UEMU      :   Exploit (PSS: 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;33m	busybox             :   1.7.2       :   CVE-2015-9261     :   5.5       :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P) 167552/Nexans-FTTO-GigaSwitch-Outdated-Components-Hardcoded-Backdoor.html (P) 153278/WAGO-852-Industrial-Managed-Switch-Series-Code-Execution-Hardcoded-Credentials.html (P))[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2017-14495    :   5.0 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42945 / PSS: 144468/Dnsmasq-Lack-Of-Free-Denial-Of-Service.html (D))[0m
+[0;33m	busybox             :   1.7.2       :   CVE-2018-20679    :   5.0 (v2)  :   STAT/UEMU      :   Exploit (PSS: 154361/Cisco-Device-Hardcoded-Credentials-GNU-glibc-BusyBox.html (P))[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2017-14494    :   4.3 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 42944 / PSS: 144471/Dnsmasq-Information-Leak.html (P))[0m
+[0;33m	dnsmasq             :   2.40        :   CVE-2009-2958     :   4.3 (v2)  :   STAT/UEMU      :   Exploit (EDB ID: 9617 / PSS: 80896/Core-Security-Technologies-Advisory-2009.0820.html (P))[0m
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Exploitability notes:
+    [0;33mR[0m - remote exploits
+    [0;33mL[0m - local exploits
+    [0;33mD[0m - DoS exploits
+    [0;33mP[0m - PoC code found on Packetstormsecurity (unknown exploit vector)
+    [0;33mS[0m - PoC code found on Snyk vulnerability database (unknown exploit vector)
+    [0;33mX[0m - Vulnerability is known as exploited
+    [0;33mV[0m - Kernel vulnerability was verified from module s26
+
+
+
+
+[[0;33m*[0m] Source notes:
+    [0;33mSTAT[0m - Details found by static modules (S06, S09, S24, S25)
+    [0;33mPACK[0m - Details found by package management environment (S08)
+    [0;33mUEMU[0m - Details found by dynamic user-mode emulation modules (S115, S116)
+    [0;33mSEMU[0m - Details found by dynamic system emulation modules (L*)
+
+-----------------------------------------------------------------
+

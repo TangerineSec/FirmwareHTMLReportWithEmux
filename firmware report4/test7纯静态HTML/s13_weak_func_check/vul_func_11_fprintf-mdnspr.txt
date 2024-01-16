@@ -1,0 +1,234 @@
+[[0;33m*[0m] Binary protection state of [0;33mmdnspr[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mmdnspr[0m
+
+    9168:	e0530000 	subs	r0, r3, r0
+    916c:	13a00001 	movne	r0, #1
+    9170:	e3500000 	cmp	r0, #0
+    9174:	0a000014 	beq	91cc <SocketDataReady+0x198>
+    9178:	e59f40c0 	ldr	r4, [pc, #192]	; 9240 <SocketDataReady+0x20c>
+    917c:	e594301c 	ldr	r3, [r4, #28]
+    9180:	e5941020 	ldr	r1, [r4, #32]
+    9184:	e5942018 	ldr	r2, [r4, #24]
+    9188:	e2830001 	add	r0, r3, #1
+    918c:	e2811001 	add	r1, r1, #1
+    9190:	e0010091 	mul	r1, r1, r0
+    9194:	e2822001 	add	r2, r2, #1
+    9198:	e5842018 	str	r2, [r4, #24]
+    919c:	e1520081 	cmp	r2, r1, lsl #1
+    91a0:	da00001f 	ble	9224 <SocketDataReady+0x1f0>
+    91a4:	e59f1098 	ldr	r1, [pc, #152]	; 9244 <SocketDataReady+0x210>
+    91a8:	e58d2000 	str	r2, [sp]
+    91ac:	e0822003 	add	r2, r2, r3
+    91b0:	e5910000 	ldr	r0, [r1]
+    91b4:	e59f108c 	ldr	r1, [pc, #140]	; 9248 <SocketDataReady+0x214>
+[31m    91b8:	ebfffec1 	bl	8cc4 <fprintf@plt>[0m
+    91bc:	e3a03000 	mov	r3, #0
+    91c0:	e584301c 	str	r3, [r4, #28]
+--
+
+000092c0 <ClearInterfaceList>:
+    92c0:	e92d40f8 	push	{r3, r4, r5, r6, r7, lr}
+    92c4:	e2505000 	subs	r5, r0, #0
+    92c8:	1a000012 	bne	9318 <ClearInterfaceList+0x58>
+    92cc:	e59f006c 	ldr	r0, [pc, #108]	; 9340 <ClearInterfaceList+0x80>
+    92d0:	e3a02fb9 	mov	r2, #740	; 0x2e4
+    92d4:	e59f1068 	ldr	r1, [pc, #104]	; 9344 <ClearInterfaceList+0x84>
+    92d8:	e59f3068 	ldr	r3, [pc, #104]	; 9348 <ClearInterfaceList+0x88>
+    92dc:	ebfffedb 	bl	8e50 <__assert@plt>
+    92e0:	e1a00005 	mov	r0, r5
+    92e4:	e1a01004 	mov	r1, r4
+    92e8:	e3a02000 	mov	r2, #0
+    92ec:	eb00627e 	bl	21cec <mDNS_DeregisterInterface>
+    92f0:	e5973024 	ldr	r3, [r7, #36]	; 0x24
+    92f4:	e3530000 	cmp	r3, #0
+    92f8:	da000003 	ble	930c <ClearInterfaceList+0x4c>
+    92fc:	e5960000 	ldr	r0, [r6]
+    9300:	e59f1044 	ldr	r1, [pc, #68]	; 934c <ClearInterfaceList+0x8c>
+    9304:	e5942fd8 	ldr	r2, [r4, #4056]	; 0xfd8
+[31m    9308:	ebfffe6d 	bl	8cc4 <fprintf@plt>[0m
+    930c:	e1a00004 	mov	r0, r4
+    9310:	ebffffce 	bl	9250 <FreePosixNetworkInterface>
+--
+    99f8:	ebfffea3 	bl	948c <SetupSocket.clone.0>
+    99fc:	e2504000 	subs	r4, r0, #0
+    9a00:	1a000012 	bne	9a50 <SetupOneInterface+0x1e0>
+    9a04:	e1a00007 	mov	r0, r7
+    9a08:	e1a01006 	mov	r1, r6
+    9a0c:	e3a02000 	mov	r2, #0
+    9a10:	eb005fa3 	bl	218a4 <mDNS_RegisterInterface>
+    9a14:	e2504000 	subs	r4, r0, #0
+    9a18:	1a00000c 	bne	9a50 <SetupOneInterface+0x1e0>
+    9a1c:	e59f308c 	ldr	r3, [pc, #140]	; 9ab0 <SetupOneInterface+0x240>
+    9a20:	e5932020 	ldr	r2, [r3, #32]
+    9a24:	e2822001 	add	r2, r2, #1
+    9a28:	e5832020 	str	r2, [r3, #32]
+    9a2c:	e5933024 	ldr	r3, [r3, #36]	; 0x24
+    9a30:	e3530000 	cmp	r3, #0
+    9a34:	da000008 	ble	9a5c <SetupOneInterface+0x1ec>
+    9a38:	e59f3074 	ldr	r3, [pc, #116]	; 9ab4 <SetupOneInterface+0x244>
+    9a3c:	e59f1074 	ldr	r1, [pc, #116]	; 9ab8 <SetupOneInterface+0x248>
+    9a40:	e5962fd8 	ldr	r2, [r6, #4056]	; 0xfd8
+    9a44:	e5930000 	ldr	r0, [r3]
+[31m    9a48:	ebfffc9d 	bl	8cc4 <fprintf@plt>[0m
+    9a4c:	ea000002 	b	9a5c <SetupOneInterface+0x1ec>
+    9a50:	e3a08000 	mov	r8, #0
+--
+    a628:	e3500000 	cmp	r0, #0
+    a62c:	05865000 	streq	r5, [r6]
+    a630:	0a000003 	beq	a644 <mDNSPlatformInit+0x1c0>
+    a634:	ebfff9f6 	bl	8e14 <__errno_location@plt>
+    a638:	e5905000 	ldr	r5, [r0]
+    a63c:	e3550000 	cmp	r5, #0
+    a640:	1a000005 	bne	a65c <mDNSPlatformInit+0x1d8>
+    a644:	e5960000 	ldr	r0, [r6]
+    a648:	e1a02006 	mov	r2, r6
+    a64c:	e59f1070 	ldr	r1, [pc, #112]	; a6c4 <mDNSPlatformInit+0x240>
+    a650:	ebffff61 	bl	a3dc <mDNSPosixAddFDToEventLoop>
+    a654:	e2505000 	subs	r5, r0, #0
+    a658:	0a00000d 	beq	a694 <mDNSPlatformInit+0x210>
+    a65c:	e59f3064 	ldr	r3, [pc, #100]	; a6c8 <mDNSPlatformInit+0x244>
+    a660:	e5936000 	ldr	r6, [r3]
+    a664:	ebfff975 	bl	8c40 <getpid@plt>
+    a668:	e59f105c 	ldr	r1, [pc, #92]	; a6cc <mDNSPlatformInit+0x248>
+    a66c:	e1a02000 	mov	r2, r0
+    a670:	e1a03005 	mov	r3, r5
+    a674:	e1a00006 	mov	r0, r6
+[31m    a678:	ebfff991 	bl	8cc4 <fprintf@plt>[0m
+    a67c:	ea000004 	b	a694 <mDNSPlatformInit+0x210>
+    a680:	e3e00801 	mvn	r0, #65536	; 0x10000
+--
+    ae64:	1affffdf 	bne	ade8 <recvfrom_flags+0xd8>
+    ae68:	e1a00009 	mov	r0, r9
+    ae6c:	e28dd028 	add	sp, sp, #40	; 0x28
+    ae70:	e28ddb01 	add	sp, sp, #1024	; 0x400
+    ae74:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+    ae78:	00023deb 	.word	0x00023deb
+    ae7c:	00023f52 	.word	0x00023f52
+    ae80:	00023f38 	.word	0x00023f38
+
+0000ae84 <WriteLogMsg>:
+    ae84:	e59f3054 	ldr	r3, [pc, #84]	; aee0 <WriteLogMsg+0x5c>
+    ae88:	e92d4070 	push	{r4, r5, r6, lr}
+    ae8c:	e1a04001 	mov	r4, r1
+    ae90:	e5933000 	ldr	r3, [r3]
+    ae94:	e3530000 	cmp	r3, #0
+    ae98:	0a000007 	beq	aebc <WriteLogMsg+0x38>
+    ae9c:	e59f5040 	ldr	r5, [pc, #64]	; aee4 <WriteLogMsg+0x60>
+    aea0:	e1a02004 	mov	r2, r4
+    aea4:	e59f103c 	ldr	r1, [pc, #60]	; aee8 <WriteLogMsg+0x64>
+    aea8:	e5950000 	ldr	r0, [r5]
+[31m    aeac:	ebfff784 	bl	8cc4 <fprintf@plt>[0m
+    aeb0:	e5950000 	ldr	r0, [r5]
+    aeb4:	e8bd4070 	pop	{r4, r5, r6, lr}
+--
+   23230:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   23234:	e24dddc3 	sub	sp, sp, #12480	; 0x30c0
+   23238:	e1a07000 	mov	r7, r0
+   2323c:	e24dd03c 	sub	sp, sp, #60	; 0x3c
+   23240:	e1a05001 	mov	r5, r1
+   23244:	da00012c 	ble	236fc <main+0x4d0>
+   23248:	e3a02000 	mov	r2, #0
+   2324c:	e59f0548 	ldr	r0, [pc, #1352]	; 2379c <main+0x570>
+   23250:	e59f1548 	ldr	r1, [pc, #1352]	; 237a0 <main+0x574>
+   23254:	e1a03002 	mov	r3, r2
+   23258:	e58d2000 	str	r2, [sp]
+   2325c:	e58d2004 	str	r2, [sp, #4]
+   23260:	e58d2008 	str	r2, [sp, #8]
+   23264:	ebfffe90 	bl	22cac <mDNS_Init>
+   23268:	e2506000 	subs	r6, r0, #0
+   2326c:	0a000005 	beq	23288 <main+0x5c>
+   23270:	e59f352c 	ldr	r3, [pc, #1324]	; 237a4 <main+0x578>
+   23274:	e1a02006 	mov	r2, r6
+   23278:	e59f1528 	ldr	r1, [pc, #1320]	; 237a8 <main+0x57c>
+   2327c:	e5930000 	ldr	r0, [r3]
+[31m   23280:	ebff968f 	bl	8cc4 <fprintf@plt>[0m
+   23284:	ea000140 	b	2378c <main+0x560>
+   23288:	e3a00002 	mov	r0, #2
+--
+   2339c:	ebff9693 	bl	8df0 <gethostbyname@plt>
+   233a0:	e3500000 	cmp	r0, #0
+   233a4:	0a000005 	beq	233c0 <main+0x194>
+   233a8:	e5903010 	ldr	r3, [r0, #16]
+   233ac:	e28d1dc3 	add	r1, sp, #12480	; 0x30c0
+   233b0:	e2811038 	add	r1, r1, #56	; 0x38
+   233b4:	e5933000 	ldr	r3, [r3]
+   233b8:	e5933000 	ldr	r3, [r3]
+   233bc:	e7813004 	str	r3, [r1, r4]
+   233c0:	e59fc3fc 	ldr	ip, [pc, #1020]	; 237c4 <main+0x598>
+   233c4:	e28d2dc3 	add	r2, sp, #12480	; 0x30c0
+   233c8:	e2822038 	add	r2, r2, #56	; 0x38
+   233cc:	e792400c 	ldr	r4, [r2, ip]
+   233d0:	e3740001 	cmn	r4, #1
+   233d4:	1a000006 	bne	233f4 <main+0x1c8>
+   233d8:	e59f33c4 	ldr	r3, [pc, #964]	; 237a4 <main+0x578>
+   233dc:	e1a06004 	mov	r6, r4
+   233e0:	e59f13e0 	ldr	r1, [pc, #992]	; 237c8 <main+0x59c>
+   233e4:	e5952004 	ldr	r2, [r5, #4]
+   233e8:	e5930000 	ldr	r0, [r3]
+[31m   233ec:	ebff9634 	bl	8cc4 <fprintf@plt>[0m
+   233f0:	ea0000e5 	b	2378c <main+0x560>
+   233f4:	e28d8c17 	add	r8, sp, #5888	; 0x1700
+--
+   236c0:	e59f00d4 	ldr	r0, [pc, #212]	; 2379c <main+0x570>
+   236c4:	ebff9c4b 	bl	a7f8 <mDNSPosixRunEventLoopOnce>
+   236c8:	e1a00004 	mov	r0, r4
+   236cc:	e3a01002 	mov	r1, #2
+   236d0:	ebff95cc 	bl	8e08 <sigismember@plt>
+   236d4:	e3500000 	cmp	r0, #0
+   236d8:	1a000004 	bne	236f0 <main+0x4c4>
+   236dc:	e1a00004 	mov	r0, r4
+   236e0:	e3a0100f 	mov	r1, #15
+   236e4:	ebff95c7 	bl	8e08 <sigismember@plt>
+   236e8:	e3500000 	cmp	r0, #0
+   236ec:	0affffed 	beq	236a8 <main+0x47c>
+   236f0:	e59f00a4 	ldr	r0, [pc, #164]	; 2379c <main+0x570>
+   236f4:	ebfffddc 	bl	22e6c <mDNS_Close>
+   236f8:	ea000023 	b	2378c <main+0x560>
+   236fc:	e59f40a0 	ldr	r4, [pc, #160]	; 237a4 <main+0x578>
+   23700:	e3e06000 	mvn	r6, #0
+   23704:	e5952000 	ldr	r2, [r5]
+   23708:	e59f10d0 	ldr	r1, [pc, #208]	; 237e0 <main+0x5b4>
+   2370c:	e5940000 	ldr	r0, [r4]
+[31m   23710:	ebff956b 	bl	8cc4 <fprintf@plt>[0m
+   23714:	e5941000 	ldr	r1, [r4]
+   23718:	e59f00c4 	ldr	r0, [pc, #196]	; 237e4 <main+0x5b8>
+   2371c:	ebff95d1 	bl	8e68 <fputs@plt>
+   23720:	e5941000 	ldr	r1, [r4]
+   23724:	e59f00bc 	ldr	r0, [pc, #188]	; 237e8 <main+0x5bc>
+   23728:	ebff95ce 	bl	8e68 <fputs@plt>
+   2372c:	e5941000 	ldr	r1, [r4]
+   23730:	e59f00b4 	ldr	r0, [pc, #180]	; 237ec <main+0x5c0>
+   23734:	ebff95cb 	bl	8e68 <fputs@plt>
+   23738:	e5941000 	ldr	r1, [r4]
+   2373c:	e59f00ac 	ldr	r0, [pc, #172]	; 237f0 <main+0x5c4>
+   23740:	ebff95c8 	bl	8e68 <fputs@plt>
+   23744:	e5941000 	ldr	r1, [r4]
+   23748:	e59f00a4 	ldr	r0, [pc, #164]	; 237f4 <main+0x5c8>
+   2374c:	ebff95c5 	bl	8e68 <fputs@plt>
+   23750:	e5941000 	ldr	r1, [r4]
+   23754:	e59f009c 	ldr	r0, [pc, #156]	; 237f8 <main+0x5cc>
+   23758:	ebff95c2 	bl	8e68 <fputs@plt>
+   2375c:	e59f1098 	ldr	r1, [pc, #152]	; 237fc <main+0x5d0>
+   23760:	e5952000 	ldr	r2, [r5]
+   23764:	e5940000 	ldr	r0, [r4]
+[31m   23768:	ebff9555 	bl	8cc4 <fprintf@plt>[0m
+   2376c:	e59f108c 	ldr	r1, [pc, #140]	; 23800 <main+0x5d4>
+   23770:	e5952000 	ldr	r2, [r5]
+   23774:	e5940000 	ldr	r0, [r4]
+[31m   23778:	ebff9551 	bl	8cc4 <fprintf@plt>[0m
+   2377c:	e5940000 	ldr	r0, [r4]
+   23780:	e59f107c 	ldr	r1, [pc, #124]	; 23804 <main+0x5d8>
+   23784:	e5952000 	ldr	r2, [r5]
+[31m   23788:	ebff954d 	bl	8cc4 <fprintf@plt>[0m
+   2378c:	e1a00006 	mov	r0, r6
+   23790:	e28dd0fc 	add	sp, sp, #252	; 0xfc
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m11[0m times [0;33mmdnspr[0m
+

@@ -1,0 +1,283 @@
+#!/bin/sh 
+#set -x
+
+######### 说明  #########################
+#   /usr/local/app/ReadInstallPlugin ALL  查看所有已经安装的信息
+#	/usr/local/app/ReadInstallPlugin BASE 查看所有已经安装的信息，但是如果U盘未挂载，则不返回信息
+#	/usr/local/app/ReadInstallPlugin NEED Version Name ... ...   查看所有插件 指定内容的信息
+#   /usr/local/app/ReadInstallPlugin NEEDONE 2 Version Name ... ... 查看指 定插件 指定内容的信息
+
+#exec 1>>/tmp/1 
+#exec 2>>/tmp/1
+
+Parameter_one=$1
+Parameter_two=$2
+Parameter_num=$#
+Parameter_all=$*
+Path=""
+ReturnValue=""
+AppID=""
+AppName=""
+AppVersion=""
+AppState=""
+AllOfficeAppFile=""
+xRouterLog 0 "ReadInstallPlug" - "`basename $0` ${Parameter_all}."
+
+GetAppReturn()
+{
+	local EachFile=""
+	local EachValue=""
+	local AllFile=""
+	local Size=""
+	local InstallPath=""
+	local L_Parameter=$1
+	local L_Path=$2
+	
+	local isOpt=`echo $L_Path | grep opt`
+	
+	cd ${L_Path}
+	if  [ $? -ne 0 ];
+	then
+		return
+	fi
+	
+	OfficeAppPath="/usr/local/app/appinstalled/"
+	AllOfficeAppFile=`ls $OfficeAppPath`
+	
+	AllFile=`ls ./`
+	for EachFile in ${AllFile}
+	do
+		
+		capbility=`/usr/local/localshell/getcapability`
+	
+		if [ "$capbility" != "RY-1" ]; then
+		
+			if [ ! -z ${isOpt} ];then
+			
+				for EachOfficeAppFile in ${AllOfficeAppFile}
+				do 
+						if [ ${EachFile} = "$EachOfficeAppFile" ];then
+							
+							isOfficeApp="YES"
+							break
+						fi
+				done
+				
+				if [ ${isOfficeApp} = "YES" ];then
+					isOfficeApp="NO"
+					continue
+				fi
+			fi
+		fi
+	
+		
+		EachValue=""
+		AppID=`cat ${EachFile} | grep "plugin_ID" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		AppVersion=`cat ${EachFile} | grep "plugin_VersionName"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		InstallPath=`cat ${EachFile} | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+	
+		if  [ "BASE" == "${L_Parameter}" ];
+		then
+			if [ ! -d "$InstallPath" ]; then 
+				#echo "Dir not exit $InstallPath"
+				xRouterLog 1 "ReadInstallPlug" "GetAppReturn" "${InstallPath} is not exist."
+				continue
+			fi 
+		  	InstallAppInfo=`printf "%s/appinfo" "$InstallPath"`
+			#echo "Dir exit $InstallAppInfo "
+	
+			InAppID=`cat ${InstallAppInfo} | grep "plugin_ID" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+			
+			if  [ "$AppID"  -ne  "$InAppID" ];	then 
+				#echo "ID not exit $AppID $InAppID"
+				xRouterLog 1 "ReadInstallPlug" "GetAppReturn" "$AppID and $InAppID not equal."
+				continue
+			fi
+			
+			InAppVersion=`cat ${InstallAppInfo} | grep "plugin_VersionName" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+			
+			if  [ "$AppVersion"  -ne  "$InAppVersion" ];	then 
+				#echo "Version not exit $AppVersion $InAppVersion"
+				xRouterLog 1 "ReadInstallPlug" "GetAppReturn" "$AppVersion and $InAppVersion not equal."
+				continue
+			fi	
+			
+		fi 
+
+		AppName=`cat ${EachFile} | grep "plugin_Name"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		AppState=`cat ${EachFile} | grep "plugin_State"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		Size=`cat ${EachFile} | grep "plugin_Space"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+		
+		AppName=`echo ${AppName//,/，}`
+		
+		EachValue="${AppID},${AppName},${AppVersion},${AppState},${Size},${InstallPath}"
+		if [ "${ReturnValue}" == "" ];then
+			ReturnValue="${EachValue},${EachFile}"
+		else
+			ReturnValue="${ReturnValue}""////""${EachValue},${EachFile}"		
+		fi
+	done
+}
+
+if [ ${Parameter_num} -eq 0 ];then
+	xRouterLog 2 "ReadInstallPlug" "-" "Parameter Err."
+	exit 1
+elif [ ${Parameter_num} -eq 1 ];then
+	if [ "$Parameter_one" != "ALL" ];then
+		if [ "$Parameter_one" != "BASE" ];then
+			xRouterLog 2 "ReadInstallPlug" "-" "Parameter error BASE."
+			exit 1
+		else
+			GetAppReturn $Parameter_one "/usr/local/app/appinstalled/"
+			GetAppReturn $Parameter_one	"/opt/app/appinstalled/"		
+		fi
+	else
+		GetAppReturn $Parameter_one "/usr/local/app/appinstalled/"
+		GetAppReturn $Parameter_one	"/opt/app/appinstalled/"		
+	fi
+elif [ ${Parameter_num} -ge 2 ];then
+	if [ "$Parameter_one" == "NEEDONE" ];then
+		
+		local EachValue=""
+		local AllFile=""
+		local TempValue=""
+		local TempParm=""
+		
+		OfficeAppPath="/usr/local/app/appinstalled/"
+		AllOfficeAppFile=`ls $OfficeAppPath`
+		
+		for EachOfficeAppFile in ${AllOfficeAppFile}
+		do 
+			if [ ${Parameter_two} = "$EachOfficeAppFile" ];then
+					isOfficeApp="YES"
+					break
+			fi
+		done
+		
+		if [ ${isOfficeApp} = "YES" ];then
+			isOfficeApp="NO"
+			Path="/usr/local/app/appinstalled/"
+		else
+			Path="/opt/app/appinstalled/"
+			mkdir -p /opt/app/appinstalled
+		fi
+		
+		cd ${Path}
+		
+		for TempParm in ${Parameter_all}
+		do
+			if [ "${TempParm}" == "NEEDONE" ];then
+				continue
+			elif [ "${TempParm}" == "${Parameter_two}" ];then
+				continue
+			fi
+			
+			TempValue=`cat ${Parameter_two} | grep "plugin_${TempParm}" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+			if [ "${TempValue}" == "" ];then
+				xRouterLog 2 "ReadInstallPlug" "-" "Parameter error.1"
+				exit 1
+			fi
+			
+			TempValue=`echo ${TempValue//,/，}`
+			
+			if [ "${EachValue}" == "" ];then
+				EachValue="$TempValue"
+			else
+				EachValue="$EachValue,$TempValue"
+			fi
+		done
+		if [ "${ReturnValue}" == "" ];then
+			ReturnValue="${EachValue},${Parameter_two}"
+		else
+			ReturnValue="${ReturnValue}""////""${EachValue},${Parameter_two}"		
+		fi
+	elif [ "$Parameter_one" == "NEED" ];then
+		local EachFile=""
+		local EachValue=""
+		local AllFile=""
+		local TempValue=""
+		local TempParm=""
+		
+		#查询/usr/local/app/appinstalled/ 目录
+		Path="/usr/local/app/appinstalled/"
+		cd ${Path}
+		AllFile=`ls ./`
+		for EachFile in ${AllFile}
+		do
+			local FirstIn="YES"
+			EachValue=""
+			for TempParm in ${Parameter_all}
+			do
+				if [ "${FirstIn}" == "YES" ];then
+					FirstIn="NO"
+					continue					
+				fi
+
+				TempValue=`cat ${EachFile} | grep "plugin_${TempParm}" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+				if [ "${TempValue}" == "" ];then
+					xRouterLog 2 "ReadInstallPlug" "-" "Parameter error.2"
+					exit 1
+				fi
+				
+				TempValue=`echo ${TempValue//,/，}`
+				
+				if [ "${EachValue}" == "" ];then
+					EachValue="$TempValue"
+				else
+					EachValue="$EachValue,$TempValue"
+				fi
+			done
+			if [ "${ReturnValue}" == "" ];then
+				ReturnValue="${EachValue},${EachFile}"
+			else
+				ReturnValue="${ReturnValue}""////""${EachValue},${EachFile}"		
+			fi
+		done
+		
+		#查询/opt/app/appinstalled/ 目录
+		Path="/opt/app/appinstalled/"
+		cd ${Path}
+		AllFile=`ls ./`
+		for EachFile in ${AllFile}
+		do
+			local FirstIn="YES"
+			EachValue=""
+			for TempParm in ${Parameter_all}
+			do
+				if [ "${FirstIn}" == "YES" ];then
+					FirstIn="NO"
+					continue					
+				fi
+
+				TempValue=`cat ${EachFile} | grep "plugin_${TempParm}" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+				if [ "${TempValue}" == "" ];then
+					xRouterLog 2 "ReadInstallPlug" "-" "Parameter error.2"
+					exit 1
+				fi
+				
+				TempValue=`echo ${TempValue//,/，}`
+				
+				if [ "${EachValue}" == "" ];then
+					EachValue="$TempValue"
+				else
+					EachValue="$EachValue,$TempValue"
+				fi
+			done
+			if [ "${ReturnValue}" == "" ];then
+				ReturnValue="${EachValue},${EachFile}"
+			else
+				ReturnValue="${ReturnValue}""////""${EachValue},${EachFile}"		
+			fi
+		done		
+	fi	
+fi
+
+if [ "${ReturnValue}" == "" ];then
+	xRouterLog 2 "ReadInstallPlug" - "ReturnValue is Null."
+	exit 0
+fi
+
+xRouterLog 0 "ReadInstallPlug" - "$ReturnValue."
+echo $ReturnValue
+exit 0
+

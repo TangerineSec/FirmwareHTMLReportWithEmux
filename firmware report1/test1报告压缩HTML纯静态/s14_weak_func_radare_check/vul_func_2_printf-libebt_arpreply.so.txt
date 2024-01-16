@@ -1,0 +1,82 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibebt_arpreply.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mlibebt_arpreply.so[0m
+
+lui gp, 2
+addiu gp, gp, -0x7aa8
+addu gp, gp, t9
+lw v0, -0x7fe8(gp)
+addiu v1, zero, -2
+sb zero, 0x24(a0)
+sw v1, 0x2c(a0)
+sb zero, 0x25(a0)
+sb zero, 0x26(a0)
+sb zero, 0x27(a0)
+sb zero, 0x28(a0)
+sb zero, 0x29(a0)
+jr ra
+sw zero, 0xd60(v0)
+lui gp, 2
+addiu gp, gp, -0x7ae0
+addu gp, gp, t9
+lw a0, -0x7fe4(gp)
+lw t9, -sym.imp.puts(gp)
+jr t9
+addiu a0, a0, 0xaa0
+lui gp, 2
+addiu gp, gp, -0x7afc
+addu gp, gp, t9
+lw a0, -0x7fe4(gp)
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu sp, sp, -0x20
+sw gp, 0x10(sp)
+sw ra, 0x1c(sp)
+sw s0, 0x18(sp)
+addiu a0, a0, 0xb80
+jalr t9
+move s0, a1
+lw gp, 0x10(sp)
+lw t9, -sym.imp.ebt_print_mac(gp)
+jalr t9
+addiu a0, s0, 0x24
+lw v0, 0x2c(s0)
+addiu v1, zero, -2
+beq v0, v1, 0x87c
+lw gp, 0x10(sp)
+lw v1, -0x7fd0(gp)
+nor v0, zero, v0
+sll v0, v0, 2
+addu v0, v1, v0
+lw a0, -0x7fe4(gp)
+lw ra, 0x1c(sp)
+lw s0, 0x18(sp)
+lw a1, (v0)
+[31mlw t9, -sym.imp.printf(gp)[0m
+addiu a0, a0, 0xb90
+jr t9
+addiu sp, sp, 0x20
+lw ra, 0x1c(sp)
+lw s0, 0x18(sp)
+jr ra
+addiu sp, sp, 0x20
+lui gp, 2
+addiu gp, gp, -0x7b8c
+addu gp, gp, t9
+lhu v0, 8(a0)
+addiu sp, sp, -0x28
+sw gp, 0x10(sp)
+addiu v1, zero, 0x806
+sw ra, 0x24(sp)
+bne v0, v1, 0x930
+lw t0, 0x38(sp)
+lw v0, 4(a0)
+andi v0, v0, 1
+bnez v0, 0x930
+
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m2[0m times [0;33mlibebt_arpreply.so[0m
+

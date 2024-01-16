@@ -1,0 +1,56 @@
+#!/bin/sh
+#set -x
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_Parameter_two=$2
+G_Parameter_all=$*
+G_ValueLast=
+G_InstallStausFile="/usr/local/app/installstatus/installstatus"  #用户存放app的安装状态
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 2 ];then
+		xRouterLog 2 "UpdateInstallStatus" "FunParamLegal" "Parameter Err."
+		exit 100
+	fi
+}
+
+UpdateInstallStatus()
+{
+	local TmpStaus=""
+	local TmpLine=""
+	local TmpNextLine=""
+	
+	TmpStaus=`cat ${G_InstallStausFile} | grep "app_${G_Parameter_one}" |awk -F ":" '{printf $2}' |awk -F " " '{printf $1}'`
+	if [ "${TmpStaus}" == "" ];then
+		echo "app_${G_Parameter_one}:${G_Parameter_two}" >> ${G_InstallStausFile}
+		xRouterLog 0 "UpdateInstallStatus" "UpdateInstallStatus" "app_${G_Parameter_one}:${G_Parameter_two}."
+		exit 0
+	else
+		#找到指定的行号
+		TmpLine=`sed = ${G_InstallStausFile}|sed 'N;s/\n/:/' |grep "app_${G_Parameter_one}" | awk -F ":" '{printf $1}'`
+		
+
+		num=`printf "%d" ${TmpLine}`
+		TmpNextLine=`expr ${num} + 1`
+
+		#在当前行插入一个新行，内容为 app_${G_Parameter_one}:$G_Parameter_two} 
+		sed -ri ''${TmpLine}'i\'app_${G_Parameter_one}:${G_Parameter_two} ${G_InstallStausFile}
+
+		#删除插入后的下一行
+		sed -ri ''${TmpNextLine}'d' ${G_InstallStausFile}
+		
+		xRouterLog 0 "UpdateInstallStatus" "UpdateInstallStatus" "app_${G_Parameter_one}:${G_Parameter_two}."
+		exit 0	
+	fi	
+}
+
+xRouterLog 0 "UpdateInstallStatus" "-" "`basename $0` ${G_Parameter_all}."
+
+#检查参数合法性
+FunParamLegal
+#更新安装状态
+UpdateInstallStatus

@@ -1,0 +1,2480 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mntfs-3g[0m
+
+cmp fp, sl
+beq 0xaaec
+mov r0, r5
+bl sym.strlen
+add sl, r0, 0x14
+mov r7, r0
+mov r0, sl
+bl sym.ntfs_malloc
+subs r8, r0, 0
+beq 0xab88
+ldr ip, [r6, 4]
+mov r1, sl
+ldr lr, str..ntfs_3g_
+mov r3, r5
+ldr r2, str._s_s_010d
+add r7, r7, 0x13
+add ip, ip, 1
+str ip, [r6, 4]
+str ip, [sp, 4]
+str lr, [sp]
+[31mbl sym.__GI_snprintf[0m
+cmp r0, r7
+mov ip, r0
+--
+bl sym.ntfs_volume_error
+subs r6, r0, 0
+bne 0xc668
+ldr r3, [r4]
+ldr r2, [r3, 0x5c]
+cmp r2, 0
+beq 0xc830
+ldr r3, [r3]
+add r0, r0, 0x1e
+add r7, sp, 0xfc
+ldr r8, [r3, 0x18]
+bl sym.sysconf
+cmp r0, 0
+mov r1, 0x40
+movle r0, 0x1000
+ldr r2, str._blkdev_blksize_u
+cmp r0, r8
+movlo r3, r0
+movhs r3, r8
+mov r0, r7
+[31mbl sym.__GI_snprintf[0m
+add r0, sp, 0x154
+mov r1, r7
+--
+mov r0, r4
+pop {r3, r4, r5, pc}
+ldr r3, obj.stderr
+mov r1, 1
+mov r2, 0x2e
+ldr r0, str.fuse:_failed_to_allocate_thread_specific_data_n
+ldr r3, [r3]
+bl sym.fwrite
+bl sym.abort
+andeq fp, r8, r4, ror 28
+andeq fp, r8, r4, ror 23
+muleq r6, ip, r1
+cmp r2, 0
+push {r4, lr}
+mov r4, r0
+bne 0xe3b0
+ldr r3, obj.stderr
+mov r2, 0xa
+ldr r1, str._____o_hard_remove_________immediate_removal__dont_hide_files__n_____o_use_ino_____________let_filesystem_set_inode_numbers_n_____o_readdir_ino_________try_to_fill_in_d_ino_in_readdir_n_____o_direct_io___________use_direct_I_O_n_____o_kernel_cache________cache_files_in_kernel_n_____o_umaskM_____________set_file_permissions__octal__n_____o_uidN_______________set_file_owner_n_____o_gidN_______________set_file_group_n_____o_entry_timeoutT_____cache_timeout_for_names__1.0s__n_____o_negative_timeoutT__cache_timeout_for_deleted_names__0.0s__n_____o_attr_timeoutT______cache_timeout_for_attributes__1.0s__n_____o_ac_attr_timeoutT___auto_cache_timeout_for_attributes__attr_timeout__n_____o_intr________________allow_requests_to_be_interrupted_n_____o_intr_signalNUM_____signal_to_send_on_interrupt___i__n_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mov r3, 1
+str r3, [r4, 0x60]
+--
+cmp r3, 0
+bne 0xe6f4
+b 0xe704
+add r1, r3, 4
+ldr r3, [r3, 4]
+cmp r3, 0
+beq 0xe704
+cmp r4, r3
+bne 0xe6e4
+ldr r3, [r4, 4]
+str r3, [r1]
+mov r0, 0
+bl sym.free
+mov r0, r4
+pop {r4, r5, r6, lr}
+b sym.free
+ldr r0, obj.stderr
+ldr r1, str.delete:__llu_n
+ldr r2, [r4, 8]
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0xe6b4
+ldr r0, str.node__refctr___0
+--
+ldr r0, [r4, 0x18]
+bl sym.free
+str r6, [r4, 0x18]
+str r6, [r4, 0x14]
+pop {r4, r5, r6, pc}
+ldrb r1, [r3, 1]
+add r3, r3, 1
+cmp r1, 0
+beq 0xe7a0
+add ip, r1, r2, lsl 5
+ldrb r1, [r3, 1]!
+rsb r2, r2, ip
+cmp r1, 0
+bne 0xe81c
+b 0xe7a0
+ldr r0, obj.stderr
+mov r3, 0
+ldr r1, str.fuse_internal_error:_unable_to_unhash_node:__llu_n
+ldr r2, [r4, 8]
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+bl sym.abort
+andeq fp, r8, r4, ror 23
+--
+mov r4, r2
+bl sym.__aeabi_uidivmod
+ldr r0, [r5, r1, lsl 2]
+cmp r0, 0
+beq 0xe8a0
+ldr r3, [r0, 8]
+cmp r4, r3
+bne 0xe894
+pop {r3, r4, r5, pc}
+ldr r3, [r0, 8]
+cmp r4, r3
+popeq {r3, r4, r5, pc}
+ldr r0, [r0, 4]
+cmp r0, 0
+bne 0xe888
+ldr r0, obj.stderr
+mov r2, r4
+ldr r1, str.fuse_internal_error:_node__llu_not_found_n
+mov r3, 0
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+bl sym.abort
+andeq fp, r8, r4, ror 23
+--
+b sym.forget_node
+mov r1, r2
+pop {r4, r5, r6, lr}
+b sym.reply_err
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0xc
+mov r7, r0
+mov r6, r1
+mov r5, r2
+bl sym.fuse_req_userdata
+ldr r3, [r0, 0x8c]
+mov r4, r0
+cmp r3, 0
+beq 0xec10
+ldr r0, obj.stderr
+mov r2, r6
+str r5, [sp]
+mov r3, 0
+ldr r1, str.FORGET__llu__lu_n
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+mov r0, r4
+mov r1, r6
+--
+bl sym.fuse_fs_access
+mov r1, r5
+mov r8, r0
+mov r2, sl
+mov r0, r4
+bl sym.fuse_finish_interrupt
+mov r0, r6
+bl sym.free
+mov r0, r7
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+mov r1, r8
+bl sym.reply_err
+add sp, sp, 0x1c
+pop {r4, r5, r6, r7, r8, sl, pc}
+ldr r0, obj.stderr
+mov r2, r6
+ldr r1, str.ACCESS__s_0_o_n
+mov r3, r8
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0xfa58
+andeq fp, r8, r4, ror 23
+--
+mov sl, r2
+mov r7, r1
+mov r8, r0
+bl sym.req_fuse_prepare
+add r5, r0, 0x38
+mov r4, r0
+mov r0, r5
+bl sym.pthread_rwlock_rdlock
+mov r0, r4
+mov r1, r7
+bl sym.get_path
+subs r6, r0, 0
+beq 0x107a8
+ldr r3, [r4, 0x8c]
+cmp r3, 0
+beq 0x107a8
+ldr r0, obj.stderr
+ldr r1, str.FLUSH__llu__n
+ldrd r2, r3, [sl, 0x10]
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+mov r1, r8
+mov r2, r7
+--
+ldr r0, [r4, 0xc4]
+bl sym.fuse_fs_fsync
+mov r1, r5
+mov sl, r0
+mov r2, r8
+mov r0, r4
+bl sym.fuse_finish_interrupt
+mov r0, r7
+bl sym.free
+mov r0, r6
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+mov r1, sl
+bl sym.reply_err
+add sp, sp, 0x18
+pop {r4, r5, r6, r7, r8, sb, sl, pc}
+ldr r0, obj.stderr
+ldr r1, str.FSYNC__llu__n
+ldrd r2, r3, [sl, 0x10]
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x109b4
+andeq fp, r8, r4, ror 23
+--
+ldr r0, str.fuse:_wrote_too_many_bytes
+mov r2, 0x1a
+ldr r3, [r3]
+bl sym.fwrite
+mov r0, r6
+mov r1, r5
+bl sym.fuse_reply_write
+add sp, sp, 0x44
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+ldr ip, [r7, 8]
+ldrd sl, fp, [r7, 0x10]
+ldr r0, [r3]
+ldr r3, str.PAGE
+cmp ip, 0
+ldr r2, [0x00010c24]
+ldr r1, str.___WRITE_s__llu___u_bytes_n
+movne r2, r3
+str r5, [sp, 8]
+strd sl, fp, [sp]
+[31mbl sym.fprintf[0m
+b 0x10b58
+ldr r3, obj.stderr
+ldrd sl, fp, [r7, 0x10]
+ldr ip, [r7, 8]
+ldr r0, [r3]
+ldr r3, str.PAGE
+strd sl, fp, [sp]
+cmp ip, 0
+ldrd sl, fp, [sp, 0x68]
+ldr r2, [0x00010c24]
+movne r2, r3
+ldr r1, str.WRITE_s__llu___lu_bytes_to__llu_n
+str r8, [sp, 8]
+strd sl, fp, [sp, 0x10]
+[31mbl sym.fprintf[0m
+b 0x10ae4
+ldr r0, [sp, 0x1c]
+--
+cmp r6, 0
+blt 0x10dec
+ldr r3, [r4, 0x8c]
+cmp r3, 0
+bne 0x10d7c
+cmp r5, r6
+blo 0x10d9c
+mov r0, r7
+mov r1, r8
+mov r2, r6
+bl sym.fuse_reply_buf
+mov r0, r8
+bl sym.free
+add sp, sp, 0x34
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r0, obj.stderr
+ldrd r2, r3, [fp, 0x10]
+ldr r1, str.___READ__llu___u_bytes_n
+ldr r0, [r0]
+str r6, [sp]
+[31mbl sym.fprintf[0m
+cmp r5, r6
+bhs 0x10d5c
+ldr r3, obj.stderr
+mov r1, 1
+mov r2, 0x19
+ldr r0, str.fuse:_read_too_many_bytes
+ldr r3, [r3]
+bl sym.fwrite
+b 0x10d5c
+ldr sl, [sp, 0x60]
+ldr r0, obj.stderr
+ldr r1, str.READ__llu___lu_bytes_from__llu_n
+ldrd r2, r3, [sl, 0x10]
+ldrd sl, fp, [sp, 0x58]
+ldr r0, [r0]
+str r5, [sp]
+strd sl, fp, [sp, 8]
+[31mbl sym.fprintf[0m
+b 0x10ce8
+ldr r0, [sp, 0x14]
+--
+mov r1, r5
+mov r8, r0
+mov r2, sl
+mov r0, r4
+bl sym.fuse_finish_interrupt
+cmp r8, 0
+beq 0x11200
+mov r0, r6
+bl sym.free
+mov r0, r7
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+mov r1, r8
+bl sym.reply_err
+add sp, sp, 0x1c
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.RMDIR__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11188
+mov r0, r4
+--
+mov r1, r8
+bl sym.get_path
+ldr r3, [r4, 0x8c]
+str r0, [sp, 0x14]
+cmp r3, 0
+beq 0x11394
+ldrb lr, [r5, 0xc]
+ldr r3, obj.stderr
+ldr ip, [0x0001142c]
+and lr, lr, 4
+ldrd sl, fp, [r5, 0x10]
+uxtb lr, lr
+ldr r0, [r3]
+ldr r3, [r5]
+cmp lr, 0
+ldr r2, [0x00011430]
+ldr r1, str.RELEASE_s__llu__flags:_0x_x_n
+movne r2, ip
+strd sl, fp, [sp]
+str r3, [sp, 8]
+[31mbl sym.fprintf[0m
+ldrb fp, [r5, 0xc]
+and r2, fp, 4
+--
+mov r0, sl
+ldr r2, [r3, 0x28]
+add r2, r2, 1
+str r2, [r3, 0x28]
+bl sym.__pthread_mutex_unlock
+mov r0, r5
+mov r1, r8
+bl sym.fuse_reply_open
+cmn r0, 2
+beq 0x1159c
+ldr r3, [r4, 0x8c]
+cmp r3, 0
+beq 0x114bc
+ldr r1, obj.stderr
+ldr ip, [r8]
+ldrd r2, r3, [r8, 0x10]
+ldr r0, [r1]
+ldr r1, str.OPEN__llu__flags:_0x_x__s_n
+str ip, [sp]
+str r7, [sp, 4]
+[31mbl sym.fprintf[0m
+b 0x114bc
+mov r0, r5
+--
+mvn r3, r3
+lsl r3, r3, 0x17
+and r1, r1, 0xf000
+lsr r3, r3, 0x17
+orr r3, r3, r1
+str r3, [r4, 0x18]
+ldr r3, [r6, 0xa0]
+cmp r3, 0
+ldrne r3, [r6, 0x58]
+strne r3, [r4, 0x20]
+ldr r3, [r6, 0xa4]
+cmp r3, 0
+ldrne r3, [r6, 0x5c]
+strne r3, [r4, 0x24]
+ldr r3, [r6, 0x8c]
+cmp r3, 0
+beq 0x11718
+ldr r3, obj.stderr
+ldr r1, str.___NODEID:__lu_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11718
+mov r0, 1
+--
+add r2, r2, 1
+str r2, [r3, 0x28]
+bl sym.__pthread_mutex_unlock
+mov r0, r5
+add r1, sp, 8
+ldr r2, [sp, 0xc8]
+bl sym.fuse_reply_create
+cmn r0, 2
+beq 0x11b0c
+ldr r3, [r4, 0x8c]
+cmp r3, 0
+beq 0x119b4
+ldr ip, [sp, 0xc8]
+ldr r1, obj.stderr
+ldrd r2, r3, [ip, 0x10]
+ldr ip, [ip]
+ldr r0, [r1]
+ldr r1, str.__CREATE__llu__flags:_0x_x__s_n
+str ip, [sp]
+str r6, [sp, 4]
+[31mbl sym.fprintf[0m
+b 0x119b4
+mov r1, r5
+--
+mov r0, r5
+mov r1, sb
+mov r2, sl
+bl sym.reply_entry
+add sp, sp, 0xac
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+add sb, sp, 0x10
+mov r0, r4
+ldr r1, [sp, 0xc]
+mov r2, fp
+mov r3, r7
+stm sp, {sb, sl, ip}
+bl sym.lookup_path
+ldr ip, [sp, 8]
+mov sl, r0
+b 0x11c20
+ldr r3, obj.stderr
+mov r2, r7
+ldr r1, str.LINK__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11be8
+andeq fp, r8, r4, ror 23
+--
+strne r3, [sp, 0xc]
+beq 0x11d7c
+mov r0, r4
+mov r1, r5
+mov r2, r8
+bl sym.fuse_finish_interrupt
+mov r0, r6
+bl sym.free
+mov r0, r7
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+ldr r1, [sp, 0xc]
+mov r2, sl
+bl sym.reply_entry
+add sp, sp, 0xac
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.SYMLINK__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11cf8
+add ip, sp, 0x10
+--
+strne r3, [sp, 0xc]
+beq 0x11e94
+mov r0, r4
+mov r1, r5
+mov r2, r8
+bl sym.fuse_finish_interrupt
+mov r0, r6
+bl sym.free
+mov r0, r7
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+ldr r1, [sp, 0xc]
+mov r2, sl
+bl sym.reply_entry
+add sp, sp, 0xac
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.MKDIR__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11e10
+add ip, sp, 0x10
+--
+subs fp, r0, 0
+beq 0x12030
+mov r0, r4
+mov r1, r5
+mov r2, r7
+bl sym.fuse_finish_interrupt
+mov r0, r8
+bl sym.free
+mov r0, r6
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+ldr r1, [sp, 0x10]
+mov r2, fp
+bl sym.reply_entry
+add sp, sp, 0xd4
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+mov r2, r8
+ldr r1, str.MKNOD__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x11f28
+add lr, sp, 0x98
+--
+mov r7, r0
+beq 0x12180
+mov r0, r4
+mov r1, r5
+mov r2, fp
+bl sym.fuse_finish_interrupt
+mov r0, r6
+bl sym.free
+mov r0, r8
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+mov r1, sb
+mov r2, r7
+bl sym.reply_entry
+add sp, sp, 0xac
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.LOOKUP__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x120f0
+ldrd r2, r3, [r4, 0x70]
+--
+add r5, sp, 0x80
+str r1, [sp, 0x14]
+str r3, [sp, 0x10]
+mov r0, sb
+bl sym.__pthread_mutex_lock
+mov r0, r8
+mov r1, sl
+mov r2, r6
+ldr r3, [sp, 0x10]
+bl sym.lookup_node.clone.8
+subs r7, r0, 0
+beq 0x126cc
+ldr ip, [r4, 0x1c]
+mov r1, 0x40
+ldr r3, [r7, 8]
+mov r0, r5
+ldr r2, str..fuse_hidden_08x_08x
+add ip, ip, 1
+str ip, [r4, 0x1c]
+str ip, [sp]
+[31mbl sym.__GI_snprintf[0m
+mov r0, r8
+mov r1, sl
+--
+mov r0, r4
+mov r1, r5
+add r2, sp, 0x14
+bl sym.fuse_finish_interrupt
+ldr r0, [sp, 0xc]
+bl sym.free
+mov r0, r8
+bl sym.free
+mov r0, r6
+bl sym.pthread_rwlock_unlock
+mov r0, r5
+mov r1, r7
+bl sym.reply_err
+add sp, sp, 0x2c
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+mov r3, r0
+ldr r0, obj.stderr
+mov r2, r8
+ldr r1, str.RENAME__s_____s_n
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+ldr r0, [r4, 0xb0]
+mov r1, r5
+--
+bl sym.reply_err
+add sp, sp, 0x1c
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+mov r0, r4
+mov r1, r8
+mov r2, r7
+bl sym.is_open
+cmp r0, 0
+beq 0x12914
+mov r0, r4
+mov r1, r6
+mov r2, r8
+mov r3, r7
+bl sym.hide_node
+mov sl, r0
+b 0x12928
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.UNLINK__s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x128f4
+mov r0, r4
+--
+str sl, [r3], 4
+str sl, [r3]
+str r2, [sp, 0x88]
+str sl, [sp, 0x8c]
+bl sym.sigemptyset
+mov r0, r7
+mov r1, sb
+mov r2, sl
+bl sym.__GI_sigaction
+cmn r0, 1
+movne r3, 1
+strne r3, [r4, 0xc0]
+bne 0x12c44
+ldr r0, str.fuse:_cannot_set_interrupt_signal_handler
+bl sym.perror
+b 0x12d60
+ldr r3, obj.stderr
+ldr r1, str.utime_omit_ok:__i_n
+ldr r2, [r4, 0xc8]
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x12bb0
+ldr r3, obj.stderr
+ldr r5, [r3]
+bl sym.strerror
+ldr r1, str.fuse:_failed_to_create_thread_specific_key:__s_n
+mov r2, r0
+mov r0, r5
+[31mbl sym.fprintf[0m
+add r0, r4, 4
+bl sym.__pthread_mutex_unlock
+--
+mov r2, r0
+mov r3, 0
+b 0x13274
+push {r3, lr}
+subs r3, r2, 0
+bne 0x133c4
+ldr r3, obj.stderr
+mov r1, 1
+mov r2, 0xe8
+ldr r0, str._____o_max_writeN_________set_maximum_size_of_write_requests_n_____o_max_readaheadN_____set_maximum_readahead_n_____o_async_read__________perform_reads_asynchronously__default__n_____o_sync_read___________perform_reads_synchronously_n
+ldr r3, [r3]
+bl sym.fwrite
+mvn r0, 0
+pop {r3, pc}
+cmp r3, 1
+beq 0x133e8
+ldr r3, obj.stderr
+mov r2, r1
+ldr r1, str.fuse:_unknown_option___s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mvn r0, 0
+pop {r3, pc}
+ldr r0, obj.stderr
+mov r2, 7
+ldr r1, str.using_FUSE_kernel_interface_version__i._i_n
+mov r3, 8
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+mvn r0, 0
+pop {r3, pc}
+--
+mov r2, 1
+add r3, r3, r1
+blo 0x13560
+ldr r2, [r4]
+str r3, [sp, 0x10]
+ldr r3, [r2]
+cmp r3, 0
+beq 0x135c0
+ldr r3, obj.stderr
+rsb r0, r5, 0
+ldr sl, [r3]
+bl sym.strerror
+ldr ip, [sp, 0x10]
+mov r2, r8
+str r0, [sp, 4]
+mov r3, sb
+mov r0, sl
+ldr r1, str.___unique:__llu__error:__i___s___outsize:__i_n
+str r5, [sp]
+str ip, [sp, 8]
+[31mbl sym.fprintf[0m
+mov r1, r7
+mov r2, r6
+ldr r0, [r4, 0x38]
+bl sym.fuse_chan_send
+mov r5, r0
+mov r0, r4
+bl sym.free_req
+mov r0, r5
+add sp, sp, 0x30
+pop {r4, r5, r6, r7, r8, sb, sl, pc}
+ldr r3, obj.stderr
+mov r2, r1
+ldr r1, str.fuse:_bad_error_value:__i_n
+mvn r5, 0x21
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x13520
+andeq fp, r8, r4, ror 23
+--
+beq 0x1378c
+mov r0, r6
+ldr r1, [r6, 0x44]
+blx r3
+mov r0, r5
+bl sym.__pthread_mutex_unlock
+mov r0, r7
+bl sym.__pthread_mutex_lock
+ldr r3, [r6, 0x10]
+sub r3, r3, 1
+cmp r3, 0
+str r3, [r6, 0x10]
+beq 0x137e4
+mov r0, r4
+bl sym.destroy_req
+b 0x13724
+ldr r0, obj.stderr
+ldr r1, str.INTERRUPT:__llu_n
+ldrd r2, r3, [r2]
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x1367c
+ldr r2, [r3, 0x44]
+--
+ldr r1, [r0]
+sub sp, sp, 0x14
+mov r5, r0
+mov r7, r2
+mov r6, r3
+cmp r1, 0
+beq 0x13950
+ldr ip, [r4, 4]
+ldr r1, obj.stderr
+ldrd r2, r3, [r4, 8]
+cmp ip, 0x26
+ldr r0, [r1]
+ldrhi lr, [0x00013be0]
+bls 0x13b10
+ldr r8, [r4, 0x10]
+ldr r1, str.unique:__llu__opcode:__s___i___nodeid:__lu__insize:__zu_n
+str lr, [sp]
+str ip, [sp, 4]
+str r8, [sp, 8]
+str r7, [sp, 0xc]
+[31mbl sym.fprintf[0m
+mov r0, 1
+mov r1, 0x50
+--
+orrne r3, r3, 0x20
+strne r3, [sp, 0xc]
+cmp r1, 0
+ldr r3, [r4, 0xa8]
+str r3, [sp, 0x14]
+bne 0x141dc
+ldr r2, [r5, 4]
+mov r0, r6
+mov r1, sp
+cmp r2, 4
+movhi r2, 0x18
+movls r2, 8
+bl sym.send_reply_ok
+add sp, sp, 0x18
+pop {r4, r5, r6, r7, r8, pc}
+ldr r8, obj.stderr
+ldr r2, [r5]
+ldr r1, str.INIT:__u._u_n
+ldr r0, [r8]
+ldr r3, [r5, 4]
+[31mbl sym.fprintf[0m
+ldr r2, [r5]
+cmp r2, 7
+bhi 0x1426c
+beq 0x14258
+ldr r3, [r5, 4]
+str r2, [r4, 0x9c]
+str r3, [r4, 0xa0]
+ldr r0, [r8]
+ldr r1, str.fuse:_unsupported_protocol_version:__u._u_n
+[31mbl sym.fprintf[0m
+mov r0, r6
+mov r1, 0x47
+bl sym.fuse_reply_err
+b 0x14184
+ldr r4, obj.stderr
+ldm sp, {r2, r3}
+ldr r1, str.___INIT:__u._u_n
+ldr r0, [r4]
+[31mbl sym.fprintf[0m
+ldr r2, [sp, 0xc]
+ldr r1, str.___flags0x_08x_n
+ldr r0, [r4]
+[31mbl sym.fprintf[0m
+ldr r2, [sp, 8]
+ldr r1, str.___max_readahead0x_08x_n
+ldr r0, [r4]
+[31mbl sym.fprintf[0m
+ldr r0, [r4]
+ldr r1, str.___max_write0x_08x_n
+ldr r2, [sp, 0x14]
+[31mbl sym.fprintf[0m
+b 0x14168
+ldr r3, obj.stderr
+mov r2, r7
+ldr r1, str.fuse:_warning:_buffer_size_too_small:__zu_n
+mov r7, 0x1000
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x140b0
+cmp r3, 5
+bhi 0x1406c
+mov r3, 0
+str r3, [r4, 0xa4]
+str r3, [r4, 0xac]
+b 0x140a4
+ldr r3, [r5, 4]
+cmp r3, 5
+strls r2, [r4, 0x9c]
+strls r3, [r4, 0xa0]
+bls 0x14248
+ldr r2, [r5, 0xc]
+ldr r1, str.flags0x_08x_n
+ldr r0, [r8]
+[31mbl sym.fprintf[0m
+ldr r0, [r8]
+ldr r1, str.max_readahead0x_08x_n
+ldr r2, [r5, 8]
+[31mbl sym.fprintf[0m
+b 0x14050
+ldr r8, [pc]
+--
+ldrb ip, [r0, r2]
+add r0, r3, r2
+cmp ip, 0x3d
+addeq r0, r0, 1
+cmp r7, 0x25
+bne 0x155bc
+ldrb r2, [r1, 1]
+cmp r2, 0x73
+beq 0x1557c
+mov r2, r5
+str r3, [sp, 4]
+bl sym.sscanf
+cmp r0, 1
+ldr r3, [sp, 4]
+moveq r0, 0
+beq 0x15574
+mov r2, r3
+ldr r3, obj.stderr
+ldr r1, str.fuse:_invalid_parameter_in_option___s_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mvn r0, 0
+b 0x15574
+--
+str sl, [sp]
+bl sym.process_opt
+mov r4, r0
+mov r0, sb
+bl sym.free
+cmn r4, 1
+add r0, r5, 0xc
+mov r1, r6
+mov r2, r8
+bne 0x15634
+mov r0, r4
+add sp, sp, 0x14
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+mov r0, r5
+b 0x15704
+ldr r3, obj.stderr
+mov r2, r6
+ldr r1, str.fuse:_missing_argument_after___s_n
+mvn r4, 0
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x15700
+mov r0, r7
+--
+add r6, r4, 0x18
+mov r1, 1
+mov r0, r6
+ldr r2, [0x00015ab8]
+bl sym.fuse_opt_insert_arg
+cmn r0, 1
+beq 0x15974
+mov r0, r6
+mov r1, 2
+ldr r2, [sp, 0x24]
+bl sym.fuse_opt_insert_arg
+cmn r0, 1
+bne 0x159a8
+mvn r6, 0
+b 0x159e4
+ldr r3, obj.stderr
+mov r2, r1
+ldr r1, str.fuse:_missing_argument_after___s_n
+mvn r6, 0
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x159e4
+mov r0, r6
+--
+ldr r6, [r0]
+mov r5, r1
+mov r8, r2
+cmp r6, 0
+beq 0x16078
+mov r0, r6
+bl sym.strlen
+mov r7, r0
+mov r0, r5
+bl sym.strlen
+add r1, r8, 2
+add r1, r1, r7
+add r1, r1, r0
+mov r0, r6
+bl sym.realloc
+subs r6, r0, 0
+beq 0x16088
+add r0, r6, r7
+ldr r1, [0x000160a4]
+mov r2, r5
+[31mbl sym.sprintf[0m
+mov r0, 0
+str r6, [r4]
+pop {r4, r5, r6, r7, r8, pc}
+mov r0, r1
+bl sym.__GI_strdup
+subs r6, r0, 0
+bne 0x1606c
+ldr r3, obj.stderr
+ldr r1, str._s:_failed_to_allocate_memory_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mvn r0, 0
+pop {r4, r5, r6, r7, r8, pc}
+--
+ldr r0, str._dev_fuse
+bl sym.open64
+mov r8, r0
+bl sym.drop_privs
+subs r5, r0, 0
+bne 0x162cc
+cmn r8, 1
+beq 0x16338
+ldr r0, str._dev_fuse
+bl sym.__GI_strdup
+cmp r0, 0
+str r0, [sp, 0x20]
+beq 0x16d24
+cmn r8, 1
+bge 0x16374
+ldr r3, obj.stderr
+mvn r8, 0
+ldr r1, str._s:_fuse_device_is_missing__try_modprobe_fuse_as_root_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x162d0
+bl sym.__errno_location
+ldr r0, [r0]
+cmp r0, 0x13
+cmpne r0, 2
+beq 0x1631c
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.strerror
+ldr r1, str._s:_failed_to_open__s:__s_n
+str r0, [sp]
+mov r0, r4
+ldr r2, str.ntfs_3g_mount
+ldr r3, str._dev_fuse
+[31mbl sym.fprintf[0m
+b 0x162d0
+bl sym.getuid
+--
+cmp r0, 0
+bne 0x16394
+mov r0, r7
+add r5, r5, 1
+bl sym.getmntent
+cmp r0, 0
+ldr r1, str.fuse
+bne 0x163a8
+mov r4, r0
+mov r0, r7
+bl sym.endmntent
+cmp r5, 0x3e8
+blt 0x16450
+ldr r0, obj.stderr
+mov r3, 0x3e8
+ldr r1, str._s:_too_many_mounted_FUSE_filesystems___d__n
+mov r6, r4
+ldr r2, str.ntfs_3g_mount
+mov r5, r4
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x16994
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_open__s:__s_n
+str r0, [sp]
+mov r0, r4
+ldr r2, str.ntfs_3g_mount
+ldr r3, str._etc_mtab
+[31mbl sym.fprintf[0m
+add r4, sp, 0x1c0
+mov r0, sb
+--
+bne 0x16ac8
+mov r0, sb
+mov r1, 1
+bl sym.open64
+cmn r0, 1
+str r0, [sp, 8]
+beq 0x16c84
+mov r1, r4
+bl sym.fstat64
+cmn r0, 1
+beq 0x16bf0
+ldr r3, [sp, 0x1d0]
+and r3, r3, 0xf000
+cmp r3, segment.LOAD0
+bne 0x16b50
+mvn r3, 0
+ldr r0, obj.procfile.4891
+ldr r2, [sp, 8]
+ldr r1, str._proc_self_fd__i
+str r3, [sp, 0xc]
+[31mbl sym.sprintf[0m
+ldr ip, obj.procfile.4891
+str ip, [sp, 0x28]
+--
+mov r0, r4
+bl sym.strlen
+sub r0, r0, 1
+ldrb r3, [r4, r0]
+cmp r3, 0x2c
+strbeq r5, [r4, r0]
+bl sym.getuid
+cmp r0, 0
+bne 0x16cb8
+ldr r2, [sp, 0x24]
+and r6, r2, 0xf000
+bl sym.getuid
+mov r4, r0
+bl sym.getgid
+ldr r1, str.fd_i_rootmode_o_user_id_i_group_id_i
+mov r2, r8
+str r0, [sp, 4]
+mov r3, r6
+ldr r0, [sp, 0x1c]
+str r4, [sp]
+[31mbl sym.sprintf[0m
+cmp r7, 0
+moveq r4, r7
+--
+cmp r0, 0
+bne 0x16918
+cmn fp, 1
+ldrne r6, [sp, 0x234]
+bne 0x16940
+bl sym.__errno_location
+ldr r1, [sp, 0x10]
+ldr r6, [r0]
+cmp r1, 0
+beq 0x16774
+cmp r6, 0x13
+beq 0x16d78
+ldr sl, obj.stderr
+mov r0, r6
+ldr fp, [sl]
+bl sym.strerror
+ldr r1, str._s:_mount_failed:__s_n
+mov r3, r0
+ldr r2, str.ntfs_3g_mount
+mov r0, fp
+[31mbl sym.fprintf[0m
+cmp r6, 1
+bne 0x16918
+--
+str ip, [sp, 0x30]
+beq 0x16e40
+ldr r2, [sp, 0x30]
+cmp r2, 0
+ldrne r3, [sp, 0x18]
+ldreq ip, [sp, 0x18]
+orrne r3, r3, r4
+biceq ip, ip, r4
+strne r3, [sp, 0x18]
+streq ip, [sp, 0x18]
+b 0x165bc
+mov r5, r6
+b 0x16574
+ldr r3, obj.stderr
+mov r8, sl
+ldr r1, str._s:_failed_to_allocate_memory_n
+mov r5, r7
+ldr r2, str.ntfs_3g_mount
+mov r4, r7
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mov r0, r4
+mov r4, 0
+--
+str r2, [sp, 8]
+str r1, [sp, 0x28]
+b 0x164e8
+mov r1, r5
+mov r0, r6
+mov r2, 0
+bl sym.add_option
+cmn r0, 1
+bne 0x16610
+mov r5, 0
+mov r4, r5
+b 0x16918
+ldr r0, obj.stderr
+mvn r1, 0
+str r1, [sp, 8]
+mov r3, sb
+str r1, [sp, 0xc]
+ldr r2, str.ntfs_3g_mount
+ldr r1, str._s:_mountpoint__s_is_not_a_directory_or_a_regular_file_n
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+mov r6, 0
+mvn fp, 0
+mov r4, r6
+mov r5, r6
+b 0x16950
+ldr r3, obj.stderr
+ldr r1, str._s:_failed_to_allocate_memory_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x16918
+mov r1, r6
+mov r2, r4
+ldr r0, [sp, 0x1c]
+mov r7, sl
+ldr r5, [sp, 0x34]
+ldr sl, [sp, 0x30]
+bl sym.memcpy
+ldr r1, [sp, 0x1c]
+mov r2, 0x2c
+add r3, r1, r4
+strb r2, [r1, r4]
+add r3, r3, 1
+str r3, [sp, 0x1c]
+b 0x165bc
+ldr r0, obj.stderr
+mvn ip, 0
+mov r3, sb
+ldr r1, str._s:_mountpoint__s_is_no_longer_a_regular_file_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r0]
+str ip, [sp, 0xc]
+[31mbl sym.fprintf[0m
+b 0x16aec
+add r0, sp, 0x38
+--
+ldr r1, str._u._u
+add r3, sp, 0x22c
+bl sym.sscanf
+cmp r0, 2
+bne 0x16840
+ldr r3, [sp, 0x230]
+cmp r3, 2
+ldrhi ip, [sp, 0x22c]
+bhi 0x16bc4
+cmp r3, 2
+bne 0x16840
+ldr ip, [sp, 0x22c]
+cmp ip, 4
+bls 0x16840
+movw r1, 0xbbe4
+ldr r2, str.ntfs_3g_mount
+movt r1, 8
+ldr r0, [r1]
+ldr r1, str._s:_note:_large_read_mount_option_is_deprecated_for__i._i_kernels_n
+str ip, [sp]
+[31mbl sym.fprintf[0m
+b 0x165bc
+ldr r0, str.priv_drop:_setgroups_failed
+bl sym.perror
+b 0x16994
+str r0, [sp, 0xc]
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_access_mountpoint__s:__s_n
+str r0, [sp]
+mov r3, sb
+mov r0, r4
+ldr r2, str.ntfs_3g_mount
+[31mbl sym.fprintf[0m
+b 0x16aec
+ldr r0, [sp, 0x18]
+ldr r1, [sp, 0x20]
+bl sym.strcpy
+b 0x1670c
+bl sym.__errno_location
+ldr r3, [r0]
+cmp r3, 0x16
+bne 0x16740
+bl sym.getuid
+ldr r1, str.fd_i_rootmode_o_user_id_i
+mov r2, r8
+str r0, [sp]
+mov r3, r6
+ldr r0, [sp, 0x1c]
+[31mbl sym.sprintf[0m
+ldr ip, [sp, 0x14]
+mov r3, sl
+--
+mov r0, r6
+bl sym.add_option
+cmn r0, 1
+beq 0x16abc
+ldr r0, [sp, 0x234]
+mov r1, r4
+bl sym.strcat
+b 0x16660
+add r6, sp, 0x234
+ldr r1, [0x00016ee0]
+mov r0, r6
+mov r2, r4
+bl sym.add_option
+cmn r0, 1
+bne 0x165f0
+b 0x16abc
+ldr r3, obj.stderr
+ldr r1, str._s:_failed_to_allocate_memory_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mov r0, r8
+mvn r8, 0
+bl sym.close
+b 0x162d0
+ldr r3, obj.stderr
+str r0, [sp, 8]
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_chdir_to_mountpoint:__s_n
+mov r3, r0
+ldr r2, str.ntfs_3g_mount
+mov r0, r4
+[31mbl sym.fprintf[0m
+b 0x16aec
+bl sym.fuse_mnt_check_fuseblk
+cmp r0, 0
+beq 0x16e00
+ldr r3, obj.stderr
+mov r0, r6
+ldr r6, [r3]
+bl sym.strerror
+ldr r1, str._s:_mount_failed:__s_n
+mov r3, r0
+ldr r2, str.ntfs_3g_mount
+mov r0, r6
+[31mbl sym.fprintf[0m
+b 0x16918
+ldr r3, obj.stderr
+str r0, [sp, 8]
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_open_current_directory:__s_n
+mov r3, r0
+ldr r2, str.ntfs_3g_mount
+mov r0, r4
+[31mbl sym.fprintf[0m
+b 0x16aec
+ldr r0, obj.stderr
+mvn r2, 0
+str r2, [sp, 8]
+mov r3, sb
+ldr r1, str._s:_mountpoint__s_not_owned_by_user_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x16aec
+ldr r3, obj.stderr
+ldr r1, str._s:_fuseblk_support_missing_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x16918
+ldr r3, obj.stderr
+mvn fp, 0
+ldr r6, [sp, 0x14]
+ldr r1, str._s:_failed_to_allocate_memory_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+mov r4, r6
+mov r5, r6
+[31mbl sym.fprintf[0m
+b 0x16950
+bl sym.getuid
+cmp r0, 0
+beq 0x168cc
+movw r1, 0xbbe4
+mov r3, r8
+movt r1, 8
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r1]
+mov r4, r6
+ldr r1, str._s:_unsafe_option__s_ignored_n
+[31mbl sym.fprintf[0m
+b 0x168cc
+str r0, [sp, 8]
+mov r3, sb
+ldr r0, obj.stderr
+ldr r1, str._s:_user_has_no_write_access_to_mountpoint__s_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x16aec
+ldr r3, obj.stderr
+ldr r1, str._s:_could_not_determine_username_n
+ldr r2, str.ntfs_3g_mount
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x16abc
+muleq r6, r4, r2
+--
+cmp r0, 0
+mvnne r4, 0
+b 0x16fa8
+ldr r0, str.ntfs_3g_mount
+mov r1, r5
+mov r2, r8
+bl sym.fuse_mnt_umount
+mov r4, r0
+b 0x17004
+ldr r3, obj.stderr
+mvn r4, 0
+ldr r7, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_unmount__s:__s_n
+mov r3, r5
+str r0, [sp]
+mov r0, r7
+ldr r2, str.ntfs_3g_mount
+[31mbl sym.fprintf[0m
+b 0x17004
+andeq pc, r6, ip, ror r3
+--
+strh r1, [ip]
+bl sym.geteuid
+bl sym.setuid
+add r0, sp, 0x20
+bl sym.mkdtemp
+subs sl, r0, 0
+beq 0x1773c
+bl sym.chdir
+subs r8, r0, 0
+beq 0x1769c
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_chdir_to__s:__s_n
+mov r2, r5
+str r0, [sp]
+mov r3, sl
+mov r0, r4
+[31mbl sym.fprintf[0m
+mov r0, 1
+bl sym.__GI_exit
+--
+ldr ip, [0x00017770]
+mov r1, r0
+ldr r3, [0x00017774]
+str r4, [sp, 0x14]
+str ip, [sp, 8]
+ldr ip, [sp, 0x58]
+str r7, [sp, 4]
+str r6, [sp, 0x10]
+str ip, [sp, 0xc]
+str r8, [sp, 0x18]
+bl sym.execl
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_execute__bin_mount:__s_n
+mov r3, r0
+mov r2, r5
+mov r0, r4
+[31mbl sym.fprintf[0m
+mov r0, 1
+bl sym.__GI_exit
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_fork:__s_n
+mov r3, r0
+mov r2, r5
+mov r0, r4
+[31mbl sym.fprintf[0m
+b 0x17608
+ldr r3, obj.stderr
+mov r2, r5
+ldr r1, str._s:_failed_to_create_temporary_directory_n
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+mov r0, 1
+bl sym.__GI_exit
+--
+add r1, sp, 0xc
+mov r2, 0
+bl sym.waitpid
+cmn r0, 1
+mov r4, r0
+beq 0x17844
+ldr r4, [sp, 0xc]
+cmp r4, 0
+mvnne r4, 0
+b 0x177c8
+ldr r3, obj.stderr
+ldr r5, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_unmount__s:__s_n
+mov r2, r6
+str r0, [sp]
+mov r3, r7
+mov r0, r5
+[31mbl sym.fprintf[0m
+b 0x177c8
+ldr r3, obj.stderr
+ldr r5, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_waitpid:__s_n
+mov r3, r0
+mov r2, r6
+mov r0, r5
+[31mbl sym.fprintf[0m
+b 0x177c8
+ldr r3, obj.stderr
+ldr r5, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_fork:__s_n
+mov r3, r0
+mov r2, r6
+mov r0, r5
+[31mbl sym.fprintf[0m
+b 0x177c8
+bl sym.geteuid
+--
+ldr ip, [0x00017910]
+cmp r5, 0
+ldr r0, str._bin_umount
+moveq r5, 0
+ldr r2, [0x00017918]
+mov r3, r7
+movne r5, ip
+str r4, [sp, 4]
+mov r1, r0
+str r5, [sp]
+bl sym.execl
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_execute__bin_umount:__s_n
+mov r3, r0
+mov r2, r6
+mov r0, r4
+[31mbl sym.fprintf[0m
+mov r0, 1
+bl sym.__GI_exit
+--
+bl sym.malloc
+cmp r0, 0
+mov r5, r0
+mov r7, r0
+beq 0x17adc
+mov r0, r8
+bl sym.strlen
+cmp r0, 0
+beq 0x17a20
+add r3, sp, 0x1000
+add r3, r3, 8
+add r0, r3, r0
+sub r0, r0, 0x1000
+ldrb r3, [r0, -1]
+cmp r3, 0x2f
+beq 0x17b28
+mov r0, r7
+ldr r1, str._s__s
+mov r2, r8
+mov r3, r6
+[31mbl sym.sprintf[0m
+mov r0, r4
+bl sym.free
+--
+beq 0x17a8c
+cmp r8, 0
+movne r3, 0
+strbne r3, [r8]
+b 0x179a4
+mov r0, r8
+bl sym.__GI_strdup
+mov r5, r0
+mov r0, r4
+bl sym.free
+cmp r5, 0
+bne 0x17a3c
+b 0x17ae4
+mov r0, r4
+bl sym.free
+ldr r3, obj.stderr
+mov r2, sl
+ldr r1, str._s:_failed_to_allocate_memory_n
+mov r5, 0
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x17a3c
+mov r2, r0
+ldr r0, obj.stderr
+ldr r1, str._s:_invalid_mountpoint__s_n
+mov r3, r7
+ldr r0, [r0]
+[31mbl sym.fprintf[0m
+b 0x17a3c
+ldr r5, [0x00017ba0]
+mov r6, r4
+b 0x17a78
+mov r0, r5
+ldr r1, str._s_s
+mov r2, r8
+mov r3, r6
+[31mbl sym.sprintf[0m
+b 0x17a34
+ldr r3, obj.stderr
+mov r5, r0
+ldr r6, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_bad_mount_point__s:__s_n
+mov r2, sl
+str r0, [sp]
+mov r3, r7
+mov r0, r6
+[31mbl sym.fprintf[0m
+mov r0, r4
+bl sym.free
+b 0x17a3c
+ldr r3, obj.stderr
+mov r2, sl
+ldr r1, str._s:_failed_to_allocate_memory_n
+mov r5, r4
+ldr r0, [r3]
+[31mbl sym.fprintf[0m
+b 0x17a3c
+andeq pc, r6, r4, asr sp
+--
+andeq r3, r7, ip, asr 10
+mov r0, 0
+bx lr
+push {r4, r5, r6, r7, r8, sb, sl, lr}
+mov r7, r3
+sub sp, sp, 0x200
+bl sym.__errno_location
+ands r7, r7, 0x100
+ldr r8, [sp, 0x224]
+mov r4, r0
+ldr sb, [sp, 0x228]
+ldr r6, [r0]
+beq 0x3cee0
+cmp r6, 0x1c
+moveq sl, 1
+beq 0x3cf24
+mov r1, 0x200
+mov r0, sp
+mov r2, r8
+mov r3, sb
+[31mbl sym.__GI_vsnprintf[0m
+subs sl, r0, 0
+mov r5, sp
+--
+beq 0x3d1b8
+mov r0, r5
+mov r1, 0x2f
+bl sym.strrchr
+add r5, r0, 1
+ands r6, fp, 1
+bne 0x3d26c
+tst fp, 2
+bne 0x3d2bc
+tst fp, 4
+bne 0x3d2dc
+tst fp, 8
+bne 0x3d21c
+movw r3, 0x402
+and r3, r7, r3
+cmp r3, 0
+bne 0x3d21c
+mov r0, r4
+ldr r1, [sp, 0x34]
+ldr r2, [sp, 0x38]
+[31mbl sym.__GI_vfprintf[0m
+tst r7, 0x100
+add r6, r0, r6
+bne 0x3d24c
+mov r0, r4
+bl sym.fflush
+str sb, [r8]
+mov r0, r6
+add sp, sp, 0xc
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r1, str._s__:
+mov r0, r4
+ldr r2, [sp]
+[31mbl sym.fprintf[0m
+ldr r1, [sp, 0x34]
+add r6, r6, r0
+ldr r2, [sp, 0x38]
+mov r0, r4
+[31mbl sym.__GI_vfprintf[0m
+tst r7, 0x100
+add r6, r0, r6
+beq 0x3d204
+mov r0, sb
+bl sym.strerror
+ldr r1, [0x0003d364]
+mov r2, r0
+mov r0, r4
+[31mbl sym.fprintf[0m
+add r6, r6, r0
+b 0x3d204
+cmp r7, 0x10
+ldreq r2, str.VERBOSE:
+beq 0x3d2a0
+bls 0x3d2f8
+cmp r7, 0x80
+beq 0x3d320
+bhi 0x3d318
+cmp r7, 0x20
+ldreq r2, str.PROGRESS:
+beq 0x3d2a0
+cmp r7, 0x40
+bne 0x3d310
+ldr r2, str.WARNING:
+mov r0, r4
+ldr r1, [0x0003d374]
+[31mbl sym.fprintf[0m
+ldr fp, [sl, 4]
+mov r6, r0
+tst fp, 2
+beq 0x3d1c8
+mov r0, r4
+ldr r1, [0x0003d378]
+mov r2, r5
+[31mbl sym.fprintf[0m
+ldr fp, [sl, 4]
+add r6, r6, r0
+tst fp, 4
+beq 0x3d1d0
+mov r0, r4
+ldr r1, [0x0003d37c]
+ldr r2, [sp, 4]
+[31mbl sym.fprintf[0m
+ldr fp, [sl, 4]
+add r6, r6, r0
+--
+mov r0, r7
+add sp, sp, 0x4c
+pop {r4, r5, r6, r7, r8, sl, pc}
+bl sym.__errno_location
+mov r3, 0x16
+mvn r7, 0
+str r3, [r0]
+b 0x41fc0
+andeq lr, r8, r0, lsr 2
+muleq r7, ip, r4
+strdeq r4, r5, [r7], -r8
+andeq r4, r7, r8, ror r4
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x22c
+mov r3, r0
+ldr r2, str._sys_block__s_dm_name
+mov r6, r1
+mov r0, sp
+mov r1, 0x118
+mov r4, sp
+[31mbl sym.__GI_snprintf[0m
+mov r0, sp
+ldr r1, [0x000420ac]
+--
+mov r1, 0x110
+mov r0, r7
+mov r2, r5
+bl sym.fgets
+cmp r0, 0
+moveq r4, r0
+beq 0x42094
+mov r0, r7
+bl sym.strlen
+cmp r0, 1
+movls r4, 0
+bls 0x42094
+add r3, sp, 0x228
+mov lr, 0
+add ip, r3, r0
+ldr r2, str._dev_mapper__s
+mov r3, r7
+mov r1, 0x118
+strb lr, [ip, -0x111]
+mov r0, sp
+[31mbl sym.__GI_snprintf[0m
+mov r0, r6
+mov r1, sp
+--
+bne 0x464a0
+ldr r3, [r5, 0xc]
+ldr r2, [r5, 0x10]
+add r2, r2, r3, lsl 2
+subs r3, r3, 1
+bmi 0x464d8
+ldr r1, [r2, -4]!
+cmp r6, r1
+bne 0x464c4
+mvn r5, r3
+lsr r5, r5, 0x1f
+mov r0, r5
+add sp, sp, 0x64
+add sp, sp, 0x400
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r2, [r0, 0x18]
+add fp, sp, 0x420
+ldr r1, str._proc__u_task__u_status
+mov r0, fp
+mov r3, r2
+[31mbl sym.sprintf[0m
+mov r1, r4
+mov r0, fp
+--
+orr r3, r3, r8, lsl 16
+orr r3, r3, r7, lsl 24
+orr ip, ip, lr, lsl 8
+str ip, [sp, 4]
+ldrb ip, [r4, 8]
+str ip, [sp, 8]
+ldrb ip, [r4, 9]
+str ip, [sp, 0xc]
+ldrb ip, [r4, 0xa]
+str ip, [sp, 0x10]
+ldrb ip, [r4, 0xb]
+str ip, [sp, 0x14]
+ldrb ip, [r4, 0xc]
+str ip, [sp, 0x18]
+ldrb ip, [r4, 0xd]
+str ip, [sp, 0x1c]
+ldrb ip, [r4, 0xe]
+str ip, [sp, 0x20]
+ldrb ip, [r4, 0xf]
+str ip, [sp, 0x24]
+[31mbl sym.__GI_snprintf[0m
+cmp r0, 0x24
+bne 0x47c94
+--
+bls 0x47d88
+cmp r0, 0
+beq 0x47d88
+ldrb r3, [r0]
+cmp r3, 1
+beq 0x47da4
+bl sym.__errno_location
+mov r3, 0
+mov r2, 0x16
+str r2, [r0]
+mov r0, r3
+add sp, sp, 0x14
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldrb r2, [r0, 1]
+cmp r2, 0xf
+movls r6, fp
+bhi 0x47d88
+ldr r0, [sp, 0xc]
+mov r1, r6
+ldr r2, str.S__hhu_
+[31mbl sym.__GI_snprintf[0m
+cmp r0, r6
+movlt r3, 0
+--
+subs ip, r1, 0x20
+add r0, r0, 1
+and r2, r2, 0xff
+mov r3, 0
+lsr r5, r2, lr
+lsl r4, r2, r1
+lslpl r5, r2, ip
+sub r1, r1, 8
+adds r8, r8, r4
+adc sb, sb, r5
+cmn r1, 8
+bne 0x47df4
+ldrb r3, [r7, 2]
+ldrb r2, [r7, 3]
+orrs r2, r3, r2, lsl 8
+bne 0x47f04
+mov r0, sl
+mov r1, r6
+ldr r2, [0x00047f74]
+mov r3, r8
+[31mbl sym.__GI_snprintf[0m
+lsr r4, r0, 0x1f
+cmp r0, r6
+--
+add r8, sl, r0
+rsb r6, r0, r6
+b 0x47e8c
+ldrb r3, [r7, 1]
+rsb r6, r0, r6
+cmp r3, r4
+ble 0x47f1c
+add r3, r4, 2
+mov r0, r8
+add ip, r7, r3, lsl 2
+ldrb r5, [r7, r3, lsl 2]
+mov r1, r6
+ldr r2, [0x00047f78]
+ldrb sl, [ip, 1]
+add r4, r4, 1
+ldrb lr, [ip, 2]
+ldrb ip, [ip, 3]
+orr r5, r5, sl, lsl 8
+orr r5, r5, lr, lsl 16
+orr r3, r5, ip, lsl 24
+[31mbl sym.__GI_snprintf[0m
+cmp r0, r6
+movlt r3, 0
+movge r3, 1
+add r8, r8, r0
+orrs r3, r3, r0, lsr 31
+beq 0x47e7c
+cmp r0, r6
+blt 0x47f24
+bl sym.__errno_location
+cmp fp, 0
+mov r4, r0
+mov r5, 0x5a
+beq 0x47f38
+str r5, [r4]
+mov r3, 0
+b 0x47d98
+mov r0, sl
+mov r1, r6
+ldr r2, str.0x_llx
+strd r8, sb, [sp]
+[31mbl sym.__GI_snprintf[0m
+b 0x47e50
+ldr r3, [sp, 0xc]
+--
+cmp r4, 0
+bne 0x59350
+add r4, r4, 1
+cmp r3, 0
+str r4, [ip, r2]
+ldr r2, [0x0005935c]
+ldr r2, [ip, r2]
+ldr r4, [r2]
+ldr r2, [0x00059360]
+ldr r2, [ip, r2]
+ldr r2, [r2]
+ldreq r3, [0x00059364]
+addeq r3, ip, r3
+str r1, [sp]
+ldr r1, [0x00059368]
+str r3, [sp, 4]
+mov r3, lr
+str r0, [sp, 8]
+mov r0, r4
+add r1, ip, r1
+[31mbl sym.fprintf[0m
+bl sym.abort
+andeq lr, r2, r4
+--
+mov r2, 2
+mov r6, r0
+bl sym.__GI_fseek
+cmp r0, 0
+add r5, pc, r5
+movlt r0, 1
+blt 0x5a814
+ldr r3, [r4, 8]
+mov r0, r6
+ldr r1, [0x0005a820]
+ldr r2, [r4]
+str r3, [sp]
+ldr r3, [r4, 0xc]
+add r1, r5, r1
+str r3, [sp, 4]
+ldr r3, [r4, 0x10]
+str r3, [sp, 8]
+ldr r3, [r4, 0x14]
+str r3, [sp, 0xc]
+ldr r3, [r4, 4]
+[31mbl sym.fprintf[0m
+lsr r0, r0, 0x1f
+add sp, sp, 0x10
+--
+ldr r2, [r3, 4]
+lsl r2, r2, 3
+bl 0x5a8d0
+tst r6, 0x3f8
+ldreq r3, [0x0005adb8]
+addeq r3, r4, r3
+ldreq r3, [r3, 4]
+orreq r6, r6, r3, lsl 3
+add r7, sp, 0x420
+add r8, sp, 0x14
+add r7, r7, 4
+mov r0, r7
+bl sym.__GI_time
+mov r0, r7
+bl sym.__GI_ctime
+ldr r1, [0x0005adbc]
+add r3, r0, 4
+mov r2, r6
+mov r0, r8
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+ldr r3, [0x0005adc0]
+add r8, r8, r0
+ldr r6, [r4, r3]
+mov r0, r6
+bl sym.strlen
+cmp r0, 0x3c0
+bhs 0x5ab9c
+ldr r1, [0x0005adc4]
+mov r0, r8
+mov r2, r6
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+b 0x5abac
+ldr r1, [0x0005adc8]
+mov r0, r8
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+ldr r3, [0x0005adb0]
+add r7, r8, r0
+add r3, r4, r3
+ldr r3, [r3, 4]
+tst r3, 1
+beq 0x5abe0
+bl sym.getpid
+ldr r1, [0x0005adcc]
+mov r2, r0
+mov r0, r7
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+add r7, r7, r0
+mov r6, r7
+mov r3, 0x3a
+strb r3, [r6], 1
+mov r3, 0x20
+strb r3, [r7, 1]
+add r3, sp, 0x410
+add r6, r6, 1
+add sb, r3, 3
+rsb fp, r6, sb
+str r5, [sl]
+mov r0, r6
+str r3, [sp, 4]
+mov r1, fp
+ldr r3, [sp, 0xc]
+ldr r2, [sp, 8]
+[31mbl sym.__GI_vsnprintf[0m
+adds r5, r6, r0
+movlo r3, 0
+--
+b 0x5c8a0
+ldr r3, [0x0005c8bc]
+add r3, r1, r3
+add r3, r3, 2
+mov r2, r3
+ldr r0, [0x0005c8c0]
+ldr ip, [0x0005c8c4]
+ldr r0, [r1, r0]
+add r1, r1, ip
+ldr r0, [r0]
+[31mb sym.fprintf[0m
+andeq sl, r2, r8, lsl 21
+invalid
+andeq r0, r0, r8, ror 2
+invalid
+push {r1, r2, r3}
+push {r0, r1, lr}
+add r2, sp, 0x10
+ldr r1, [sp, 0xc]
+str r2, [sp, 4]
+[31mbl sym.__GI_vfprintf[0m
+pop {r2, r3, lr}
+add sp, sp, 0xc
+bx lr
+push {r2, r3}
+push {r0, r1, r2, lr}
+add r3, sp, 0x14
+ldr r2, [sp, 0x10]
+str r3, [sp, 4]
+[31mbl sym.__GI_vsnprintf[0m
+pop {r1, r2, r3, lr}
+add sp, sp, 8
+bx lr
+push {r1, r2, r3}
+push {r0, r1, lr}
+mvn r1, 0
+add r3, sp, 0x10
+ldr r2, [sp, 0xc]
+str r3, [sp, 4]
+[31mbl sym.__GI_vsnprintf[0m
+pop {r2, r3, lr}
+add sp, sp, 0xc
+--
+str r8, [sp, 0x20]
+mov sl, sp
+str r8, [sp, 0x24]
+str r8, [sp, 0x28]
+str r8, [sp, 0x2c]
+strb r8, [sp, 2]
+str r8, [sp, 0x38]
+bl sym.__stdio_init_mutex
+mvn r3, r4
+mov r0, sp
+cmp r3, r5
+movlo r5, r3
+mov r1, r7
+add r3, r4, r5
+mov r2, r6
+str r8, [sp, 0x18]
+str r4, [sp, 8]
+str r3, [sp, 0xc]
+str r4, [sp, 0x10]
+str r4, [sp, 0x14]
+[31mbl sym._vfprintf_internal[0m
+cmp r5, r8
+beq 0x5c9f4
+--
+add r6, r0, 0x48
+mov r0, sp
+ldr r1, [r3, r2]
+mov r2, r6
+bl sym.__pthread_cleanup_push_defer
+mov r0, r6
+bl sym.__pthread_mutex_lock
+ldrh r3, [r4]
+and r3, r3, 0xc0
+cmp r3, 0xc0
+beq 0x5d134
+mov r0, r4
+mov r1, 0x80
+bl sym.__stdio_trans2w_o
+cmp r0, 0
+mvnne r4, 0
+bne 0x5d148
+mov r0, r4
+mov r1, r8
+mov r2, r7
+[31mbl sym._vfprintf_internal[0m
+mov r4, r0
+cmp r5, 0
+--
+mov r7, fp
+mov r4, r8
+ldr r5, [sp, 0x2c]
+ldr fp, [sp, 0x28]
+ldr r8, [sp, 0x24]
+rsbs r3, r3, 1
+movlo r3, 0
+cmp ip, 0
+moveq r3, 0
+cmp r3, 0
+beq 0x61764
+cmp r8, 0
+beq 0x61734
+ldr r3, [0x00061b78]
+ldr r1, [0x00061b7c]
+ldr r2, [r5]
+ldr r3, [r4, r3]
+add r1, r4, r1
+ldr r0, [r3]
+ldr r3, [sp, 0x14]
+[31mbl sym.fprintf[0m
+ldr r6, [0x00061b6c]
+add r5, r4, r6
+--
+ldr r1, [r6, 4]
+beq 0x61830
+cmp r1, 0
+addne r3, r0, 1
+strne r3, [r2, 8]
+bne 0x618b4
+cmp r8, 0
+beq 0x61808
+ldr r1, [sp, 0x10]
+ldr r2, [r5, r1, lsl 2]
+ldrb r3, [r2, 1]
+cmp r3, 0x2d
+ldr r3, [0x00061b78]
+bne 0x617e4
+ldr r3, [r4, r3]
+ldr r1, [0x00061b80]
+ldr r2, [r5]
+ldr r0, [r3]
+add r1, r4, r1
+ldr r3, [r6]
+[31mbl sym.fprintf[0m
+b 0x61808
+ldr r1, [r4, r3]
+ldrb r3, [r2]
+ldr r2, [r6]
+str r2, [sp]
+ldr r0, [r1]
+ldr r1, [0x00061b84]
+ldr r2, [r5]
+add r1, r4, r1
+[31mbl sym.fprintf[0m
+ldr r5, [0x00061b6c]
+add r5, r4, r5
+--
+str r3, [r5, 0xc]
+b 0x61a44
+cmp r1, 1
+bne 0x618b4
+cmp r3, fp
+ldrlt r1, [r5, r3, lsl 2]
+addlt r3, r3, 1
+strlt r3, [r2]
+strlt r1, [r2, 8]
+blt 0x618b4
+cmp r8, 0
+beq 0x6187c
+ldr r3, [0x00061b78]
+ldr r1, [0x00061b88]
+ldr ip, [sp, 0x10]
+ldr r3, [r4, r3]
+add r1, r4, r1
+ldr r2, [r5]
+ldr r0, [r3]
+ldr r3, [r5, ip, lsl 2]
+[31mbl sym.fprintf[0m
+ldr r5, [0x00061b6c]
+add r5, r4, r5
+--
+ldr r3, [sp, 0x18]
+cmp r3, 0x2d
+beq 0x61920
+mov r0, r7
+ldrb r1, [sb]
+bl sym.__GI_strchr
+cmp r0, 0
+bne 0x619a8
+cmp r8, 0
+beq 0x6197c
+ldr ip, [sp, 0x18]
+ldr r3, [0x00061b78]
+cmp ip, 0x2d
+bne 0x61958
+ldr r3, [r4, r3]
+ldr r1, [0x00061b8c]
+ldr r2, [r5]
+ldr r0, [r3]
+mov r3, sb
+add r1, r4, r1
+[31mbl sym.fprintf[0m
+b 0x6197c
+ldr r2, [r4, r3]
+ldr r0, [sp, 0x14]
+ldr r1, [0x00061b90]
+ldrb r3, [r0]
+add r1, r4, r1
+str sb, [sp]
+ldr r0, [r2]
+ldr r2, [r5]
+[31mbl sym.fprintf[0m
+ldr r3, [0x00061b6c]
+ldr r1, [0x00061b94]
+--
+streq r2, [r4, sb]
+cmp r6, 0x3a
+cmpne r0, 0
+bne 0x61a4c
+cmp r8, 0
+beq 0x61a38
+ldr r3, [0x00061b6c]
+add r3, r4, r3
+ldr r3, [r3, 0x18]
+cmp r3, 0
+ldr r3, [0x00061b78]
+ldrne r3, [r4, r3]
+ldrne r1, [0x00061b98]
+ldrne r0, [r3]
+ldreq r3, [r4, r3]
+ldreq r1, [0x00061b9c]
+ldreq r0, [r3]
+add r1, r4, r1
+ldr r2, [r5]
+mov r3, r6
+[31mbl sym.fprintf[0m
+ldr r3, [0x00061b6c]
+add r3, r4, r3
+--
+beq 0x61a9c
+add r2, r4, r3
+str sl, [r2, 8]
+ldr r2, [r4, r3]
+b 0x61afc
+ldr r2, [r4, r3]
+add r1, r4, r3
+cmp r2, fp
+ldrne r0, [r5, r2, lsl 2]
+strne r0, [r1, 8]
+bne 0x61afc
+cmp r8, 0
+beq 0x61adc
+ldr r3, [0x00061b78]
+ldr r1, [0x00061ba0]
+ldr r2, [r5]
+ldr r3, [r4, r3]
+add r1, r4, r1
+ldr r0, [r3]
+mov r3, r6
+[31mbl sym.fprintf[0m
+ldr r3, [0x00061b6c]
+add r3, r4, r3
+--
+ble 0x63550
+add r3, r5, r2
+ldrb r3, [r3, -1]
+cmp r3, 0x2f
+beq 0x63534
+add r3, sl, 8
+add r3, r3, r2
+cmp r7, r3
+bhs 0x63574
+bl sym.__errno_location
+mov r3, 0x16
+str r3, [r0]
+mvn r0, 0
+b 0x63594
+ldr r1, [0x000635a4]
+mov r0, r6
+mov r3, r5
+str sl, [sp]
+str r8, [sp, 4]
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+mov r0, 0
+pop {r1, r2, r3, r4, r5, r6, r7, r8, sl, pc}
+--
+rev r1, r1
+cmp r1, 0x10
+addls r0, r0, 4
+strls r1, [r4, 0x10]
+bls 0x6a720
+b 0x6a7bc
+ldr r8, [r0], 4
+ldr ip, [r4, 0x14]
+rev r8, r8
+str r8, [ip, r3, lsl 2]
+add r3, r3, 1
+cmp r3, r1
+blo 0x6a70c
+add r3, r1, 5
+add r3, r2, r3, lsl 2
+cmp r3, r7
+bls 0x6a778
+ldr r0, [0x0006a7e8]
+mov r3, r7
+add r0, sb, r0
+[31mbl sym.printf[0m
+b 0x6a7bc
+mov r0, sp
+--
+mov r3, 0x16
+str r3, [r0]
+mvn r0, 0
+b 0x6b760
+mov r0, r4
+mov r1, r5
+bl sym.strcpy
+mov r0, 0
+add sp, sp, 0x188
+pop {r4, r5, r6, pc}
+push {r0, r1, r2, r3}
+ldr r3, [0x0006b7a0]
+push {r0, r1, r2, lr}
+add r3, pc, r3
+ldr r1, [0x0006b7a4]
+add r2, sp, 0x14
+str r2, [sp, 4]
+ldr r3, [r3, r1]
+ldr r1, [sp, 0x10]
+ldr r0, [r3]
+[31mbl sym.__GI_vfprintf[0m
+pop {r1, r2, r3, lr}
+add sp, sp, 0x10
+--
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x410
+sub sp, sp, 4
+ldr r6, [0x0006bac4]
+mov r4, r0
+mov r7, r1
+bl 0x6b844
+subs r5, r0, 0
+add r6, pc, r6
+beq 0x6bab4
+ldr r3, [r4, 4]
+add r1, sp, 0x400
+mov r0, r4
+add r1, r1, 4
+ldr r3, [r3, 8]
+blx r3
+ldr r1, [0x0006bac8]
+mov r2, r7
+mov r0, r5
+add r1, r6, r1
+[31mbl sym.sprintf[0m
+add r4, r5, r0
+ldr r0, [sp, 0x404]
+--
+mov r7, 0
+ldr r1, [0x0006bad4]
+mov r0, r4
+add r1, r6, r1
+bl sym.strcpy
+mov r0, r4
+bl sym.strlen
+cmp r7, 0
+add r4, r4, r0
+beq 0x6ba64
+mov r0, r4
+mov r1, r7
+bl sym.strcpy
+mov r0, r4
+bl sym.strlen
+b 0x6baa0
+ldr r1, [0x0006bad8]
+mov r0, r4
+ldr r2, [sp, 0x408]
+add r1, r6, r1
+[31mbl sym.sprintf[0m
+b 0x6baa0
+mov r0, r4
+ldr r1, [0x0006badc]
+b 0x6ba90
+ldr r1, [0x0006bae0]
+mov r0, r4
+add r1, r6, r1
+ldr r2, [sp, 0x408]
+ldr r3, [sp, 0x40c]
+[31mbl sym.sprintf[0m
+add r4, r4, r0
+mov r3, 0xa
+--
+ldr r1, [r3]
+pop {r4, lr}
+b sym.__GI_fputs
+andeq fp, r1, r4, lsl 16
+andeq r0, r0, r8, ror 2
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x400
+sub sp, sp, 4
+ldr r4, [0x0006bc2c]
+mov r7, r0
+bl 0x6b844
+subs r6, r0, 0
+add r4, pc, r4
+beq 0x6bc1c
+bl sym.__GI___rpc_thread_createerr
+ldr r1, [0x0006bc30]
+mov r2, r7
+mov r5, r0
+mov r0, r6
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+add r7, r6, r0
+ldr r0, [r5]
+--
+bne 0x6c208
+ldr r4, [sp, 0xc]
+add r3, sp, 0x60
+rsb r2, r7, r3
+mov r1, r7
+sub r2, r2, 0x22
+add r0, r4, 0xc
+bl 0x6bee8
+cmp r0, 0
+beq 0x6c298
+mov r0, r7
+bl sym.strlen
+add r7, r7, r0
+b 0x6c240
+add r1, sp, 0x60
+mov r0, r7
+add r3, r1, sl, lsl 2
+mov r1, r4
+ldr r2, [r3, -0x20]
+str ip, [sp, 4]
+[31mbl sym.sprintf[0m
+ldr ip, [sp, 4]
+add r7, r7, r0
+
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m132[0m times [0;33mntfs-3g[0m
+

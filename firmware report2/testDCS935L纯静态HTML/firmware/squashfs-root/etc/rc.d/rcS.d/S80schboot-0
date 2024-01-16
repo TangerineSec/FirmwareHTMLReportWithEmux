@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# camsvr: This starts and stops schboot.
+#
+# chkconfig: 2345 80 10
+# description: schboot
+#
+# processname: /usr/sbin/schboot
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+start() {
+	echo -n "Starting schboot ... "
+	cd /usr/sbin; ./schboot &
+	echo "."
+}
+
+stop() {
+	echo -n "Stopping schboot ... "
+	#kill `pidof schboot`
+	killall schboot
+	echo "."
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

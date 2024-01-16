@@ -1,0 +1,84 @@
+[[0;33m*[0m] Binary protection state of [0;33mNetUSB.ko[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mREL[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mNetUSB.ko[0m
+
+     56c:	e3500000 	cmp	r0, #0
+     570:	159d0004 	ldrne	r0, [sp, #4]
+     574:	03e00000 	mvneq	r0, #0
+     578:	e8bd800e 	pop	{r1, r2, r3, pc}
+
+0000057c <ks_inet_ntoa>:
+     57c:	e92d4070 	push	{r4, r5, r6, lr}
+     580:	e24dd030 	sub	sp, sp, #48	; 0x30
+     584:	e7e73450 	ubfx	r3, r0, #8, #8
+     588:	e58d000c 	str	r0, [sp, #12]
+     58c:	e1a04001 	mov	r4, r1
+     590:	e1a06002 	mov	r6, r2
+     594:	e7e71850 	ubfx	r1, r0, #16, #8
+     598:	e6ef2070 	uxtb	r2, r0
+     59c:	e1a00c20 	lsr	r0, r0, #24
+     5a0:	e28d5010 	add	r5, sp, #16
+     5a4:	e58d1000 	str	r1, [sp]
+     5a8:	e58d0004 	str	r0, [sp, #4]
+     5ac:	e1a00005 	mov	r0, r5
+     5b0:	e59f102c 	ldr	r1, [pc, #44]	; 5e4 <ks_inet_ntoa+0x68>
+[31m     5b4:	ebfffffe 	bl	0 <sprintf>[0m
+     5b8:	e1a00005 	mov	r0, r5
+     5bc:	ebfffffe 	bl	0 <strlen>
+--
+   12864:	e3a03000 	mov	r3, #0
+   12868:	e5803010 	str	r3, [r0, #16]
+   1286c:	e580300c 	str	r3, [r0, #12]
+   12870:	e1a00003 	mov	r0, r3
+   12874:	e12fff1e 	bx	lr
+
+00012878 <inet_ntop4>:
+   12878:	e92d4070 	push	{r4, r5, r6, lr}
+   1287c:	e1a05001 	mov	r5, r1
+   12880:	e5d01002 	ldrb	r1, [r0, #2]
+   12884:	e24dd018 	sub	sp, sp, #24
+   12888:	e1a06002 	mov	r6, r2
+   1288c:	e28d4008 	add	r4, sp, #8
+   12890:	e5d02000 	ldrb	r2, [r0]
+   12894:	e5d03001 	ldrb	r3, [r0, #1]
+   12898:	e58d1000 	str	r1, [sp]
+   1289c:	e5d01003 	ldrb	r1, [r0, #3]
+   128a0:	e1a00004 	mov	r0, r4
+   128a4:	e58d1004 	str	r1, [sp, #4]
+   128a8:	e59f102c 	ldr	r1, [pc, #44]	; 128dc <inet_ntop4+0x64>
+[31m   128ac:	ebfffffe 	bl	0 <sprintf>[0m
+   128b0:	e3500000 	cmp	r0, #0
+   128b4:	ba000005 	blt	128d0 <inet_ntop4+0x58>
+--
+   12abc:	1a00000e 	bne	12afc <inet_ntop+0x21c>
+   12ac0:	e59d3044 	ldr	r3, [sp, #68]	; 0x44
+   12ac4:	e1530009 	cmp	r3, r9
+   12ac8:	1a00000b 	bne	12afc <inet_ntop+0x21c>
+   12acc:	e28d3060 	add	r3, sp, #96	; 0x60
+   12ad0:	e284000c 	add	r0, r4, #12
+   12ad4:	e0662003 	rsb	r2, r6, r3
+   12ad8:	e1a01006 	mov	r1, r6
+   12adc:	e2422032 	sub	r2, r2, #50	; 0x32
+   12ae0:	ebffff64 	bl	12878 <inet_ntop4>
+   12ae4:	e3500000 	cmp	r0, #0
+   12ae8:	0a000020 	beq	12b70 <inet_ntop+0x290>
+   12aec:	e1a00006 	mov	r0, r6
+   12af0:	ebfffffe 	bl	0 <strlen>
+   12af4:	e0866000 	add	r6, r6, r0
+   12af8:	ea00000a 	b	12b28 <inet_ntop+0x248>
+   12afc:	e28d3030 	add	r3, sp, #48	; 0x30
+   12b00:	e1a00006 	mov	r0, r6
+   12b04:	e59f106c 	ldr	r1, [pc, #108]	; 12b78 <inet_ntop+0x298>
+   12b08:	e7932107 	ldr	r2, [r3, r7, lsl #2]
+[31m   12b0c:	ebfffffe 	bl	0 <sprintf>[0m
+   12b10:	e3500000 	cmp	r0, #0
+   12b14:	ba000014 	blt	12b6c <inet_ntop+0x28c>
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m3[0m times [0;33mNetUSB.ko[0m
+

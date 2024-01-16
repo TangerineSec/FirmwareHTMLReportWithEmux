@@ -1,0 +1,386 @@
+#!/bin/sh
+set -x
+
+Parameter_num=$#
+Parameter_one=$1
+PathNow=`dirname $0`  #当前执行appshell的路径
+PathInstall="/opt/app"
+LastValue=
+IpkName="thunder*.ipk"
+BinName="EmbedThunderManager"
+LICENSE='14030500010000022000810qz8y9ijosstqslmemve'
+
+#1，判断参数是否合法
+FunParamLegal()
+{
+	if [ ${Parameter_num} -ne 1 ];then
+		echo "Fail:Parameter Err."
+		exit 1
+	fi
+}
+
+#CheckBindingStatus
+#return 0 ok
+#return 1 need to re-bind
+#return 2 not running or error
+#return 3 not bound
+CheckBindingStatus()
+{
+  mkdir /tmp/thunder
+  rm /tmp/thunder/checkloginstatus_getsysinfo
+  touch /tmp/thunder/checkloginstatus_getsysinfo
+  wget http://localhost:9000/getsysinfo -O /tmp/thunder/checkloginstatus_getsysinfo
+  actcode=$(cat /tmp/thunder/checkloginstatus_getsysinfo)
+  if [ "$actcode" != "" ]; then
+	actcode=$(cat /tmp/thunder/checkloginstatus_getsysinfo | cut -d "," -f5 | cut -d "\"" -f2)
+  bounduser=$(cat /tmp/thunder/checkloginstatus_getsysinfo | cut -d "," -f8 | cut -d "\"" -f2)
+  ret=0
+	if [  "$actcode" == ""  -a "$bounduser" != "" ]; then
+    #connected and bound
+		ret=0
+	elif [ "$actcode" == ""  -a "$bounduser" == "" ]; then
+    #not connected
+    ret=1
+  elif [ "$actcode" != ""  -a "$bounduser" == "" ]; then
+    #not bound
+    ret=3
+  else
+      #connection error
+      ret=2
+  fi
+else
+	#"迅雷远程未启动"
+	ret=2
+fi
+echo ${ret}
+}
+
+#查看进程号
+CheckProgressNum()
+{
+	local L_NumProgress=""
+	local L_Line=""
+	local L_TmpFile="/tmp/NumProgress_thunder"
+	local L_Tmp=""
+	
+	sleep 1
+	ps | grep "${BinName}" > ${L_TmpFile}
+	
+	while read L_Line
+	do
+		L_Tmp=`echo ${L_Line} | grep "grep ${BinName}"`
+		if [ "${L_Tmp}" == "" ];then
+			L_Tmp=$(basename $(echo ${L_Line} | awk -F " " '{print $5}' | awk -F " " '{print $1}'))
+			if [ "${L_Tmp}" != "${BinName}" ];then
+				continue
+			else
+				L_NumProgress=`echo ${L_Line} | awk -F " " '{print $1}'`
+				break
+			fi
+		fi
+		
+		break			
+	done < ${L_TmpFile}
+
+	rm -f ${L_TmpFile}
+	
+	echo ${L_NumProgress}
+}
+
+
+#安装函数
+Install()
+{
+	local L_ExitStatus=0
+
+	#进入当前 appshell 的目录
+	chmod +x ${PathInstall}/thunder/appshell
+	rm -rf /tmp/thunder/cfgbackup
+	mkdir /tmp/thunder
+	mkdir /tmp/thunder/cfgbackup
+	cp ${PathInstall}/thunder/cfg/* /tmp/thunder/cfgbackup/
+	${PathInstall}/thunder/appshell uninstall
+	cd ${PathNow}
+	
+	#查看/opt/app 目录是否存在 ,如果不存在则创建这样一个目录
+	if [ ! -d "${PathInstall}" ];then
+		mkdir -p ${PathInstall}
+	fi
+	
+	#ipk 文件存在
+	if [ -f ${IpkName} ];then
+		tar xzvf ${IpkName} -C ${PathInstall}
+		LastValue=$?
+		if [ ${LastValue} -eq 0 ];then
+			chmod +x ${PathInstall}/thunder/portal
+			chmod +x ${PathInstall}/thunder/lib/*
+			chmod +x ${PathInstall}/thunder/bin/*
+			mkdir ${PathInstall}/thunder/cfg
+			cp /tmp/thunder/cfgbackup/* ${PathInstall}/thunder/cfg/ 
+			echo "Success."
+			L_ExitStatus=0
+		else
+			echo "Fail:Install Err."
+			L_ExitStatus=3
+		fi
+	else
+		echo "Fail:Install file is not exist."
+		L_ExitStatus=2
+	fi
+	cd -
+	exit ${L_ExitStatus}
+}
+
+#卸载函数
+unInstall()
+{
+	local L_ExitStatus=0
+	local L_NumProgress=""
+
+	#杀掉线程
+	cd ${PathNow}
+	./portal -s
+	sleep 1
+	killall -9 ETMDaemon
+	killall -9 EmbedThunderManager
+	sleep 1
+	L_NumProgress=`CheckProgressNum`
+	if [ "${L_NumProgress}" != "" ];then
+		kill -9 ${L_NumProgress}
+	fi
+	
+	#进入当前 appshell 的目录
+	cd ${PathNow}
+		rm  -fr ../thunder
+	cd -
+	
+	#删除其他软连接
+	
+	exit ${L_ExitStatus}
+}
+
+#启动函数
+Start()
+{
+	local L_ExitStatus=0
+	local L_NumProgress=""
+	mkdir /app_cfg
+	ln -s /usr/local/thunder /app_cfg/thunder
+	
+	#杀掉线程
+	cd ${PathNow}
+	./portal -s
+	sleep 1
+	killall -9 ETMDaemon
+	killall -9 EmbedThunderManager
+	sleep 1
+	L_NumProgress=`CheckProgressNum`
+	if [ "${L_NumProgress}" != "" ];then
+		kill -9 ${L_NumProgress}
+	fi
+	
+	#进入当前 appshell 的目录
+	cd ${PathNow}
+	
+	#查看bin文件是否存在
+	if [ -f portal ];then
+		chmod +x portal
+		#./portal -s
+		rm -f /tmp/thunder/log
+		mkdir /tmp/thunder
+		./portal -l ${LICENSE} > /tmp/thunder/log &
+		LastValue=$?
+		sleep 2
+		
+		for j in $(seq 3);do
+      cbs=`CheckBindingStatus`
+      if [ "${cbs}" == "1" -o "${cbs}" == "2" ];then
+        ./portal -s
+        sleep 1
+        ./portal -l ${LICENSE} > /tmp/thunder/log &
+        LastValue=$?
+        sleep 1
+        wget http://localhost:9000/syswakeup -O /tmp/thunder/syswakeup
+        sleep $j
+      else
+        break;
+      fi
+    done
+    
+		if [ ${LastValue} -eq 0 ];then
+			echo "Success."
+			L_ExitStatus=0
+		else
+			echo "Fail:Start Err."
+			L_ExitStatus=4
+		fi
+		
+	else
+		echo "Fail:thunder[bin file] is not exist."
+		L_ExitStatus=5
+	fi
+	
+	cd -	
+
+	exit ${L_ExitStatus}	
+}
+
+#停止函数
+Stop()
+{
+	local L_ExitStatus=0
+	local L_NumProgress=""
+	
+	#杀掉线程
+	cd ${PathNow}
+	wget http://localhost:9000/stopthunder -O /tmp/thunder/stop.log
+	./portal -s
+	sleep 1
+	killall -9 ETMDaemon
+	killall -9 EmbedThunderManager
+	sleep 1
+	L_NumProgress=`CheckProgressNum`
+	if [ "${L_NumProgress}" != "" ];then
+		kill -9 ${L_NumProgress}
+		LastValue=$?
+		if [ ${LastValue} -eq 0 ];then
+			echo "Success."
+			L_ExitStatus=0
+		else
+			echo "Fail:Stop Err."
+			L_ExitStatus=4
+		fi
+	else
+		echo "Success."
+		L_ExitStatus=0		
+	fi
+		
+	exit ${L_ExitStatus}	
+}
+
+
+#重新启动函数
+Restart()
+{
+	local L_ExitStatus=0
+	local L_NumProgress=""
+	
+	#杀掉线程
+	wget http://localhost:9000/stopthunder -O /tmp/thunder/stop.log
+	cd ${PathNow}
+	./portal -s
+	sleep 1
+	killall -9 ETMDaemon
+	killall -9 EmbedThunderManager
+	sleep 1
+	L_NumProgress=`CheckProgressNum`
+	if [ "${L_NumProgress}" != "" ];then
+		kill -9 ${L_NumProgress}
+	fi	
+	
+	#进入当前 appshell 的目录
+	cd ${PathNow}
+	
+	#查看bin文件是否存在
+	if [ -f portal ];then
+		chmod +x portal
+		#./portal -s
+		rm -f /tmp/thunder/log
+		mkdir /tmp/thunder
+		./portal -l ${LICENSE} > /tmp/thunder/log &
+		LastValue=$?
+		sleep 2
+		
+		for j in $(seq 3);do
+      cbs=`CheckBindingStatus`
+      if [ "${cbs}" == "1" -o "${cbs}" == "2" ];then
+        ./portal -s
+        sleep 1
+        ./portal -l ${LICENSE} > /tmp/thunder/log &
+        LastValue=$?
+        sleep 1
+        wget http://localhost:9000/syswakeup -O /tmp/thunder/syswakeup
+        sleep $j
+      else
+        break;
+      fi
+    done
+		
+		if [ ${LastValue} -eq 0 ];then
+			echo "Success."
+			L_ExitStatus=0
+		else
+			echo "Fail:Start Err."
+			L_ExitStatus=4
+		fi
+		
+	else
+		echo "Fail:portal[bin file] is not exist."
+		L_ExitStatus=5
+	fi
+	
+	cd -	
+	exit ${L_ExitStatus}	
+}
+
+#查看运行状态函数
+CheckRunStatus()
+{
+	local L_ExitStatus=0
+	local L_NumProgress=""
+	
+	#查看程序运行状态
+	L_NumProgress=`CheckProgressNum`
+	if [ "${L_NumProgress}" != "" ];then
+		echo "Success."
+		L_ExitStatus=0
+	else
+		echo "Success."
+		L_ExitStatus=1		
+	fi	
+
+	exit ${L_ExitStatus}	
+}
+
+#主函数
+Main()
+{
+	#安装
+	if [ "${Parameter_one}" = "install" ];then
+		Install
+	
+	#卸载
+	elif [ "${Parameter_one}" = "uninstall" ];then
+		unInstall
+	
+	#启动
+	elif [ "${Parameter_one}" = "start" ];then
+		Start
+	
+	#停止
+	elif [ "${Parameter_one}" = "stop" ];then
+		Stop	
+	
+	#重启
+	elif [ "${Parameter_one}" = "restart" ];then
+		Restart
+		
+	#查看运行状态
+	elif [ "${Parameter_one}" = "runstatus" ];then
+		CheckRunStatus
+		
+	elif [ "${Parameter_one}" == "bindingstatus" ];then
+    CheckBindingStatus
+		
+	#输入参数错误
+	else
+		echo "ERR:Parameter Err."
+		exit 1	
+	fi
+}
+
+#检查参数是否合法
+FunParamLegal
+
+#执行主函数
+Main

@@ -1,0 +1,254 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 4:[0m
+[0mSTART=60[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 7:[0m
+[0m	local interface[0m
+[33m        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 8:[0m
+[0m	config_get interface $1 interface "loopback lan"[0m
+[32m                             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get interface "$1" interface "loopback lan"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 11:[0m
+[0m	local interfaces=$([0m
+[33m        ^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m              ^--------^ SC2155 (warning): Declare and assign separately to avoid masking return values.[0m
+[33m                         ^-- SC2046 (warning): Quote this to prevent word splitting.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 12:[0m
+[0m		. /lib/functions/network.sh[0m
+[32m                  ^-----------------------^ SC1091 (info): Not following: /lib/functions/network.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 14:[0m
+[0m		local net[0m
+[33m                ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 16:[0m
+[0m			local device[0m
+[33m                        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 18:[0m
+[0m				local subnet[0m
+[33m                                ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 19:[0m
+[0m				network_get_subnet  subnet "$net" && echo -n "$subnet "[0m
+[33m                                                                          ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 20:[0m
+[0m				network_get_subnet6 subnet "$net" && echo -n "$subnet "[0m
+[33m                                                                          ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 23:[0m
+[0m			echo -n "${device:-$net} "[0m
+[33m                             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 27:[0m
+[0m	local name workgroup description charset[0m
+[33m        ^-- SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 28:[0m
+[0m	local hostname="$(uci_get system.@system[0].hostname)"[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m              ^------^ SC2155 (warning): Declare and assign separately to avoid masking return values.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 30:[0m
+[0m	config_get name        $1 name        "${hostname:-OpenWrt}"[0m
+[32m                               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get name        "$1" name        "${hostname:-OpenWrt}"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 31:[0m
+[0m	config_get workgroup   $1 workgroup   "${hostname:-OpenWrt}"[0m
+[32m                               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get workgroup   "$1" workgroup   "${hostname:-OpenWrt}"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 32:[0m
+[0m	config_get description $1 description "Samba on ${hostname:-OpenWrt}"[0m
+[32m                               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get description "$1" description "Samba on ${hostname:-OpenWrt}"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 33:[0m
+[0m	config_get charset     $1 charset     "UTF-8"[0m
+[32m                               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get charset     "$1" charset     "UTF-8"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 43:[0m
+[0m	local homes[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 44:[0m
+[0m	config_get_bool homes $1 homes 0[0m
+[32m                              ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get_bool homes "$1" homes 0
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 45:[0m
+[0m	[ $homes -gt 0 ] && {[0m
+[32m          ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ "$homes" -gt 0 ] && {
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 60:[0m
+[0m	local name[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 61:[0m
+[0m	local path[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 62:[0m
+[0m	local users[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 63:[0m
+[0m	local read_only[0m
+[33m        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 64:[0m
+[0m	local guest_ok[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 65:[0m
+[0m	local create_mask[0m
+[33m        ^---------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 66:[0m
+[0m	local dir_mask[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 68:[0m
+[0m	config_get name $1 name[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get name "$1" name
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 69:[0m
+[0m	config_get path $1 path[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get path "$1" path
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 70:[0m
+[0m	config_get users $1 users[0m
+[32m                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get users "$1" users
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 71:[0m
+[0m	config_get read_only $1 read_only[0m
+[32m                             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get read_only "$1" read_only
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 72:[0m
+[0m	config_get guest_ok $1 guest_ok[0m
+[32m                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get guest_ok "$1" guest_ok
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 73:[0m
+[0m	config_get create_mask $1 create_mask[0m
+[32m                               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get create_mask "$1" create_mask
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 74:[0m
+[0m	config_get dir_mask $1 dir_mask[0m
+[32m                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_get dir_mask "$1" dir_mask
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 76:[0m
+[0m	[ -z "$name" -o -z "$path" ] && return[0m
+[33m                     ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 78:[0m
+[0m	echo -e "\n[$name]\n\tpath = $path" >> /var/etc/smb.conf[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 79:[0m
+[0m	[ -n "$users" ] && echo -e "\tvalid users = $users" >> /var/etc/smb.conf[0m
+[33m                                ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 80:[0m
+[0m	[ -n "$read_only" ] && echo -e "\tread only = $read_only" >> /var/etc/smb.conf[0m
+[33m                                    ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 81:[0m
+[0m	[ -n "$guest_ok" ] && echo -e "\tguest ok = $guest_ok" >> /var/etc/smb.conf[0m
+[33m                                   ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 82:[0m
+[0m	[ -n "$create_mask" ] && echo -e "\tcreate mask = $create_mask" >> /var/etc/smb.conf[0m
+[33m                                      ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/samba line 83:[0m
+[0m	[ -n "$dir_mask" ] && echo -e "\tdirectory mask = $dir_mask" >> /var/etc/smb.conf[0m
+[33m                                   ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2155 -- Declare and assign separately to ...

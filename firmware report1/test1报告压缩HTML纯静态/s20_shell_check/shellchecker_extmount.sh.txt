@@ -1,0 +1,62 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 9:[0m
+[0m	root_device="$(mount | grep ' / ' | cut -f1 -d\  | grep -v rootfs )"[0m
+[33m        ^---------^ SC2034 (warning): root_device appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 13:[0m
+[0m	jffs="$(awk '/jffs2/ {print $2}' /proc/mounts)"[0m
+[33m        ^--^ SC2034 (warning): jffs appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 21:[0m
+[0m	local modules="$(cat /tmp/extroot_modules/modules.d/* 2>/dev/null)"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m              ^-----^ SC2155 (warning): Declare and assign separately to avoid masking return values.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 29:[0m
+[0m	mount -o move /proc $1/proc && \[0m
+[32m                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o move /proc "$1"/proc && \
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 30:[0m
+[0m	pivot_root $1 $1$2 && {[0m
+[32m                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	pivot_root "$1" "$1""$2" && {
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 31:[0m
+[0m		mount -o move $2/dev /dev[0m
+[32m                              ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mount -o move "$2"/dev /dev
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 32:[0m
+[0m		mount -o move $2/tmp /tmp[0m
+[32m                              ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mount -o move "$2"/tmp /tmp
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/extmount.sh line 33:[0m
+[0m		mount -o move $2/sys /sys 2>&-[0m
+[32m                              ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mount -o move "$2"/sys /sys 2>&-
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- jffs appears unused. Verify use (...
+  https://www.shellcheck.net/wiki/SC2155 -- Declare and assign separately to ...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.

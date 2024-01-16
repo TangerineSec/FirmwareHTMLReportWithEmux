@@ -1,0 +1,64 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibcom_err.so.2.1[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibcom_err.so.2.1[0m
+
+lw s2, 0x28(sp)
+lw s1, 0x24(sp)
+lw s0, 0x20(sp)
+jr t9
+addiu sp, sp, 0x30
+lw v0, (v0)
+bnel v0, zero, 0xfc4
+lw v1, 4(v0)
+lw t9, -sym.et_list_unlock(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+lw s2, -0x7fe8(gp)
+lw a1, -0x7fdc(gp)
+lw t9, -sym.imp.strcpy(gp)
+addiu a0, s2, 0x1e50
+jalr t9
+addiu a1, a1, 0x1c54
+beqz s1, 0x10a4
+lw gp, 0x10(sp)
+lw t9, -sym.error_table_name(gp)
+jalr t9
+move a0, s1
+lw gp, 0x10(sp)
+addiu a0, s2, 0x1e50
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+move a1, v0
+lw gp, 0x10(sp)
+addiu a0, s2, 0x1e50
+lw a1, -0x7fdc(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+addiu a1, a1, 0x1c60
+addiu v0, s2, 0x1e50
+lb v1, (v0)
+bnel v1, zero, 0x10a8
+addiu v0, v0, 1
+slti v1, s0, 0x64
+bnez v1, 0x10e4
+slti v1, s0, 0xa
+addiu v1, zero, 0x64
+div zero, s0, v1
+teq v1, zero, 7
+mflo v1
+addiu v1, v1, 0x30
+sb v1, (v0)
+mfhi s0
+b 0x10ec
+addiu v0, v0, 1
+bnel v1, zero, 0x1110
+addiu s0, s0, 0x30
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m2[0m times [0;33mlibcom_err.so.2.1[0m
+

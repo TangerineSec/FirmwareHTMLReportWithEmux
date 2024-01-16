@@ -1,0 +1,55 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibuClibc-0.9.33.2.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[33mPartial RELRO[0m  [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mlibuClibc-0.9.33.2.so[0m
+
+[31mlw t9, -sym.mmap(gp)[0m
+sw zero, 0x10(sp)
+sw zero, 0x14(sp)
+move a0, zero
+move a1, s1
+addiu a2, zero, 3
+jalr t9
+addiu a3, zero, 0x802
+addiu v1, zero, -1
+beq v0, v1, 0x46800
+lw gp, 0x18(sp)
+andi v1, v0, 7
+beql v1, zero, 0x46794
+sw zero, (v0)
+addiu a0, zero, 8
+subu v1, a0, v1
+addu v0, v0, v1
+sw v1, (v0)
+subu v1, s1, v1
+b 0x46798
+ori v1, v1, 2
+--
+[31mlw t9, -sym.mmap(gp)[0m
+sw zero, 0x10(sp)
+sw zero, 0x14(sp)
+move a0, zero
+move a1, s1
+addiu a2, zero, 3
+jalr t9
+addiu a3, zero, 0x802
+move s7, v0
+addiu v0, zero, -1
+beq s7, v0, 0x468ec
+lw gp, 0x18(sp)
+lw v1, -obj.__malloc_state(gp)
+addiu a0, zero, -2
+addu v0, s7, s1
+lw a1, 0x360(v1)
+and a0, a1, a0
+b 0x468ec
+sw a0, 0x360(v1)
+addiu s7, zero, -1
+addiu a1, zero, -1
+
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m2[0m times [0;33mlibuClibc-0.9.33.2.so[0m
+

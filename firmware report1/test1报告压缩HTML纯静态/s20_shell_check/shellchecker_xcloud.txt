@@ -1,0 +1,33 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xcloud line 5:[0m
+[0mSTART=52[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xcloud line 6:[0m
+[0mexport LD_LIBRARY_PATH=/usr/local/xcloud/lib:$LD_LIBRARY_PATH[0m
+[32m                                             ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+export LD_LIBRARY_PATH=/usr/local/xcloud/lib:"$LD_LIBRARY_PATH"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xcloud line 20:[0m
+[0m	for PID in `/bin/ps | grep xCloudClient | grep -v grep | awk  '{print $1}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	for PID in $(/bin/ps | grep xCloudClient | grep -v grep | awk  '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/xcloud line 22:[0m
+[0m		/bin/kill -9 $PID[0m
+[32m                             ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		/bin/kill -9 "$PID"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

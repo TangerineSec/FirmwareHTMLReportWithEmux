@@ -1,0 +1,179 @@
+#!/bin/sh
+#set -x
+
+##### 只有一个参数，有四种情况			#####
+##### all, 停止所有app					#####
+##### udisk	 , 停止所有Udisk里面app 	#####
+##### rom 	 , 停止所有rom里面app  		#####
+##### ID	 , 停止指定ID 的app的    	#####
+
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_SuccessFlag=0   #0 ,表示全部停止成功，非零数字表示有几个程序没有停止成功
+G_APP_INSTALLED_DIR=""
+G_StateFile="/usr/local/app/StateFile"  #用于存放app的运行状态，格式为ID,状态//ID，状态 
+G_Parameter_all=$*
+G_ValueLast=
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 1 ];then
+		xRouterLog 2 "appStop" "FunParamLegal" "Parameter Err."
+		exit 1
+	fi
+}
+
+#删掉StateFile文件
+FunDelStateFile()
+{
+	rm -f ${G_StateFile}
+}
+
+#获取配置文件的路径
+FunGetConfigPath()
+{
+	OfficeAppPath="/usr/local/app/appinstalled/"
+	AllOfficeAppFile=`ls $OfficeAppPath`
+		
+	for EachOfficeAppFile in ${AllOfficeAppFile}
+	do 
+		if [ ${G_Parameter_one} = "$EachOfficeAppFile" ];then
+					isOfficeApp="YES"
+					break
+		fi
+	done
+		
+	if [ ${isOfficeApp} = "YES" ];then
+		isOfficeApp="NO"
+		G_APP_INSTALLED_DIR="/usr/local/app/appinstalled/"
+	else
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		mkdir -p /opt/app/appinstalled
+	fi
+	
+	xRouterLog 0 "appStop" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+}
+
+#停止指定ID的app
+StopIdApp()
+{	
+	local Path=""
+	local ValueLast=""
+	
+	cd ${G_APP_INSTALLED_DIR}
+	#指定ID的文件不存在
+	if [ ! -f "${G_Parameter_one}" ];then
+		cd -
+		xRouterLog 2 "appStop" "StopIdApp" "${G_APP_INSTALLED_DIR}/${G_Parameter_one} is not exist."
+		exit 1
+	fi
+	
+	Path=`cat ${G_Parameter_one} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+	
+	#没有找到路径
+	if [ "${Path}" == "" ];then
+		cd -
+		xRouterLog 2 "appStop" "StopIdApp" "${Path} is Null."
+		exit 1
+	else
+		G_AppPath=${Path}
+		cd -
+		cd ${G_AppPath}
+		./appshell stop
+		ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 "appStop" "StopIdApp" "${G_AppPath}/appshell stop fail.${ValueLast}"
+		fi
+		
+		cd -
+		xRouterLog 0 "appStop" "StopIdApp" "${G_AppPath}/appshell stop success."
+		echo ${ValueLast}
+		exit ${ValueLast}
+	fi
+	FunDelStateFile	
+}
+
+#停止U盘里面的app
+StopUdiskApp()
+{	
+	local File=""
+	local Path=""
+	local RunWay=""
+	local ValueLast=
+	local AppState=""
+	
+	cd ${G_APP_INSTALLED_DIR}
+	
+	for File in `ls`
+	do
+		Path=`cat ${File} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+		
+		#没有找到路径
+		if [ "${Path}" == "" ];then
+			xRouterLog 2 "appStop" "StopUdiskApp" "plugin_IntallPath in ${File} is Null."
+			G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+			continue
+		else
+			G_AppPath=${Path}
+			../appCheckStatus ${File}
+			cd ${G_AppPath}
+			
+			AppState=`cat ${G_StateFile} |awk -F "," '{print $2}' |awk -F " " '{print $1}'`
+			
+			#APP正在运行，则执行关闭程序
+			if [ "${AppState}" == "7" ];then
+				./appshell stop
+				ValueLast=$?
+				if [ ${ValueLast} -ne 0 ];then
+					xRouterLog 2 "appStop" "StopUdiskApp" "${Path}/appshell stop fail.${ValueLast}"
+					G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+				fi			
+			fi
+	
+		fi			
+		cd ${G_APP_INSTALLED_DIR}
+	done
+	FunDelStateFile
+	
+	if [ ${G_SuccessFlag} -eq 0 ];then
+		xRouterLog 0 "appStop" "StopUdiskApp" "Stop all success."
+	fi
+	exit ${G_SuccessFlag}
+}
+
+StopAllApp()
+{
+	exit 0
+}
+StopRomApp()
+{
+	exit 0
+}
+
+StopApp()
+{
+	if [ "${G_Parameter_one}" == "all" ];then
+		StopAllApp
+	elif [ "${G_Parameter_one}" == "udisk" ];then
+		StopUdiskApp
+	elif [ "${G_Parameter_one}" == "rom" ];then
+		StopRomApp	
+	else
+		StopIdApp
+	fi	
+}
+
+###### 开始执行程序，程序入口  ########
+xRouterLog 0 "appStart" - "`basename $0` ${G_Parameter_all}."
+
+#检查参数合法性
+FunParamLegal
+
+#获取配置文件路径
+FunGetConfigPath
+
+#停止APP
+StopApp

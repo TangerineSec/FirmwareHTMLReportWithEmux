@@ -1,0 +1,141 @@
+[[0;33m*[0m] Binary protection state of [0;33migd[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33migd[0m
+
+    9094:	0000b3dc 	ldrdeq	fp, [r0], -ip
+    9098:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+    909c:	e1a05000 	mov	r5, r0
+    90a0:	e24dd0b4 	sub	sp, sp, #180	; 0xb4
+    90a4:	e1a06001 	mov	r6, r1
+    90a8:	e59f0564 	ldr	r0, [pc, #1380]	; 9614 <_start+0x688>
+    90ac:	e59f1564 	ldr	r1, [pc, #1380]	; 9618 <_start+0x68c>
+    90b0:	ebffff49 	bl	8ddc <fopen@plt>
+    90b4:	e2508000 	subs	r8, r0, #0
+    90b8:	1a0000e1 	bne	9444 <_start+0x4b8>
+    90bc:	e59f0550 	ldr	r0, [pc, #1360]	; 9614 <_start+0x688>
+    90c0:	e59f1554 	ldr	r1, [pc, #1364]	; 961c <_start+0x690>
+    90c4:	ebffff44 	bl	8ddc <fopen@plt>
+    90c8:	e2504000 	subs	r4, r0, #0
+    90cc:	0a000144 	beq	95e4 <_start+0x658>
+    90d0:	ebffff38 	bl	8db8 <getpid@plt>
+    90d4:	e0865105 	add	r5, r6, r5, lsl #2
+    90d8:	e1a02000 	mov	r2, r0
+    90dc:	e59f153c 	ldr	r1, [pc, #1340]	; 9620 <_start+0x694>
+    90e0:	e1a00004 	mov	r0, r4
+[31m    90e4:	ebffff69 	bl	8e90 <fprintf@plt>[0m
+    90e8:	e2867004 	add	r7, r6, #4
+    90ec:	e1a00004 	mov	r0, r4
+--
+    915c:	e3a0000f 	mov	r0, #15
+    9160:	ebffff7d 	bl	8f5c <signal@plt>
+    9164:	e59f34c4 	ldr	r3, [pc, #1220]	; 9630 <_start+0x6a4>
+    9168:	e5930000 	ldr	r0, [r3]
+    916c:	ebffff3b 	bl	8e60 <fflush@plt>
+    9170:	e3540000 	cmp	r4, #0
+    9174:	0a000004 	beq	918c <_start+0x200>
+    9178:	e3a00001 	mov	r0, #1
+    917c:	e1a01000 	mov	r1, r0
+    9180:	ebfffedc 	bl	8cf8 <daemon@plt>
+    9184:	e3700001 	cmn	r0, #1
+    9188:	0a00011a 	beq	95f8 <_start+0x66c>
+    918c:	e59f1488 	ldr	r1, [pc, #1160]	; 961c <_start+0x690>
+    9190:	e59f047c 	ldr	r0, [pc, #1148]	; 9614 <_start+0x688>
+    9194:	ebffff10 	bl	8ddc <fopen@plt>
+    9198:	e1a04000 	mov	r4, r0
+    919c:	ebffff05 	bl	8db8 <getpid@plt>
+    91a0:	e59f1478 	ldr	r1, [pc, #1144]	; 9620 <_start+0x694>
+    91a4:	e1a02000 	mov	r2, r0
+    91a8:	e1a00004 	mov	r0, r4
+[31m    91ac:	ebffff37 	bl	8e90 <fprintf@plt>[0m
+    91b0:	e1a00004 	mov	r0, r4
+    91b4:	ebffff05 	bl	8dd0 <fclose@plt>
+--
+    93b0:	12866001 	addne	r6, r6, #1
+    93b4:	e35500ff 	cmp	r5, #255	; 0xff
+    93b8:	1afffff2 	bne	9388 <_start+0x3fc>
+    93bc:	e3560000 	cmp	r6, #0
+    93c0:	1a00005b 	bne	9534 <_start+0x5a8>
+    93c4:	e59f32b0 	ldr	r3, [pc, #688]	; 967c <_start+0x6f0>
+    93c8:	e3a01001 	mov	r1, #1
+    93cc:	e59f02ac 	ldr	r0, [pc, #684]	; 9680 <_start+0x6f4>
+    93d0:	e3a02018 	mov	r2, #24
+    93d4:	e5933000 	ldr	r3, [r3]
+    93d8:	ebfffe49 	bl	8d04 <fwrite@plt>
+    93dc:	e59f0230 	ldr	r0, [pc, #560]	; 9614 <_start+0x688>
+    93e0:	ebfffe98 	bl	8e48 <unlink@plt>
+    93e4:	e3a00000 	mov	r0, #0
+    93e8:	e28dd0b4 	add	sp, sp, #180	; 0xb4
+    93ec:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    93f0:	e59f3284 	ldr	r3, [pc, #644]	; 967c <_start+0x6f0>
+    93f4:	e59f1288 	ldr	r1, [pc, #648]	; 9684 <_start+0x6f8>
+    93f8:	e5962000 	ldr	r2, [r6]
+    93fc:	e5930000 	ldr	r0, [r3]
+[31m    9400:	ebfffea2 	bl	8e90 <fprintf@plt>[0m
+    9404:	eaffff47 	b	9128 <_start+0x19c>
+    9408:	e1a01006 	mov	r1, r6
+    940c:	e1a00005 	mov	r0, r5
+    9410:	ebfffed4 	bl	8f68 <strcpy@plt>
+    9414:	e1a00005 	mov	r0, r5
+    9418:	ebfffe5a 	bl	8d88 <strlen@plt>
+    941c:	e59f1264 	ldr	r1, [pc, #612]	; 9688 <_start+0x6fc>
+    9420:	e3a0200d 	mov	r2, #13
+    9424:	e0850000 	add	r0, r5, r0
+    9428:	ebfffe3e 	bl	8d28 <memcpy@plt>
+    942c:	e1a00005 	mov	r0, r5
+    9430:	ebfffe63 	bl	8dc4 <nvram_get@plt>
+    9434:	e3500000 	cmp	r0, #0
+    9438:	11a01000 	movne	r1, r0
+    943c:	01a01004 	moveq	r1, r4
+    9440:	eaffffb8 	b	9328 <_start+0x39c>
+    9444:	e59f3230 	ldr	r3, [pc, #560]	; 967c <_start+0x6f0>
+    9448:	e59f123c 	ldr	r1, [pc, #572]	; 968c <_start+0x700>
+    944c:	e59f223c 	ldr	r2, [pc, #572]	; 9690 <_start+0x704>
+    9450:	e5930000 	ldr	r0, [r3]
+[31m    9454:	ebfffe8d 	bl	8e90 <fprintf@plt>[0m
+    9458:	e1a00008 	mov	r0, r8
+    945c:	ebfffe5b 	bl	8dd0 <fclose@plt>
+--
+    9b20:	ebfffcbf 	bl	8e24 <sscanf@plt>
+    9b24:	e59d3248 	ldr	r3, [sp, #584]	; 0x248
+    9b28:	e59d224c 	ldr	r2, [sp, #588]	; 0x24c
+    9b2c:	e5893008 	str	r3, [r9, #8]
+    9b30:	e59d3240 	ldr	r3, [sp, #576]	; 0x240
+    9b34:	e589200c 	str	r2, [r9, #12]
+    9b38:	e5893000 	str	r3, [r9]
+    9b3c:	e59d3244 	ldr	r3, [sp, #580]	; 0x244
+    9b40:	e5893004 	str	r3, [r9, #4]
+    9b44:	eaffffa0 	b	99cc <_start+0xa40>
+    9b48:	e59f309c 	ldr	r3, [pc, #156]	; 9bec <_start+0xc60>
+    9b4c:	e1a05004 	mov	r5, r4
+    9b50:	e5934000 	ldr	r4, [r3]
+    9b54:	ebfffc64 	bl	8cec <__errno_location@plt>
+    9b58:	e5900000 	ldr	r0, [r0]
+    9b5c:	ebfffcf5 	bl	8f38 <strerror@plt>
+    9b60:	e59f1088 	ldr	r1, [pc, #136]	; 9bf0 <_start+0xc64>
+    9b64:	e1a03000 	mov	r3, r0
+    9b68:	e59f2064 	ldr	r2, [pc, #100]	; 9bd4 <_start+0xc48>
+    9b6c:	e1a00004 	mov	r0, r4
+[31m    9b70:	ebfffcc6 	bl	8e90 <fprintf@plt>[0m
+    9b74:	eaffff9a 	b	99e4 <_start+0xa58>
+    9b78:	e59f306c 	ldr	r3, [pc, #108]	; 9bec <_start+0xc60>
+    9b7c:	e1a05004 	mov	r5, r4
+    9b80:	e5934000 	ldr	r4, [r3]
+    9b84:	ebfffc58 	bl	8cec <__errno_location@plt>
+    9b88:	e5900000 	ldr	r0, [r0]
+    9b8c:	ebfffce9 	bl	8f38 <strerror@plt>
+    9b90:	e59f1058 	ldr	r1, [pc, #88]	; 9bf0 <_start+0xc64>
+    9b94:	e1a03000 	mov	r3, r0
+    9b98:	e1a02006 	mov	r2, r6
+    9b9c:	e1a00004 	mov	r0, r4
+[31m    9ba0:	ebfffcba 	bl	8e90 <fprintf@plt>[0m
+    9ba4:	eaffff8e 	b	99e4 <_start+0xa58>
+    9ba8:	e1a00006 	mov	r0, r6
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m6[0m times [0;33migd[0m
+

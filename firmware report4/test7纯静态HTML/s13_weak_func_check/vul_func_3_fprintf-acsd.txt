@@ -1,0 +1,84 @@
+[[0;33m*[0m] Binary protection state of [0;33macsd[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33macsd[0m
+
+    bf38:	12833001 	addne	r3, r3, #1
+    bf3c:	15453004 	strbne	r3, [r5, #-4]
+    bf40:	e5944034 	ldr	r4, [r4, #52]	; 0x34
+    bf44:	eaffff6c 	b	bcfc <_start@@Base+0x2d98>
+    bf48:	e5d83008 	ldrb	r3, [r8, #8]
+    bf4c:	e35300ff 	cmp	r3, #255	; 0xff
+    bf50:	12833001 	addne	r3, r3, #1
+    bf54:	15c83008 	strbne	r3, [r8, #8]
+    bf58:	e5944034 	ldr	r4, [r4, #52]	; 0x34
+    bf5c:	eaffff66 	b	bcfc <_start@@Base+0x2d98>
+    bf60:	e5d83009 	ldrb	r3, [r8, #9]
+    bf64:	e35300ff 	cmp	r3, #255	; 0xff
+    bf68:	12833001 	addne	r3, r3, #1
+    bf6c:	15c83009 	strbne	r3, [r8, #9]
+    bf70:	e5944034 	ldr	r4, [r4, #52]	; 0x34
+    bf74:	eaffff60 	b	bcfc <_start@@Base+0x2d98>
+    bf78:	e59f0060 	ldr	r0, [pc, #96]	; bfe0 <_start@@Base+0x307c>
+    bf7c:	e3a0306d 	mov	r3, #109	; 0x6d
+    bf80:	e59f105c 	ldr	r1, [pc, #92]	; bfe4 <_start@@Base+0x3080>
+    bf84:	e5900000 	ldr	r0, [r0]
+[31m    bf88:	ebfff389 	bl	8db4 <fprintf@plt>[0m
+    bf8c:	e3a03000 	mov	r3, #0
+    bf90:	e5873000 	str	r3, [r7]
+--
+    fae4:	e5d53012 	ldrb	r3, [r5, #18]
+    fae8:	e5972008 	ldr	r2, [r7, #8]
+    faec:	e3530000 	cmp	r3, #0
+    faf0:	15941004 	ldrne	r1, [r4, #4]
+    faf4:	05941004 	ldreq	r1, [r4, #4]
+    faf8:	16bf1f31 	revne	r1, r1
+    fafc:	e1520006 	cmp	r2, r6
+    fb00:	9a00000c 	bls	fb38 <_start@@Base+0x6bd4>
+    fb04:	e0844001 	add	r4, r4, r1
+    fb08:	e3530000 	cmp	r3, #0
+    fb0c:	1affff52 	bne	f85c <_start@@Base+0x68f8>
+    fb10:	e5943000 	ldr	r3, [r4]
+    fb14:	e353006b 	cmp	r3, #107	; 0x6b
+    fb18:	13a03000 	movne	r3, #0
+    fb1c:	03a03001 	moveq	r3, #1
+    fb20:	eaffff52 	b	f870 <_start@@Base+0x690c>
+    fb24:	e59f02e8 	ldr	r0, [pc, #744]	; fe14 <_start@@Base+0x6eb0>
+    fb28:	e3a0306d 	mov	r3, #109	; 0x6d
+    fb2c:	e59f12e4 	ldr	r1, [pc, #740]	; fe18 <_start@@Base+0x6eb4>
+    fb30:	e5900000 	ldr	r0, [r0]
+[31m    fb34:	ebffe49e 	bl	8db4 <fprintf@plt>[0m
+    fb38:	e28dd094 	add	sp, sp, #148	; 0x94
+    fb3c:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+--
+   1327c:	1594c008 	ldrne	ip, [r4, #8]
+   13280:	0594c008 	ldreq	ip, [r4, #8]
+   13284:	16bf9f39 	revne	r9, r9
+   13288:	05949004 	ldreq	r9, [r4, #4]
+   1328c:	16bfcf3c 	revne	ip, ip
+   13290:	15849004 	strne	r9, [r4, #4]
+   13294:	e3120008 	tst	r2, #8
+   13298:	e584c008 	str	ip, [r4, #8]
+   1329c:	1a000068 	bne	13444 <_start@@Base+0xa4e0>
+   132a0:	e3530000 	cmp	r3, #0
+   132a4:	05843004 	streq	r3, [r4, #4]
+   132a8:	05843008 	streq	r3, [r4, #8]
+   132ac:	0a00000a 	beq	132dc <_start@@Base+0xa378>
+   132b0:	e5942004 	ldr	r2, [r4, #4]
+   132b4:	e3520001 	cmp	r2, #1
+   132b8:	0a000007 	beq	132dc <_start@@Base+0xa378>
+   132bc:	e59f09dc 	ldr	r0, [pc, #2524]	; 13ca0 <_start@@Base+0xad3c>
+   132c0:	e3a03001 	mov	r3, #1
+   132c4:	e59f19d8 	ldr	r1, [pc, #2520]	; 13ca4 <_start@@Base+0xad40>
+   132c8:	e5900000 	ldr	r0, [r0]
+[31m   132cc:	ebffd6b8 	bl	8db4 <fprintf@plt>[0m
+   132d0:	e3a03000 	mov	r3, #0
+   132d4:	e5843000 	str	r3, [r4]
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m3[0m times [0;33macsd[0m
+

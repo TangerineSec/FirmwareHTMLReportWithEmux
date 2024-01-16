@@ -1,0 +1,77 @@
+[[0;33m*[0m] Binary protection state of [0;33mwakeOnLanProxy[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [31mRPATH[0m        [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mwakeOnLanProxy[0m
+
+lui a0, 0x40
+lw gp, 0x20(sp)
+lui a1, 0x40
+addiu a0, a0, 0x18b4
+lw t9, -sym.imp.fopen(gp)
+jalr t9
+addiu a1, a1, 0x18c8
+lw gp, 0x20(sp)
+beqz v0, 0x40155c
+move s3, v0
+lui v0, 0x41
+lui v1, 0x41
+sw zero, 0x2180(v0)
+lui v0, 0x41
+sw zero, 0x2214(v1)
+lui v1, 0x41
+addiu v0, v0, 0x2194
+addiu v1, v1, 0x2214
+sw zero, (v0)
+addiu v0, v0, 4
+bne v0, v1, 0x4012cc
+lui s1, 0x41
+b 0x4014c4
+addiu v0, sp, 0x28
+lw a0, 0x2214(s0)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+mult a0, s2
+mflo a0
+addu a0, s1, a0
+jalr t9
+addiu a0, a0, 4
+move a1, s7
+lw a0, 0x2214(s0)
+lw gp, 0x20(sp)
+mult a0, s2
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+mflo a0
+addu a0, s1, a0
+jalr t9
+addiu a0, a0, 0x14
+move a1, s6
+lw a0, 0x2214(s0)
+lw gp, 0x20(sp)
+mult a0, s2
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+mflo a0
+addu a0, s1, a0
+jalr t9
+addiu a0, a0, 0x24
+lw a2, 0x2214(s0)
+lhu v1, 0x28(sp)
+mult a2, s2
+lw gp, 0x20(sp)
+lw t9, -sym.imp.inet_addr(gp)
+mflo a2
+addiu v0, a2, 0x38
+addu a2, a2, s1
+sh v1, 0x34(a2)
+addu v0, s1, v0
+lhu v1, 0x2a(sp)
+addiu a0, a2, 4
+sh v1, 0x36(a2)
+sw zero, 0xc(v0)
+sw zero, (v0)
+sw zero, 4(v0)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m3[0m times [0;33mwakeOnLanProxy[0m
+

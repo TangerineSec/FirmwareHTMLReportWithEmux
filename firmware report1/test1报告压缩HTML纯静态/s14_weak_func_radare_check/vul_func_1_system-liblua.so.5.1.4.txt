@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mliblua.so.5.1.4[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msystem[0m tear down of [0;33mliblua.so.5.1.4[0m
+
+lw t9, -sym.luaL_optinteger(gp)
+addiu sp, sp, -0x20
+sw gp, 0x10(sp)
+sw ra, 0x1c(sp)
+addiu a1, zero, 1
+jalr t9
+move a2, zero
+lw gp, 0x10(sp)
+lw t9, -sym.imp.exit(gp)
+jalr t9
+move a0, v0
+lui gp, 2
+addiu gp, gp, 0xe0c
+addu gp, gp, t9
+lw t9, -sym.luaL_optlstring(gp)
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+sw gp, 0x10(sp)
+move a2, zero
+move a3, zero
+sw s0, 0x18(sp)
+addiu a1, zero, 1
+jalr t9
+move s0, a0
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.system(gp)[0m
+jalr t9
+move a0, v0
+lw gp, 0x10(sp)
+move a0, s0
+lw t9, -sym.lua_pushinteger(gp)
+jalr t9
+move a1, v0
+lw ra, 0x1c(sp)
+addiu v0, zero, 1
+lw s0, 0x18(sp)
+jr ra
+addiu sp, sp, 0x20
+lui gp, 2
+addiu gp, gp, 0xda0
+addu gp, gp, t9
+lw t9, -sym.luaL_checknumber(gp)
+addiu sp, sp, -0x30
+sw ra, 0x2c(sp)
+sw gp, 0x10(sp)
+sw s4, 0x28(sp)
+
+[[0;33m*[0m] Function [0;33msystem[0m used [0;33m1[0m times [0;33mliblua.so.5.1.4[0m
+

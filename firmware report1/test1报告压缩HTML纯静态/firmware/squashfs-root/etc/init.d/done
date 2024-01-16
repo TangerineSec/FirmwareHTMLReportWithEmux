@@ -1,0 +1,29 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006 OpenWrt.org
+
+START=95
+boot() {
+	[ -d /tmp/root ] && {
+		lock /tmp/.switch2jffs
+		firstboot switch2jffs
+		lock -u /tmp/.switch2jffs
+	}
+
+	# process user commands
+	[ -f /etc/rc.local ] && {
+		sh /etc/rc.local
+	}
+
+	# set leds to normal state
+	. /etc/diag.sh
+	set_state done
+	i2cset -f -y 0 0x45 0 0x7f b
+        i2cset -f -y 0 0x45 1 0x7f b
+	#add for wancheck
+	[ -f /usr/sbin/wancheck ] && {
+		uci delete user.@wan_conn[-1] 2>/dev/null
+		/sbin/uci add user wan_conn 2>/dev/null
+		/sbin/uci commit user
+		start-stop-daemon -S -b -m -p /var/run/wancheck.pid -x /usr/sbin/wancheck
+	}
+}

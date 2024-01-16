@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mudhcpd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mudhcpd[0m
+
+lw a0, (s0)
+addiu a1, zero, 0x5c
+move a3, s3
+lw t9, -sym.imp.fwrite(gp)
+addiu a2, zero, 1
+jalr t9
+addu a0, a0, s1
+lw v0, (s0)
+lw gp, 0x10(sp)
+addu s1, v0, s1
+sw fp, 0x14(s1)
+addiu s2, s2, 1
+mult s2, s5
+lw v0, 0x24(s4)
+lw fp, -obj.server_config(gp)
+sltu v0, s2, v0
+bnez v0, 0x402b94
+mflo s1
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+move a0, s3
+lw a2, 0x48(fp)
+lw gp, 0x10(sp)
+beqz a2, 0x402ca4
+addiu s0, sp, 0x18
+[31mlw t9, -sym.imp.sprintf(gp)[0m
+lw a3, 0x40(fp)
+lui a1, 0x40
+move a0, s0
+jalr t9
+addiu a1, a1, 0x78d8
+lw gp, 0x10(sp)
+lw t9, -sym.imp.system(gp)
+jalr t9
+move a0, s0
+lw ra, 0x13c(sp)
+lw fp, 0x138(sp)
+lw s7, 0x134(sp)
+lw s6, 0x130(sp)
+lw s5, 0x12c(sp)
+lw s4, 0x128(sp)
+lw s3, 0x124(sp)
+lw s2, 0x120(sp)
+lw s1, 0x11c(sp)
+lw s0, 0x118(sp)
+jr ra
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m1[0m times [0;33mudhcpd[0m
+

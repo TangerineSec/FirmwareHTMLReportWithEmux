@@ -1,0 +1,131 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 15:[0m
+[0mcur_line=`printf "%sp" "$num"`[0m
+[32m         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+cur_line=$(printf "%sp" "$num")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 19:[0m
+[0mwhile [ "null" = "null" ]; do[0m
+[33m               ^-- SC2050 (warning): This expression is constant. Did you forget the $ on a variable?[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 20:[0m
+[0mline=`sed -n $cur_line $dev_usb_state_file`[0m
+[32m     ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+line=$(sed -n "$cur_line" $dev_usb_state_file)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 22:[0m
+[0m		manufact=`echo $line | awk '{print $1}'`[0m
+[32m                         ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		manufact=$(echo "$line" | awk '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 24:[0m
+[0m		if [ -z $manufact ]; then[0m
+[32m                        ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ -z "$manufact" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 27:[0m
+[0m		let num=$num+1[0m
+[33m                ^------------^ SC3039 (warning): In POSIX sh, 'let' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 28:[0m
+[0m		cur_line=`printf "%sp" "$num"`[0m
+[32m                         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		cur_line=$(printf "%sp" "$num")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 30:[0m
+[0m		sdxx=`echo $line | awk '{print $2}'`[0m
+[32m                     ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		sdxx=$(echo "$line" | awk '{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 31:[0m
+[0m		if [ -z $sdxx ]; then[0m
+[32m                        ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ -z "$sdxx" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 35:[0m
+[0m		if [ $sdxx != "$dev_iso" ]; then[0m
+[32m                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ "$sdxx" != "$dev_iso" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 40:[0m
+[0m		org_data=`echo $line | awk '{print $4}'`[0m
+[32m                         ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		org_data=$(echo "$line" | awk '{print $4}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 43:[0m
+[0m			iso_path_dir=`cat $USB_MNT_TMP | awk '{print $2}'`[0m
+[32m                                     ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			iso_path_dir=$(cat $USB_MNT_TMP | awk '{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 44:[0m
+[0m			iso_path=`printf "%s/$iso_name" "$iso_path_dir" `[0m
+[32m                                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			iso_path=$(printf "%s/$iso_name" "$iso_path_dir" )
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 45:[0m
+[0m			current_size=`du -m $iso_path`[0m
+[32m                                     ^---------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                            ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			current_size=$(du -m "$iso_path")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 46:[0m
+[0m			persent=`echo "$current_size" | awk '{printf("Mounting///%0.1d",$1/128*100)}'` [0m
+[32m                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			persent=$(echo "$current_size" | awk '{printf("Mounting///%0.1d",$1/128*100)}') 
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usb-iso-check line 47:[0m
+[0m			echo $persent[0m
+[32m                             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			echo "$persent"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2050 -- This expression is constant. Did ...
+  https://www.shellcheck.net/wiki/SC3039 -- In POSIX sh, 'let' is undefined.
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

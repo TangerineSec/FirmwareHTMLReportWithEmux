@@ -1,0 +1,96 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 6:[0m
+[0m	IFS=$(echo -en "\n\b")[0m
+[33m                   ^-^ SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 7:[0m
+[0m	for file in ` ls $1`[0m
+[31m                    ^------^ SC2045 (error): Iterating over ls output is fragile. Use globs.[0m
+[32m                    ^------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	for file in $( ls "$1")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 9:[0m
+[0m		if [ -d $1"/"$file ]; then[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                             ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ -d "$1""/""$file" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 10:[0m
+[0m			echo -n "$file/||||"[0m
+[33m                             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 12:[0m
+[0m			echo  -n "$file||||"[0m
+[33m                              ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 18:[0m
+[0mfor line in `cat ${TMP_USB_DIR} |awk '{print $2}'`  [0m
+[32m            ^-- SC2013 (info): To read lines rather than words, pipe/redirect to a 'while read' loop.[0m
+[32m            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+for line in $(cat ${TMP_USB_DIR} |awk '{print $2}')  
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 22:[0m
+[0m	if [ $1 = "BASE" ]; then[0m
+[32m             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ "$1" = "BASE" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 23:[0m
+[0m		ergodic $USB_DIR[0m
+[32m                        ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		ergodic "$USB_DIR"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 24:[0m
+[0m	elif [ $1 = "DIR" ]; then[0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	elif [ "$1" = "DIR" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 25:[0m
+[0m		ergodic ${USB_DIR}/$2[0m
+[32m                        ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		ergodic "${USB_DIR}"/"$2"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 26:[0m
+[0m	elif [ $1 = "ROOTER" ]; then[0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	elif [ "$1" = "ROOTER" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/usbdir line 27:[0m
+[0m		echo $line[0m
+[32m                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		echo "$line"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2045 -- Iterating over ls output is fragi...
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...
+  https://www.shellcheck.net/wiki/SC2013 -- To read lines rather than words, ...

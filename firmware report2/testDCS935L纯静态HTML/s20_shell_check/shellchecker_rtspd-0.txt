@@ -1,0 +1,29 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/rtspd-0 line 15:[0m
+[0mport=`/usr/sbin/userconfig -read RTSP Port`[0m
+[32m     ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+port=$(/usr/sbin/userconfig -read RTSP Port)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/rtspd-0 line 21:[0m
+[0m	/usr/sbin/rtsp/rtspd -p $port -v 1>/dev/null 2>/dev/null[0m
+[32m                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	/usr/sbin/rtsp/rtspd -p "$port" -v 1>/dev/null 2>/dev/null
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/rtspd-0 line 25:[0m
+[0m	kill `pidof rtspd`[0m
+[33m             ^-----------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m             ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	kill $(pidof rtspd)
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

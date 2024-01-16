@@ -1,0 +1,83 @@
+[[0;33m*[0m] Binary protection state of [0;33mrc[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mpopen[0m tear down of [0;33mrc[0m
+
+   17dd8:	ebffc91e 	bl	a258 <nvram_get@plt>
+   17ddc:	e3500000 	cmp	r0, #0
+   17de0:	01a00005 	moveq	r0, r5
+   17de4:	ebffc9f9 	bl	a5d0 <atoi@plt>
+   17de8:	eafffff3 	b	17dbc <_start@@Base+0xd6c0>
+   17dec:	e3a00001 	mov	r0, #1
+   17df0:	e8bd8038 	pop	{r3, r4, r5, pc}
+   17df4:	00025b9c 	muleq	r2, ip, fp
+   17df8:	00025aa8 	andeq	r5, r2, r8, lsr #21
+   17dfc:	00023468 	andeq	r3, r2, r8, ror #8
+   17e00:	000249c8 	andeq	r4, r2, r8, asr #19
+   17e04:	e92d4030 	push	{r4, r5, lr}
+   17e08:	e24ddf45 	sub	sp, sp, #276	; 0x114
+   17e0c:	e28d4004 	add	r4, sp, #4
+   17e10:	e3a01000 	mov	r1, #0
+   17e14:	e3a02c01 	mov	r2, #256	; 0x100
+   17e18:	e1a00004 	mov	r0, r4
+   17e1c:	ebffc988 	bl	a444 <memset@plt>
+   17e20:	e59f0084 	ldr	r0, [pc, #132]	; 17eac <_start@@Base+0xd7b0>
+   17e24:	e59f1084 	ldr	r1, [pc, #132]	; 17eb0 <_start@@Base+0xd7b4>
+[31m   17e28:	ebffca00 	bl	a630 <popen@plt>[0m
+   17e2c:	e2505000 	subs	r5, r0, #0
+   17e30:	0a00000b 	beq	17e64 <_start@@Base+0xd768>
+--
+   1bc20:	e1a00006 	mov	r0, r6
+   1bc24:	ebffba06 	bl	a444 <memset@plt>
+   1bc28:	e3a01000 	mov	r1, #0
+   1bc2c:	e3a02040 	mov	r2, #64	; 0x40
+   1bc30:	e1a00008 	mov	r0, r8
+   1bc34:	ebffba02 	bl	a444 <memset@plt>
+   1bc38:	e1a00005 	mov	r0, r5
+   1bc3c:	e3a01000 	mov	r1, #0
+   1bc40:	e3a02080 	mov	r2, #128	; 0x80
+   1bc44:	ebffb9fe 	bl	a444 <memset@plt>
+   1bc48:	e59dc010 	ldr	ip, [sp, #16]
+   1bc4c:	e35c0000 	cmp	ip, #0
+   1bc50:	0affff15 	beq	1b8ac <_start@@Base+0x111b0>
+   1bc54:	e1a0200c 	mov	r2, ip
+   1bc58:	e1a00005 	mov	r0, r5
+   1bc5c:	e59f117c 	ldr	r1, [pc, #380]	; 1bde0 <_start@@Base+0x116e4>
+   1bc60:	e3a09000 	mov	r9, #0
+   1bc64:	ebffba1a 	bl	a4d4 <sprintf@plt>
+   1bc68:	e1a00005 	mov	r0, r5
+   1bc6c:	e59f1144 	ldr	r1, [pc, #324]	; 1bdb8 <_start@@Base+0x116bc>
+[31m   1bc70:	ebffba6e 	bl	a630 <popen@plt>[0m
+   1bc74:	e1a0b000 	mov	fp, r0
+   1bc78:	e3a01040 	mov	r1, #64	; 0x40
+   1bc7c:	e1a0200b 	mov	r2, fp
+   1bc80:	e1a00006 	mov	r0, r6
+   1bc84:	ebffb9b8 	bl	a36c <fgets@plt>
+   1bc88:	e1a0000b 	mov	r0, fp
+   1bc8c:	ebffb97a 	bl	a27c <pclose@plt>
+   1bc90:	e1a00006 	mov	r0, r6
+   1bc94:	ebffb92a 	bl	a144 <strlen@plt>
+   1bc98:	e28defd6 	add	lr, sp, #856	; 0x358
+   1bc9c:	e1a01009 	mov	r1, r9
+   1bca0:	e08e3000 	add	r3, lr, r0
+   1bca4:	e3a02080 	mov	r2, #128	; 0x80
+   1bca8:	e54390e5 	strb	r9, [r3, #-229]	; 0xffffff1b
+   1bcac:	e1a00005 	mov	r0, r5
+   1bcb0:	ebffb9e3 	bl	a444 <memset@plt>
+   1bcb4:	e59d2010 	ldr	r2, [sp, #16]
+   1bcb8:	e1a00005 	mov	r0, r5
+   1bcbc:	e59f1120 	ldr	r1, [pc, #288]	; 1bde4 <_start@@Base+0x116e8>
+   1bcc0:	ebffba03 	bl	a4d4 <sprintf@plt>
+   1bcc4:	e1a00005 	mov	r0, r5
+   1bcc8:	e59f10e8 	ldr	r1, [pc, #232]	; 1bdb8 <_start@@Base+0x116bc>
+[31m   1bccc:	ebffba57 	bl	a630 <popen@plt>[0m
+   1bcd0:	e1a05000 	mov	r5, r0
+   1bcd4:	e3a01040 	mov	r1, #64	; 0x40
+
+[0m
+[[0;33m*[0m] Function [0;33mpopen[0m used [0;33m3[0m times [0;33mrc[0m
+

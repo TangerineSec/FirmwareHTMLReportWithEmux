@@ -1,0 +1,85 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 4:[0m
+[0mexport LD_LIBRARY_PATH=/usr/local/xcloud/lib:$LD_LIBRARY_PATH[0m
+[32m                                             ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+export LD_LIBRARY_PATH=/usr/local/xcloud/lib:"$LD_LIBRARY_PATH"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 5:[0m
+[0mspace=""[0m
+[33m^---^ SC2034 (warning): space appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 8:[0m
+[0m	servername=`ps | grep xCloudClient | grep -v grep | awk '{print $NF}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                    ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+	servername=$(ps | grep xCloudClient | grep -v grep | awk '{print $NF}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 15:[0m
+[0m	servername=`ps | grep Monitor.sh | grep -v grep | awk '{print $NF}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                    ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+	servername=$(ps | grep Monitor.sh | grep -v grep | awk '{print $NF}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 25:[0m
+[0m	for PID in `/bin/ps | grep xCloudClient | grep -v grep | awk  '{print $1}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	for PID in $(/bin/ps | grep xCloudClient | grep -v grep | awk  '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 27:[0m
+[0m		/bin/kill -9 $PID[0m
+[32m                             ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		/bin/kill -9 "$PID"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 32:[0m
+[0m	for PID in `/bin/ps | grep Monitor.sh | grep -v grep | awk  '{print $1}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	for PID in $(/bin/ps | grep Monitor.sh | grep -v grep | awk  '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 34:[0m
+[0m		/bin/kill -9 $PID[0m
+[32m                             ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		/bin/kill -9 "$PID"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 49:[0m
+[0m	servername=`ps | grep xCloudClient | grep -v grep | awk '{print $NF}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                    ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+	servername=$(ps | grep xCloudClient | grep -v grep | awk '{print $NF}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Server.sh line 58:[0m
+[0m	servername=`ps | grep Monitor.sh | grep -v grep | awk '{print $NF}'`[0m
+[32m                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                    ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+	servername=$(ps | grep Monitor.sh | grep -v grep | awk '{print $NF}')
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- space appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2009 -- Consider using pgrep instead of g...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

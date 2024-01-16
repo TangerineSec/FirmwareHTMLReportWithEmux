@@ -1,0 +1,126 @@
+[[0;33m*[0m] Binary protection state of [0;33migmpproxy[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33migmpproxy[0m
+
+addiu v0, zero, -1
+lw ra, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x20
+addiu sp, sp, -0x50
+sw ra, 0x4c(sp)
+sw s3, 0x48(sp)
+sw s2, 0x44(sp)
+sw s1, 0x40(sp)
+sw s0, 0x3c(sp)
+lui gp, 0x42
+addiu gp, gp, 0x460
+sw gp, 0x10(sp)
+lw t9, -sym.imp.socket(gp)
+move s0, a0
+addiu a0, zero, 2
+move s3, a1
+addiu a1, zero, 1
+addiu s1, sp, 0x18
+move s2, a2
+jalr t9
+move a2, zero
+move a1, s0
+lw gp, 0x10(sp)
+move a0, s1
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move s0, v0
+move a0, s0
+ori a1, zero, 0x8913
+lw gp, 0x10(sp)
+lw t9, -sym.imp.ioctl(gp)
+jalr t9
+move a2, s1
+lw gp, 0x10(sp)
+bgez v0, 0x4029f0
+addiu v0, zero, 8
+lw t9, -sym.imp.close(gp)
+move a0, s0
+b 0x402ab0
+move s1, zero
+bne s3, v0, 0x402a38
+addiu v0, zero, 2
+lw t9, -sym.imp.ioctl(gp)
+move a2, s1
+ori a1, zero, 0x8927
+--
+addiu a0, a0, -0x7f10
+sw a0, 0x14(v0)
+sw zero, 0x14(v1)
+lw a0, 0x34(sp)
+jalr t9
+nop
+lui a0, 0x41
+lw gp, 0x18(sp)
+lw v0, -0x7f44(gp)
+lw t9, -sym.imp.fputs(gp)
+lw a1, (v0)
+jalr t9
+addiu a0, a0, -0x7ec8
+lw gp, 0x18(sp)
+lw t9, -sym.imp._exit(gp)
+b 0x40422c
+addiu a0, zero, 1
+lw t9, -sym.imp.setsid(gp)
+jalr t9
+nop
+addiu v0, zero, 2
+lw v1, 0x158(sp)
+lw gp, 0x18(sp)
+bne v1, v0, 0x404314
+lui a1, 0x41
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+lw a0, -obj.igmp_down_if_name(gp)
+b 0x404334
+addiu a1, a1, -0x7eb8
+lw a0, 0x158(sp)
+lw v1, 0x15c(sp)
+addiu v0, a0, -1
+sll v0, v0, 2
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+addu v0, v1, v0
+lw a1, (v0)
+lw a0, -obj.igmp_down_if_name(gp)
+jalr t9
+addiu s2, zero, 1
+lw gp, 0x18(sp)
+lw a0, 0x158(sp)
+lw s0, -obj.igmp_up_if_name(gp)
+lw s3, 0x15c(sp)
+addiu s4, a0, -1
+b 0x404374
+move s1, s0
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a0, s1
+addiu s2, s2, 1
+lw a1, (s3)
+jalr t9
+addiu s1, s1, 0x10
+lw gp, 0x18(sp)
+slt v0, s2, s4
+bnez v0, 0x404358
+addiu s3, s3, 4
+lw v1, 0x158(sp)
+lui s4, 0x41
+move s3, s0
+lw s5, -obj.igmp_up_if_num(gp)
+move s2, zero
+addiu v0, v1, -2
+addiu s4, s4, -0x7eb0
+sw v0, (s5)
+b 0x4043ec
+addiu s1, sp, 0x64
+lw t9, -sym.imp.memset(gp)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m4[0m times [0;33migmpproxy[0m
+

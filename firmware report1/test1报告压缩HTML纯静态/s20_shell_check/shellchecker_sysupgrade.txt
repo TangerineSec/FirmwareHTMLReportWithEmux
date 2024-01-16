@@ -1,0 +1,175 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 2:[0m
+[0m. /lib/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 5:[0m
+[0mRAMFS_COPY_BIN=""	# extra programs for temporary ramfs root[0m
+[33m^------------^ SC2034 (warning): RAMFS_COPY_BIN appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 6:[0m
+[0mRAMFS_COPY_DATA=""	# extra data files[0m
+[33m^-------------^ SC2034 (warning): RAMFS_COPY_DATA appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 24:[0m
+[0m		-v) export VERBOSE="$(($VERBOSE + 1))";;[0m
+[32m                                       ^------^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 25:[0m
+[0m		-q) export VERBOSE="$(($VERBOSE - 1))";;[0m
+[32m                                       ^------^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 50:[0m
+[0m[ -z "$ARGV" -a -z "$NEED_IMAGE" -o $HELP -gt 0 ] && {[0m
+[33m             ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[33m                                 ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 81:[0m
+[0m[ -n "$ARGV" -a -n "$NEED_IMAGE" ] && {[0m
+[33m             ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 93:[0m
+[0m	local file="$1"[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 94:[0m
+[0m	( find $(sed -ne '/^[[:space:]]*$/d; /^#/d; p' \[0m
+[33m               ^-- SC2046 (warning): Quote this to prevent word splitting.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 102:[0m
+[0m	local file="$1"[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 114:[0m
+[0m[ $SAVE_OVERLAY = 0 -o ! -d /overlay/etc ] && \[0m
+[33m                    ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 121:[0m
+[0m	local conf_tar="${1:-$CONF_TAR}"[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 128:[0m
+[0m	run_hooks "$CONFFILES" $sysupgrade_init_conffiles[0m
+[32m                               ^------------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	run_hooks "$CONFFILES" "$sysupgrade_init_conffiles"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 133:[0m
+[0m		tmp_part=`cat /proc/mtd | grep "Factory"`[0m
+[32m                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                              ^-------^ SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.[0m
+
+[1mDid you mean: [0m
+		tmp_part=$(cat /proc/mtd | grep "Factory")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 134:[0m
+[0m		wifi_partn=`echo ${tmp_part:3:1}`[0m
+[32m                           ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                           ^--------------------^ SC2116 (style): Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.[0m
+[33m                                 ^-------------^ SC3057 (warning): In POSIX sh, string indexing is undefined.[0m
+[32m                                 ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		wifi_partn=$(echo "${tmp_part:3:1}")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 135:[0m
+[0m		cat /dev/mtdblock$wifi_partn > $WIFI_CONFFILES[0m
+[32m                                 ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		cat /dev/mtdblock"$wifi_partn" > $WIFI_CONFFILES
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 141:[0m
+[0m		tar c${TAR_V}zf "$conf_tar" -T "$CONFFILES" $WIFI_CONFFILES 2>/dev/null[0m
+[32m                     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		tar c"${TAR_V}"zf "$conf_tar" -T "$CONFFILES" $WIFI_CONFFILES 2>/dev/null
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 143:[0m
+[0m		tar c${TAR_V}zf "$conf_tar" -T "$CONFFILES" 2>/dev/null[0m
+[32m                     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		tar c"${TAR_V}"zf "$conf_tar" -T "$CONFFILES" 2>/dev/null
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 154:[0m
+[0m	tar -C / -x${TAR_V}zf "$CONF_RESTORE"[0m
+[32m                   ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	tar -C / -x"${TAR_V}"zf "$CONF_RESTORE"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 155:[0m
+[0m	if [ $? -ne 0 ];then[0m
+[32m             ^-- SC2181 (style): Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 160:[0m
+[0m		tmp_part=`cat /proc/mtd | grep "Factory"`[0m
+[32m                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                              ^-------^ SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.[0m
+
+[1mDid you mean: [0m
+		tmp_part=$(cat /proc/mtd | grep "Factory")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 161:[0m
+[0m		wifi_partn=`echo ${tmp_part:3:1}`[0m
+[32m                           ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                           ^--------------------^ SC2116 (style): Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.[0m
+[33m                                 ^-------------^ SC3057 (warning): In POSIX sh, string indexing is undefined.[0m
+[32m                                 ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		wifi_partn=$(echo "${tmp_part:3:1}")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 162:[0m
+[0m		cat $WIFI_CONFFILES > /dev/mtdblock$wifi_partn[0m
+[32m                                                   ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		cat $WIFI_CONFFILES > /dev/mtdblock"$wifi_partn"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 189:[0m
+[0m	case "$(get_magic_word $CONF_IMAGE cat)" in[0m
+[32m                               ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	case "$(get_magic_word "$CONF_IMAGE" cat)" in
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/sysupgrade line 206:[0m
+[0mrun_hooks "" $sysupgrade_pre_upgrade[0m
+[33m             ^---------------------^ SC2154 (warning): sysupgrade_pre_upgrade is referenced but not assigned.[0m
+[32m             ^---------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+run_hooks "" "$sysupgrade_pre_upgrade"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- RAMFS_COPY_BIN appears unused. Ve...
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2154 -- sysupgrade_pre_upgrade is referen...

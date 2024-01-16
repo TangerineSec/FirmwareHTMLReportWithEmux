@@ -1,0 +1,190 @@
+<div class='wifi_setup'>
+	<style type='text/css'>
+		.pppoetype{
+			display:none;
+		}
+
+		.wanstatic{
+			display: none;
+		}
+
+		.alert_word{
+			display:block;
+			float:right;
+			margin-right:10px;
+			/*color:#F04D4E;*/
+			padding-top:3px;
+			/*width:140px;*/
+		}
+
+		.pppoestatus{
+			display: block;
+			float:right;
+			margin-right: 10px;
+			padding-top:3px;
+			color:#666;
+		}
+
+		.pppoe_off{
+			margin-top:0px;
+			margin-right:230px;
+		}
+	</style>
+	<div class='setup_head'>
+		<h4 rel='0'>外网设置</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+	<div class='setup_wifi'>
+		<% 	
+			local uci = require "luci.model.uci".cursor()
+			local ntm = require "luci.model.network"
+			ntm.init(uci)
+
+			local devices  = ntm:get_wifidevs()
+			local devs
+			local netlist = {}
+
+			for _, dev in ipairs(devices) do local nets = dev:get_wifinets()
+				local nets = dev:get_wifinets()
+				for _, net in ipairs(nets) do
+					netlist[#netlist+1] = net:id()
+				end
+			end
+
+			local netmd = require "luci.model.network".init()
+			local net = netmd:get_wifinet(netlist[1])
+			local dev = net:get_device()
+
+			local wiretype = nil
+			local nn = netmd:get_network("wan")
+			wiretype = nn:proto()				
+
+			local wifitype = wiretype
+
+			local sel1,sel2,sel3,sel4 = '','',''
+			
+			local word = '保存'
+
+			if wifitype == 'pppoe' then
+				sel1 = "selected='selected'";
+				word = "拨号"
+			elseif wifitype == 'dhcp' then
+				sel2 = "selected='selected'";
+			elseif wifitype == 'static' then
+				sel3 = "selected='selected'";
+			end
+
+			local wanuci = require "luci.model.uci".cursor()
+		%>
+		<ul>
+			<li>
+				<span class='setup_left'>WAN连接类型</span>
+				<span class='setup_right'><select class='wanchange' style='width:209px'>
+					<option value='pppoe'  <%=sel1%>>PPPoE拨号</option>
+					<option value='dhcp'   <%=sel2%>>动态IP地址</option>
+					<option value='static' <%=sel3%>>静态IP地址</option>
+				</select></span>
+				<div class='clr'></div>
+			</li>
+			<li class='pppoetype'>
+				<span class='setup_left'>上网账号：</span>
+				<span class='setup_right'><input type='text' class='wify_long pppoe_pst' value='<%=wanuci.get("network","wan","username")%>'></span>
+				<div class='clr'></div>
+			</li>
+			<li class='pppoetype'>
+				<span class='setup_left'>上网密码：</span>
+				<span class='setup_right'><input type='text' class='wify_long pppoe_pwd' value='<%=wanuci.get("network","wan","password")%>'></span>
+				<div class='clr'></div>
+			</li>
+			<li class='wanstatic'>
+				<span class='setup_left'>IP地址：</span>
+				<span class='setup_right'><input type='text' class='wify_long wanstatic_ip' value='<%=wanuci.get("network","wan","ipaddr")%>'></span>
+				<div class='clr'></div>
+			</li>
+			<li class='wanstatic'>
+				<span class='setup_left'>子网掩码：</span>
+				<span class='setup_right'><input type='text' class='wify_long wanstatic_netmask' value='<%=wanuci.get("network","wan","netmask")%>'></span>
+				<div class='clr'></div>
+			</li>			
+			<li class='wanstatic'>
+				<span class='setup_left'>网关：</span>
+				<span class='setup_right'><input type='text' class='wify_long wanstatic_gateway' value='<%=wanuci.get("network","wan","gateway")%>'></span>
+				<div class='clr'></div>
+			</li>
+			<li class='wanstatic'>
+				<span class='setup_left'>DNS：</span>
+				<span class='setup_right'><input type='text' class='wify_long wanstatic_dns' value='<%=wanuci.get("network","wan","dns")%>'></span>
+				<div class='clr'></div>
+			</li>
+		</ul>
+
+		<span id="pppoe_btn">
+			<%if wifitype == 'pppoe' and netmd:get_wannet() then%>
+				<a href='javascript:void(0)' class='pppoetype subbtn pppoe_off' style='display:block;'><b>断开</b></a>
+			<%else%>
+				<a href='javascript:void(0)' class='dial'><b><%=word%></b></a>
+			<%end%>
+		</span>
+		<span class='alert_word'>
+			<%if wifitype == 'pppoe' and netmd:get_wannet() then%>
+				已连接
+			<%end%>
+		</span>
+	</div>
+</div>
+<script type='text/javascript'>
+	function wantypeChange(){
+		var proto = $('.wanchange').children('option:selected').val();
+
+		if (proto == 'pppoe'){
+			$('.pppoetype').css('display','block');
+			$('.wanstatic').css('display','none');
+			$('.dial b').html('拨号');
+			$('.pppoestatus').css('display','block');
+		}else if(proto == 'dhcp'){
+			$('.wanstatic').css('display','none');
+			$('.pppoetype').css('display','none');
+			$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>保存</b></a>");
+			$('.pppoestatus').css('display','none');
+			$('.alert_word').html('');
+		}else if(proto == 'static'){
+			$('.wanstatic').css('display','block');
+			$('.pppoetype').css('display','none');
+			$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>保存</b></a>");
+			$('.pppoestatus').css('display','none');
+			$('.alert_word').html('');
+		}
+	}
+
+	$('.wanchange').change(function(){
+		wantypeChange();
+	})
+
+	wantypeChange();
+
+	//检测PPPOE日志文件
+	function check_pppd(){
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/check_pppd"))%>',
+			type:'GET',
+			dataType:'HTML',
+			success:function(data){
+				if(data == 'error'){
+					alert_word('拨号超时，请稍后再试', 3000);
+				}else if(data == 11 || data == 19){
+					alert_word('账号验证失败，请验证用户名和密码', 3000);
+				}
+
+				$('.setup_head h4').attr('rel','0');
+			},
+
+			error:function(){
+				$('.setup_head h4').attr('rel','0');
+				return 'error';
+			}
+		});
+	}
+</script>

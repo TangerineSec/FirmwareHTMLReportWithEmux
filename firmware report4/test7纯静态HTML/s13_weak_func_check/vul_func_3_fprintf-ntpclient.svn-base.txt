@@ -1,0 +1,84 @@
+[[0;33m*[0m] Binary protection state of [0;33mntpclient.svn-base[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mntpclient.svn-base[0m
+
+    9368:	ebfffe7e 	bl	8d68 <_start+0x354>
+    936c:	e28dd010 	add	sp, sp, #16
+    9370:	e8bd8070 	pop	{r4, r5, r6, pc}
+    9374:	e92d4038 	push	{r3, r4, r5, lr}
+    9378:	e1a05000 	mov	r5, r0
+    937c:	e1a04001 	mov	r4, r1
+    9380:	e1a00001 	mov	r0, r1
+    9384:	ebfffd81 	bl	8990 <gethostbyname@plt>
+    9388:	e3500000 	cmp	r0, #0
+    938c:	1a000003 	bne	93a0 <_start+0x98c>
+    9390:	e1a00004 	mov	r0, r4
+    9394:	ebfffd7a 	bl	8984 <herror@plt>
+    9398:	e3a00001 	mov	r0, #1
+    939c:	ebfffd84 	bl	89b4 <exit@plt>
+    93a0:	e590200c 	ldr	r2, [r0, #12]
+    93a4:	e3520004 	cmp	r2, #4
+    93a8:	0a000005 	beq	93c4 <_start+0x9b0>
+    93ac:	e59f3028 	ldr	r3, [pc, #40]	; 93dc <_start+0x9c8>
+    93b0:	e5930000 	ldr	r0, [r3]
+    93b4:	e59f1024 	ldr	r1, [pc, #36]	; 93e0 <_start+0x9cc>
+[31m    93b8:	ebfffd53 	bl	890c <fprintf@plt>[0m
+    93bc:	e3a00001 	mov	r0, #1
+    93c0:	ebfffd7b 	bl	89b4 <exit@plt>
+--
+    9408:	e1cd30b0 	strh	r3, [sp]
+    940c:	e1a03c21 	lsr	r3, r1, #24
+    9410:	e1833c01 	orr	r3, r3, r1, lsl #24
+    9414:	e201c8ff 	and	ip, r1, #16711680	; 0xff0000
+    9418:	e183342c 	orr	r3, r3, ip, lsr #8
+    941c:	e2011cff 	and	r1, r1, #65280	; 0xff00
+    9420:	e1831401 	orr	r1, r3, r1, lsl #8
+    9424:	e58d1004 	str	r1, [sp, #4]
+    9428:	e7e73454 	ubfx	r3, r4, #8, #8
+    942c:	e1833404 	orr	r3, r3, r4, lsl #8
+    9430:	e1cd30b2 	strh	r3, [sp, #2]
+    9434:	e1a0100d 	mov	r1, sp
+    9438:	e3a02010 	mov	r2, #16
+    943c:	ebfffd35 	bl	8918 <bind@plt>
+    9440:	e3700001 	cmn	r0, #1
+    9444:	1a000008 	bne	946c <_start+0xa58>
+    9448:	e59f3030 	ldr	r3, [pc, #48]	; 9480 <_start+0xa6c>
+    944c:	e5930000 	ldr	r0, [r3]
+    9450:	e59f102c 	ldr	r1, [pc, #44]	; 9484 <_start+0xa70>
+    9454:	e1a02004 	mov	r2, r4
+[31m    9458:	ebfffd2b 	bl	890c <fprintf@plt>[0m
+    945c:	e59f0024 	ldr	r0, [pc, #36]	; 9488 <_start+0xa74>
+    9460:	ebfffd0e 	bl	88a0 <perror@plt>
+--
+    98cc:	ebfffc38 	bl	89b4 <exit@plt>
+    98d0:	e28d0054 	add	r0, sp, #84	; 0x54
+    98d4:	e3a01064 	mov	r1, #100	; 0x64
+    98d8:	e304318c 	movw	r3, #16780	; 0x418c
+    98dc:	e3403001 	movt	r3, #1
+    98e0:	e5932000 	ldr	r2, [r3]
+    98e4:	ebfffbe7 	bl	8888 <fgets@plt>
+    98e8:	e3500000 	cmp	r0, #0
+    98ec:	1affff8f 	bne	9730 <_start+0xd1c>
+    98f0:	e28dd0bc 	add	sp, sp, #188	; 0xbc
+    98f4:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    98f8:	0000bb70 	andeq	fp, r0, r0, ror fp
+    98fc:	00014190 	muleq	r1, r0, r1
+    9900:	e92d4008 	push	{r3, lr}
+    9904:	e1a02000 	mov	r2, r0
+    9908:	e3043190 	movw	r3, #16784	; 0x4190
+    990c:	e3403001 	movt	r3, #1
+    9910:	e5930000 	ldr	r0, [r3]
+    9914:	e30b1b84 	movw	r1, #48004	; 0xbb84
+    9918:	e3401000 	movt	r1, #0
+[31m    991c:	ebfffbfa 	bl	890c <fprintf@plt>[0m
+    9920:	e8bd8008 	pop	{r3, pc}
+    9924:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m3[0m times [0;33mntpclient.svn-base[0m
+

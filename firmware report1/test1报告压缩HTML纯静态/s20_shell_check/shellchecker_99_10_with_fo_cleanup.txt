@@ -1,0 +1,27 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/99_10_with_fo_cleanup line 13:[0m
+[0m			cd /overlay[0m
+[33m                        ^---------^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.[0m
+
+[1mDid you mean: [0m
+			cd /overlay || exit
+
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/99_10_with_fo_cleanup line 14:[0m
+[0m			find -type l[0m
+[32m                        ^--^ SC2185 (info): Some finds don't have a default path. Specify '.' explicitly.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/99_10_with_fo_cleanup line 15:[0m
+[0m		) | while read FILE; do[0m
+[32m                          ^--^ SC2162 (info): read without -r will mangle backslashes.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/99_10_with_fo_cleanup line 17:[0m
+[0m			if ls -la "$FILE" 2>&- | grep -q '(overlay-whiteout)'; then[0m
+[33m                           ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2010 -- Don't use ls | grep. Use a glob o...
+  https://www.shellcheck.net/wiki/SC2164 -- Use 'cd ... || exit' or 'cd ... |...
+  https://www.shellcheck.net/wiki/SC2162 -- read without -r will mangle backs...

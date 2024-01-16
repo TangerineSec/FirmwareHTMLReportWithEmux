@@ -1,0 +1,42 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/samba-init line 50:[0m
+[0m		AllInstallFile=`ls $PluginIntallPath`[0m
+[32m                               ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		AllInstallFile=$(ls $PluginIntallPath)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/samba-init line 53:[0m
+[0m			OneInstallFilePath=`printf "%s%s" "$PluginIntallPath" "$EachFiles"`[0m
+[32m                                           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+			OneInstallFilePath=$(printf "%s%s" "$PluginIntallPath" "$EachFiles")
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/samba-init line 54:[0m
+[0m			PluginID=`cat ${OneInstallFilePath} | grep "plugin_ID" |awk -F ":" '{print $2}'`[0m
+[32m                                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                      ^-------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			PluginID=$(cat "${OneInstallFilePath}" | grep "plugin_ID" |awk -F ":" '{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/samba-init line 63:[0m
+[0mCapbility=`/usr/local/localshell/getcapability`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+Capbility=$(/usr/local/localshell/getcapability)
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/samba-init line 71:[0m
+[0m	> /etc/config/samba [0m
+[33m        ^-----------------^ SC2188 (warning): This redirection doesn't have a command. Move to its command (or use 'true' as no-op).[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2188 -- This redirection doesn't have a c...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

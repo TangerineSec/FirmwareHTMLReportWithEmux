@@ -1,0 +1,243 @@
+[[0;34m+[0m] [0;36m[1mIdentify and analyze kernel version[0m
+[1m=================================================================[0m
+This module tries to identify the version of the used Linux kernel. The following sources are tested:
+    - Results of module s24
+    - Identified kernel modules in .ko format
+    - Identified kernel modules in .o format
+    - Filesytem path of kernel modules - e.g.: /lib/modules/1.2.3/bla
+
+
+Additionally it checks the identified kernel version with the linux-exploit-suggester (https://github.com/mzet-/linux-exploit-suggester) for known exploits.
+Finally it tests the kernel modules for interesting combination of closed source modules with debugging information. E.g. Non open source modules with debugging information included.
+
+
+Kernel version:
+    [0;33m2.6.30.9[0m
+
+
+Kernel details:
+    AL3010_ALS_driver}
+    GPIO_I2C_driver}
+    }
+
+[0;34m==>[0m [0;36mKernel vulnerabilities[0m
+-----------------------------------------------------------------
+[[0;32m+[0m][0;32m Found linux kernel version/s:[0m
+    [0;33m2.6.30.9[0m
+
+
+
+[0;34m==>[0m [0;36mPossible exploits via linux-exploit-suggester.sh for kernel version [0;33m2.6.30.9[0m[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] Search possible exploits via linux-exploit-suggester.sh for kernel version [0;33m2.6.30.9[0m
+    https://github.com/mzet-/linux-exploit-suggester
+
+[1;37mAvailable information:[0m
+
+Kernel version: [1;32m2.6.30.9[0m
+Architecture: [91;1mN/A[0m
+Distribution: [91;1mN/A[0m
+Distribution version: [91;1mN/A[0m
+Additional checks (CONFIG_*, sysctl entries, custom Bash commands): [91;1mN/A[0m
+Package listing: [91;1mN/A[0m
+
+[1;37mSearching among:[0m
+
+81 kernel space exploits
+0 user space exploits
+
+[1;37mPossible Exploits:[0m
+
+[+] [1;32m[CVE-2016-5195][0m dirtycow
+
+   Details: https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
+   Exposure: probable
+   Tags: debian=7|8,RHEL=5{kernel:2.6.(18|24|33)-*},RHEL=6{kernel:2.6.32-*|3.(0|2|6|8|10).*|2.6.33.9-rt31},RHEL=7{kernel:3.10.0-*|4.2.0-0.21.el7},ubuntu=16.04|14.04|12.04
+   Download URL: https://www.exploit-db.com/download/40611
+   Comments: For RHEL/CentOS see exact vulnerable versions here: https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh
+   Requirements: pkg=linux-kernel,ver>=2.6.22,ver<=4.8.3
+   exploit-db: 40611
+   author: Phil Oester
+
+[+] [1;32m[CVE-2016-5195][0m dirtycow 2
+
+   Details: https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
+   Exposure: probable
+   Tags: debian=7|8,RHEL=5|6|7,ubuntu=14.04|12.04,ubuntu=10.04{kernel:2.6.32-21-generic},ubuntu=16.04{kernel:4.4.0-21-generic}
+   Download URL: https://www.exploit-db.com/download/40839
+   ext-url: https://www.exploit-db.com/download/40847
+   Comments: For RHEL/CentOS see exact vulnerable versions here: https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh
+   Requirements: pkg=linux-kernel,ver>=2.6.22,ver<=4.8.3
+   exploit-db: 40839
+   author: FireFart (author of exploit at EDB 40839); Gabriele Bonacini (author of exploit at 'ext-url')
+
+[+] [1;32m[CVE-2022-32250][0m nft_object UAF (NFT_MSG_NEWSET)
+
+   Details: https://research.nccgroup.com/2022/09/01/settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250/
+https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/
+   Exposure: less probable
+   Tags: ubuntu=(22.04){kernel:5.15.0-27-generic}
+   Download URL: https://raw.githubusercontent.com/theori-io/CVE-2022-32250-exploit/main/exp.c
+   Comments: kernel.unprivileged_userns_clone=1 required (to obtain CAP_NET_ADMIN)
+   Requirements: pkg=linux-kernel,ver<5.18.1,CONFIG_USER_NS=y,sysctl:kernel.unprivileged_userns_clone==1
+   author: vulnerability discovery: EDG Team from NCC Group; Author of this exploit: theori.io
+
+[+] [1;32m[CVE-2021-27365][0m linux-iscsi
+
+   Details: https://blog.grimm-co.com/2021/03/new-old-bugs-in-linux-kernel.html
+   Exposure: less probable
+   Tags: RHEL=8
+   Download URL: https://codeload.github.com/grimm-co/NotQuite0DayFriday/zip/trunk
+   Comments: CONFIG_SLAB_FREELIST_HARDENED must not be enabled
+   Requirements: pkg=linux-kernel,ver<=5.11.3,CONFIG_SLAB_FREELIST_HARDENED!=y
+   author: GRIMM
+
+[+] [1;32m[CVE-2021-22555][0m Netfilter heap out-of-bounds write
+
+   Details: https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html
+   Exposure: less probable
+   Tags: ubuntu=20.04{kernel:5.8.0-*}
+   Download URL: https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c
+   ext-url: https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c
+   Comments: ip_tables kernel module must be loaded
+   Requirements: pkg=linux-kernel,ver>=2.6.19,ver<=5.12-rc6
+   exploit-db: 50135
+   author: theflow (orginal exploit author); bcoles (author of exploit update at 'ext-url')
+
+[+] [1;32m[CVE-2017-6074][0m dccp
+
+   Details: http://www.openwall.com/lists/oss-security/2017/02/22/3
+   Exposure: less probable
+   Tags: ubuntu=(14.04|16.04){kernel:4.4.0-62-generic}
+   Download URL: https://www.exploit-db.com/download/41458
+   Comments: Requires Kernel be built with CONFIG_IP_DCCP enabled. Includes partial SMEP/SMAP bypass
+   Requirements: pkg=linux-kernel,ver>=2.6.18,ver<=4.9.11,CONFIG_IP_DCCP=[my]
+   exploit-db: 41458
+   author: Andrey 'xairy' Konovalov
+
+[+] [1;32m[CVE-2013-0268][0m msr
+
+   Details: https://www.exploit-db.com/exploits/27297/
+   Exposure: less probable
+   Download URL: https://www.exploit-db.com/download/27297
+   Requirements: pkg=linux-kernel,ver>=2.6.18,ver<3.7.6
+   exploit-db: 27297
+
+[+] [1;32m[CVE-2012-0056,CVE-2010-3849,CVE-2010-3850][0m full-nelson
+
+   Details: http://vulnfactory.org/exploits/full-nelson.c
+   Exposure: less probable
+   Tags: ubuntu=(9.10|10.10){kernel:2.6.(31|35)-(14|19)-(server|generic)},ubuntu=10.04{kernel:2.6.32-(21|24)-server}
+   Download URL: http://vulnfactory.org/exploits/full-nelson.c
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.36
+   exploit-db: 15704
+
+[+] [1;32m[CVE-2010-4347][0m american-sign-language
+
+   Details: https://www.exploit-db.com/exploits/15774/
+   Exposure: less probable
+   Download URL: https://www.exploit-db.com/download/15774
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.36
+   exploit-db: 15774
+
+[+] [1;32m[CVE-2010-3904][0m rds
+
+   Details: http://www.securityfocus.com/archive/1/514379
+   Exposure: less probable
+   Tags: debian=6.0{kernel:2.6.(31|32|34|35)-(1|trunk)-amd64},ubuntu=10.10|9.10,fedora=13{kernel:2.6.33.3-85.fc13.i686.PAE},ubuntu=10.04{kernel:2.6.32-(21|24)-generic}
+   Download URL: http://web.archive.org/web/20101020044048/http://www.vsecurity.com/download/tools/linux-rds-exploit.c
+   Requirements: pkg=linux-kernel,ver>=2.6.30,ver<2.6.37
+   exploit-db: 15285
+
+[+] [1;32m[CVE-2010-3848,CVE-2010-3850,CVE-2010-4073][0m half_nelson
+
+   Details: https://www.exploit-db.com/exploits/17787/
+   Exposure: less probable
+   Tags: ubuntu=(10.04|9.10){kernel:2.6.(31|32)-(14|21)-server}
+   Download URL: https://www.exploit-db.com/download/17787
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.36
+   exploit-db: 17787
+
+[+] [1;32m[CVE-2010-3437][0m pktcdvd
+
+   Details: https://www.exploit-db.com/exploits/15150/
+   Exposure: less probable
+   Tags: ubuntu=10.04
+   Download URL: https://www.exploit-db.com/download/15150
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.36
+   exploit-db: 15150
+
+[+] [1;32m[CVE-2010-3301][0m ptrace_kmod2
+
+   Details: https://www.exploit-db.com/exploits/15023/
+   Exposure: less probable
+   Tags: debian=6.0{kernel:2.6.(32|33|34|35)-(1|2|trunk)-amd64},ubuntu=(10.04|10.10){kernel:2.6.(32|35)-(19|21|24)-server}
+   Download URL: https://www.exploit-db.com/download/15023
+   Requirements: pkg=linux-kernel,ver>=2.6.26,ver<=2.6.34
+   exploit-db: 15023
+
+[+] [1;32m[CVE-2010-3081][0m video4linux
+
+   Details: https://www.exploit-db.com/exploits/15024/
+   Exposure: less probable
+   Tags: RHEL=5
+   Download URL: https://www.exploit-db.com/download/15024
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.33
+   exploit-db: 15024
+
+[+] [1;32m[CVE-2010-2959][0m can_bcm
+
+   Details: https://www.exploit-db.com/exploits/14814/
+   Exposure: less probable
+   Tags: ubuntu=10.04{kernel:2.6.32-24-generic}
+   Download URL: https://www.exploit-db.com/download/14814
+   Requirements: pkg=linux-kernel,ver>=2.6.18,ver<=2.6.36
+   exploit-db: 14814
+
+[+] [1;32m[CVE-2010-1146][0m reiserfs
+
+   Details: https://jon.oberheide.org/blog/2010/04/10/reiserfs-reiserfs_priv-vulnerability/
+   Exposure: less probable
+   Tags: ubuntu=9.10
+   Download URL: https://jon.oberheide.org/files/team-edward.py
+   Requirements: pkg=linux-kernel,ver>=2.6.18,ver<=2.6.34
+   exploit-db: 12130
+
+[+] [1;32m[CVE-2009-3547][0m pipe.c 3
+
+   Details: https://www.exploit-db.com/exploits/10018/
+   Exposure: less probable
+   Download URL: https://www.exploit-db.com/download/10018
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.31
+   exploit-db: 10018
+
+[+] [1;32m[CVE-2009-3547][0m pipe.c 2
+
+   Details: https://www.exploit-db.com/exploits/33322/
+   Exposure: less probable
+   Download URL: https://www.exploit-db.com/download/33322
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.31
+   exploit-db: 33322
+
+[+] [1;32m[CVE-2009-3547][0m pipe.c 1
+
+   Details: https://www.exploit-db.com/exploits/33321/
+   Exposure: less probable
+   Download URL: https://www.exploit-db.com/download/33321
+   Requirements: pkg=linux-kernel,ver>=2.6.0,ver<=2.6.31
+   exploit-db: 33321
+
+
+[0;34m==>[0m [0;36mCheck modprobe.d directory and content[0m
+-----------------------------------------------------------------
+[[0;31m-[0m] No modprobe.d directory found
+[[0;31m-[0m] No check for kernel configuration
+
+[0;34m==>[0m [0;36mAnalyze kernel modules[0m
+-----------------------------------------------------------------
+[[0;33m*[0m] Found [0;33m3[0m kernel modules.
+[[0;31m-[0m] Found kernel module [0m/lib/modules/al3010.ko (-rw-r--r-- root root)  [0;33mLicense: GPL[0m - [0;32mNOT STRIPPED[0m
+[[0;31m-[0m] Found kernel module [0m/lib/modules/hwmon.ko (-rw-r--r-- root root)  [0;33mLicense: GPL[0m - [0;32mNOT STRIPPED[0m
+[[0;31m-[0m] Found kernel module [0m/lib/modules/gpio_i2c.ko (-rw-r--r-- root root)  [0;33mLicense: GPL[0m - [0;32mNOT STRIPPED[0m
+[*] Statistics:2.6.30.9
+[*] Statistics1:3:0

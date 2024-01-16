@@ -1,0 +1,128 @@
+[[0;33m*[0m] Binary protection state of [0;33mtc[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mtc[0m
+
+   2cfe4:	ebff7def 	bl	c7a8 <strcpy@plt>
+   2cfe8:	ebff7cfe 	bl	c3e8 <__ctype_b_loc@plt>
+   2cfec:	e5d52000 	ldrb	r2, [r5]
+   2cff0:	e1a09000 	mov	r9, r0
+   2cff4:	e5903000 	ldr	r3, [r0]
+   2cff8:	e1a02082 	lsl	r2, r2, #1
+   2cffc:	e19320b2 	ldrh	r2, [r3, r2]
+   2d000:	e3120001 	tst	r2, #1
+   2d004:	13a0a000 	movne	sl, #0
+   2d008:	1a00003c 	bne	2d100 <exit_error@@Base+0x268>
+   2d00c:	e5d42000 	ldrb	r2, [r4]
+   2d010:	e1a02082 	lsl	r2, r2, #1
+   2d014:	e19330b2 	ldrh	r3, [r3, r2]
+   2d018:	e3130002 	tst	r3, #2
+   2d01c:	13a08000 	movne	r8, #0
+   2d020:	1a00002a 	bne	2d0d0 <exit_error@@Base+0x238>
+   2d024:	e5972000 	ldr	r2, [r7]
+   2d028:	e1a03004 	mov	r3, r4
+   2d02c:	e59f11e4 	ldr	r1, [pc, #484]	; 2d218 <exit_error@@Base+0x380>
+   2d030:	e1a00006 	mov	r0, r6
+[31m   2d034:	ebff7d96 	bl	c694 <sprintf@plt>[0m
+   2d038:	e1a00006 	mov	r0, r6
+   2d03c:	e3a01001 	mov	r1, #1
+--
+   2d0d8:	e1580000 	cmp	r8, r0
+   2d0dc:	3afffff4 	bcc	2d0b4 <exit_error@@Base+0x21c>
+   2d0e0:	eaffffcf 	b	2d024 <exit_error@@Base+0x18c>
+   2d0e4:	ebff7d01 	bl	c4f0 <__ctype_tolower_loc@plt>
+   2d0e8:	e7d5300a 	ldrb	r3, [r5, sl]
+   2d0ec:	e5902000 	ldr	r2, [r0]
+   2d0f0:	e1a03083 	lsl	r3, r3, #1
+   2d0f4:	e19230f3 	ldrsh	r3, [r2, r3]
+   2d0f8:	e7c5300a 	strb	r3, [r5, sl]
+   2d0fc:	e28aa001 	add	sl, sl, #1
+   2d100:	e1a00008 	mov	r0, r8
+   2d104:	ebff7cff 	bl	c508 <strlen@plt>
+   2d108:	e150000a 	cmp	r0, sl
+   2d10c:	8afffff4 	bhi	2d0e4 <exit_error@@Base+0x24c>
+   2d110:	e5993000 	ldr	r3, [r9]
+   2d114:	eaffffbc 	b	2d00c <exit_error@@Base+0x174>
+   2d118:	e59f10fc 	ldr	r1, [pc, #252]	; 2d21c <exit_error@@Base+0x384>
+   2d11c:	e1a03004 	mov	r3, r4
+   2d120:	e5972000 	ldr	r2, [r7]
+   2d124:	e1a00006 	mov	r0, r6
+[31m   2d128:	ebff7d59 	bl	c694 <sprintf@plt>[0m
+   2d12c:	e1a00006 	mov	r0, r6
+   2d130:	e3a01001 	mov	r1, #1
+   2d134:	ebff7d89 	bl	c760 <dlopen@plt>
+   2d138:	e2508000 	subs	r8, r0, #0
+   2d13c:	1affffc3 	bne	2d050 <exit_error@@Base+0x1b8>
+   2d140:	e59f10d0 	ldr	r1, [pc, #208]	; 2d218 <exit_error@@Base+0x380>
+   2d144:	e1a03005 	mov	r3, r5
+   2d148:	e5972000 	ldr	r2, [r7]
+   2d14c:	e1a00006 	mov	r0, r6
+[31m   2d150:	ebff7d4f 	bl	c694 <sprintf@plt>[0m
+   2d154:	e1a00006 	mov	r0, r6
+   2d158:	e3a01001 	mov	r1, #1
+   2d15c:	ebff7d7f 	bl	c760 <dlopen@plt>
+   2d160:	e2508000 	subs	r8, r0, #0
+   2d164:	1affffb9 	bne	2d050 <exit_error@@Base+0x1b8>
+   2d168:	e59f10ac 	ldr	r1, [pc, #172]	; 2d21c <exit_error@@Base+0x384>
+   2d16c:	e1a03005 	mov	r3, r5
+   2d170:	e5972000 	ldr	r2, [r7]
+   2d174:	e1a00006 	mov	r0, r6
+[31m   2d178:	ebff7d45 	bl	c694 <sprintf@plt>[0m
+   2d17c:	e1a00006 	mov	r0, r6
+   2d180:	e3a01001 	mov	r1, #1
+--
+   2d214:	00049ce4 	andeq	r9, r4, r4, ror #25
+   2d218:	0003d440 	andeq	sp, r3, r0, asr #8
+   2d21c:	0003d450 	andeq	sp, r3, r0, asr r4
+   2d220:	000486dc 	ldrdeq	r8, [r4], -ip
+   2d224:	0003d430 	andeq	sp, r3, r0, lsr r4
+
+0002d228 <addr_to_dotted@@Base>:
+   2d228:	e92d4010 	push	{r4, lr}
+   2d22c:	e1a0c000 	mov	ip, r0
+   2d230:	e59f4034 	ldr	r4, [pc, #52]	; 2d26c <addr_to_dotted@@Base+0x44>
+   2d234:	e30d1460 	movw	r1, #54368	; 0xd460
+   2d238:	e24dd008 	sub	sp, sp, #8
+   2d23c:	e3401003 	movt	r1, #3
+   2d240:	e5d0e002 	ldrb	lr, [r0, #2]
+   2d244:	e5dcc003 	ldrb	ip, [ip, #3]
+   2d248:	e5d02000 	ldrb	r2, [r0]
+   2d24c:	e5d03001 	ldrb	r3, [r0, #1]
+   2d250:	e1a00004 	mov	r0, r4
+   2d254:	e58de000 	str	lr, [sp]
+   2d258:	e58dc004 	str	ip, [sp, #4]
+[31m   2d25c:	ebff7d0c 	bl	c694 <sprintf@plt>[0m
+   2d260:	e1a00004 	mov	r0, r4
+   2d264:	e28dd008 	add	sp, sp, #8
+--
+   30ac0:	e1a09000 	mov	r9, r0
+   30ac4:	e1a05003 	mov	r5, r3
+   30ac8:	e08fc00c 	add	ip, pc, ip
+   30acc:	e58d2004 	str	r2, [sp, #4]
+   30ad0:	da000018 	ble	30b38 <hexstring_n2a@@Base+0x88>
+   30ad4:	e3530002 	cmp	r3, #2
+   30ad8:	da000016 	ble	30b38 <hexstring_n2a@@Base+0x88>
+   30adc:	e59f8064 	ldr	r8, [pc, #100]	; 30b48 <hexstring_n2a@@Base+0x98>
+   30ae0:	e244a001 	sub	sl, r4, #1
+   30ae4:	e1a07002 	mov	r7, r2
+   30ae8:	e3a06000 	mov	r6, #0
+   30aec:	e3a0b03a 	mov	fp, #58	; 0x3a
+   30af0:	e08c8008 	add	r8, ip, r8
+   30af4:	ea000001 	b	30b00 <hexstring_n2a@@Base+0x50>
+   30af8:	e3550002 	cmp	r5, #2
+   30afc:	da00000d 	ble	30b38 <hexstring_n2a@@Base+0x88>
+   30b00:	e2455002 	sub	r5, r5, #2
+   30b04:	e1a00007 	mov	r0, r7
+   30b08:	e7d92006 	ldrb	r2, [r9, r6]
+   30b0c:	e1a01008 	mov	r1, r8
+[31m   30b10:	ebff6edf 	bl	c694 <sprintf@plt>[0m
+   30b14:	e156000a 	cmp	r6, sl
+   30b18:	13550001 	cmpne	r5, #1
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m6[0m times [0;33mtc[0m
+

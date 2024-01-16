@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Copyright (C) 2011 OpenWrt.org
+#
+
+ry02_set_leds() {
+	uci batch <<EOF
+set system.usb_led=led
+set system.usb_led.name='USB'
+set system.usb_led.sysfs='usb:blue'
+set system.usb_led.trigger='usbdev'
+set system.usb_led.dev='1-1.4'
+set system.usb_led.interval='50'
+
+set system.wlan_led=led
+set system.wlan_led.name='WLAN'
+set system.wlan_led.sysfs='wifi:yellow'
+set system.wlan_led.block_led='wifi:blue'
+set system.wlan_led.trigger='netdev'
+set system.wlan_led.dev='ra0'
+set system.wlan_led.mode='link tx rx blockby'
+
+set system.w5g_led=led
+set system.w5g_led.name='W5G'
+set system.w5g_led.sysfs='wifi:blue'
+set system.w5g_led.block_led='wifi:yellow'
+set system.w5g_led.trigger='netdev'
+set system.w5g_led.dev='rai0'
+set system.w5g_led.mode='link tx rx blockto'
+
+commit system
+EOF
+}
+
+. /lib/ralink.sh
+
+board=$(ralink_board_name)
+
+if [ "${board}" == "RY-02" ]; then
+	ry02_set_leds
+fi

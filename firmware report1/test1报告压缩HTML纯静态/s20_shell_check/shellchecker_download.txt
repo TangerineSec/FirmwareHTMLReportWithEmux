@@ -1,0 +1,26 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/download line 9:[0m
+[0m	kill `ps w | awk '/.*wget.*\/tmp\/firmware\.img/{print $1}'`[0m
+[33m             ^-- SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	kill $(ps w | awk '/.*wget.*\/tmp\/firmware\.img/{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/download line 20:[0m
+[0mwget -T 30 $1 -O $DownloadPath 2>&1 \[0m
+[32m           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+wget -T 30 "$1" -O $DownloadPath 2>&1 \
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/download line 25:[0m
+[0mResult=${Result:0:3}[0m
+[33m       ^-----------^ SC3057 (warning): In POSIX sh, string indexing is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC3057 -- In POSIX sh, string indexing is u...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

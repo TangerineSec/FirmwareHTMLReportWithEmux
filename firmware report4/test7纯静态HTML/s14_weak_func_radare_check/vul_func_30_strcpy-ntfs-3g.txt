@@ -1,0 +1,638 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mntfs-3g[0m
+
+mov r0, r5
+bl sym.strlen
+add r0, r6, r0
+add r0, r0, 1
+bl sym.ntfs_malloc
+subs r6, r0, 0
+bne 0x9b74
+mvn r4, 0
+mov r0, r4
+pop {r4, r5, r6, pc}
+mov r1, r2
+pop {r4, r5, r6, lr}
+b sym.ntfs_mbstoucs
+ldr r3, obj.nf_ns_user_prefix_len
+mov r1, r2
+ldr r0, [r3]
+add r0, r5, r0
+pop {r4, r5, r6, lr}
+b sym.ntfs_mbstoucs
+ldr r1, obj.xattr_ntfs_3g
+[31mbl sym.strcpy[0m
+mov r1, r5
+mov r0, r6
+--
+mov r0, r8
+bl sym.strlen
+mov r5, r0
+cmp r0, 0x2000
+movls r7, 0
+movhi r7, 1
+cmp sl, 0x2000
+orrhi r7, r7, 1
+uxtb r7, r7
+cmp r7, 0
+bne 0xd1b8
+add r1, sl, 1
+mov r0, r8
+add r1, r1, r5
+bl sym.realloc
+cmp r0, 0
+beq 0xd1fc
+str r0, [r6]
+mov r1, r4
+add r0, r0, r5
+[31mbl sym.strcpy[0m
+mov r0, r7
+add sp, sp, 0x14
+--
+ldr r4, [r0]
+mov r7, r1
+cmp r4, 0
+beq 0x1543c
+mov r0, r4
+bl sym.strlen
+mov r6, r0
+mov r0, r7
+bl sym.strlen
+add r1, r6, r0
+mov r0, r4
+add r1, r1, 2
+bl sym.realloc
+subs r4, r0, 0
+beq 0x1544c
+add r0, r6, 1
+mov r3, 0x2c
+strb r3, [r4, r6]
+add r0, r4, r0
+mov r1, r7
+[31mbl sym.strcpy[0m
+str r4, [r5]
+mov r0, 0
+--
+ldr r3, [r7, 0xc]
+ldr r2, [r7, 0x10]
+add r3, r3, 1
+cmp r2, r3
+ble 0x15714
+ldr r2, [r7, 0x14]
+str r3, [r7, 0xc]
+ldr fp, [r2, r3, lsl 2]
+mov r0, fp
+bl sym.strlen
+add r3, r4, 1
+add r0, r3, r0
+bl sym.malloc
+subs sb, r0, 0
+mov r2, r4
+mov r1, r6
+beq 0x15748
+bl sym.memcpy
+mov r1, fp
+add r0, sb, r4
+[31mbl sym.strcpy[0m
+mov r2, r4
+mov r1, r5
+--
+mov r4, r0
+ldr r0, [sp, 0x20]
+bl sym.strlen
+add r0, r0, r4
+add r0, r0, 0x20
+bl sym.malloc
+mov r4, r0
+mov r0, 0x20
+bl sym.malloc
+cmp r0, 0
+cmpne r4, 0
+mov r5, r0
+str r4, [sp, 0x18]
+str r0, [sp, 0x24]
+beq 0x16b00
+ldr ip, [sp, 0x10]
+ldr r3, str.fuseblk
+ldr r1, str.fuse
+cmp ip, 0
+movne r1, r3
+[31mbl sym.strcpy[0m
+cmp r7, 0
+beq 0x16c24
+ldr r0, [sp, 0x18]
+mov r1, r7
+[31mbl sym.strcpy[0m
+bl sym.restore_privs
+cmp r0, 0
+--
+bl sym.fprintf
+b 0x165bc
+ldr r0, str.priv_drop:_setgroups_failed
+bl sym.perror
+b 0x16994
+str r0, [sp, 0xc]
+ldr r3, obj.stderr
+ldr r4, [r3]
+bl sym.__errno_location
+ldr r0, [r0]
+bl sym.strerror
+ldr r1, str._s:_failed_to_access_mountpoint__s:__s_n
+str r0, [sp]
+mov r3, sb
+mov r0, r4
+ldr r2, str.ntfs_3g_mount
+bl sym.fprintf
+b 0x16aec
+ldr r0, [sp, 0x18]
+ldr r1, [sp, 0x20]
+[31mbl sym.strcpy[0m
+b 0x1670c
+bl sym.__errno_location
+--
+bl sym.fgets
+cmp r0, 0
+moveq r4, r0
+beq 0x42094
+mov r0, r7
+bl sym.strlen
+cmp r0, 1
+movls r4, 0
+bls 0x42094
+add r3, sp, 0x228
+mov lr, 0
+add ip, r3, r0
+ldr r2, str._dev_mapper__s
+mov r3, r7
+mov r1, 0x118
+strb lr, [ip, -0x111]
+mov r0, sp
+bl sym.__GI_snprintf
+mov r0, r6
+mov r1, sp
+[31mbl sym.strcpy[0m
+mov r4, r0
+mov r0, r5
+--
+cmp r3, 0x5c
+strbeq r2, [r4]
+ldrb r3, [r4, 1]!
+cmp r3, 0
+bne 0x429fc
+ldr r4, [sp, 4]
+ldrb r3, [r4, 1]
+cmp r3, 0x3a
+beq 0x42aa0
+mov r0, r6
+bl sym.strlen
+mov r5, r0
+mov r0, r4
+bl sym.strlen
+add r0, r5, r0
+add r0, r0, 0xb
+bl sym.ntfs_malloc
+subs r5, r0, 0
+beq 0x42a8c
+mov r1, r6
+[31mbl sym.strcpy[0m
+mov r0, r5
+bl sym.strlen
+--
+mov r1, r5
+mov r0, r7
+sub r2, r4, 7
+ldr r3, [sp, 0x20]
+bl sym.search_absolute
+cmp r0, 0
+mov r5, r0
+str r0, [sp, 4]
+beq 0x429b0
+mov r0, r6
+bl sym.strlen
+mov r7, r0
+mov r0, r5
+bl sym.strlen
+add r0, r7, r0
+add r0, r0, 2
+bl sym.ntfs_malloc
+subs r5, r0, 0
+beq 0x42b48
+mov r1, r6
+[31mbl sym.strcpy[0m
+mov r0, r5
+bl sym.strlen
+--
+mov r0, fp
+ldr r1, [sp, 0x20]
+sub r2, r4, 1
+mov r3, r6
+bl sym.search_absolute
+str r0, [sp, 0x3c]
+ldr r6, [sp, 0x3c]
+cmp r6, 0
+beq 0x42f80
+mov r0, r7
+bl sym.strlen
+mov sb, r0
+mov r0, r6
+bl sym.strlen
+add r0, sb, r0
+add r0, r0, 2
+bl sym.ntfs_malloc
+subs r6, r0, 0
+beq 0x42f78
+mov r1, r7
+[31mbl sym.strcpy[0m
+mov r0, r6
+bl sym.strlen
+--
+cmp r2, 0x5c
+strbeq r1, [r3, -1]
+ldrb r2, [r3], 1
+cmp r2, 0
+bne 0x42fc4
+ldr r3, [sp, 0x3c]
+ldrb r2, [r3, 1]
+cmp r2, 0x3a
+beq 0x43208
+mov r0, r7
+bl sym.strlen
+mov r4, r0
+ldr r0, [sp, 0x3c]
+bl sym.strlen
+add r0, r4, r0
+add r0, r0, 0xb
+bl sym.ntfs_malloc
+subs r6, r0, 0
+beq 0x430e8
+mov r1, r7
+[31mbl sym.strcpy[0m
+mov r0, r6
+bl sym.strlen
+--
+ldr r4, [0x0005a490]
+cmp r7, 0x3f
+orrhi r3, r3, 1
+cmp r3, 0
+mov r5, r2
+mov r8, r1
+add r4, pc, r4
+beq 0x5a220
+bl sym.__errno_location
+mov r3, 0x16
+mov r5, 0
+str r3, [r0]
+b 0x5a484
+cmp r2, 0
+addne r1, r2, 0x900
+addne r1, r1, 0xc
+ldreq r1, [0x0005a494]
+addeq r1, r4, r1
+add r6, sp, 0x10c
+mov r0, r6
+[31mbl sym.strcpy[0m
+ldrb sl, [r8]
+cmp sl, 0
+--
+ldr r2, [sp, 0x94]
+add r6, r6, 1
+cmp r6, 1
+str r2, [r3, -0x40]
+beq 0x5b3c4
+ldrb r3, [r4]
+cmp r3, 0
+beq 0x5b548
+ldr r3, [0x0005b5d4]
+mov r1, 0
+mov r2, 0x30
+strb r1, [r5, r3]
+ldr r3, [0x0005b5d8]
+ldr r4, [r5, r3]
+mov r0, r4
+bl sym.__GI_memset
+ldr r1, [0x0005b5c4]
+add r0, r4, 0x10
+add r1, r5, r1
+add r1, r1, 3
+[31mbl sym.strcpy[0m
+b 0x5b55c
+ldr r3, [0x0005b5d8]
+--
+beq 0x5b724
+ldr sb, [sb]
+cmp sb, 0
+bne 0x5b6a0
+mov r0, sl
+mov r1, 7
+bl sym.strnlen
+cmp r0, 6
+bgt 0x5b710
+add r0, r0, 8
+bl sym.malloc
+cmp r0, 0
+ldr r3, [0x0005b958]
+beq 0x5b71c
+ldr r3, [r5, r3]
+mov r1, sl
+ldr r2, [r3]
+str r0, [r3]
+str r2, [r0]
+add r0, r0, 4
+[31mbl sym.strcpy[0m
+mov r8, r0
+b 0x5b724
+--
+bne 0x605b4
+bl sym.__errno_location
+mov r3, 2
+mov r5, r4
+str r3, [r0]
+b 0x6081c
+bl sym.strlen
+movw r3, 0xffd
+cmp r0, r3
+bls 0x605d4
+bl sym.__errno_location
+mov r3, 0x24
+str r3, [r0]
+b 0x60700
+rsb r4, r0, 0xff0
+add r6, sp, 0x10
+add r4, r4, 0xf
+mov r1, r7
+add r6, r6, r4
+mov r0, r6
+[31mbl sym.strcpy[0m
+cmp r5, 0
+movne fp, 0
+--
+add r0, sp, 0x14
+ldr r6, [r5, 0x2c]
+rsb r3, r3, 1
+ldr r4, [r5, 0x38]
+mov r1, 0
+add r2, r2, 1
+str r2, [r5, 0x34]
+mov r2, r7
+bl sym._stdlib_strto_ll
+mov r2, r0
+mov r3, r1
+mov r0, r6
+mov r1, r4
+bl sym._store_inttype
+b 0x66170
+ldrb r2, [r3]
+cmp r2, 0
+bne 0x65efc
+mov r0, r6
+ldr r1, [r4, 0x30]
+[31mbl sym.strcpy[0m
+ldr r3, [r4, 0x34]
+add r6, r6, r3
+--
+ldr sb, [sp, 0x14]
+b 0x68f24
+str sl, [r5, sb, lsl 2]
+add sl, sl, 4
+add sb, sb, 1
+ldr r3, [sp, 0x40]
+cmp sb, r3
+bls 0x68f18
+mov r3, 0
+str r3, [r5, sb, lsl 2]
+ldr sb, [sp, 0x1c]
+cmp sb, r3
+beq 0x68f64
+mov r0, sb
+bl sym.strlen
+cmp fp, r0
+bls 0x68f64
+mov r7, sl
+mov r0, sl
+mov r1, sb
+[31mbl sym.strcpy[0m
+mov r3, 2
+str r7, [r4]
+--
+bl sym.__pthread_mutex_lock
+bl sym.__open_nameservers
+ldr r3, [0x0006aff0]
+ldr lr, [sp, 0x28]
+ldr r2, [sp, 0x3c]
+ldr r3, [r7, r3]
+ldr r3, [r3]
+str r3, [sp, 0x24]
+mov r3, 0
+strb r3, [lr, r2]
+ldr r1, [sp, 0x24]
+cmp sl, r1
+bhs 0x6aa14
+mov r3, 0x2e
+strb r3, [lr, r2]
+ldr r3, [0x0006aff4]
+ldr r0, [sp, 0x54]
+ldr r3, [r7, r3]
+ldr r3, [r3]
+ldr r1, [r3, sl, lsl 2]
+[31mbl sym.strcpy[0m
+cmp r8, 0
+bge 0x6aa50
+--
+mov r4, r0
+mov r0, sp
+mov r6, r1
+mov r5, sp
+bl sym.uname
+cmn r0, 1
+beq 0x6b760
+add r5, sp, 0x41
+mov r0, r5
+bl sym.strlen
+add r0, r0, 1
+cmp r0, r6
+bls 0x6b750
+bl sym.__errno_location
+mov r3, 0x16
+str r3, [r0]
+mvn r0, 0
+b 0x6b760
+mov r0, r4
+mov r1, r5
+[31mbl sym.strcpy[0m
+mov r0, 0
+add sp, sp, 0x188
+--
+bl 0x6b844
+subs r5, r0, 0
+add r6, pc, r6
+beq 0x6bab4
+ldr r3, [r4, 4]
+add r1, sp, 0x400
+mov r0, r4
+add r1, r1, 4
+ldr r3, [r3, 8]
+blx r3
+ldr r1, [0x0006bac8]
+mov r2, r7
+mov r0, r5
+add r1, r6, r1
+bl sym.sprintf
+add r4, r5, r0
+ldr r0, [sp, 0x404]
+bl sym.__GI_clnt_sperrno
+mov r1, r0
+mov r0, r4
+[31mbl sym.strcpy[0m
+mov r0, r4
+bl sym.strlen
+--
+add r1, r6, r1
+b 0x6ba74
+ldr r7, [0x0006bad0]
+mov r3, 0
+ldr r1, [sp, 0x408]
+add r7, r6, r7
+add r2, r7, r3, lsl 3
+ldr r0, [r2, 0x254]
+cmp r0, r1
+ldreq r3, [r2, 0x258]
+addeq r7, r7, 0x294
+addeq r7, r7, r3
+beq 0x6ba28
+add r3, r3, 1
+cmp r3, 7
+bls 0x6b9fc
+mov r7, 0
+ldr r1, [0x0006bad4]
+mov r0, r4
+add r1, r6, r1
+[31mbl sym.strcpy[0m
+mov r0, r4
+bl sym.strlen
+cmp r7, 0
+add r4, r4, r0
+beq 0x6ba64
+mov r0, r4
+mov r1, r7
+[31mbl sym.strcpy[0m
+mov r0, r4
+bl sym.strlen
+--
+sub sp, sp, 0x400
+sub sp, sp, 4
+ldr r4, [0x0006bc2c]
+mov r7, r0
+bl 0x6b844
+subs r6, r0, 0
+add r4, pc, r4
+beq 0x6bc1c
+bl sym.__GI___rpc_thread_createerr
+ldr r1, [0x0006bc30]
+mov r2, r7
+mov r5, r0
+mov r0, r6
+add r1, r4, r1
+bl sym.sprintf
+add r7, r6, r0
+ldr r0, [r5]
+bl sym.__GI_clnt_sperrno
+mov r1, r0
+mov r0, r7
+[31mbl sym.strcpy[0m
+mov r0, r7
+bl sym.strlen
+ldr r3, [r5]
+add r7, r7, r0
+cmp r3, 0xc
+beq 0x6bbc8
+cmp r3, 0xe
+bne 0x6bc0c
+ldr r1, [0x0006bc34]
+mov r0, r7
+add r1, r4, r1
+[31mbl sym.strcpy[0m
+mov r0, r7
+bl sym.strlen
+add r7, r7, r0
+ldr r0, [r5, 4]
+bl sym.__GI_clnt_sperrno
+mov r1, r0
+mov r0, r7
+[31mbl sym.strcpy[0m
+mov r0, r7
+bl sym.strlen
+add r7, r7, r0
+b 0x6bc0c
+ldr r1, [0x0006bc34]
+mov r0, r7
+add r1, r4, r1
+[31mbl sym.strcpy[0m
+mov r0, r7
+bl sym.strlen
+mov r2, 0x400
+add r4, r7, r0
+mov r1, sp
+ldr r0, [r5, 8]
+bl sym.__GI___glibc_strerror_r
+mov r1, sp
+mov r0, r4
+[31mbl sym.strcpy[0m
+mov r0, r4
+bl sym.strlen
+--
+strb r1, [r8, -0x14]
+add r5, r5, 1
+strb fp, [r3, -0x14]
+ble 0x6bf0c
+add r3, sp, 0x20
+mov r6, 0
+add r5, r3, r5
+add r4, sp, 0xc
+strb r6, [r5, -0x15]
+mov r0, r4
+bl sym.strlen
+cmp r0, sb
+bls 0x6c00c
+bl sym.__errno_location
+mov r3, 0x1c
+str r3, [r0]
+mov r0, r6
+b 0x6c018
+ldr r0, [sp, 4]
+mov r1, r4
+[31mbl sym.strcpy[0m
+add sp, sp, 0x24
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+--
+cmp sl, 7
+ble 0x6c174
+cmn r6, 1
+beq 0x6c250
+add r6, r8, r6
+cmp r6, 8
+moveq r3, 0x3a
+strbeq r3, [r7], 1
+mov r4, 0
+add r1, sp, 0x10
+strb r4, [r7], 1
+rsb r7, r1, r7
+cmp r7, sb
+bls 0x6c27c
+bl sym.__errno_location
+mov r3, 0x1c
+str r3, [r0]
+mov r0, r4
+b 0x6c298
+mov r0, fp
+[31mbl sym.strcpy[0m
+b 0x6c298
+bl sym.__errno_location
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m30[0m times [0;33mntfs-3g[0m
+

@@ -1,0 +1,131 @@
+<%+xcmob_header%>
+<style type='text/css'>
+	.xcmod_content .xcmod_pwd{
+		width:104px;
+	}
+
+	.xcmod_pwdsetupcontent h2{
+		font-size:18px;
+		color:#50BBBC;
+		font-weight: 700;
+		width:180px;
+		margin:20px auto 0px auto;
+		text-align: center;
+	}
+
+	.xcmod_pwdsetuppanel{
+		width:260px;
+		margin:50px auto 0px auto;
+	}
+
+	.wifipwdsetup{
+		display: block;
+		width:190px;
+		height:44px;
+		padding-left:60px;
+		padding-right:10px;
+		border: none;
+		color:#666;
+		background: url('<%=media%>/mobile/mima.png') no-repeat center;
+	}
+
+	.xcmod_pwdsetuppanel p{
+		margin-top:8px;
+		font-size:12px;
+		color:#989898;
+	}
+
+	.xcmod_lansetup{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		right:10px;
+		background: url('<%=media%>/mobile/lansetup.png') no-repeat center;
+	}
+
+	.xcmod_back{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		cursor: pointer;
+		left:10px;
+		background: url('<%=media%>/mobile/navreturn.png') no-repeat center;
+	}			
+</style>
+<div class='xcmod_nav'>
+	<h2>new wifi</h2>
+	<a class='xcmod_back' href='<%=data%>'></a>
+	<a href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmoblan"))%>' class='xcmod_lansetup'></a>
+</div>
+<div class='xcmod_content xcmod_pwdsetupcontent'>
+	<div class='xcmod_img xcmod_pwd'>
+		<img src='<%=media%>/mobile/pwdsetup.png'>
+	</div>
+	<%
+		local uci = require "luci.model.uci".cursor()
+		local ntm = require "luci.model.network"
+		ntm.init(uci)
+
+		local devices  = ntm:get_wifidevs()
+		local devs
+		local netlist = {}
+
+		for _, dev in ipairs(devices) do local nets = dev:get_wifinets()
+			local nets = dev:get_wifinets()
+			for _, net in ipairs(nets) do
+				netlist[#netlist+1] = net:id()
+			end
+		end
+
+		local netmd = require "luci.model.network".init()
+		local net = netmd:get_wifinet(netlist[1])
+
+		local wireSafePwd = nil
+		wireSafePwd = net:get("key")
+	%>
+	<h2>设置一个WIFI密码</h2>
+	<div class='xcmod_pwdsetuppanel'>
+		<input type='text' class='wifipwdsetup' maxlength="64" value='<%=wireSafePwd%>'>
+		<p>密码为8-64个字符,设置时使用英文字母数字组合</p>
+		<input type='submit' name='submit' class='loginsubmit wifisetupbtn' rel='1' value='下一步'>
+		<input type='submit' name='submit' class='loginsubmit wifisetuppass' rel='0' value='跳过'>
+	</div>
+	<div style='height:50px'>
+	</div>
+</div>
+<script type='text/javascript'>
+	$('.loginsubmit').click(function(){
+		var flag = $(this).attr('rel');
+
+		if (flag == "0"){
+			window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudssid"))%>';
+		}else{
+			var pwd = $('.wifipwdsetup').val();
+			if (pwd.length < 8 || pwd.length > 64){
+				alert('请输入8-64位密码');
+				return false;
+			}
+
+			var reg = /^[0-9a-zA-Z]{8,64}$/
+			if (!reg.test(pwd)){
+				alert('请输入字母或者数字组成的密码');
+				return false;
+			}
+
+			$.ajax({
+				url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmodpwd"))%>',
+				data:{password:pwd},
+				type:'POST',
+				dataType:'json',
+				success:function(){
+					window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudssid"))%>';
+				}
+			})
+		}
+	})
+</script>
+<%+xcmob_footer%>

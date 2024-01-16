@@ -1,0 +1,30 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/WOIagentd line 3:[0m
+[0mSTART=96[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/WOIagentd line 4:[0m
+[0mstop=90[0m
+[33m^--^ SC2034 (warning): stop appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/WOIagentd line 7:[0m
+[0m	for WOIagent_PID in `/bin/ps|grep /bin/WOIagent | grep -v grep | awk '{print $1}'`[0m
+[32m                            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	for WOIagent_PID in $(/bin/ps|grep /bin/WOIagent | grep -v grep | awk '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/WOIagentd line 9:[0m
+[0m    		kill -9 ${WOIagent_PID}[0m
+[32m                        ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    		kill -9 "${WOIagent_PID}"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

@@ -1,0 +1,62 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 11:[0m
+[0m	local OLD_UCI_CONFIG_DIR="$UCI_CONFIG_DIR"[0m
+[33m        ^----------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 12:[0m
+[0m	local OLD_PATH="$PATH"[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 13:[0m
+[0m	local OLD_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"[0m
+[33m        ^-----------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 20:[0m
+[0m	if [ "$jffs" = "/tmp/overlay" ] && [ -r "/tmp/overlay/etc/config/fstab" ]; then[0m
+[33m              ^---^ SC2154 (warning): jffs is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 22:[0m
+[0m		ER_IS_SQUASHFS=true[0m
+[33m                ^------------^ SC2034 (warning): ER_IS_SQUASHFS appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 38:[0m
+[0m	[ "$root_device" = "/dev/root" ] && {[0m
+[33m           ^----------^ SC2154 (warning): root_device is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 41:[0m
+[0m			sleep $extroot_settle_time[0m
+[32m                              ^------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			sleep "$extroot_settle_time"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 47:[0m
+[0m		[ "$rootfs_found" = "1" ] && grep -q ' /overlay ' /proc/mounts && { [0m
+[33m                   ^-----------^ SC2154 (warning): rootfs_found is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 53:[0m
+[0m			pi_extroot_mount_success=true[0m
+[33m                        ^----------------------^ SC2034 (warning): pi_extroot_mount_success appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 54:[0m
+[0m			pi_mount_skip_next=false[0m
+[33m                        ^----------------^ SC2034 (warning): pi_mount_skip_next appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/preinit/50_determine_usb_root line 55:[0m
+[0m			ER_OVERLAY_ROM="/rom"[0m
+[33m                        ^------------^ SC2034 (warning): ER_OVERLAY_ROM appears unused. Verify use (or export if used externally).[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- ER_IS_SQUASHFS appears unused. Ve...
+  https://www.shellcheck.net/wiki/SC2154 -- jffs is referenced but not assign...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.

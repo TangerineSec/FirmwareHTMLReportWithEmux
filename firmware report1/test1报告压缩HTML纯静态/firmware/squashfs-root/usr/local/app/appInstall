@@ -1,0 +1,247 @@
+#!/bin/sh 
+#set -x
+
+G_AppName=""
+G_AppPathTemp=""
+G_Parameter_num=$#
+G_PathTmp="/opt"
+G_Parameter_one=$1
+G_InstallPath=""
+G_AppInstalledPath=""
+G_Parameter_all=$*
+G_ValueLast=
+
+#1，判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 1 ];then
+		xRouterLog 2 appInstall "FunParamLegal" "Parameter Err"
+
+		exit 1
+	else
+		G_AppName=`basename ${G_Parameter_one}`
+		G_AppPathTemp=`dirname ${G_Parameter_one}`	
+	fi	
+}
+
+#2，加锁
+FunLock()
+{
+	local L_TempPath=""
+	local L_Temp=`echo ${G_AppName} | awk -F "." '{print $1}' | awk -F " " '{print $1}'`
+	
+	L_Temp="${L_Temp}.lock"
+	L_TempPath=`ls ${G_PathTmp}/${L_Temp}`
+	if [ "${L_TempPath}" != "" ];then
+		xRouterLog 2 appInstall "FunLock" "${L_Temp}.lock is not exist."
+		
+		exit 2
+	fi
+	touch ${G_PathTmp}/${L_Temp}	
+}
+
+#删除 解压后的包
+FunDel()
+{
+	local L_TempPath=""
+
+	L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	rm -fr ${G_PathTmp}/ipk/${L_TempPath}
+	rm -fr ${G_Parameter_one}
+}
+
+#3，解压 默认加压到tmp 下
+FunUntar()
+{
+	local L_TempPath=""
+
+	L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	mkdir -p ${G_PathTmp}/ipk/${L_TempPath}
+	if [ $? -ne 0 ];then
+		#FunOnlock	
+		xRouterLog 2 appInstall "FunUntar" "mkdir ${G_PathTmp}/ipk/${L_TempPath} fail."
+		exit 3
+	fi
+
+	cd ${G_PathTmp}
+	tar zxvf ${G_AppName} -C ${G_PathTmp}/ipk/${L_TempPath} 1>/dev/null
+	if [ $? -ne 0 ];then 
+		xRouterLog 2 appInstall "FunUntar" "tar zxvf ${G_AppName} fail."
+	
+		#FunOnlock
+		FunDel
+		echo "3"
+		exit 3
+	fi
+	cd -
+}
+
+FunCheckVersion()
+{
+	local L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	local L_TempDir=""
+	local L_VersionRom=""
+	local L_VersionPlug=""
+	
+	L_TempDir=`ls ${G_PathTmp}/ipk/${L_TempPath}`
+	cd ${G_PathTmp}/ipk/${L_TempPath}/${L_TempDir}
+			
+	L_VersionPlug=`cat ./appinfo | grep "plugin_RomVersionL" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+	L_VersionRom=`cat /etc/openwrt_release | grep "DISTRIB_UPDATE" | awk -F "=" '{printf $2}' | awk -F " " '{printf $1}'`
+	L_VersionRom=${L_VersionRom:1:7}
+	
+	if [ "${L_VersionRom}" \> "${L_VersionPlug}" ];then
+		echo "Rom version:${L_VersionRom} , Plug version:${L_VersionPlug}."
+		xRouterLog 0 appInstall "FunCheckVersion" "1,Rom version:${L_VersionRom}, Plug version:${L_VersionPlug}."
+	elif [ "${L_VersionPlug}" = "${L_VersionRom}" ];then
+		echo "Rom version:${L_VersionRom} , Plug version:${L_VersionPlug}."
+		xRouterLog 0 appInstall "FunCheckVersion" "2,Rom version:${L_VersionRom}, Plug version:${L_VersionPlug}."	
+	else
+		echo "FunCheckVersion" "Rom version is too low."
+		xRouterLog 2 appInstall "FunCheckVersion" "3,Rom version:${L_VersionRom}, Plug version:${L_VersionPlug}."
+		xRouterLog 2 appInstall "FunCheckVersion" "Rom version is too low."
+		exit 7
+	fi
+}
+
+#4，对ipk文件作md5校验
+FunMd5()
+{
+	local L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	local L_Md5FromConfig=""
+	local L_Md5Exe=""
+	local L_TempDir=""
+	
+	L_TempDir=`ls ${G_PathTmp}/ipk/${L_TempPath}`
+	cd ${G_PathTmp}/ipk/${L_TempPath}/${L_TempDir}
+		
+	L_Md5Exe=`md5sum ./*.ipk | awk -F " " '{print $1}'`	
+	L_Md5FromConfig=`cat ./appinfo | grep "plugin_MD5" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+	G_InstallPath=`cat ./appinfo | grep "plugin_IntallPath" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+	
+	if [ "${L_Md5FromConfig}" == "" ];then
+		xRouterLog 2 appInstall "FunMd5" "L_Md5FromConfig is NULL."
+	
+		#FunOnlock
+		FunDel
+		echo "4"
+		exit 4	
+	elif [ "${L_Md5Exe}" == "" ];then
+		xRouterLog 2 appInstall "FunMd5" "L_Md5Exe is NULL."
+	
+		#FunOnlock
+		FunDel
+		echo "442"
+		exit 4		
+	elif [ "${L_Md5Exe}" != "${L_Md5FromConfig}" ];then
+		xRouterLog 2 appInstall "FunMd5" "${L_Md5Exe} and ${L_Md5FromConfig} is not equal."
+	
+		#FunOnlock
+		FunDel
+		echo "4"
+		exit 4
+	fi	
+	cd -
+}
+
+#6,执行安装
+FunInstall()
+{
+	local L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	local L_Md5FromConfig=""
+	local L_TempDir=""
+	
+	L_TempDir=`ls ${G_PathTmp}/ipk/${L_TempPath}`
+	cd ${G_PathTmp}/ipk/${L_TempPath}/${L_TempDir}
+
+	#调用插件的安装脚本安装
+	./appshell install 1>/dev/null
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then 
+		xRouterLog 2 appInstall "FunInstall" "appshell install fail.${G_ValueLast}"
+	
+		#FunOnlock
+		FunDel
+		echo "5"
+		exit 5
+	fi
+	cd -
+}
+
+#7,修改配置文件
+FunAlterConfig()
+{	
+	local L_TempPath=`echo ${G_AppName} |awk -F "." '{print $1}' |awk -F " " '{print $1}'`
+	local L_Md5FromConfig=""
+	local L_TempDir=""
+	local L_AppID=""
+	local TmpTime=""
+	local TmpLine=""
+	local Tmp=""
+	local TmpNextLine=""
+	local TmpNum=""
+	local TmpFileName="./appinfo"
+	
+	TmpTime=`date +%Y-%m-%d`
+	L_TempDir=`ls ${G_PathTmp}/ipk/${L_TempPath}`
+	cd ${G_PathTmp}/ipk/${L_TempPath}/${L_TempDir}
+
+	L_AppID=`cat ${TmpFileName} | grep "plugin_ID" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`
+	
+	TmpLine=`sed = ${TmpFileName}|sed 'N;s/\n/:/' |grep "plugin_InstallDate" | awk -F ":" '{printf $1}'`		
+
+	TmpNum=`printf "%d" ${TmpLine}`
+	TmpNextLine=`expr ${TmpNum} + 1`
+	
+	#在当前行插入一个新行，内容为 plugin_InstallDate:${TmpTime}
+	sed -ri ''${TmpLine}'i\plugin_InstallDate:'${TmpTime}  ${TmpFileName}
+	
+	#删除插入后的下一行
+	sed -ri ''${TmpNextLine}'d' ${TmpFileName}
+	
+	#创建配置文件目录
+	
+	G_AppInstalledPath="/opt/app/appinstalled"
+	mkdir -p ${G_AppInstalledPath}
+	cp ${TmpFileName} ${G_AppInstalledPath}/${L_AppID}
+	if [ $? -ne 0 ];then 
+		xRouterLog 2 appInstall "FunAlterConfig" "cp ${TmpFileName} ${G_AppInstalledPath}/${L_AppID} fail."
+		
+		exit 6
+	fi
+	cp ${TmpFileName} ${G_InstallPath}/
+	if [ $? -ne 0 ];then 
+		xRouterLog 2 appInstall "FunAlterConfig" "cp ${TmpFileName} ${G_InstallPath}/ fail."
+		
+		exit 6
+	fi
+	
+	cd -		
+}
+
+#8,解锁
+FunOnlock()
+{
+	local L_Temp=`echo ${G_AppName} | awk -F "." '{print $1}' | awk -F " " '{print $1}'`
+	L_Temp="${L_Temp}.lock"
+	rm -f ${G_PathTmp}/${L_Temp}	
+}
+
+xRouterLog 0 "appInstall" - "`basename $0` ${G_Parameter_all}"
+
+FunParamLegal  
+#FunLock
+FunUntar
+FunCheckVersion
+FunMd5
+FunInstall
+FunAlterConfig
+FunDel
+#FunOnlock
+
+xRouterLog 0 "appInstall" - "`basename $0` ${G_Parameter_all} success."
+exit 0
+
+
+
+

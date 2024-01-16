@@ -1,0 +1,496 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s20_shell_check.html" title="./../s20_shell_check.html" >&laquo; Back to s20_shell_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>#!/bin/sh</pre>
+<pre># Copyright (C) 2006-2011 OpenWrt.org</pre>
+<pre># Copyright (C) 2006 Fokus Fraunhofer &lt;carsten.tittel&commat;fokus.fraunhofer.de&gt;</pre>
+<br />
+<br />
+<pre>debug () {</pre>
+<pre>	${DEBUG:-:} "$&commat;"</pre>
+<pre>}</pre>
+<pre>mount() {</pre>
+<pre>	busybox mount "$&commat;"</pre>
+<pre>}</pre>
+<br />
+<pre># newline</pre>
+<pre>N="</pre>
+<pre>"</pre>
+<br />
+<pre>_C=0</pre>
+<pre>NO_EXPORT=1</pre>
+<pre>LOAD_STATE=1</pre>
+<pre>LIST_SEP=" "</pre>
+<br />
+<pre>hotplug_dev() {</pre>
+<pre>	env -i ACTION=$1 INTERFACE=$2 /sbin/hotplug-call net</pre>
+<pre>}</pre>
+<br />
+<pre>append() {</pre>
+<pre>	local var="$1"</pre>
+<pre>	local value="$2"</pre>
+<pre>	local sep="${3:- }"</pre>
+<br />
+<pre><span class="green">	eval "export ${NO_EXPORT:+-n} -- \"$var=\${$var:+\${$var}\${value:+\$sep}}\$value\""</span></pre>
+<pre>}</pre>
+<br />
+<pre>list_contains() {</pre>
+<pre>	local var="$1"</pre>
+<pre>	local str="$2"</pre>
+<pre>	local val</pre>
+<br />
+<pre><span class="green">	eval "val=\" \${$var} \""</span></pre>
+<pre>	[ "${val%% $str *}" != "$val" ]</pre>
+<pre>}</pre>
+<br />
+<pre>list_remove() {</pre>
+<pre>	local var="$1"</pre>
+<pre>	local remove="$2"</pre>
+<pre>	local val</pre>
+<br />
+<pre><span class="green">	eval "val=\" \${$var} \""</span></pre>
+<pre>	val1="${val%% $remove *}"</pre>
+<pre>	[ "$val1" = "$val" ] &amp;&amp; return</pre>
+<pre>	val2="${val##* $remove }"</pre>
+<pre>	[ "$val2" = "$val" ] &amp;&amp; return</pre>
+<pre>	val="${val1## } ${val2%% }"</pre>
+<pre>	val="${val%% }"</pre>
+<pre><span class="green">	eval "export ${NO_EXPORT:+-n} -- \"$var=\$val\""</span></pre>
+<pre>}</pre>
+<br />
+<pre>config_load() {</pre>
+<pre>	[ -n "$IPKG_INSTROOT" ] &amp;&amp; return 0</pre>
+<pre>	uci_load "$&commat;"</pre>
+<pre>}</pre>
+<br />
+<pre>reset_cb() {</pre>
+<pre>	config_cb() { return 0; }</pre>
+<pre>	option_cb() { return 0; }</pre>
+<pre>	list_cb() { return 0; }</pre>
+<pre>}</pre>
+<pre>reset_cb</pre>
+<br />
+<pre>package() {</pre>
+<pre>	return 0</pre>
+<pre>}</pre>
+<br />
+<pre>config () {</pre>
+<pre>	local cfgtype="$1"</pre>
+<pre>	local name="$2"</pre>
+<br />
+<pre>	export ${NO_EXPORT:+-n} CONFIG_NUM_SECTIONS=$(($CONFIG_NUM_SECTIONS + 1))</pre>
+<pre>	name="${name:-cfg$CONFIG_NUM_SECTIONS}"</pre>
+<pre>	append CONFIG_SECTIONS "$name"</pre>
+<pre>	[ -n "$NO_CALLBACK" ] || config_cb "$cfgtype" "$name"</pre>
+<pre>	export ${NO_EXPORT:+-n} CONFIG_SECTION="$name"</pre>
+<pre>	export ${NO_EXPORT:+-n} "CONFIG_${CONFIG_SECTION}_TYPE=$cfgtype"</pre>
+<pre>}</pre>
+<br />
+<pre>option () {</pre>
+<pre>	local varname="$1"; shift</pre>
+<pre>	local value="$*"</pre>
+<br />
+<pre>	export ${NO_EXPORT:+-n} "CONFIG_${CONFIG_SECTION}_${varname}=$value"</pre>
+<pre>	[ -n "$NO_CALLBACK" ] || option_cb "$varname" "$*"</pre>
+<pre>}</pre>
+<br />
+<pre>list() {</pre>
+<pre>	local varname="$1"; shift</pre>
+<pre>	local value="$*"</pre>
+<pre>	local len</pre>
+<br />
+<pre>	config_get len "$CONFIG_SECTION" "${varname}_LENGTH" 0</pre>
+<pre>	[ $len = 0 ] &amp;&amp; append CONFIG_LIST_STATE "${CONFIG_SECTION}_${varname}"</pre>
+<pre>	len=$(($len + 1))</pre>
+<pre>	config_set "$CONFIG_SECTION" "${varname}_ITEM$len" "$value"</pre>
+<pre>	config_set "$CONFIG_SECTION" "${varname}_LENGTH" "$len"</pre>
+<pre>	append "CONFIG_${CONFIG_SECTION}_${varname}" "$value" "$LIST_SEP"</pre>
+<pre>	list_cb "$varname" "$*"</pre>
+<pre>}</pre>
+<br />
+<pre>config_rename() {</pre>
+<pre>	local OLD="$1"</pre>
+<pre>	local NEW="$2"</pre>
+<pre>	local oldvar</pre>
+<pre>	local newvar</pre>
+<br />
+<pre>	[ -n "$OLD" -a -n "$NEW" ] || return</pre>
+<pre>	for oldvar in `set | grep ^CONFIG_${OLD}_ | \</pre>
+<pre>		sed -e 's/\(.*\)=.*$/\1/'` ; do</pre>
+<pre>		newvar="CONFIG_${NEW}_${oldvar##CONFIG_${OLD}_}"</pre>
+<pre><span class="green">		eval "export ${NO_EXPORT:+-n} \"$newvar=\${$oldvar}\""</span></pre>
+<pre>		unset "$oldvar"</pre>
+<pre>	done</pre>
+<pre>	export ${NO_EXPORT:+-n} CONFIG_SECTIONS="$(echo " $CONFIG_SECTIONS " | sed -e "s, $OLD , $NEW ,")"</pre>
+<br />
+<pre>	[ "$CONFIG_SECTION" = "$OLD" ] &amp;&amp; export ${NO_EXPORT:+-n} CONFIG_SECTION="$NEW"</pre>
+<pre>}</pre>
+<br />
+<pre>config_unset() {</pre>
+<pre>	config_set "$1" "$2" ""</pre>
+<pre>}</pre>
+<br />
+<pre>config_clear() {</pre>
+<pre>	local SECTION="$1"</pre>
+<pre>	local oldvar</pre>
+<br />
+<pre>	list_remove CONFIG_SECTIONS "$SECTION"</pre>
+<pre>	export ${NO_EXPORT:+-n} CONFIG_SECTIONS="${SECTION:+$CONFIG_SECTIONS}"</pre>
+<br />
+<pre>	for oldvar in `set | grep ^CONFIG_${SECTION:+${SECTION}_} | \</pre>
+<pre>		sed -e 's/\(.*\)=.*$/\1/'` ; do</pre>
+<pre>		unset $oldvar</pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre># config_get &lt;variable&gt; &lt;section&gt; &lt;option&gt; [&lt;default&gt;]</pre>
+<pre># config_get &lt;section&gt; &lt;option&gt;</pre>
+<pre>config_get() {</pre>
+<pre>	case "$3" in</pre>
+<pre><span class="green">		"") eval echo "\${CONFIG_${1}_${2}:-\${4}}"</span>;</span></pre>
+<pre><span class="green">		*)  eval export ${NO_EXPORT:+-n} -- "${1}=\${CONFIG_${2}_${3}:-\${4}}"</span>;</span></pre>
+<pre>	esac</pre>
+<pre>}</pre>
+<br />
+<pre># config_get_bool &lt;variable&gt; &lt;section&gt; &lt;option&gt; [&lt;default&gt;]</pre>
+<pre>config_get_bool() {</pre>
+<pre>	local _tmp</pre>
+<pre>	config_get _tmp "$2" "$3" "$4"</pre>
+<pre>	case "$_tmp" in</pre>
+<pre>		1|on|true|enabled) _tmp=1</span>;</pre>
+<pre>		0|off|false|disabled) _tmp=0</span>;</pre>
+<pre>		*) _tmp="$4"</span>;</pre>
+<pre>	esac</pre>
+<pre>	export ${NO_EXPORT:+-n} "$1=$_tmp"</pre>
+<pre>}</pre>
+<br />
+<pre>config_set() {</pre>
+<pre>	local section="$1"</pre>
+<pre>	local option="$2"</pre>
+<pre>	local value="$3"</pre>
+<pre>	local old_section="$CONFIG_SECTION"</pre>
+<br />
+<pre>	CONFIG_SECTION="$section"</pre>
+<pre>	option "$option" "$value"</pre>
+<pre>	CONFIG_SECTION="$old_section"</pre>
+<pre>}</pre>
+<br />
+<pre>config_foreach() {</pre>
+<pre>	local ___function="$1"</pre>
+<pre>	[ "$#" -ge 1 ] &amp;&amp; shift</pre>
+<pre>	local ___type="$1"</pre>
+<pre>	[ "$#" -ge 1 ] &amp;&amp; shift</pre>
+<pre>	local section cfgtype</pre>
+<br />
+<pre>	[ -z "$CONFIG_SECTIONS" ] &amp;&amp; return 0</pre>
+<pre>	for section in ${CONFIG_SECTIONS}; do</pre>
+<pre>		config_get cfgtype "$section" TYPE</pre>
+<pre>		[ -n "$___type" -a "x$cfgtype" != "x$___type" ] &amp;&amp; continue</pre>
+<pre><span class="green">		eval "$___function \"\$section\" \"\$&commat;\""</span></pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre>config_list_foreach() {</pre>
+<pre>	[ "$#" -ge 3 ] || return 0</pre>
+<pre>	local section="$1"; shift</pre>
+<pre>	local option="$1"; shift</pre>
+<pre>	local function="$1"; shift</pre>
+<pre>	local val</pre>
+<pre>	local len</pre>
+<pre>	local c=1</pre>
+<br />
+<pre>	config_get len "${section}" "${option}_LENGTH"</pre>
+<pre>	[ -z "$len" ] &amp;&amp; return 0</pre>
+<pre>	while [ $c -le "$len" ]; do</pre>
+<pre>		config_get val "${section}" "${option}_ITEM$c"</pre>
+<pre><span class="green">		eval "$function \"\$val\" \"$&commat;\""</span></pre>
+<pre>		c="$(($c + 1))"</pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre>load_modules() {</pre>
+<pre>	[ -d /etc/modules.d ] &amp;&amp; {</pre>
+<pre>		cd /etc/modules.d</pre>
+<pre>		sed 's/^[^#]/insmod &amp;/' $* | ash 2&gt;&amp;- || :</pre>
+<pre>	}</pre>
+<pre>}</pre>
+<br />
+<pre>include() {</pre>
+<pre>	local file</pre>
+<br />
+<pre>	for file in $(ls $1/*.sh 2&gt;/dev/null); do</pre>
+<pre>		. $file</pre>
+<pre>	done</pre>
+<pre>}</pre>
+<br />
+<pre>find_mtd_part() {</pre>
+<pre>	local PART="$(grep "\"$1\"" /proc/mtd | awk -F: '{print $1}')"</pre>
+<pre>	local PREFIX=/dev/mtdblock</pre>
+<br />
+<pre>	PART="${PART##mtd}"</pre>
+<pre>	[ -d /dev/mtdblock ] &amp;&amp; PREFIX=/dev/mtdblock/</pre>
+<pre>	echo "${PART:+$PREFIX$PART}"</pre>
+<pre>}</pre>
+<br />
+<pre>strtok() { # &lt;string&gt; { &lt;variable&gt; [&lt;separator&gt;] ... }</pre>
+<pre>	local tmp</pre>
+<pre>	local val="$1"</pre>
+<pre>	local count=0</pre>
+<br />
+<pre>	shift</pre>
+<br />
+<pre>	while [ $# -gt 1 ]; do</pre>
+<pre>		tmp="${val%%$2*}"</pre>
+<br />
+<pre>		[ "$tmp" = "$val" ] &amp;&amp; break</pre>
+<br />
+<pre>		val="${val#$tmp$2}"</pre>
+<br />
+<pre>		export ${NO_EXPORT:+-n} "$1=$tmp"; count=$((count+1))</pre>
+<pre>		shift 2</pre>
+<pre>	done</pre>
+<br />
+<pre>	if [ $# -gt 0 -a -n "$val" ]; then</pre>
+<pre>		export ${NO_EXPORT:+-n} "$1=$val"; count=$((count+1))</pre>
+<pre>	fi</pre>
+<br />
+<pre>	return $count</pre>
+<pre>}</pre>
+<br />
+<br />
+<pre>jffs2_mark_erase() {</pre>
+<pre>	local part="$(find_mtd_part "$1")"</pre>
+<pre>	[ -z "$part" ] &amp;&amp; {</pre>
+<pre>		echo Partition not found.</pre>
+<pre>		return 1</pre>
+<pre>	}</pre>
+<pre>	echo -e "\xde\xad\xc0\xde" | mtd -qq write - "$1"</pre>
+<pre>}</pre>
+<br />
+<pre>uci_apply_defaults() {</pre>
+<pre>	cd /etc/uci-defaults || return 0</pre>
+<pre>	files="$(ls)"</pre>
+<pre>	[ -z "$files" ] &amp;&amp; return 0</pre>
+<pre>	mkdir -p /tmp/.uci</pre>
+<pre>	for file in $files; do</pre>
+<pre>		( . "./$(basename $file)" ) &amp;&amp; rm -f "$file"</pre>
+<pre>	done</pre>
+<pre>	uci commit</pre>
+<pre>}</pre>
+<br />
+<pre>group_add() {</pre>
+<pre>	local name="$1"</pre>
+<pre>	local gid="$2"</pre>
+<pre>	local rc</pre>
+<pre>	[ -f "${IPKG_INSTROOT}/etc/group" ] || return 1</pre>
+<pre>	[ -n "$IPKG_INSTROOT" ] || lock /var/lock/group</pre>
+<pre>	echo "${name}:x:${gid}:" &gt;&gt; ${IPKG_INSTROOT}/etc/group</pre>
+<pre>	rc=$?</pre>
+<pre>	[ -n "$IPKG_INSTROOT" ] || lock -u /var/lock/group</pre>
+<pre>	return $rc</pre>
+<pre>}</pre>
+<br />
+<pre>group_exists() {</pre>
+<pre>	grep -qs "^${1}:" ${IPKG_INSTROOT}/etc/group</pre>
+<pre>}</pre>
+<br />
+<pre>user_add() {</pre>
+<pre>	local name="${1}"</pre>
+<pre>	local uid="${2}"</pre>
+<pre>	local gid="${3:-$2}"</pre>
+<pre>	local desc="${4:-$1}"</pre>
+<pre>	local home="${5:-/var/run/$1}"</pre>
+<pre>	local shell="${6:-/bin/false}"</pre>
+<pre>	local rc</pre>
+<pre>	[ -f "${IPKG_INSTROOT}/etc/passwd" ] || return 1</pre>
+<pre>	[ -n "$IPKG_INSTROOT" ] || lock /var/lock/passwd</pre>
+<pre>	echo "${name}:x:${uid}:${gid}:${desc}:${home}:${shell}" &gt;&gt; ${IPKG_INSTROOT}/etc/passwd</pre>
+<pre>	echo "${name}:x:0:0:99999:7:::" &gt;&gt; ${IPKG_INSTROOT}/etc/shadow</pre>
+<pre>	rc=$?</pre>
+<pre>	[ -n "$IPKG_INSTROOT" ] || lock -u /var/lock/passwd</pre>
+<pre>	return $rc</pre>
+<pre>}</pre>
+<br />
+<pre>user_exists() {</pre>
+<pre>	grep -qs "^${1}:" ${IPKG_INSTROOT}/etc/passwd</pre>
+<pre>}</pre>
+<br />
+<br />
+<pre>pi_include() {</pre>
+<pre>	if [ -f "/tmp/overlay/$1" ]; then</pre>
+<pre>		. "/tmp/overlay/$1"</pre>
+<pre>	elif [ -f "$1" ]; then</pre>
+<pre>		. "$1"</pre>
+<pre>	elif [ -d "/tmp/overlay/$1" ]; then</pre>
+<pre>		if [ -n "$(ls /tmp/overlay/$1/*.sh 2&gt;/dev/null)" ]; then</pre>
+<pre>			for src_script in /tmp/overlay/$1/*.sh; do</pre>
+<pre>				. "$src_script"</pre>
+<pre>			done</pre>
+<pre>		fi</pre>
+<pre>	elif [ -d "$1" ]; then</pre>
+<pre>		if [ -n "$(ls $1/*.sh 2&gt;/dev/null)" ]; then</pre>
+<pre>			for src_script in $1/*.sh; do</pre>
+<pre>				. "$src_script"</pre>
+<pre>			done</pre>
+<pre>		fi</pre>
+<pre>	else</pre>
+<pre>		echo "WARNING: $1 not found"</pre>
+<pre>		return 1</pre>
+<pre>	fi</pre>
+<pre>	return 0</pre>
+<pre>}</pre>
+<br />
+<pre>[ -z "$IPKG_INSTROOT" -a -f /lib/config/uci.sh ] &amp;&amp; . /lib/config/uci.sh</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

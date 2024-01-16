@@ -1,0 +1,86 @@
+1 mmap2(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_UNINITIALIZED,-1,0) = 0x40810000
+1 open("/lib/libc.so.0",O_RDONLY) = 3
+1 fstat(3,0x40702ef0) = 0
+1 mmap2(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_UNINITIALIZED,-1,0) = 0x40811000
+1 read(3,0x40811000,4096) = 4096
+1 mmap2(NULL,475136,PROT_NONE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x40812000
+1 mmap2(0x40812000,413376,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_FIXED,3,0) = 0x40812000
+1 mmap2(0x4087f000,4980,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_FIXED,3,0x65) = 0x4087f000
+1 mmap2(0x40881000,17872,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x40881000
+1 close(3) = 0
+1 munmap(0x40811000,4096) = 0
+1 stat("/lib/ld-uClibc.so.0",0x40703910) = 0
+1 open("/dev/urandom",O_RDONLY) = 3
+1 read(3,0x40703958,4) = 4
+1 close(3) = 0
+1 mprotect(0x4087f000,4096,PROT_READ) = 0
+1 mprotect(0x4080d000,4096,PROT_READ) = 0
+1 ioctl(0,TCGETS,0x40703734) = -1 errno=25 (Inappropriate ioctl for device)
+1 ioctl(1,TCGETS,0x40703734) = -1 errno=25 (Inappropriate ioctl for device)
+1 brk(NULL) = 0x00016000
+1 brk(0x00018000) = 0x00018000
+1 brk(0x00019000) = 0x00019000
+1 brk(0x0001a000) = 0x0001a000
+1 open("/etc/inadyn.conf",O_RDONLY) = -1 errno=2 (No such file or directory)
+1 write(1,0x40882648,3141)
+
+
+			INADYN Help
+
+	INADYN is a dynamic DNS client. That is, it maintains the IP address
+of a host name. It periodically checks whether the IP address of the current machine
+(the external visible IP address of the machine that runs INADYN) has changed.
+If yes it performs an update in the dynamic dns server.
+
+Typical usage: 
+	-for dyndns.org system: 
+		inadyn -u username -p password -a my.registrated.name 
+	-for freedns.afraid.org:
+		 inadyn --dyndns_system default@freedns.afraid.org -a my.registrated.name,hash -a anothername,hash2
+			 'hash' is extracted from the grab url batch file that is downloaded from freedns.afraid.org
+
+Parameters:
+	'--help': help
+	'-h': help
+	'--username': your  membername/ hash
+	'-u': your  membername / hash
+	'--password': your password. Optional.
+	'-p': your password
+	'--alias': alias host name. this option can appear multiple times.
+	'-a': alias host name. this option can appear multiple times.
+	'--input_file': the file containing [further] inadyn options.The default config file, '/etc/inadyn.conf' is used if inadyn is called without any cmd line options.
+	'--ip_server_name': <srv_name[:port] local_url> - local IP is detected by parsing the response after returned by this server and URL. 
+		The first IP in found in http response is considered 'my IP'. 
+		Default value: 'checkip.dyndns.org /
+	'--dyndns_server_name': [<NAME>[:port]] 
+		The server that receives the update DNS request.  
+		Allows the use of unknown DNS services that accept HTTP updates.
+		If no proxy is wanted, then it is enough to set the dyndns system. The default servers will be taken.
+	'--dyndns_server_url': <name>
+	full URL relative to DynDNS server root.
+	Ex: /some_script.php?hostname=
+
+	'--dyndns_system': [NAME] - optional DYNDNS service type. SHOULD be one of the following: 
+		-For dyndns.org DNS system: dyndns@dyndns.org OR statdns@dyndns.org OR customdns@dyndns.org.
+		-For freedns.afraid.org DNS system: default@freedns.afraid.org
+		-For www.zoneedit.com DNS system: default@zoneedit.com
+		-For www.no-ip.com DNS system: default@no-ip.com
+		-For generic DNS system: custom@http_svr_basic_auth
+		DEFAULT value is intended for default service at dyndns.org (most users): dyndns@dyndns.org
+	'--proxy_server': [NAME[:port]]  - the http proxy server name and port. Default is none.
+	'--update_period': how often the IP is checked. The period is in [ms]. Default is about 1 min. Max is 10 days
+	'--update_period_sec': how often the IP is checked. The period is in [sec]. Default is about 1 min. Max is 10 days
+	'--forced_update_period': how often the IP is updated even if it is not changed. [in sec]
+	'--log_file': log file path abd name
+	'--background': run in background. output to log file or to syslog
+	'--verbose': set dbg level. 0 to 5
+	'--iterations': set the number of DNS updates. Default is 0, which means infinity.
+	'--syslog': force logging to syslog . (e.g. /var/log/messages). Works on **NIX systems only.
+	'--change_persona': after init switch to a new user/group. Parameters: <uid[:gid]> to change to. Works on **NIX systems only.
+	'--version': print the version number
+
+
+
+
+ = 3141
+1 exit(0)

@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33migs.ko[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mREL[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33migs.ko[0m
+
+    1450:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+    1454:	00000000 	.word	0x00000000
+    1458:	000003cf 	.word	0x000003cf
+    145c:	000003ef 	.word	0x000003ef
+    1460:	00000000 	.word	0x00000000
+    1464:	00000412 	.word	0x00000412
+    1468:	000003b1 	.word	0x000003b1
+    146c:	000003c2 	.word	0x000003c2
+	...
+
+00001478 <igs_sdb_list>:
+    1478:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+    147c:	e24dde43 	sub	sp, sp, #1072	; 0x430
+    1480:	e59d644c 	ldr	r6, [sp, #1100]	; 0x44c
+    1484:	e1a04000 	mov	r4, r0
+    1488:	e1a0000d 	mov	r0, sp
+    148c:	e1a08003 	mov	r8, r3
+    1490:	e1a0500d 	mov	r5, sp
+    1494:	e28d7020 	add	r7, sp, #32
+    1498:	e2861004 	add	r1, r6, #4
+[31m    149c:	ebfffffe 	bl	0 <strcpy>[0m
+    14a0:	e3a03004 	mov	r3, #4
+    14a4:	e5960018 	ldr	r0, [r6, #24]
+--
+    1568:	ebfffffe 	bl	0 <printk>
+    156c:	e3e00000 	mvn	r0, #0
+    1570:	e28dde43 	add	sp, sp, #1072	; 0x430
+    1574:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+    1578:	00000424 	.word	0x00000424
+    157c:	00000442 	.word	0x00000442
+    1580:	0000046d 	.word	0x0000046d
+    1584:	0000047a 	.word	0x0000047a
+    1588:	0000047e 	.word	0x0000047e
+
+0000158c <igs_stats_get>:
+    158c:	e92d40f0 	push	{r4, r5, r6, r7, lr}
+    1590:	e24ddd11 	sub	sp, sp, #1088	; 0x440
+    1594:	e24dd004 	sub	sp, sp, #4
+    1598:	e1a06000 	mov	r6, r0
+    159c:	e28d4010 	add	r4, sp, #16
+    15a0:	e1a07003 	mov	r7, r3
+    15a4:	e59d545c 	ldr	r5, [sp, #1116]	; 0x45c
+    15a8:	e1a00004 	mov	r0, r4
+    15ac:	e2851004 	add	r1, r5, #4
+[31m    15b0:	ebfffffe 	bl	0 <strcpy>[0m
+    15b4:	e3a03006 	mov	r3, #6
+    15b8:	e5950018 	ldr	r0, [r5, #24]
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33migs.ko[0m
+

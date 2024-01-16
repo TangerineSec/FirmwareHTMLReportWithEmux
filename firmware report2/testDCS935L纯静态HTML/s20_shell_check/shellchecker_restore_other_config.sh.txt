@@ -1,0 +1,85 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 7:[0m
+[0m	flicker=`cfg -a r -p /mnt/flash/config image_default.ini Image flicker` [0m
+[32m                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	flicker=$(cfg -a r -p /mnt/flash/config image_default.ini Image flicker) 
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 8:[0m
+[0m	if [ ! -z "$flicker" ]; then[0m
+[32m             ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 9:[0m
+[0m		if [ "$flicker" == "1" ]; then[0m
+[33m                                ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 11:[0m
+[0m		elif [ "$flicker" == "2" ]; then[0m
+[33m                                  ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 21:[0m
+[0m	mac=`rtkmib mac|tr '[a-z]' '[A-Z]'`[0m
+[32m            ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                           ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                   ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+	mac=$(rtkmib mac|tr '[a-z]' '[A-Z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 22:[0m
+[0m	modelname=`/usr/sbin/userconfig -read System ModelName`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	modelname=$(/usr/sbin/userconfig -read System ModelName)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 23:[0m
+[0m	ssid=$modelname"-"`echo $mac|cut -d: -f 5``echo $mac|cut -d: -f 6`[0m
+[32m                          ^----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                  ^----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                        ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	ssid=$modelname"-"$(echo "$mac"|cut -d: -f 5)$(echo "$mac"|cut -d: -f 6)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 24:[0m
+[0m	userconfig -write WIRELESS_AP SSID $ssid[0m
+[32m                                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	userconfig -write WIRELESS_AP SSID "$ssid"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 27:[0m
+[0m		psk=`dlinkpsk`[0m
+[32m                    ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+		psk=$(dlinkpsk)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 28:[0m
+[0m		if [ ! -z "$psk" ]; then[0m
+[32m                     ^-- SC2236 (style): Use -n instead of ! -z.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/restore_other_config.sh line 29:[0m
+[0m			userconfig -write WIRELESS_AP PreSharedKey $psk[0m
+[32m                                                                   ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			userconfig -write WIRELESS_AP PreSharedKey "$psk"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...
+  https://www.shellcheck.net/wiki/SC2021 -- Don't use [] around classes in tr...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

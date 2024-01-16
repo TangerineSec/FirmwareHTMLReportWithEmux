@@ -1,0 +1,36 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibshared.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibshared.so[0m
+
+    d244:	ebffda2d 	bl	3b00 <strlen@plt>
+    d248:	e59dc01c 	ldr	ip, [sp, #28]
+    d24c:	e3a02004 	mov	r2, #4
+    d250:	e0841005 	add	r1, r4, r5
+    d254:	e08c0000 	add	r0, ip, r0
+    d258:	ebffd944 	bl	3770 <memcpy@plt>
+    d25c:	e59d001c 	ldr	r0, [sp, #28]
+    d260:	ebffd9d2 	bl	39b0 <nvram_get@plt>
+    d264:	e2502000 	subs	r2, r0, #0
+    d268:	0a000030 	beq	d330 <get_wsec+0xe50>
+    d26c:	e59f11b8 	ldr	r1, [pc, #440]	; d42c <get_wsec+0xf4c>
+    d270:	e28d5f5d 	add	r5, sp, #372	; 0x174
+    d274:	e1a00005 	mov	r0, r5
+    d278:	e0841001 	add	r1, r4, r1
+    d27c:	ebffd9ef 	bl	3a40 <sprintf@plt>
+    d280:	e59d1028 	ldr	r1, [sp, #40]	; 0x28
+    d284:	e59d001c 	ldr	r0, [sp, #28]
+    d288:	ebffd8f0 	bl	3650 <strcpy@plt>
+    d28c:	e1a01005 	mov	r1, r5
+    d290:	e59d001c 	ldr	r0, [sp, #28]
+[31m    d294:	ebffd977 	bl	3878 <strcat@plt>[0m
+    d298:	e59d001c 	ldr	r0, [sp, #28]
+    d29c:	ebffd9c3 	bl	39b0 <nvram_get@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m1[0m times [0;33mlibshared.so[0m
+

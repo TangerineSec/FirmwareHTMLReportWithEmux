@@ -1,0 +1,153 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibcrypto.so.0.9.8[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlibcrypto.so.0.9.8[0m
+
+move s0, zero
+beqz a2, 0x91a98
+nop
+lb v0, (s2)
+addiu s0, zero, 0x2f
+bne v0, s0, 0x91af0
+nop
+lw t9, -sym.imp.strlen(gp)
+lw s1, -0x7fc8(gp)
+jalr t9
+move a0, s2
+addiu a2, zero, 0x11b
+lw gp, 0x18(sp)
+addiu a0, v0, 1
+lw t9, -sym.CRYPTO_malloc(gp)
+jalr t9
+addiu a1, s1, 0x27f4
+lw gp, 0x18(sp)
+bnez v0, 0x91ae0
+move s0, v0
+addiu v0, zero, 0x11f
+addiu a3, s1, 0x27f4
+lw t9, -sym.ERR_put_error(gp)
+b 0x91b60
+sw v0, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s2
+b 0x91ba8
+move a0, v0
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move a0, s3
+move a0, s2
+lw gp, 0x18(sp)
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move s1, v0
+addu v1, s3, s1
+lb v1, -1(v1)
+lw gp, 0x18(sp)
+bne v1, s0, 0x91b2c
+addu v0, s1, v0
+addiu s1, s1, -1
+addiu v0, v0, -1
+lw s4, -0x7fc8(gp)
+addiu a0, v0, 2
+lw t9, -sym.CRYPTO_malloc(gp)
+addiu a2, zero, 0x141
+jalr t9
+addiu a1, s4, 0x27f4
+lw gp, 0x18(sp)
+bnez v0, 0x91b78
+move s0, v0
+addiu v0, zero, 0x145
+addiu a3, s4, 0x27f4
+lw t9, -sym.ERR_put_error(gp)
+sw v0, 0x10(sp)
+addiu a0, zero, 0x25
+addiu a1, zero, 0x82
+jalr t9
+addiu a2, zero, 0x41
+b 0x91bb0
+nop
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s3
+jalr t9
+move a0, v0
+addiu a0, s1, 1
+move a1, s2
+lw gp, 0x18(sp)
+addu s1, s0, s1
+addiu v0, zero, 0x2f
+addu a0, s0, a0
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+sb v0, (s1)
+jalr t9
+nop
+move v0, s0
+lw ra, 0x34(sp)
+lw s4, 0x30(sp)
+lw s3, 0x2c(sp)
+lw s2, 0x28(sp)
+lw s1, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x38
+lui gp, 0xc
+addiu gp, gp, 0x6b6c
+addu gp, gp, t9
+addiu sp, sp, -0x38
+sw ra, 0x34(sp)
+sw s4, 0x30(sp)
+sw s3, 0x2c(sp)
+sw s2, 0x28(sp)
+--
+jalr t9
+addiu a2, zero, 0x6d
+b 0x91d0c
+move v0, s0
+beqz s3, 0x91cfc
+move a1, s1
+lw t9, -sym.DSO_flags(gp)
+jalr t9
+move a0, s2
+lw gp, 0x18(sp)
+andi v0, v0, 2
+lw t9, -sym.imp.sprintf(gp)
+bnez v0, 0x91ce0
+move a2, s1
+lw a1, -0x7fc8(gp)
+move a0, s0
+b 0x91cec
+addiu a1, a1, 0x2800
+lw a1, -0x7fc8(gp)
+move a0, s0
+addiu a1, a1, 0x280c
+jalr t9
+nop
+b 0x91d0c
+move v0, s0
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+move a0, v0
+move v0, s0
+lw ra, 0x34(sp)
+lw s4, 0x30(sp)
+lw s3, 0x2c(sp)
+lw s2, 0x28(sp)
+lw s1, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x38
+lui gp, 0xc
+addiu gp, gp, 0x6a14
+addu gp, gp, t9
+addiu sp, sp, -0x38
+sw ra, 0x34(sp)
+sw s1, 0x30(sp)
+sw s0, 0x2c(sp)
+sw gp, 0x18(sp)
+move s0, a0
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m4[0m times [0;33mlibcrypto.so.0.9.8[0m
+

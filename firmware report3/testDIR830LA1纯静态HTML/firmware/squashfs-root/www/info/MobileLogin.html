@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns= "http://www.w3c.org/1999/xhtml" xml:lang="zh_TW" lang="zh_TW">
+
+<head>
+<title>D-LINK</title>
+<meta http-equiv="X-UA-Compatible" content="IE=9">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/css">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/css/style_mobile.css" media="all" />
+<link href="/css/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" charset="utf-8" src="/js/comm.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/hmac_md5.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/libajax.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/hnap.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/i18n.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/jquery.validate.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/includeLang.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/messageDescription.js"></script>
+
+<script type="text/javascript">
+	// Auto Detecting Language, Timmy 2013/05/03, 2013/05/31(Modify)
+	var SetLang = 0;
+	var IsPrivateBrowseing = 0;
+	
+	try
+	{
+		// Try to set localstorage
+		localStorage.setItem('Test', 'test');
+		localStorage.removeItem('Test');
+		
+		// Language List
+		var LangList = new Array("en-us", "zh-tw", "zh-cn", "ko-kr", "fr-fr", "pt-br", "es-es", "it-it", "de-de", "ru-ru");
+		
+		if (localStorage.getItem('language') === null)
+		{
+			if (navigator.appName == 'Netscape')
+			{
+				var language = navigator.language;
+			}
+			else
+			{
+				var language = navigator.browserLanguage;
+			}
+			
+			var SetLanguage = language.toLowerCase();
+			var IsSuccessSetupLang = "false";
+			
+			for (var i = 0; i < LangList.length; i ++)
+			{
+				if (SetLanguage == LangList[i])
+				{
+					localStorage.setItem('language', LangList[i]);
+					localStorage.language = LangList[i];
+					InitLANG(localStorage.language);
+					IsSuccessSetupLang = "true";
+					SetLang = i;
+				}
+			}
+		}
+		else
+		{
+			InitLANG(localStorage.language);
+			for (var i = 0; i < LangList.length; i ++)
+			{
+				if (localStorage.language == LangList[i])
+				{
+					SetLang = i;
+				}
+			}
+		}
+	}
+	catch (error)
+	{
+		if (error.code === DOMException.QUOTA_EXCEEDED_ERR && localStorage.length === 0)
+		{
+			InitLANG("en-us");
+			alert(I18N("j", "The Private Browsing feature of Safari is incompatible with this device's interface. You will need to disable Private Browsing to log in."));
+			IsPrivateBrowseing = 1;
+		}
+		else throw error;
+	}
+
+</script>
+
+<script type="text/javascript">
+	var HNAP = new HNAP_XML();
+	var Challenge = null;
+	var Cookie = null;
+	var PublicKey = null;
+	var PrivateKey = null;
+	var HasCAPTCHA = 0;
+	
+	function GenerateCaptcha()
+	{
+		var AJAX = GetAjaxObj("captcha");
+		AJAX.release();
+		AJAX.createRequest();
+		AJAX.onCallback = function(xml)
+		{
+			switch (xml.Get("/captcha/result"))
+			{
+				case "OK":
+					self.captcha = xml.Get("/captcha/message");
+					document.getElementById("mobile_captcha_image").innerHTML = "<img src="+self.captcha+"?"+COMM_RandomStr(6)+" height=\"37px\" />";
+					break;
+			}
+			AJAX.release();
+		}
+		AJAX.setHeader("Content-Type", "application/x-www-form-urlencoded");
+		AJAX.sendRequest("/captcha.cgi", "DUMMY=YES");
+	}
+	if (navigator.cookieEnabled)	{	document.cookie = "uid="+COMM_RandomStr(10)+"; path=/";	}
+	
+	function Initial()
+	{
+		var xml_GetDeviceSettings = HNAP.GetXML("GetDeviceSettings");
+		var getHasCaptcha =  xml_GetDeviceSettings.Get("GetDeviceSettingsResponse/CAPTCHA");
+		
+		if (getHasCaptcha=="true")
+		{
+			document.getElementById("mobile_captcha_info").style.display = "block";
+			GenerateCaptcha();
+			HasCAPTCHA = 1;
+		}
+		else
+		{
+			document.getElementById("mobile_captcha_info").style.display = "none";
+			HasCAPTCHA = 0;
+		}
+	}
+	
+	function OnClickLogin()
+	{
+		var Login_Password;
+		var Login_Captcha;
+		
+		Login_Password = document.getElementById("mobile_login_pwd").value;
+		
+		if(HasCAPTCHA==0)
+			Login_Captcha = "";
+		else
+			Login_Captcha = document.getElementById("mobile_login_captcha").value.toUpperCase();
+		
+		/* Login request */
+		var xml_Login = HNAP.GetXML("Login");
+		xml_Login.Set("Login/Action", "request");
+		xml_Login.Set("Login/Username", "Admin");
+		xml_Login.Set("Login/LoginPassword", "");
+		xml_Login.Set("Login/Captcha", Login_Captcha);
+		
+		var xml_LoginResult = HNAP.SetXML("Login", xml_Login);
+		Challenge = xml_LoginResult.Get("LoginResponse/Challenge");
+		Cookie = xml_LoginResult.Get("LoginResponse/Cookie");
+		PublicKey = xml_LoginResult.Get("LoginResponse/PublicKey");
+		PrivateKey = hex_hmac_md5(PublicKey + Login_Password, Challenge);
+		PrivateKey = changText(PrivateKey);
+		
+		/* Set Cookie */
+		if (navigator.cookieEnabled && Cookie != "")
+			document.cookie = "uid=" + Cookie + "; path=/";
+		
+		/* Storage data in DOM */
+		if(IsPrivateBrowseing==0)
+		{
+			localStorage.setItem("PrivateKey", PrivateKey);
+		}
+		
+		if (Challenge != null || Cookie != null || PublicKey != null)
+		{
+			var Login_Passwd = hex_hmac_md5(PrivateKey, Challenge);
+			Login_Passwd = changText(Login_Passwd);
+			xml_Login.Set("Login/Action", "login");
+			xml_Login.Set("Login/Username", "Admin");
+			xml_Login.Set("Login/LoginPassword", Login_Passwd);
+			
+			if(HasCAPTCHA==1)
+				xml_Login.Set("Login/Captcha", Login_Captcha);
+			
+			var xml_LoginResult = HNAP.SetXML("Login", xml_Login);
+			if(xml_LoginResult.Get("LoginResponse/LoginResult")=="success")
+			{
+				var redirect_url = sessionStorage.getItem("RedirectUrl");
+				if((redirect_url == null) || (redirect_url.indexOf("Login.html") > 0) || (redirect_url.indexOf("html") < 0))
+				{
+					window.location.href = "/IndexHome.html";
+				}
+				else
+				{	
+					window.location.href = redirect_url;
+				}
+			}
+			else
+			{
+				alert(I18N("j", "Invalid password, please try again."));
+				if (HasCAPTCHA==1)
+				{
+					document.getElementById("mobile_login_pwd").value = "";
+					document.getElementById("mobile_login_captcha").value = "";
+					document.getElementById("mobile_login_pwd").focus();
+					GenerateCaptcha();
+				}
+				else
+				{
+					document.getElementById("mobile_login_pwd").value = "";
+					document.getElementById("mobile_login_pwd").focus();
+				}
+			}
+		}
+	}
+
+</script>
+<style>
+body
+{
+	margin: 0;
+	padding: 0;
+	font-size: 75%;
+	font-family: Arial, Helvetica, sens-serif;
+	line-height:1.4;
+	color: #333333;
+	background-color: #d1d1d1;
+}
+</style>
+</head>
+
+<body>
+	<form name="mobile_login_form" id="mobile_login_form" method="POST" action="">
+		<table class="mobile_div_stu" cellspacing="0" cellpadding="0" width="95%" align="center" border="0">
+			<tr height="200px" align="center" valign="bottom">
+				<td colspan="3" align="center">
+					<img src="/image/mobile_dlinklogo_login.png" width="200" height="77">
+				</td>
+			</tr>
+			<tr class="emptyline"></tr>
+			<tr height="50px" align="left">
+				<td colspan="3" style="padding-left:30px">
+					<b><span class="textnormal"><script>I18N("h", "Admin Password");</script>:</span></b>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<input id="mobile_login_pwd" name="mobile_login_pwd" type="password" size="16" maxlength="32">
+				</td>
+			</tr>
+			<tr class="emptyline"></tr>
+			<tr>
+				<td id="mobile_captcha_info" style="display:none">
+					<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+						<tr height="50px" align="left">
+							<td colspan="3" style="padding-left:30px">
+								<b><span class="textnormal"><script>I18N("h", "Type the characters you see in the picture below.");</script>:</span></b>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<input id="mobile_login_captcha" name="mobile_login_captcha" type="text" size="16" maxlength="15">
+							</td>
+						</tr>
+						<tr class="emptysmall"></tr>
+						<tr>
+							<td align="center" height="30px">
+								<span id="mobile_captcha_image"></span>
+								<img id="mobile_refresh_btn" src="/image/refresh.png" onclick="GenerateCaptcha()" width="37px" height="37px"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="emptyline"></tr>
+			<tr>
+				<td align="center">
+					<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+						<tr>
+							<td class="btn_save" onclick="OnClickLogin()">
+								<input id="submit_check_data" class="submit" type="submit" value="Submit" style="display:none"/>
+								<b><span class="textnormal"><script>I18N("h", "Log In");</script></span></b>
+							</td>
+						</tr>
+						<tr class="emptyline"></tr>
+						<tr class="emptyline"></tr>
+						<tr>
+							<td align="center">
+								<span class="textcr"><span id="copyright"><script>I18N("h", "COPYRIGHT");</script></span></span>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="emptyline"></tr>
+		</table>
+	</form>
+</body>
+<script type="text/javascript">
+	Initial();
+</script>
+</html>

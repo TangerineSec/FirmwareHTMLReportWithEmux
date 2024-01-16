@@ -1,0 +1,55 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 4:[0m
+[0mSTART=10[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 5:[0m
+[0mSTOP=98[0m
+[33m^--^ SC2034 (warning): STOP appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 8:[0m
+[0m	local cfg="$1"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 10:[0m
+[0m	local hostname conloglevel timezone[0m
+[33m        ^-- SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 17:[0m
+[0m	[ -z "$conloglevel" -a -z "$buffersize" ] || dmesg ${conloglevel:+-n $conloglevel} ${buffersize:+-s $buffersize}[0m
+[33m                            ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 29:[0m
+[0m		local args log_ip log_size log_port log_type log_file[0m
+[33m                ^-- SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 41:[0m
+[0m		service_start /sbin/syslogd $args[0m
+[32m                                            ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		service_start /sbin/syslogd "$args"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 46:[0m
+[0m		service_start /sbin/klogd $args[0m
+[32m                                          ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		service_start /sbin/klogd "$args"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/boot line 95:[0m
+[0m	[ -e /dev/root -o -h /dev/root ] || {[0m
+[33m                       ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- START appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] && [ q ] as [ p -a q...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.

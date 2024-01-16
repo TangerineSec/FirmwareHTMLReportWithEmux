@@ -1,0 +1,107 @@
+[[0;33m*[0m] Binary protection state of [0;33mlld2d[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mlld2d[0m
+
+    ad60:	eb000200 	bl	b568 <util_use_syslog>
+    ad64:	e5950000 	ldr	r0, [r5]
+    ad68:	ebfffae1 	bl	98f4 <osl_become_daemon>
+    ad6c:	e5950000 	ldr	r0, [r5]
+    ad70:	ebfff9d2 	bl	94c0 <osl_write_pidfile>
+    ad74:	e5950000 	ldr	r0, [r5]
+    ad78:	ebfffa97 	bl	97dc <osl_drop_privs>
+    ad7c:	eb0000ea 	bl	b12c <event_mainloop>
+    ad80:	e3a00000 	mov	r0, #0
+    ad84:	e8bd8ff8 	pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    ad88:	e599b000 	ldr	fp, [r9]
+    ad8c:	e1a0000b 	mov	r0, fp
+    ad90:	ebfff8f7 	bl	9174 <atoi@plt>
+    ad94:	e2507000 	subs	r7, r0, #0
+    ad98:	1affff6f 	bne	ab5c <main+0x5c>
+    ad9c:	e59f516c 	ldr	r5, [pc, #364]	; af10 <main+0x410>
+    ada0:	e1a0300b 	mov	r3, fp
+    ada4:	e59f1168 	ldr	r1, [pc, #360]	; af14 <main+0x414>
+    ada8:	e5942000 	ldr	r2, [r4]
+    adac:	e5950000 	ldr	r0, [r5]
+[31m    adb0:	ebfff892 	bl	9000 <fprintf@plt>[0m
+    adb4:	e5950000 	ldr	r0, [r5]
+    adb8:	e59f1158 	ldr	r1, [pc, #344]	; af18 <main+0x418>
+    adbc:	e5942000 	ldr	r2, [r4]
+[31m    adc0:	ebfff88e 	bl	9000 <fprintf@plt>[0m
+    adc4:	e3a00002 	mov	r0, #2
+    adc8:	ebfff8e6 	bl	9168 <exit@plt>
+    adcc:	e59f313c 	ldr	r3, [pc, #316]	; af10 <main+0x410>
+    add0:	e59f1140 	ldr	r1, [pc, #320]	; af18 <main+0x418>
+    add4:	e5942000 	ldr	r2, [r4]
+    add8:	e5930000 	ldr	r0, [r3]
+[31m    addc:	ebfff887 	bl	9000 <fprintf@plt>[0m
+    ade0:	e3a00002 	mov	r0, #2
+    ade4:	ebfff8df 	bl	9168 <exit@plt>
+    ade8:	e59f80a0 	ldr	r8, [pc, #160]	; ae90 <main+0x390>
+    adec:	e5983000 	ldr	r3, [r8]
+    adf0:	e1560003 	cmp	r6, r3
+    adf4:	ca000005 	bgt	ae10 <main+0x310>
+    adf8:	e59f5110 	ldr	r5, [pc, #272]	; af10 <main+0x410>
+    adfc:	e59f1118 	ldr	r1, [pc, #280]	; af1c <main+0x41c>
+    ae00:	e5942000 	ldr	r2, [r4]
+    ae04:	e5950000 	ldr	r0, [r5]
+[31m    ae08:	ebfff87c 	bl	9000 <fprintf@plt>[0m
+    ae0c:	eaffffe8 	b	adb4 <main+0x2b4>
+    ae10:	e7950103 	ldr	r0, [r5, r3, lsl #2]
+--
+    b434:	e92d000f 	push	{r0, r1, r2, r3}
+    b438:	e59f305c 	ldr	r3, [pc, #92]	; b49c <die+0x68>
+    b43c:	e5933000 	ldr	r3, [r3]
+    b440:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+    b444:	e24dd00c 	sub	sp, sp, #12
+    b448:	e28d2014 	add	r2, sp, #20
+    b44c:	e59d4010 	ldr	r4, [sp, #16]
+    b450:	e3530000 	cmp	r3, #0
+    b454:	e58d2004 	str	r2, [sp, #4]
+    b458:	0a000004 	beq	b470 <die+0x3c>
+    b45c:	e3a00003 	mov	r0, #3
+    b460:	e1a01004 	mov	r1, r4
+    b464:	ebfff745 	bl	9180 <vsyslog@plt>
+    b468:	e3a00001 	mov	r0, #1
+    b46c:	ebfff73d 	bl	9168 <exit@plt>
+    b470:	e59f5028 	ldr	r5, [pc, #40]	; b4a0 <die+0x6c>
+    b474:	e59f3028 	ldr	r3, [pc, #40]	; b4a4 <die+0x70>
+    b478:	e59f1028 	ldr	r1, [pc, #40]	; b4a8 <die+0x74>
+    b47c:	e5950000 	ldr	r0, [r5]
+    b480:	e5932000 	ldr	r2, [r3]
+[31m    b484:	ebfff6dd 	bl	9000 <fprintf@plt>[0m
+    b488:	e5950000 	ldr	r0, [r5]
+    b48c:	e1a01004 	mov	r1, r4
+--
+    b4a0:	0001c7b0 	.word	0x0001c7b0
+    b4a4:	0001d900 	.word	0x0001d900
+    b4a8:	00013278 	.word	0x00013278
+
+0000b4ac <warn>:
+    b4ac:	e92d000f 	push	{r0, r1, r2, r3}
+    b4b0:	e59f3064 	ldr	r3, [pc, #100]	; b51c <warn+0x70>
+    b4b4:	e5933000 	ldr	r3, [r3]
+    b4b8:	e92d4030 	push	{r4, r5, lr}
+    b4bc:	e24dd00c 	sub	sp, sp, #12
+    b4c0:	e28d201c 	add	r2, sp, #28
+    b4c4:	e59d4018 	ldr	r4, [sp, #24]
+    b4c8:	e3530000 	cmp	r3, #0
+    b4cc:	e58d2004 	str	r2, [sp, #4]
+    b4d0:	1a00000d 	bne	b50c <warn+0x60>
+    b4d4:	e59f5044 	ldr	r5, [pc, #68]	; b520 <warn+0x74>
+    b4d8:	e59f3044 	ldr	r3, [pc, #68]	; b524 <warn+0x78>
+    b4dc:	e59f1044 	ldr	r1, [pc, #68]	; b528 <warn+0x7c>
+    b4e0:	e5950000 	ldr	r0, [r5]
+    b4e4:	e5932000 	ldr	r2, [r3]
+[31m    b4e8:	ebfff6c4 	bl	9000 <fprintf@plt>[0m
+    b4ec:	e5950000 	ldr	r0, [r5]
+    b4f0:	e1a01004 	mov	r1, r4
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m6[0m times [0;33mlld2d[0m
+

@@ -1,0 +1,107 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibc.so.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[32mFull RELRO[0m     [32mCanary found[0m      [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibc.so.0[0m
+
+ldr r0, [fp, -0x28]
+bls 0x1b7b8
+ldr r3, [r0]
+cmp r3, 0
+str r3, [fp, -0x28]
+bne 0x1b88c
+b 0x1b9f0
+str r5, [sp]
+mov r0, r4
+mov r1, r7
+mov r2, sb
+ldr r3, [fp, 4]
+bl 0x1ba10
+cmp r0, 0
+beq 0x1b9fc
+and r8, r5, 1
+bic sl, r5, 4
+ldr r6, [fp, -0x28]
+mov r1, r4
+add r0, r6, 4
+[31mbl rsym.__GI_strcat[0m
+cmp r8, 0
+mov r1, r7
+--
+str r2, [sp]
+sub r1, fp, 0x44
+add r2, sp, 8
+bl rsym.__GI_getpwnam_r
+cmp r0, 0
+bne 0x45a98
+ldr r3, [fp, -0x28]
+cmp r3, 0
+beq 0x45a98
+ldr r0, [r3, 0x14]
+bl sym.strlen
+add r0, r0, 9
+bl rsym.malloc
+ldr r3, [fp, -0x28]
+mov sl, r0
+ldr r1, [r3, 0x14]
+bl rsym.__GI_strcpy
+ldr r1, [0x00045ab4]
+mov r0, sl
+add r1, r5, r1
+[31mbl rsym.__GI_strcat[0m
+bl rsym.__GI_geteuid
+ldr r3, [fp, -0x28]
+--
+mov r5, r0
+bl rsym.__GI_getegid
+cmp r5, r0
+bne 0x47488
+ldr r0, [0x000474a0]
+add r0, r4, r0
+bl rsym.__GI_getenv
+subs r5, r0, 0
+beq 0x47488
+bl sym.strlen
+add r0, r0, 0x16
+mov r1, r5
+bic r0, r0, 7
+sub sp, sp, r0
+mov r0, sp
+mov r6, sp
+bl rsym.__GI_strcpy
+ldr r1, [0x000474a4]
+mov r0, sp
+add r1, r4, r1
+[31mbl rsym.__GI_strcat[0m
+ldr r1, [0x000474a8]
+mov r0, sp
+--
+mvn r3, 9
+mov r0, sl
+str r3, [sp]
+asr r3, r2, 0x1f
+str r7, [sp, 4]
+bl rsym._uintmaxtostr
+rsb sl, r0, sl
+mov fp, r0
+add sl, sl, 0xa
+cmp r8, sl
+bhs 0x5550c
+mov r0, 0x22
+str r0, [r4]
+b 0x55704
+ldr r1, [0x00055714]
+mov r0, r6
+add r1, r5, r1
+bl rsym.__GI_strcpy
+mov r0, r6
+mov r1, fp
+[31mbl rsym.__GI_strcat[0m
+str sb, [r4]
+mov r0, r7
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m4[0m times [0;33mlibc.so.0[0m
+

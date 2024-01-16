@@ -1,0 +1,132 @@
+[[0;33m*[0m] Binary protection state of [0;33mwlconf[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mwlconf[0m
+
+    8f08:	08bd8008 	popeq	{r3, pc}
+    8f0c:	e59f301c 	ldr	r3, [pc, #28]	; 8f30 <_start@@Base+0xd0>
+    8f10:	e3530000 	cmp	r3, #0
+    8f14:	08bd8008 	popeq	{r3, pc}
+    8f18:	e12fff33 	blx	r3
+    8f1c:	e8bd8008 	pop	{r3, pc}
+    8f20:	00000000 	andeq	r0, r0, r0
+    8f24:	00011d44 	andeq	r1, r1, r4, asr #26
+    8f28:	0001b360 	andeq	fp, r1, r0, ror #6
+    8f2c:	0001a008 	andeq	sl, r1, r8
+    8f30:	00000000 	andeq	r0, r0, r0
+    8f34:	e92d4038 	push	{r3, r4, r5, lr}
+    8f38:	e1a03000 	mov	r3, r0
+    8f3c:	e1a04002 	mov	r4, r2
+    8f40:	e1a05001 	mov	r5, r1
+    8f44:	e1a00002 	mov	r0, r2
+    8f48:	e1a01003 	mov	r1, r3
+    8f4c:	ebffff27 	bl	8bf0 <strcpy@plt>
+    8f50:	e1a00004 	mov	r0, r4
+    8f54:	e1a01005 	mov	r1, r5
+[31m    8f58:	ebffff57 	bl	8cbc <strcat@plt>[0m
+    8f5c:	e1a00004 	mov	r0, r4
+    8f60:	e8bd8038 	pop	{r3, r4, r5, pc}
+--
+    9180:	e3a02003 	mov	r2, #3
+    9184:	ebfffedb 	bl	8cf8 <strncmp@plt>
+    9188:	e3500000 	cmp	r0, #0
+    918c:	e1a01006 	mov	r1, r6
+    9190:	e2840003 	add	r0, r4, #3
+    9194:	1a000002 	bne	91a4 <_start@@Base+0x344>
+    9198:	ebfffefa 	bl	8d88 <strcmp@plt>
+    919c:	e3500000 	cmp	r0, #0
+    91a0:	0a000004 	beq	91b8 <_start@@Base+0x358>
+    91a4:	e5b5400c 	ldr	r4, [r5, #12]!
+    91a8:	e3540000 	cmp	r4, #0
+    91ac:	1afffff1 	bne	9178 <_start@@Base+0x318>
+    91b0:	e28dd06c 	add	sp, sp, #108	; 0x6c
+    91b4:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+    91b8:	e28d4004 	add	r4, sp, #4
+    91bc:	e1a01007 	mov	r1, r7
+    91c0:	e1a00004 	mov	r0, r4
+    91c4:	ebfffe89 	bl	8bf0 <strcpy@plt>
+    91c8:	e1a01006 	mov	r1, r6
+    91cc:	e1a00004 	mov	r0, r4
+[31m    91d0:	ebfffeb9 	bl	8cbc <strcat@plt>[0m
+    91d4:	e1a00004 	mov	r0, r4
+    91d8:	e5951004 	ldr	r1, [r5, #4]
+--
+    9e74:	0a00006f 	beq	a038 <_start@@Base+0x11d8>
+    9e78:	e28d8d2d 	add	r8, sp, #2880	; 0xb40
+    9e7c:	e58d902c 	str	r9, [sp, #44]	; 0x2c
+    9e80:	e288800c 	add	r8, r8, #12
+    9e84:	e1a09005 	mov	r9, r5
+    9e88:	ea000002 	b	9e98 <_start@@Base+0x1038>
+    9e8c:	e5b7600c 	ldr	r6, [r7, #12]!
+    9e90:	e3560000 	cmp	r6, #0
+    9e94:	0a000065 	beq	a030 <_start@@Base+0x11d0>
+    9e98:	e1a00006 	mov	r0, r6
+    9e9c:	e59f1b14 	ldr	r1, [pc, #2836]	; a9b8 <_start@@Base+0x1b58>
+    9ea0:	e3a02003 	mov	r2, #3
+    9ea4:	ebfffb93 	bl	8cf8 <strncmp@plt>
+    9ea8:	e3500000 	cmp	r0, #0
+    9eac:	1afffff6 	bne	9e8c <_start@@Base+0x102c>
+    9eb0:	e28d1ed5 	add	r1, sp, #3408	; 0xd50
+    9eb4:	e1a00008 	mov	r0, r8
+    9eb8:	ebfffb4c 	bl	8bf0 <strcpy@plt>
+    9ebc:	e1a00008 	mov	r0, r8
+    9ec0:	e2861003 	add	r1, r6, #3
+[31m    9ec4:	ebfffb7c 	bl	8cbc <strcat@plt>[0m
+    9ec8:	e35a0000 	cmp	sl, #0
+    9ecc:	0a000003 	beq	9ee0 <_start@@Base+0x1080>
+--
+    bba0:	e28d9e42 	add	r9, sp, #1056	; 0x420
+    bba4:	e1a0800a 	mov	r8, sl
+    bba8:	e58da028 	str	sl, [sp, #40]	; 0x28
+    bbac:	e58da034 	str	sl, [sp, #52]	; 0x34
+    bbb0:	e58da058 	str	sl, [sp, #88]	; 0x58
+    bbb4:	e58d7038 	str	r7, [sp, #56]	; 0x38
+    bbb8:	e58d503c 	str	r5, [sp, #60]	; 0x3c
+    bbbc:	e3a02050 	mov	r2, #80	; 0x50
+    bbc0:	e59f1ca8 	ldr	r1, [pc, #3240]	; c870 <_start@@Base+0x3a10>
+    bbc4:	e1a0000b 	mov	r0, fp
+    bbc8:	ebfff44a 	bl	8cf8 <strncmp@plt>
+    bbcc:	e3500000 	cmp	r0, #0
+    bbd0:	e28d1ed5 	add	r1, sp, #3408	; 0xd50
+    bbd4:	05cd0b51 	strbeq	r0, [sp, #2897]	; 0xb51
+    bbd8:	e1a00009 	mov	r0, r9
+    bbdc:	03a07001 	moveq	r7, #1
+    bbe0:	13a07000 	movne	r7, #0
+    bbe4:	ebfff401 	bl	8bf0 <strcpy@plt>
+    bbe8:	e1a0100b 	mov	r1, fp
+    bbec:	e1a00009 	mov	r0, r9
+[31m    bbf0:	ebfff431 	bl	8cbc <strcat@plt>[0m
+    bbf4:	e1a00009 	mov	r0, r9
+    bbf8:	ebfff456 	bl	8d58 <nvram_get@plt>
+--
+    def8:	e8930003 	ldm	r3, {r0, r1}
+    defc:	e2833008 	add	r3, r3, #8
+    df00:	e28cc00c 	add	ip, ip, #12
+    df04:	e28aa008 	add	sl, sl, #8
+    df08:	e58da03c 	str	sl, [sp, #60]	; 0x3c
+    df0c:	e88e0003 	stm	lr, {r0, r1}
+    df10:	e8930003 	ldm	r3, {r0, r1}
+    df14:	e58dc038 	str	ip, [sp, #56]	; 0x38
+    df18:	e58d7070 	str	r7, [sp, #112]	; 0x70
+    df1c:	e88c0003 	stm	ip, {r0, r1}
+    df20:	e28d0edd 	add	r0, sp, #3536	; 0xdd0
+    df24:	e28d1ed5 	add	r1, sp, #3408	; 0xd50
+    df28:	e2800004 	add	r0, r0, #4
+    df2c:	e7905009 	ldr	r5, [r0, r9]
+    df30:	e28d0d2a 	add	r0, sp, #2688	; 0xa80
+    df34:	e2800004 	add	r0, r0, #4
+    df38:	ebffeb2c 	bl	8bf0 <strcpy@plt>
+    df3c:	e28d0d2a 	add	r0, sp, #2688	; 0xa80
+    df40:	e1a01005 	mov	r1, r5
+    df44:	e2800004 	add	r0, r0, #4
+[31m    df48:	ebffeb5b 	bl	8cbc <strcat@plt>[0m
+    df4c:	e28d0d2a 	add	r0, sp, #2688	; 0xa80
+    df50:	e2800004 	add	r0, r0, #4
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m5[0m times [0;33mwlconf[0m
+

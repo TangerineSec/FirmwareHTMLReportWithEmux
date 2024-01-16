@@ -1,0 +1,34 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibnvram.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m tear down of [0;33mlibnvram.so[0m
+
+[31m 634:	ebffffc7 	bl	558 <mmap@plt>[0m
+ 638:	e59f304c 	ldr	r3, [pc, #76]	; 68c <nvram_init+0xb0>
+ 63c:	e3700001 	cmn	r0, #1
+ 640:	e1a06000 	mov	r6, r0
+ 644:	e5830000 	str	r0, [r3]
+ 648:	0a000005 	beq	664 <nvram_init+0x88>
+ 64c:	e5940000 	ldr	r0, [r4]
+ 650:	e3a01002 	mov	r1, #2
+ 654:	e3a02001 	mov	r2, #1
+ 658:	ebffffd6 	bl	5b8 <fcntl@plt>
+ 65c:	e1a00005 	mov	r0, r5
+ 660:	eaffffe4 	b	5f8 <nvram_init+0x1c>
+ 664:	e5940000 	ldr	r0, [r4]
+ 668:	ebffffd5 	bl	5c4 <close@plt>
+ 66c:	e5846000 	str	r6, [r4]
+ 670:	e59f0010 	ldr	r0, [pc, #16]	; 688 <nvram_init+0xac>
+ 674:	ebffffb1 	bl	540 <perror@plt>
+ 678:	ebffffc2 	bl	588 <__errno_location@plt>
+ 67c:	e5900000 	ldr	r0, [r0]
+ 680:	eaffffdc 	b	5f8 <nvram_init+0x1c>
+ 684:	00008a1c 	andeq	r8, r0, ip, lsl sl
+
+[0m
+[[0;33m*[0m] Function [0;33mmmap[0m used [0;33m1[0m times [0;33mlibnvram.so[0m
+

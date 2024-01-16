@@ -1,0 +1,86 @@
+<div class="app_list_opt">
+	<div class="setup_head">
+		<h4>硬盘休眠</h4>
+		<a class="setup_return" href="javascript:void(0)"><span class="setup_return_img"></span>&nbsp;返回</a>
+		<div class="clr"></div>
+		<div class="bottom_line">
+		</div>
+	</div>
+	<div class="app_setup">
+		<table class="setpwdTable hardsleep">
+			<tr>
+				<td><div class="label">硬盘休眠</div></td>
+				<td id="hd_status">
+					<label for="start_thread"><input type="radio" name="status" checked="checked" value="1" class="start_thread" id="start_thread">&nbsp;&nbsp;启动</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;<label for="stop_thread"><input  type="radio" name="status" class="stop_thread" value="0" id="stop_thread">&nbsp;&nbsp;停止<span></span></label>
+					<span class="startWarning"></span>
+				</td>
+			</tr>
+			<tr>
+				<td><div class="label">选择硬盘</div></td>
+				<td>
+				<select class="select" id='hd'>
+				<%
+					require("nixio.fs")
+					require("luci.http")
+					for dev in nixio.fs.glob("/dev/[sh]d[a-z]") do			
+						luci.http.write(string.format("<option value='%s'>%s</option>",nixio.fs.basename(dev),nixio.fs.basename(dev)))
+					end
+				%>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td><div class="label">空闲时间</div></td>
+				<td>
+					<select class='select' id='hd_time'>
+						<option value='30-minutes'>30分钟</option>
+						<option value='1-hours'>1小时</option>
+						<option value='2-hours'>2小时</option>
+						<option value='4-hours'>4小时</option>
+						<option value='8-hours'>8小时</option>
+						<option value='12-hours'>12小时</option>
+						<option value='24-hours'>24小时</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><a href="javascript:;" class="subbtn" id="saveHardConfig" style="margin-top:0;">保存</a><p id="savehdwarning" style="float:right;color:red;font-size: 12px;padding-top: 3px;padding-right:5px;"></p></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<script language="javascript">
+/*************硬盘休眠***********/
+$('#saveHardConfig').die().live('click',function(){
+	var hd = $("#hd").val();
+	var hd_time = $("#hd_time").val();
+	var tinfo = hd_time.split('-');
+	var time = 0;
+	switch(tinfo[1]){
+		case "hours":
+			time = parseInt(tinfo[0])*60*60;
+		break;
+		case "minutes":
+			time = parseInt(tinfo[0])*60;
+			break;
+	}
+
+	var stauts = $('#hd_status input[type="radio"][name="status"]:checked').val();
+		
+	tinyBox_init('保存中...');
+	
+	$.ajax({
+		url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/hardsleep/change"))%>',
+		data:{disk:hd,time:time,type:stauts},
+		dataType:'json',  
+		type:'post',
+		timeOut:600000,
+		success:function(r){
+			tinyBox_change(r.msg, 1);
+			tinyBox_hide(2000);
+		}
+	});
+});
+</script>

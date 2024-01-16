@@ -1,0 +1,38 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/hotplug-call line 6:[0m
+[0m. /lib/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/hotplug-call line 13:[0m
+[0m[ \! -z "$1" -a -d /etc/hotplug.d/$1 ] && {[0m
+[33m     ^-- SC2057 (warning): Unknown binary operator.[0m
+[33m             ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[32m                                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+[ \! -z "$1" -a -d /etc/hotplug.d/"$1" ] && {
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/hotplug-call line 14:[0m
+[0m	for script in $(ls /etc/hotplug.d/$1/* 2>&-); do ([0m
+[31m                      ^----------------------------^ SC2045 (error): Iterating over ls output is fragile. Use globs.[0m
+[32m                                          ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	for script in $(ls /etc/hotplug.d/"$1"/* 2>&-); do (
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/hotplug-call line 15:[0m
+[0m		[ -f $script ] && . $script[0m
+[32m                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                                    ^-----^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+[32m                                    ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		[ -f "$script" ] && . "$script"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2045 -- Iterating over ls output is fragi...
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2057 -- Unknown binary operator.

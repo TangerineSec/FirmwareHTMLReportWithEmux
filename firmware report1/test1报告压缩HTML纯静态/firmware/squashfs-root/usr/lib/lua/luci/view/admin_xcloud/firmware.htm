@@ -1,0 +1,132 @@
+<%
+	local uci = require "luci.model.uci".cursor()
+	local ipdef = uci.get('network','lan','ipaddr') or '192.168.99.1'
+%>
+<div class='firmware_update'>
+	<div class='setup_head'>
+		<h4>固件升级</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+
+	<div class='firmware_setup'>
+		<div class='firmware_save'>
+			<input type='checkbox' name='firmwaresave' checked='checked' class='firmwaresave'>
+			<span>保留路由器配置</span>
+		</div>
+		<div class='check_firmware'>
+			<span></span>
+			<a href='javascript:void(0)'>一键升级</a>
+			<div class='firmware_newast'><p>当前固件已为最新版本</p></div>
+			<div class='clr'></div>
+			<%
+				require "luci.sys"
+				local versionflag = luci.sys.exec('/usr/local/localshell/getcapability')
+				versionflag = string.sub(versionflag,1,string.len(versionflag)-1)
+			%>
+			<script type='text/javascript'>
+				changeVersion('<%=pcdata(luci.version.xcloud_update)%>','<%=versionflag%>');
+			</script>
+		</div>
+
+		<div class='firmware_panel'>
+			<h4>请将下载到电脑端的固件导入进行升级</h4>
+			<form id='upload_firmware' action='<%=pcdata(build_url("admin/xcloud/firmware/upload"))%>' method='post' enctype="multipart/form-data">
+				<input type='file' name='image' class='firmware_input'>
+			</form>			
+			<a href='javascript:void(0)' class='firmwarebtn'><b>导入</b></a>
+			<span class='firmware_mention'></span>
+			<div class='clr'></div>
+		</div>
+
+		<div class='firmware_uploading'>
+			<p>固件升级中，请稍后...升级过程中请勿拔出电源，否则会造成如意云路由固件损坏</p>
+		</div>
+	</div>
+
+	<div class='firmware_download'>
+		<div class='firmware_down_panel'>
+			<span class='firmware_down_title'>正在下载固件：</span>
+			<span class='firmware_down_rate'>0%</span>
+			<a href='javascript:void(0)'>取消</a>
+			<input type='hidden' value="">
+		</div>
+	</div>	
+</div>
+<script type='text/javascript'>
+	var keep = "";
+	$('.firmwaresave').live('click',function(){
+		if (!$('.firmwaresave').attr('checked'))
+			keep = "-n";
+		else
+			keep = "";
+
+		$('.firmware_down_panel input').val(keep);
+	})
+
+	function firmwaremention(word){
+		$('.firmware_mention').html(word).stop().animate({'opacity':1},1000,"",function(){
+			$('.firmware_mention').stop().animate({'opacity':0},3000);
+		});		
+	}
+
+	$('.firmwarebtn').live('click',function(){
+		if ($('.firmware_input').val()==""){
+			firmwaremention('您未选择文件');
+			return false;
+		}
+
+		// save
+		if (!$('.firmwaresave').attr('checked'))
+			keep = "-n";
+		$('.firmwaresave').attr('disabled','disabled');
+		var tmp = null;
+
+		$('#upload_firmware').ajaxSubmit({
+			type:"post",
+			url:$('.upload_firmware').attr('action'),
+			dataType:"html",
+			success:function(r){
+				//alert(r);
+				if (r == '1'){
+					//alert('success');
+					startUpload(keep);
+				}else{
+					$('.firmwaresave').removeAttr('disabled');
+					firmwaremention('文件类型不符');
+				}
+			},
+			error:function(){
+				alert('error')
+			}
+		});
+	})
+
+	function startUpload(keep){
+		if($('#upload_firmware input').val() != ""){
+			$('.check_firmware').hide();
+			$('.firmware_panel').hide();
+			$('.firmware_download').hide();
+			$('.firmware_uploading').show();
+		}
+
+		tinyBox_init('固件升级中，请稍后...<br />升级过程中请勿拔出电源，否则会造成如意云路由固件损坏');
+
+		$.ajax({
+			url:'<%=pcdata(build_url("admin/xcloud/firmware/uploading"))%>',
+			data:{kp:keep},
+			dataType:'json',
+			method:'post',
+			timeout:10000,
+			success:function(r){
+				alert(123123);
+			}
+		})
+
+		var interval = window.setInterval(function() {
+			window.location.href = 'http://<%=ipdef%>/';
+		}, 160000);
+	}
+</script>

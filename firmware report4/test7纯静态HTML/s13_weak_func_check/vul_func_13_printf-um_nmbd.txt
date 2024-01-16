@@ -1,0 +1,271 @@
+[[0;33m*[0m] Binary protection state of [0;33mum_nmbd[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mum_nmbd[0m
+
+    8bd8:	e3a03000 	mov	r3, #0
+    8bdc:	e88d0180 	stm	sp, {r7, r8}
+    8be0:	ebffff06 	bl	8800 <recvfrom@plt>
+    8be4:	e2506000 	subs	r6, r0, #0
+    8be8:	aa000001 	bge	8bf4 <read_socket+0x58>
+    8bec:	e59f006c 	ldr	r0, [pc, #108]	; 8c60 <read_socket+0xc4>
+    8bf0:	ebffff3b 	bl	88e4 <error@plt>
+    8bf4:	e28d2b01 	add	r2, sp, #1024	; 0x400
+    8bf8:	e59d0410 	ldr	r0, [sp, #1040]	; 0x410
+    8bfc:	e1d230be 	ldrh	r3, [r2, #14]
+    8c00:	e58a0000 	str	r0, [sl]
+    8c04:	e1a02403 	lsl	r2, r3, #8
+    8c08:	e1823423 	orr	r3, r2, r3, lsr #8
+    8c0c:	e6ff3073 	uxth	r3, r3
+    8c10:	e5843010 	str	r3, [r4, #16]
+    8c14:	ebffff26 	bl	88b4 <inet_ntoa@plt>
+    8c18:	e1a03006 	mov	r3, r6
+    8c1c:	e1a01000 	mov	r1, r0
+    8c20:	e5942010 	ldr	r2, [r4, #16]
+    8c24:	e59f0038 	ldr	r0, [pc, #56]	; 8c64 <read_socket+0xc8>
+[31m    8c28:	ebfffee2 	bl	87b8 <printf@plt>[0m
+    8c2c:	e1a01006 	mov	r1, r6
+    8c30:	e1a00005 	mov	r0, r5
+--
+    8cac:	ea000003 	b	8cc0 <read_config+0x58>
+    8cb0:	e59f008c 	ldr	r0, [pc, #140]	; 8d44 <read_config+0xdc>
+    8cb4:	ebfffebc 	bl	87ac <strcpy@plt>
+    8cb8:	e59f0084 	ldr	r0, [pc, #132]	; 8d44 <read_config+0xdc>
+    8cbc:	ea000002 	b	8ccc <read_config+0x64>
+    8cc0:	e59f0080 	ldr	r0, [pc, #128]	; 8d48 <read_config+0xe0>
+    8cc4:	ebfffeb8 	bl	87ac <strcpy@plt>
+    8cc8:	e59f0078 	ldr	r0, [pc, #120]	; 8d48 <read_config+0xe0>
+    8ccc:	e3a0100a 	mov	r1, #10
+    8cd0:	ebffff0f 	bl	8914 <strchr@plt>
+    8cd4:	e3500000 	cmp	r0, #0
+    8cd8:	15c06000 	strbne	r6, [r0]
+    8cdc:	e3a01032 	mov	r1, #50	; 0x32
+    8ce0:	e1a00007 	mov	r0, r7
+    8ce4:	e1a02005 	mov	r2, r5
+    8ce8:	ebfffeb8 	bl	87d0 <fgets@plt>
+    8cec:	e2501000 	subs	r1, r0, #0
+    8cf0:	1affffe8 	bne	8c98 <read_config+0x30>
+    8cf4:	e59f1048 	ldr	r1, [pc, #72]	; 8d44 <read_config+0xdc>
+    8cf8:	e59f004c 	ldr	r0, [pc, #76]	; 8d4c <read_config+0xe4>
+[31m    8cfc:	ebfffead 	bl	87b8 <printf@plt>[0m
+    8d00:	e59f1040 	ldr	r1, [pc, #64]	; 8d48 <read_config+0xe0>
+    8d04:	e59f0044 	ldr	r0, [pc, #68]	; 8d50 <read_config+0xe8>
+[31m    8d08:	ebfffeaa 	bl	87b8 <printf@plt>[0m
+    8d0c:	e1a00005 	mov	r0, r5
+    8d10:	ebfffee4 	bl	88a8 <fclose@plt>
+    8d14:	e59f002c 	ldr	r0, [pc, #44]	; 8d48 <read_config+0xe0>
+    8d18:	ebfffec4 	bl	8830 <inet_addr@plt>
+    8d1c:	e59f3030 	ldr	r3, [pc, #48]	; 8d54 <read_config+0xec>
+    8d20:	e1a01000 	mov	r1, r0
+    8d24:	e5830000 	str	r0, [r3]
+    8d28:	e59f0028 	ldr	r0, [pc, #40]	; 8d58 <read_config+0xf0>
+[31m    8d2c:	ebfffea1 	bl	87b8 <printf@plt>[0m
+    8d30:	e59f2024 	ldr	r2, [pc, #36]	; 8d5c <read_config+0xf4>
+    8d34:	e59f3024 	ldr	r3, [pc, #36]	; 8d60 <read_config+0xf8>
+--
+    90dc:	ebfffdd9 	bl	8848 <setsockopt@plt>
+    90e0:	e3700001 	cmn	r0, #1
+    90e4:	1a000001 	bne	90f0 <open_socket_in+0x90>
+    90e8:	e59f004c 	ldr	r0, [pc, #76]	; 913c <open_socket_in+0xdc>
+    90ec:	ebfffdbd 	bl	87e8 <puts@plt>
+    90f0:	e1a00004 	mov	r0, r4
+    90f4:	e28d100c 	add	r1, sp, #12
+    90f8:	e3a02010 	mov	r2, #16
+    90fc:	ebfffdc8 	bl	8824 <bind@plt>
+    9100:	e3700001 	cmn	r0, #1
+    9104:	e1a06000 	mov	r6, r0
+    9108:	1a000005 	bne	9124 <open_socket_in+0xc4>
+    910c:	e59f002c 	ldr	r0, [pc, #44]	; 9140 <open_socket_in+0xe0>
+    9110:	ebfffdb4 	bl	87e8 <puts@plt>
+    9114:	e1a00004 	mov	r0, r4
+    9118:	e1a04006 	mov	r4, r6
+    911c:	ebfffe05 	bl	8938 <close@plt>
+    9120:	ea000002 	b	9130 <open_socket_in+0xd0>
+    9124:	e59f0018 	ldr	r0, [pc, #24]	; 9144 <open_socket_in+0xe4>
+    9128:	e1a01005 	mov	r1, r5
+[31m    912c:	ebfffda1 	bl	87b8 <printf@plt>[0m
+    9130:	e1a00004 	mov	r0, r4
+    9134:	e28dd020 	add	sp, sp, #32
+--
+    91bc:	e5808008 	str	r8, [r0, #8]
+    91c0:	e580300c 	str	r3, [r0, #12]
+    91c4:	e59f3394 	ldr	r3, [pc, #916]	; 9560 <parse_packet+0x3e0>
+    91c8:	e5933000 	ldr	r3, [r3]
+    91cc:	e5803010 	str	r3, [r0, #16]
+    91d0:	e1a00008 	mov	r0, r8
+    91d4:	ebfffdb9 	bl	88c0 <time@plt>
+    91d8:	e1a01008 	mov	r1, r8
+    91dc:	e5840018 	str	r0, [r4, #24]
+    91e0:	e3a0209c 	mov	r2, #156	; 0x9c
+    91e4:	e2840020 	add	r0, r4, #32
+    91e8:	ebfffdab 	bl	889c <memset@plt>
+    91ec:	e359000b 	cmp	r9, #11
+    91f0:	da0000d2 	ble	9540 <parse_packet+0x3c0>
+    91f4:	e1d530b0 	ldrh	r3, [r5]
+    91f8:	e59f0364 	ldr	r0, [pc, #868]	; 9564 <parse_packet+0x3e4>
+    91fc:	e1a01c03 	lsl	r1, r3, #24
+    9200:	e1a01821 	lsr	r1, r1, #16
+    9204:	e1811423 	orr	r1, r1, r3, lsr #8
+    9208:	e5841020 	str	r1, [r4, #32]
+[31m    920c:	ebfffd69 	bl	87b8 <printf@plt>[0m
+    9210:	e5d53002 	ldrb	r3, [r5, #2]
+    9214:	e7e321d3 	ubfx	r2, r3, #3, #4
+--
+    97a8:	e3a02010 	mov	r2, #16
+    97ac:	e595b014 	ldr	fp, [r5, #20]
+    97b0:	e595500c 	ldr	r5, [r5, #12]
+    97b4:	e1a0900a 	mov	r9, sl
+    97b8:	ebfffc37 	bl	889c <memset@plt>
+    97bc:	e7e73454 	ubfx	r3, r4, #8, #8
+    97c0:	e28d2b01 	add	r2, sp, #1024	; 0x400
+    97c4:	e1833404 	orr	r3, r3, r4, lsl #8
+    97c8:	e1a00005 	mov	r0, r5
+    97cc:	e3a08005 	mov	r8, #5
+    97d0:	e58d5414 	str	r5, [sp, #1044]	; 0x414
+    97d4:	e1c231b2 	strh	r3, [r2, #18]
+    97d8:	e3a03002 	mov	r3, #2
+    97dc:	e1c231b0 	strh	r3, [r2, #16]
+    97e0:	e3a0a010 	mov	sl, #16
+    97e4:	ebfffc32 	bl	88b4 <inet_ntoa@plt>
+    97e8:	e1a01006 	mov	r1, r6
+    97ec:	e1a02000 	mov	r2, r0
+    97f0:	e1a03004 	mov	r3, r4
+    97f4:	e59f0098 	ldr	r0, [pc, #152]	; 9894 <send_packet+0x138>
+[31m    97f8:	ebfffbee 	bl	87b8 <printf@plt>[0m
+    97fc:	e1a0000b 	mov	r0, fp
+    9800:	e1a01007 	mov	r1, r7
+--
+    9838:	ea000007 	b	985c <send_packet+0x100>
+    983c:	e59f3054 	ldr	r3, [pc, #84]	; 9898 <send_packet+0x13c>
+    9840:	e3a00001 	mov	r0, #1
+    9844:	e5932000 	ldr	r2, [r3]
+    9848:	e2822001 	add	r2, r2, #1
+    984c:	e5832000 	str	r2, [r3]
+    9850:	e28dd024 	add	sp, sp, #36	; 0x24
+    9854:	e28ddb01 	add	sp, sp, #1024	; 0x400
+    9858:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+    985c:	e1a00005 	mov	r0, r5
+    9860:	e58d300c 	str	r3, [sp, #12]
+    9864:	ebfffc12 	bl	88b4 <inet_ntoa@plt>
+    9868:	e59d300c 	ldr	r3, [sp, #12]
+    986c:	e1a05000 	mov	r5, r0
+    9870:	e5930000 	ldr	r0, [r3]
+    9874:	ebfffbd2 	bl	87c4 <strerror@plt>
+    9878:	e1a01005 	mov	r1, r5
+    987c:	e1a03000 	mov	r3, r0
+    9880:	e1a02004 	mov	r2, r4
+    9884:	e59f0010 	ldr	r0, [pc, #16]	; 989c <send_packet+0x140>
+[31m    9888:	ebfffbca 	bl	87b8 <printf@plt>[0m
+    988c:	e3a00000 	mov	r0, #0
+    9890:	eaffffee 	b	9850 <send_packet+0xf4>
+--
+    997c:	e3a03001 	mov	r3, #1
+    9980:	e59f51a0 	ldr	r5, [pc, #416]	; 9b28 <reply_netbios_packet+0x288>
+    9984:	e58d3328 	str	r3, [sp, #808]	; 0x328
+    9988:	e58d3324 	str	r3, [sp, #804]	; 0x324
+    998c:	ea000010 	b	99d4 <reply_netbios_packet+0x134>
+    9990:	e3a03001 	mov	r3, #1
+    9994:	e59f5190 	ldr	r5, [pc, #400]	; 9b2c <reply_netbios_packet+0x28c>
+    9998:	e58d3328 	str	r3, [sp, #808]	; 0x328
+    999c:	e58d3324 	str	r3, [sp, #804]	; 0x324
+    99a0:	ea00000b 	b	99d4 <reply_netbios_packet+0x134>
+    99a4:	e59d0300 	ldr	r0, [sp, #768]	; 0x300
+    99a8:	ebfffbc1 	bl	88b4 <inet_ntoa@plt>
+    99ac:	e284105c 	add	r1, r4, #92	; 0x5c
+    99b0:	e58d004c 	str	r0, [sp, #76]	; 0x4c
+    99b4:	e3a0204c 	mov	r2, #76	; 0x4c
+    99b8:	e1a0000d 	mov	r0, sp
+    99bc:	ebfffb86 	bl	87dc <memcpy@plt>
+    99c0:	e896000c 	ldm	r6, {r2, r3}
+    99c4:	e59f1164 	ldr	r1, [pc, #356]	; 9b30 <reply_netbios_packet+0x290>
+    99c8:	e59f0164 	ldr	r0, [pc, #356]	; 9b34 <reply_netbios_packet+0x294>
+[31m    99cc:	ebfffb79 	bl	87b8 <printf@plt>[0m
+    99d0:	ea00004d 	b	9b0c <reply_netbios_packet+0x26c>
+    99d4:	e59d0300 	ldr	r0, [sp, #768]	; 0x300
+    99d8:	ebfffbb5 	bl	88b4 <inet_ntoa@plt>
+    99dc:	e5942020 	ldr	r2, [r4, #32]
+    99e0:	e1a03000 	mov	r3, r0
+    99e4:	e1a01005 	mov	r1, r5
+    99e8:	e59f0148 	ldr	r0, [pc, #328]	; 9b38 <reply_netbios_packet+0x298>
+    99ec:	e3a05000 	mov	r5, #0
+    99f0:	e58d2000 	str	r2, [sp]
+    99f4:	e1a02006 	mov	r2, r6
+[31m    99f8:	ebfffb6e 	bl	87b8 <printf@plt>[0m
+    99fc:	e5943020 	ldr	r3, [r4, #32]
+    9a00:	e3a02001 	mov	r2, #1
+    9a04:	e58d231c 	str	r2, [sp, #796]	; 0x31c
+    9a08:	e58d2330 	str	r2, [sp, #816]	; 0x330
+    9a0c:	e58d233c 	str	r2, [sp, #828]	; 0x33c
+    9a10:	e3a02d0a 	mov	r2, #640	; 0x280
+    9a14:	e59f1120 	ldr	r1, [pc, #288]	; 9b3c <reply_netbios_packet+0x29c>
+    9a18:	e59f0120 	ldr	r0, [pc, #288]	; 9b40 <reply_netbios_packet+0x2a0>
+    9a1c:	e58d3314 	str	r3, [sp, #788]	; 0x314
+    9a20:	e58d7334 	str	r7, [sp, #820]	; 0x334
+    9a24:	e58d7000 	str	r7, [sp]
+    9a28:	e28d7050 	add	r7, sp, #80	; 0x50
+    9a2c:	e58d8318 	str	r8, [sp, #792]	; 0x318
+    9a30:	e58d5320 	str	r5, [sp, #800]	; 0x320
+    9a34:	e58d532c 	str	r5, [sp, #812]	; 0x32c
+    9a38:	e58d5338 	str	r5, [sp, #824]	; 0x338
+    9a3c:	e58d5340 	str	r5, [sp, #832]	; 0x340
+    9a40:	e58d5344 	str	r5, [sp, #836]	; 0x344
+    9a44:	e58d8004 	str	r8, [sp, #4]
+[31m    9a48:	ebfffb5a 	bl	87b8 <printf@plt>[0m
+    9a4c:	e1a01005 	mov	r1, r5
+    9a50:	e3a0205c 	mov	r2, #92	; 0x5c
+--
+    9ab8:	e1a0200a 	mov	r2, sl
+    9abc:	e583a060 	str	sl, [r3, #96]	; 0x60
+    9ac0:	e59d03a4 	ldr	r0, [sp, #932]	; 0x3a4
+    9ac4:	e2800064 	add	r0, r0, #100	; 0x64
+    9ac8:	ebfffb43 	bl	87dc <memcpy@plt>
+    9acc:	e5943014 	ldr	r3, [r4, #20]
+    9ad0:	e3a00000 	mov	r0, #0
+    9ad4:	e58d0310 	str	r0, [sp, #784]	; 0x310
+    9ad8:	e58d3308 	str	r3, [sp, #776]	; 0x308
+    9adc:	ebfffb77 	bl	88c0 <time@plt>
+    9ae0:	e58d030c 	str	r0, [sp, #780]	; 0x30c
+    9ae4:	e28d0fbd 	add	r0, sp, #756	; 0x2f4
+    9ae8:	ebffff1b 	bl	975c <send_packet>
+    9aec:	e3500000 	cmp	r0, #0
+    9af0:	1a000005 	bne	9b0c <reply_netbios_packet+0x26c>
+    9af4:	e59d0300 	ldr	r0, [sp, #768]	; 0x300
+    9af8:	ebfffb6d 	bl	88b4 <inet_ntoa@plt>
+    9afc:	e59d2304 	ldr	r2, [sp, #772]	; 0x304
+    9b00:	e1a01000 	mov	r1, r0
+    9b04:	e59f0038 	ldr	r0, [pc, #56]	; 9b44 <reply_netbios_packet+0x2a4>
+[31m    9b08:	ebfffb2a 	bl	87b8 <printf@plt>[0m
+    9b0c:	e28dde3b 	add	sp, sp, #944	; 0x3b0
+    9b10:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+--
+    9b28:	00009f00 	.word	0x00009f00
+    9b2c:	00009f09 	.word	0x00009f09
+    9b30:	00009f4f 	.word	0x00009f4f
+    9b34:	00009f14 	.word	0x00009f14
+    9b38:	00009f57 	.word	0x00009f57
+    9b3c:	00009e00 	.word	0x00009e00
+    9b40:	00009fad 	.word	0x00009fad
+    9b44:	00009fe1 	.word	0x00009fe1
+
+00009b48 <process_name_query_request>:
+    9b48:	e92d45f0 	push	{r4, r5, r6, r7, r8, sl, lr}
+    9b4c:	e2804054 	add	r4, r0, #84	; 0x54
+    9b50:	e24dd01c 	sub	sp, sp, #28
+    9b54:	e590702c 	ldr	r7, [r0, #44]	; 0x2c
+    9b58:	e1a05000 	mov	r5, r0
+    9b5c:	e590000c 	ldr	r0, [r0, #12]
+    9b60:	ebfffb53 	bl	88b4 <inet_ntoa@plt>
+    9b64:	e1a02004 	mov	r2, r4
+    9b68:	e1a01000 	mov	r1, r0
+    9b6c:	e59f00f0 	ldr	r0, [pc, #240]	; 9c64 <process_name_query_request+0x11c>
+[31m    9b70:	ebfffb10 	bl	87b8 <printf@plt>[0m
+    9b74:	e1a00004 	mov	r0, r4
+    9b78:	e59f10e8 	ldr	r1, [pc, #232]	; 9c68 <process_name_query_request+0x120>
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m13[0m times [0;33mum_nmbd[0m
+

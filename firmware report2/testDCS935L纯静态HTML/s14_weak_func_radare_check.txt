@@ -1,0 +1,75 @@
+[[0;34m+[0m] [0;36m[1mCheck binaries for weak functions (radare mode)[0m
+[1m=================================================================[0m
+This module identifies the usage of critical binary functions in firmware via [0;33mradare2[0m.
+Examples of binary functions are system, strcpy, printf and strcat. These functions are configured in the configuration
+file config/functions.cfg. The module counts the usages per binary. For strcpy functions it also counts strlen functions
+right before the strcpy function. Additionally it checks if the binary is a known Linux binary or unknown and probably
+a vendor binary.
+
+
+[[0;33m*[0m] Vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system
+
+[[0;32m+[0m][0;32m /lib/ld-uClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 18 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/librt-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/librt-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 41 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 2 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 80 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 20 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m /lib/libuClibc-0.9.30.3.so (-rwxr-xr-x root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 29 [0m/ [0;33mstrlen: 12 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+
+[0;34m==>[0m [0;36mTop 10 legacy C functions - Radare2 disasm mode[0m
+-----------------------------------------------------------------
+
+
+[[0;32m+[0m][0;32m fprintf - top 10 results:[0m
+[0;33m	41    : libuClibc-0.9.3 : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m mmap - top 10 results:[0m
+[0;33m	2     : libuClibc-0.9.3 : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m printf - top 10 results:[0m
+[0;33m	80    : libuClibc-0.9.3 : common linux file: no[0m
+[0;33m	18    : ld-uClibc-0.9.3 : common linux file: no[0m
+[0;33m	1     : librt-0.9.30.3. : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m sprintf - top 10 results:[0m
+[0;33m	20    : libuClibc-0.9.3 : common linux file: no[0m
+[0;33m	1     : librt-0.9.30.3. : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcat - top 10 results:[0m
+[0;33m	3     : libuClibc-0.9.3 : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcpy - top 10 results:[0m
+[0;33m	29    : libuClibc-0.9.3 : common linux file: no[0m
+
+
+
+[*] Statistics:29
+
+[*] Statistics1:MIPS

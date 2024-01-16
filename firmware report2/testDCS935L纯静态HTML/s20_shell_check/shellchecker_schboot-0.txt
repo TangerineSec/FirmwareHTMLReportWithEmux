@@ -1,0 +1,27 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/schboot-0 line 16:[0m
+[0m	echo -n "Starting schboot ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/schboot-0 line 17:[0m
+[0m	cd /usr/sbin; ./schboot &[0m
+[33m        ^----------^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.[0m
+
+[1mDid you mean: [0m
+	cd /usr/sbin || exit; ./schboot &
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/schboot-0 line 22:[0m
+[0m	echo -n "Stopping schboot ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/schboot-0 line 44:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2164 -- Use 'cd ... || exit' or 'cd ... |...
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...

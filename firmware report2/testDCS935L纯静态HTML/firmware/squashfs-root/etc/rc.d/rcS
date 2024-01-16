@@ -1,0 +1,56 @@
+#!/bin/sh
+/bin/date 2014.07.01-00:00
+hostname rlx-linux
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t ramfs ramfs /var
+mkdir /var/tmp
+mkdir /var/log
+mkdir /var/run
+mkdir /var/lock
+
+mount_jffs2()
+{
+	mount -t jffs2 $2 $3
+	if [ $? != 0 ]; then
+		echo "[ERROR] Can't mount $2, erase it..."
+		/usr/bin/flash_eraseall $1
+		echo -n "Try to re-mount $2 ..."
+		mount -t jffs2 $2 $3
+		if [ $? != 0 ]; then
+			echo " failed"
+		else
+			echo " success"
+		fi
+	fi
+}
+
+mount_jffs2 /dev/mtd1 /dev/mtdblock1 /mnt/flash
+mount_jffs2 /dev/mtd4 /dev/mtdblock4 /mydlink
+cp -f /sbin/reboot /var/reboot
+/etc/init.d/mydlink_check.sh
+/etc/init.d/RTS5826_FW_check.sh
+# Start all init scripts in /etc/init.d
+# executing them in numerical order.
+#
+for i in /etc/rc.d/rcS.d/S??* ;do
+
+	#Ignore dangling symlinks (if any).
+	[ ! -f "$i" ] && continue
+
+	case "$i" in
+		*.sh)
+			#Source shell script for speed.
+			(
+				trap -INT QUIT TSTP
+				set start
+				. $i
+			)
+			;;
+		*)
+			# No sh extension, so fork subprocess.
+			$i start
+			;;
+	esac
+done
+

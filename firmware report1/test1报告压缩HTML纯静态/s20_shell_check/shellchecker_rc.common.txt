@@ -1,0 +1,63 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 4:[0m
+[0m. $IPKG_INSTROOT/lib/functions.sh[0m
+[32m  ^-----------------------------^ SC1091 (info): Not following: ./lib/functions.sh was not specified as input (see shellcheck -x).[0m
+[32m  ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+. "$IPKG_INSTROOT"/lib/functions.sh
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 5:[0m
+[0m. $IPKG_INSTROOT/lib/functions/service.sh[0m
+[32m  ^-- SC1091 (info): Not following: ./lib/functions/service.sh was not specified as input (see shellcheck -x).[0m
+[32m  ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+. "$IPKG_INSTROOT"/lib/functions/service.sh
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 43:[0m
+[0m	rm -f "$IPKG_INSTROOT"/etc/rc.d/S??$name[0m
+[32m                                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	rm -f "$IPKG_INSTROOT"/etc/rc.d/S??"$name"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 44:[0m
+[0m	rm -f "$IPKG_INSTROOT"/etc/rc.d/K??$name[0m
+[32m                                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	rm -f "$IPKG_INSTROOT"/etc/rc.d/K??"$name"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 50:[0m
+[0m	[ -n "$START" -o -n "$STOP" ] || {[0m
+[33m                      ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 84:[0m
+[0m. "$initscript"[0m
+[33m  ^-----------^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 86:[0m
+[0mALL_COMMANDS="start stop reload restart boot shutdown enable disable enabled depends wan_reconn ${EXTRA_COMMANDS}"[0m
+[33m^----------^ SC2034 (warning): ALL_COMMANDS appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 88:[0m
+[0m[ "$action" = "reload" ] && action='eval reload "$@" || restart "$@" && :'[0m
+[33m                                   ^-- SC2089 (warning): Quotes/backslashes will be treated literally. Rewrite using set/"$@" or functions.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.common line 89:[0m
+[0m$action "$@"[0m
+[33m^-----^ SC2090 (warning): Quotes/backslashes in this variable will not be respected.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2034 -- ALL_COMMANDS appears unused. Veri...
+  https://www.shellcheck.net/wiki/SC2089 -- Quotes/backslashes will be treate...

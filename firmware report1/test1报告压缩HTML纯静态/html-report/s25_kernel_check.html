@@ -1,0 +1,750 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./index.html"><img class="inherit" id="logoImage" src="./style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./index.html">&laquo; Back to main</a>
+      <!-- navigation start --><a class="modul" href="#identify_and_analyze_kernel_version" title="#identify_and_analyze_kernel_version" >Identify and analyze kernel version</a><a class="submodul" href="#kernelvulnerabilities" title="#kernelvulnerabilities" >Kernel vulnerabilities</a><a class="submodul" href="#possibleexploitsvialinuxexploitsuggestershforkernelversion338" title="#possibleexploitsvialinuxexploitsuggestershforkernelversion338" >Possible exploits via linux-exploit-suggester.sh for kernel version 3.3.8</a><a class="submodul" href="#checkmodprobeddirectoryandcontent" title="#checkmodprobeddirectoryandcontent" >Check modprobe.d directory and content</a><a class="submodul" href="#analyzekernelmodules" title="#analyzekernelmodules" >Analyze kernel modules</a>
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>[</span><span class="blue">+</span>] </span><span class="cyan"><span class="bold"><a id="identify_and_analyze_kernel_version">Identify and analyze kernel version</a></span></pre>
+<pre><span class="bold"><hr class="double" /></span></pre>
+<pre>This module tries to identify the version of the used Linux kernel. The following sources are tested:</pre>
+<pre>    - Results of module s24</pre>
+<pre>    - Identified kernel modules in .ko format</pre>
+<pre>    - Identified kernel modules in .o format</pre>
+<pre>    - Filesytem path of kernel modules - e.g.: /lib/modules/1.2.3/bla</pre>
+<br />
+<br />
+<pre>Additionally it checks the identified kernel version with the linux-exploit-suggester (<a href="https://github.com/mzet-/linux-exploit-suggester" title="https://github.com/mzet-/linux-exploit-suggester" target="_blank" >https://github.com/mzet-/linux-exploit-suggester</a>) for known exploits.</pre>
+<pre>Finally it tests the kernel modules for interesting combination of closed source modules with debugging information. E.g. Non open source modules with debugging information included.</pre>
+<br />
+<br />
+<pre>Kernel version:</pre>
+<pre>    </span><span class="orange">3.3.8</span></pre>
+<br />
+<br />
+<pre>Kernel details:</pre>
+<pre>    ALSA_sequencer_device_management}</pre>
+<pre>    ALSA_timer_interface}</pre>
+<pre>    ARC4_Cipher_Algorithm}</pre>
+<pre>    Advanced_Linux_Sound_Architecture_driver_for_soundcards_}</pre>
+<pre>    Amanda_NAT_helper}</pre>
+<pre>    Amanda_connection_tracking_module}</pre>
+<pre>    Asynchronous_cryptographic_hash_type</pre>
+<pre>    Authenticated_Encryption_with_Associated_Data__AEAD_}</pre>
+<pre>    Basic_SNMP_Application_Layer_Gateway}</pre>
+<pre>    Button_Hotplug_driver}</pre>
+<pre>    CRC16_calculations}</pre>
+<pre>    Character_device_for_for_generic_gpio_api}</pre>
+<pre>    Controlled_Delay_queue_discipline}</pre>
+<pre>    Core_sound_module}</pre>
+<pre>    Crypto_Algorithm_Manager}</pre>
+<pre>    Cryptographic_algorithms_API}</pre>
+<pre>    Device_Mirror_redirect_actions}</pre>
+<pre>    Device_registrar_for_Video4Linux_drivers_v2}</pre>
+<pre>    Driver_for_Alauda_based_card_readers}</pre>
+<pre>    Driver_for_Datafab_USB_Compact_Flash_reader}</pre>
+<pre>    Driver_for_Freecom_USB_IDE_adaptor}</pre>
+<pre>    Driver_for_In_System_Design__Inc__ISD200_ASIC}</pre>
+<pre>    Driver_for_Lexar__Jumpshot__Compact_Flash_reader}</pre>
+<pre>    Driver_for_MAC_address_based_VLANs}</pre>
+<pre>    Driver_for_Rio_Karma}</pre>
+<pre>    Driver_for_SCM_Microsystems__a_k_a__Shuttle__USB_ATAPI_cable}</pre>
+<pre>    Driver_for_SanDisk_SDDR_09_SmartMedia_reader}</pre>
+<pre>    Driver_for_SanDisk_SDDR_55_SmartMedia_reader}</pre>
+<pre>    Driver_helper_framework_for_Video_for_Linux_2}</pre>
+<pre>    ECB_block_cipher_algorithm}</pre>
+<pre>    Ebtables}</pre>
+<pre>    Extended_Macintosh_Filesystem}</pre>
+<pre>    Filesystem_in_Userspace}</pre>
+<pre>    Fourth_Extended_Filesystem}</pre>
+<pre>    GPIO_LED_driver}</pre>
+<pre>    GPIO_LED_trigger}</pre>
+<pre>    GRE_over_IPv4_demultiplexer_driver}</pre>
+<pre>    Generic_block_chaining_cipher_type}</pre>
+<pre>    Generic_implementation_of_a_polled_input_device}</pre>
+<pre>    H_323_NAT_helper}</pre>
+<pre>    H_323_connection_tracking_helper}</pre>
+<pre>    Hardware_dependent_layer}</pre>
+<pre>    Heartbeat_LED_trigger}</pre>
+<pre>    IPv4_packet_filter}</pre>
+<pre>    IRC__DCC__NAT_helper}</pre>
+<pre>    IRC__DCC__connection_tracking_helper}</pre>
+<pre>    Input_core}</pre>
+<pre>    Iptables_target_actions}</pre>
+<pre>    L2TP_core}</pre>
+<pre>    L2TP_netlink}</pre>
+<pre>    Memory_allocator_for_ALSA_system_}</pre>
+<pre>    Meta_block_cache__for_extended_attributes_}</pre>
+<pre>    Midlevel_PCM_code_for_ALSA_}</pre>
+<pre>    Midlevel_RawMidi_code_for_ALSA_}</pre>
+<pre>    Mixer_OSS_emulation_for_ALSA_}</pre>
+<pre>    Morse_LED_trigger}</pre>
+<pre>    NFS_file_locking_service_version_0_5_}</pre>
+<pre>    Netfilter_NAT_helper_module_for_PPTP}</pre>
+<pre>    Netfilter_NAT_protocol_helper_module_for_GRE}</pre>
+<pre>    Netfilter_connection_tracking_helper_module_for_PPTP}</pre>
+<pre>    PCM_OSS_emulation_for_ALSA_}</pre>
+<pre>    PPP_over_Ethernet_driver__generic_socket_layer_}</pre>
+<pre>    PPP_over_Ethernet_driver}</pre>
+<pre>    PPP_over_L2TP_over_UDP}</pre>
+<pre>    Point_to_Point_Protocol_Microsoft_Point_to_Point_Encryption_support}</pre>
+<pre>    Point_to_Point_Tunneling_Protocol}</pre>
+<pre>    Policing_actions}</pre>
+<pre>    Polled_GPIO_Buttons_driver}</pre>
+<pre>    Pseudo_driver_for_the_intermediate_queue_device__See_http}</pre>
+<pre>    SAT_support_for_Cypress_USB_ATA_bridges_with_ATACB}</pre>
+<pre>    SCSI_core}</pre>
+<pre>    SCSI_disk__sd__driver}</pre>
+<pre>    SHA1_Secure_Hash_Algorithm}</pre>
+<pre>    SIP_NAT_helper}</pre>
+<pre>    SIP_connection_tracking_helper}</pre>
+<pre>    SKB_Editing}</pre>
+<pre>    SNMP_service_broadcast_connection_tracking_helper}</pre>
+<pre>    TC_flow_classifier}</pre>
+<pre>    TFTP_NAT_helper}</pre>
+<pre>    TFTP_connection_tracking_helper}</pre>
+<pre>    USB_1_1__Open__Host_Controller__OHCI__Driver}</pre>
+<pre>    USB_2_0__Enhanced__Host_Controller__EHCI__Driver}</pre>
+<pre>    USB_Audio_MIDI_helper_module}</pre>
+<pre>    USB_Audio}</pre>
+<pre>    USB_Mass_Storage_driver_for_Linux}</pre>
+<pre>    USB_Printer_Device_Class_driver}</pre>
+<pre>    USB_Video_Class_driver}</pre>
+<pre>    USB_device_LED_trigger}</pre>
+<pre>    Universal_TUN_TAP_device_driver}</pre>
+<pre>    VFAT_filesystem_support}</pre>
+<pre>    Xtables}</pre>
+<pre>    _ip_ip6_arp_eb__tables_backend_module}</pre>
+<pre>    common_memory_handling_routines_for_videobuf2}</pre>
+<pre>    exFAT_Filesystem_Driver}</pre>
+<pre>    ftp_NAT_helper}</pre>
+<pre>    ftp_connection_tracking_helper}</pre>
+<pre>    ip_6__tables_connection_tracking_state_match_module}</pre>
+<pre>    iptables_application_layer_match_module}</pre>
+<pre>    iptables_filter_table}</pre>
+<pre>    iptables_mangle_table}</pre>
+<pre>    misc_helper_functions_for_v4l2_device_drivers}</pre>
+<pre>    vmalloc_memory_handling_routines_for_videobuf2}</pre>
+<pre>    }</pre>
+<pre>    Synchronous_cryptographic_hash_type}</pre>
+<br />
+<pre></span><span class="blue">==&gt</span></span> </span><span class="cyan"><a id="kernelvulnerabilities">Kernel vulnerabilities</a></span></pre>
+<pre><hr class="mono" /></pre>
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Found linux kernel version/s:</span></pre>
+<pre>    </span><span class="orange">3.3.8</span></pre>
+<br />
+<br />
+<br />
+<pre></span><span class="blue">==&gt</span></span> </span><span class="cyan">Possible exploits via linux-exploit-suggester.sh for kernel version </span><span class="orange">3.3.8</span></span></pre>
+<pre><hr class="mono" /></pre>
+<pre>[</span><span class="orange">*</span>] Search possible exploits via linux-exploit-suggester.sh for kernel version </span><span class="orange">3.3.8</span></pre>
+<pre>    <a href="https://github.com/mzet-/linux-exploit-suggester" title="https://github.com/mzet-/linux-exploit-suggester" target="_blank" >https://github.com/mzet-/linux-exploit-suggester</a></pre>
+<br />
+<pre><span class="bold">Available information:</span></pre>
+<br />
+<pre>Kernel version: <span class="bold"><span class="green">3.3.8</span></pre>
+<pre>Architecture: <span class="bold">N/A</span></pre>
+<pre>Distribution: <span class="bold">N/A</span></pre>
+<pre>Distribution version: <span class="bold">N/A</span></pre>
+<pre>Additional checks (CONFIG_*, sysctl entries, custom Bash commands): <span class="bold">N/A</span></pre>
+<pre>Package listing: <span class="bold">N/A</span></pre>
+<br />
+<pre><span class="bold">Searching among:</span></pre>
+<br />
+<pre>81 kernel space exploits</pre>
+<pre>0 user space exploits</pre>
+<br />
+<pre><span class="bold">Possible Exploits:</span></pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2016-5195" title="CVE-2016-5195" target="_blank" >CVE-2016-5195</a>]</span> dirtycow</pre>
+<br />
+<pre>   Details: <a href="https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails" title="https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails" target="_blank" >https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails</a></pre>
+<pre>   Exposure: probable</pre>
+<pre>   Tags: debian=7|8,RHEL=5{kernel:2.6.(18|24|33)-*},RHEL=6{kernel:2.6.32-*|3.(0|2|6|8|10).*|2.6.33.9-rt31},RHEL=7{kernel:3.10.0-*|4.2.0-0.21.el7},ubuntu=16.04|14.04|12.04</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/40611" title="https://www.exploit-db.com/download/40611" target="_blank" >https://www.exploit-db.com/download/40611</a></pre>
+<pre>   Comments: For RHEL/CentOS see exact vulnerable versions here: <a href="https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh" title="https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh" target="_blank" >https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.22,ver&lt;=4.8.3</pre>
+<pre>   exploit-db: 40611</pre>
+<pre>   author: Phil Oester</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2016-5195" title="CVE-2016-5195" target="_blank" >CVE-2016-5195</a>]</span> dirtycow 2</pre>
+<br />
+<pre>   Details: <a href="https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails" title="https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails" target="_blank" >https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails</a></pre>
+<pre>   Exposure: probable</pre>
+<pre>   Tags: debian=7|8,RHEL=5|6|7,ubuntu=14.04|12.04,ubuntu=10.04{kernel:2.6.32-21-generic},ubuntu=16.04{kernel:4.4.0-21-generic}</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/40839" title="https://www.exploit-db.com/download/40839" target="_blank" >https://www.exploit-db.com/download/40839</a></pre>
+<pre>   ext-url: <a href="https://www.exploit-db.com/download/40847" title="https://www.exploit-db.com/download/40847" target="_blank" >https://www.exploit-db.com/download/40847</a></pre>
+<pre>   Comments: For RHEL/CentOS see exact vulnerable versions here: <a href="https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh" title="https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh" target="_blank" >https://access.redhat.com/sites/default/files/rh-cve-2016-5195_5.sh</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.22,ver&lt;=4.8.3</pre>
+<pre>   exploit-db: 40839</pre>
+<pre>   author: FireFart (author of exploit at EDB 40839); Gabriele Bonacini (author of exploit at 'ext-url')</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2022-32250" title="CVE-2022-32250" target="_blank" >CVE-2022-32250</a>]</span> nft_object UAF (NFT_MSG_NEWSET)</pre>
+<br />
+<pre>   Details: <a href="https://research.nccgroup.com/2022/09/01/settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250/" title="https://research.nccgroup.com/2022/09/01/settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250/" target="_blank" >https://research.nccgroup.com/2022/09/01/settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250/</a></pre>
+<pre><a href="https://blog.theori.io/research/<a href="https://nvd.nist.gov/vuln/detail/CVE-2022-32250" title="CVE-2022-32250" target="_blank" >CVE-2022-32250</a>-linux-kernel-lpe-2022/" title="https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/" target="_blank" >https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=(22.04){kernel:5.15.0-27-generic}</pre>
+<pre>   Download URL: <a href="https://raw.githubusercontent.com/theori-io/<a href="https://nvd.nist.gov/vuln/detail/CVE-2022-32250" title="CVE-2022-32250" target="_blank" >CVE-2022-32250</a>-exploit/main/exp.c" title="https://raw.githubusercontent.com/theori-io/CVE-2022-32250-exploit/main/exp.c" target="_blank" >https://raw.githubusercontent.com/theori-io/CVE-2022-32250-exploit/main/exp.c</a></pre>
+<pre>   Comments: kernel.unprivileged_userns_clone=1 required (to obtain CAP_NET_ADMIN)</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&lt;5.18.1,CONFIG_USER_NS=y,sysctl:kernel.unprivileged_userns_clone==1</pre>
+<pre>   author: vulnerability discovery: EDG Team from NCC Group; Author of this exploit: theori.io</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-27365" title="CVE-2021-27365" target="_blank" >CVE-2021-27365</a>]</span> linux-iscsi</pre>
+<br />
+<pre>   Details: <a href="https://blog.grimm-co.com/2021/03/new-old-bugs-in-linux-kernel.html" title="https://blog.grimm-co.com/2021/03/new-old-bugs-in-linux-kernel.html" target="_blank" >https://blog.grimm-co.com/2021/03/new-old-bugs-in-linux-kernel.html</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: RHEL=8</pre>
+<pre>   Download URL: <a href="https://codeload.github.com/grimm-co/NotQuite0DayFriday/zip/trunk" title="https://codeload.github.com/grimm-co/NotQuite0DayFriday/zip/trunk" target="_blank" >https://codeload.github.com/grimm-co/NotQuite0DayFriday/zip/trunk</a></pre>
+<pre>   Comments: CONFIG_SLAB_FREELIST_HARDENED must not be enabled</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&lt;=5.11.3,CONFIG_SLAB_FREELIST_HARDENED!=y</pre>
+<pre>   author: GRIMM</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-22555" title="CVE-2021-22555" target="_blank" >CVE-2021-22555</a>]</span> Netfilter heap out-of-bounds write</pre>
+<br />
+<pre>   Details: <a href="https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html" title="https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html" target="_blank" >https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=20.04{kernel:5.8.0-*}</pre>
+<pre>   Download URL: <a href="https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c" title="https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c" target="_blank" >https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c</a></pre>
+<pre>   ext-url: <a href="https://raw.githubusercontent.com/bcoles/kernel-exploits/master/<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-22555" title="CVE-2021-22555" target="_blank" >CVE-2021-22555</a>/exploit.c" title="https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c" target="_blank" >https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c</a></pre>
+<pre>   Comments: ip_tables kernel module must be loaded</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.19,ver&lt;=5.12-rc6</pre>
+<pre>   exploit-db: 50135</pre>
+<pre>   author: theflow (orginal exploit author); bcoles (author of exploit update at 'ext-url')</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2019-15666" title="CVE-2019-15666" target="_blank" >CVE-2019-15666</a>]</span> XFRM_UAF</pre>
+<br />
+<pre>   Details: <a href="https://duasynt.com/blog/ubuntu-centos-redhat-privesc" title="https://duasynt.com/blog/ubuntu-centos-redhat-privesc" target="_blank" >https://duasynt.com/blog/ubuntu-centos-redhat-privesc</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: </pre>
+<pre>   Comments: CONFIG_USER_NS needs to be enabled; CONFIG_XFRM needs to be enabled</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3,ver&lt;5.0.19,CONFIG_USER_NS=y,sysctl:kernel.unprivileged_userns_clone==1,CONFIG_XFRM=y</pre>
+<pre>   author: Vitaly 'vnik' Nikolenko</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2017-7308" title="CVE-2017-7308" target="_blank" >CVE-2017-7308</a>]</span> af_packet</pre>
+<br />
+<pre>   Details: <a href="https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html" title="https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html" target="_blank" >https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=16.04{kernel:4.8.0-(34|36|39|41|42|44|45)-generic}</pre>
+<pre>   Download URL: <a href="https://raw.githubusercontent.com/xairy/kernel-exploits/master/<a href="https://nvd.nist.gov/vuln/detail/CVE-2017-7308" title="CVE-2017-7308" target="_blank" >CVE-2017-7308</a>/poc.c" title="https://raw.githubusercontent.com/xairy/kernel-exploits/master/CVE-2017-7308/poc.c" target="_blank" >https://raw.githubusercontent.com/xairy/kernel-exploits/master/CVE-2017-7308/poc.c</a></pre>
+<pre>   ext-url: <a href="https://raw.githubusercontent.com/bcoles/kernel-exploits/master/<a href="https://nvd.nist.gov/vuln/detail/CVE-2017-7308" title="CVE-2017-7308" target="_blank" >CVE-2017-7308</a>/poc.c" title="https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2017-7308/poc.c" target="_blank" >https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2017-7308/poc.c</a></pre>
+<pre>   Comments: CAP_NET_RAW cap or CONFIG_USER_NS=y needed. Modified version at 'ext-url' adds support for additional kernels</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.2,ver&lt;=4.10.6,CONFIG_USER_NS=y,sysctl:kernel.unprivileged_userns_clone==1</pre>
+<pre>   exploit-db: 41994</pre>
+<pre>   author: Andrey 'xairy' Konovalov (orginal exploit author); Brendan Coles (author of exploit update at 'ext-url')</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2017-6074" title="CVE-2017-6074" target="_blank" >CVE-2017-6074</a>]</span> dccp</pre>
+<br />
+<pre>   Details: <a href="http://www.openwall.com/lists/oss-security/2017/02/22/3" title="http://www.openwall.com/lists/oss-security/2017/02/22/3" target="_blank" >http://www.openwall.com/lists/oss-security/2017/02/22/3</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=(14.04|16.04){kernel:4.4.0-62-generic}</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/41458" title="https://www.exploit-db.com/download/41458" target="_blank" >https://www.exploit-db.com/download/41458</a></pre>
+<pre>   Comments: Requires Kernel be built with CONFIG_IP_DCCP enabled. Includes partial SMEP/SMAP bypass</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.18,ver&lt;=4.9.11,CONFIG_IP_DCCP=[my]</pre>
+<pre>   exploit-db: 41458</pre>
+<pre>   author: Andrey 'xairy' Konovalov</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2017-1000253" title="CVE-2017-1000253" target="_blank" >CVE-2017-1000253</a>]</span> PIE_stack_corruption</pre>
+<br />
+<pre>   Details: <a href="https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.txt" title="https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.txt" target="_blank" >https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.txt</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: RHEL=6,RHEL=7{kernel:3.10.0-514.21.2|3.10.0-514.26.1}</pre>
+<pre>   Download URL: <a href="https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.c" title="https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.c" target="_blank" >https://www.qualys.com/2017/09/26/linux-pie-cve-2017-1000253/cve-2017-1000253.c</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.2,ver&lt;=4.13,x86_64</pre>
+<pre>   exploit-db: 42887</pre>
+<pre>   author: Qualys</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2016-2384" title="CVE-2016-2384" target="_blank" >CVE-2016-2384</a>]</span> usb-midi</pre>
+<br />
+<pre>   Details: <a href="https://xairy.github.io/blog/2016/cve-2016-2384" title="https://xairy.github.io/blog/2016/cve-2016-2384" target="_blank" >https://xairy.github.io/blog/2016/cve-2016-2384</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=14.04,fedora=22</pre>
+<pre>   Download URL: <a href="https://raw.githubusercontent.com/xairy/kernel-exploits/master/<a href="https://nvd.nist.gov/vuln/detail/CVE-2016-2384" title="CVE-2016-2384" target="_blank" >CVE-2016-2384</a>/poc.c" title="https://raw.githubusercontent.com/xairy/kernel-exploits/master/CVE-2016-2384/poc.c" target="_blank" >https://raw.githubusercontent.com/xairy/kernel-exploits/master/CVE-2016-2384/poc.c</a></pre>
+<pre>   Comments: Requires ability to plug in a malicious USB device and to execute a malicious binary as a non-privileged user</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.0,ver&lt;=4.4.8</pre>
+<pre>   exploit-db: 41999</pre>
+<pre>   author: Andrey 'xairy' Konovalov</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2015-9322" title="CVE-2015-9322" target="_blank" >CVE-2015-9322</a>]</span> BadIRET</pre>
+<br />
+<pre>   Details: <a href="http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-2014-9322-linux-kernel-privilege-escalation/" title="http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-2014-9322-linux-kernel-privilege-escalation/" target="_blank" >http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-2014-9322-linux-kernel-privilege-escalation/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: RHEL&lt;=7,fedora=20</pre>
+<pre>   Download URL: <a href="http://site.pi3.com.pl/exp/p_cve-2014-9322.tar.gz" title="http://site.pi3.com.pl/exp/p_cve-2014-9322.tar.gz" target="_blank" >http://site.pi3.com.pl/exp/p_cve-2014-9322.tar.gz</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;3.17.5,x86_64</pre>
+<pre>   author: Rafal 'n3rgal' Wojtczuk &amp; Adam 'pi3' Zabrocki</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2015-8660" title="CVE-2015-8660" target="_blank" >CVE-2015-8660</a>]</span> overlayfs (ovl_setattr)</pre>
+<br />
+<pre>   Details: <a href="http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/" title="http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/" target="_blank" >http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=(14.04|15.10){kernel:4.2.0-(18|19|20|21|22)-generic}</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/39166" title="https://www.exploit-db.com/download/39166" target="_blank" >https://www.exploit-db.com/download/39166</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.0,ver&lt;=4.3.3</pre>
+<pre>   exploit-db: 39166</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2015-8660" title="CVE-2015-8660" target="_blank" >CVE-2015-8660</a>]</span> overlayfs (ovl_setattr)</pre>
+<br />
+<pre>   Details: <a href="http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/" title="http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/" target="_blank" >http://www.halfdog.net/Security/2015/UserNamespaceOverlayfsSetuidWriteExec/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/39230" title="https://www.exploit-db.com/download/39230" target="_blank" >https://www.exploit-db.com/download/39230</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.0,ver&lt;=4.3.3</pre>
+<pre>   exploit-db: 39230</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-5207" title="CVE-2014-5207" target="_blank" >CVE-2014-5207</a>]</span> fuse_suid</pre>
+<br />
+<pre>   Details: <a href="https://www.exploit-db.com/exploits/34923/" title="https://www.exploit-db.com/exploits/34923/" target="_blank" >https://www.exploit-db.com/exploits/34923/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/34923" title="https://www.exploit-db.com/download/34923" target="_blank" >https://www.exploit-db.com/download/34923</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;=3.16.1</pre>
+<pre>   exploit-db: 34923</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-4943" title="CVE-2014-4943" target="_blank" >CVE-2014-4943</a>]</span> PPPoL2TP <span class="bold"><span class="blue">(DoS)</span></pre>
+<br />
+<pre>   Details: <a href="https://cyseclabs.com/page?n=01102015" title="https://cyseclabs.com/page?n=01102015" target="_blank" >https://cyseclabs.com/page?n=01102015</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/36267" title="https://www.exploit-db.com/download/36267" target="_blank" >https://www.exploit-db.com/download/36267</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.2,ver&lt;=3.15.6</pre>
+<pre>   exploit-db: 36267</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-4699" title="CVE-2014-4699" target="_blank" >CVE-2014-4699</a>]</span> ptrace/sysret</pre>
+<br />
+<pre>   Details: <a href="http://www.openwall.com/lists/oss-security/2014/07/08/16" title="http://www.openwall.com/lists/oss-security/2014/07/08/16" target="_blank" >http://www.openwall.com/lists/oss-security/2014/07/08/16</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=12.04</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/34134" title="https://www.exploit-db.com/download/34134" target="_blank" >https://www.exploit-db.com/download/34134</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;=3.8</pre>
+<pre>   exploit-db: 34134</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-4014" title="CVE-2014-4014" target="_blank" >CVE-2014-4014</a>]</span> inode_capable</pre>
+<br />
+<pre>   Details: <a href="http://www.openwall.com/lists/oss-security/2014/06/10/4" title="http://www.openwall.com/lists/oss-security/2014/06/10/4" target="_blank" >http://www.openwall.com/lists/oss-security/2014/06/10/4</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=12.04</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/33824" title="https://www.exploit-db.com/download/33824" target="_blank" >https://www.exploit-db.com/download/33824</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;=3.13</pre>
+<pre>   exploit-db: 33824</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-0196" title="CVE-2014-0196" target="_blank" >CVE-2014-0196</a>]</span> rawmodePTY</pre>
+<br />
+<pre>   Details: <a href="http://blog.includesecurity.com/2014/06/exploit-walkthrough-cve-2014-0196-pty-kernel-race-condition.html" title="http://blog.includesecurity.com/2014/06/exploit-walkthrough-cve-2014-0196-pty-kernel-race-condition.html" target="_blank" >http://blog.includesecurity.com/2014/06/exploit-walkthrough-cve-2014-0196-pty-kernel-race-condition.html</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/33516" title="https://www.exploit-db.com/download/33516" target="_blank" >https://www.exploit-db.com/download/33516</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.31,ver&lt;=3.14.3</pre>
+<pre>   exploit-db: 33516</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2013-2094" title="CVE-2013-2094" target="_blank" >CVE-2013-2094</a>]</span> semtex</pre>
+<br />
+<pre>   Details: <a href="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" title="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" target="_blank" >http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: RHEL=6</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/25444" title="https://www.exploit-db.com/download/25444" target="_blank" >https://www.exploit-db.com/download/25444</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.32,ver&lt;3.8.9</pre>
+<pre>   exploit-db: 25444</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2013-2094" title="CVE-2013-2094" target="_blank" >CVE-2013-2094</a>]</span> perf_swevent</pre>
+<br />
+<pre>   Details: <a href="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" title="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" target="_blank" >http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: RHEL=6,ubuntu=12.04{kernel:3.2.0-(23|29)-generic},fedora=16{kernel:3.1.0-7.fc16.x86_64},fedora=17{kernel:3.3.4-5.fc17.x86_64},debian=7{kernel:3.2.0-4-amd64}</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/26131" title="https://www.exploit-db.com/download/26131" target="_blank" >https://www.exploit-db.com/download/26131</a></pre>
+<pre>   Comments: No SMEP/SMAP bypass</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.32,ver&lt;3.8.9,x86_64</pre>
+<pre>   exploit-db: 26131</pre>
+<pre>   author: Andrea 'sorbo' Bittau</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2013-2094" title="CVE-2013-2094" target="_blank" >CVE-2013-2094</a>]</span> perf_swevent 2</pre>
+<br />
+<pre>   Details: <a href="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" title="http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/" target="_blank" >http://timetobleed.com/a-closer-look-at-a-recent-privilege-escalation-bug-in-linux-cve-2013-2094/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Tags: ubuntu=12.04{kernel:3.(2|5).0-(23|29)-generic}</pre>
+<pre>   Download URL: <a href="https://cyseclabs.com/exploits/vnik_v1.c" title="https://cyseclabs.com/exploits/vnik_v1.c" target="_blank" >https://cyseclabs.com/exploits/vnik_v1.c</a></pre>
+<pre>   Comments: No SMEP/SMAP bypass</pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.32,ver&lt;3.8.9,x86_64</pre>
+<pre>   exploit-db: 33589</pre>
+<pre>   author: Vitaly 'vnik' Nikolenko</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2013-1959" title="CVE-2013-1959" target="_blank" >CVE-2013-1959</a>]</span> userns_root_sploit</pre>
+<br />
+<pre>   Details: <a href="http://www.openwall.com/lists/oss-security/2013/04/29/1" title="http://www.openwall.com/lists/oss-security/2013/04/29/1" target="_blank" >http://www.openwall.com/lists/oss-security/2013/04/29/1</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/25450" title="https://www.exploit-db.com/download/25450" target="_blank" >https://www.exploit-db.com/download/25450</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;3.8.9</pre>
+<pre>   exploit-db: 25450</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2013-0268" title="CVE-2013-0268" target="_blank" >CVE-2013-0268</a>]</span> msr</pre>
+<br />
+<pre>   Details: <a href="https://www.exploit-db.com/exploits/27297/" title="https://www.exploit-db.com/exploits/27297/" target="_blank" >https://www.exploit-db.com/exploits/27297/</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/27297" title="https://www.exploit-db.com/download/27297" target="_blank" >https://www.exploit-db.com/download/27297</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=2.6.18,ver&lt;3.7.6</pre>
+<pre>   exploit-db: 27297</pre>
+<br />
+<pre>[+] <span class="bold"><span class="green">[<a href="https://nvd.nist.gov/vuln/detail/CVE-2014-2851" title="CVE-2014-2851" target="_blank" >CVE-2014-2851</a>]</span> use-after-free in ping_init_sock() <span class="bold"><span class="blue">(DoS)</span></pre>
+<br />
+<pre>   Details: <a href="https://cyseclabs.com/page?n=02012016" title="https://cyseclabs.com/page?n=02012016" target="_blank" >https://cyseclabs.com/page?n=02012016</a></pre>
+<pre>   Exposure: less probable</pre>
+<pre>   Download URL: <a href="https://www.exploit-db.com/download/32926" title="https://www.exploit-db.com/download/32926" target="_blank" >https://www.exploit-db.com/download/32926</a></pre>
+<pre>   Requirements: pkg=linux-kernel,ver&gt;=3.0.1,ver&lt;=3.14</pre>
+<pre>   exploit-db: 32926</pre>
+<br />
+<br />
+<pre></span><span class="blue">==&gt</span></span> </span><span class="cyan"><a id="checkmodprobeddirectoryandcontent">Check modprobe.d directory and content</a></span></pre>
+<pre><hr class="mono" /></pre>
+<pre>[</span><span class="red">-</span>] No modprobe.d directory found</pre>
+<pre>[</span><span class="red">-</span>] No check for kernel configuration</pre>
+<br />
+<pre></span><span class="blue">==&gt</span></span> </span><span class="cyan"><a id="analyzekernelmodules">Analyze kernel modules</a></span></pre>
+<pre><hr class="mono" /></pre>
+<a class="anc" id="anchor_kernel_modules"></a>
+<pre>[</span><span class="orange">*</span>] Found </span><span class="orange">202</span> kernel modules.</pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/mbcache.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/l2tp_ppp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sha1_generic.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ledtrig-gpio.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sunrpc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_time.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_dsmark.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_basic.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_u32.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/scsi_mod.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/exfat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_fw.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/wprobe.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/jbd2.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ohci-hcd.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_irc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_connbytes.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-alauda.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_vlan.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_teql.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ledtrig-usbdev.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPLv2</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_CLASSIFY.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_arpnat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_tftp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cryptomgr.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ip_gre.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ehci-hcd.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_ECN.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-seq-device.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/act_ipt.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/em_meta.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/aead.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/input-core.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/em_u32.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_mark.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/iptable_raw.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_REDIRECT.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_connmark.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ppp_async.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_multiport.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_snmp_basic.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/crypto_algapi.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_NOTRACK.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/input-polldev.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPLv2</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_string.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_pptp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ppp_mppe.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_proto_gre.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/v4l2-common.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_IMQ.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebtable_broute.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/usb-storage.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_limit.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-hwdep.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ts_bm.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ledtrig-morse.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/iptable_nat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_snmp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/arc4.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_route.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-sddr55.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/videodev.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/act_police.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_pkttype.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/gpio_dev.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_sip.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/pptp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_statistic.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_tftp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_length.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_helper.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_physdev.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_irc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-usbat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/videobuf2-core.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nls_cp437.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/vfat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-usbmidi-lib.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-isd200.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/fat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_hfsc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/lockd.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/usb-common.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_sfq.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ppp_generic.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_sip.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_codel.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nls_base.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_broadcast.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-sddr09.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_proto_gre.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/fuse.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/button-hotplug.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPLv2</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-mixer-oss.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/gre.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_DSCP.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/mt76x2e.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/leds-gpio.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ts_kmp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_comment.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/x_tables.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/hfsplus.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_LOG.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_tcpudp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_flow.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ip_tables.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebtables.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_ecn.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_amanda.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/l2tp_netlink.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_htb.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/pppoe.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/usblp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nfs.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-pcm.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_gred.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_red.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_owner.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_prio.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_802_3.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-jumpshot.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-cypress.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/gpio_keys_polled.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPLv2</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_h323.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/crc16.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/l2tp_core.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/cls_tcindex.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/rt2860v2_ap.ko (-rw-r--r-- root root)  </span><span class="orange">License: Proprietary</span> - </span><span class="red">NOT STRIPPED</span></span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_quota.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_amanda.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/hfs.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ledtrig-heartbeat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/act_mirred.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nls_utf8.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_h323.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-usb-audio.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-timer.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/slhc.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebtable_filter.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/soundcore.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/em_cmp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/em_nbyte.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_layer7.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/exportfs.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sd_mod.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/crypto_blkcipher.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_ftp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-datafab.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/imq.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nls_iso8859-1.ko (-rw-r--r-- root root)  </span><span class="orange">License: DualBSD/GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_LED.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_nat_pptp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/usbcore.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-freecom.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_MASQUERADE.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/videobuf2-memops.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/videobuf2-vmalloc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ums-karma.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_ipv4.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack_ftp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-pcm-oss.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/uvcvideo.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_conntrack.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_mark_m.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/pppox.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/crypto_hash.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL:GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_iprange.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_recent.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_fq_codel.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-rawmidi.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_conntrack.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_TCPMSS.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_among.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/snd-page-alloc.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebtable_nat.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/tun.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/act_skbedit.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_pkttype.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_mark.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_ingress.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_limit.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_stp.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ebt_redirect.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_mac.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_hashlimit.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ext4.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/iptable_filter.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/macvlan.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_NETMAP.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_CT.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ecb.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nf_defrag_ipv4.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/nfsd.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/iptable_mangle.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_HL.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/em_text.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/sch_tbf.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ts_fsm.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/ipt_REJECT.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+<pre>[</span><span class="red">-</span>] Found kernel module </span>./logs/firmware/squashfs-root/lib/modules/3.3.8/xt_state.ko (-rw-r--r-- root root)  </span><span class="orange">License: GPL</span> - </span><span class="green">NOT STRIPPED</span></pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<a href="./s35_http_file_check.html" title="./s35_http_file_check.html" ><div id="buttonBack" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+<a href="./s20_shell_check.html" title="./s20_shell_check.html" ><div id="buttonForward" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div> </a>
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Initial strace run with [0;33mjchroot[0m on the command [0;33m./lib/libc.so.0[0m to identify missing areas
+
+[[0;33m*[0m] Emulating binary name: [0;33mlibc.so.0[0m in [0;33mstrace[0m mode to identify missing areas (with [0;33mjchroot[0m)
+[[0;33m*[0m] Emulator used: [0;33mqemu-arm-static[0m
+[[0;33m*[0m] Chroot environment used: [0;33mjchroot[0m
+[[0;33m*[0m] Using root directory: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root[0m ([0;33m1/1[0m)
+[[0;33m*[0m] Using CPU config: [0;33mNONE[0m
+
+1 mmap2(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_UNINITIALIZED,-1,0) = 0x40810000
+1 stat("/lib/ld-uClibc.so.0",0x407038a0) = 0
+1 open("/dev/urandom",O_RDONLY) = 3
+1 read(3,0x407038e8,4) = 4
+1 close(3) = 0
+1 mprotect(0x0046d000,4096,PROT_READ) = 0
+1 mprotect(0x4080d000,4096,PROT_READ) = 0
+1 rt_sigprocmask(SIG_BLOCK,0x40703aa0,NULL,8) = 0
+1 rt_sigaction(SIGIOT,0x40703a5c,NULL) = 0
+1 write(2,0x461118,25)stack smashing detected:  = 25
+1 write(2,0x46491a,0) = 0
+1 write(2,0x46110c,11) terminated = 11
+1 write(2,0x4610f9,3)()
+ = 3
+1 socket(PF_UNIX,SOCK_DGRAM,IPPROTO_IP) = 3
+1 fcntl(3,F_SETFD,1) = 0
+1 fcntl(3,F_GETFL) = 131074
+1 fcntl(3,F_SETFL,O_RDWR|O_LARGEFILE|O_NONBLOCK) = 0
+1 connect(3,0x461f58,16) = -1 errno=2 (No such file or directory)
+1 close(3) = 0
+1 socket(PF_UNIX,SOCK_STREAM,IPPROTO_IP) = 3
+1 fcntl(3,F_SETFD,1) = 0
+1 fcntl(3,F_GETFL) = 131074
+1 fcntl(3,F_SETFL,O_RDWR|O_LARGEFILE|O_NONBLOCK) = 0
+1 connect(3,0x461f58,16) = -1 errno=2 (No such file or directory)
+1 close(3) = 0
+1 gettimeofday(0x40703608,NULL) = 0 ({tv_sec = 1704942264,tv_usec = 68860},NULL)
+1 open("/etc/TZ",O_RDONLY) = 3
+1 read(3,0x40703500,68) = 8
+1 close(3) = 0
+--- SIGSEGV {si_signo=SIGSEGV, si_code=1, si_addr=0x0000008a} ---
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+
+[[0;33m*[0m] Identification of missing filesytem areas.
+[[0;33m*[0m] No missing areas found.
+
+-----------------------------------------------------------------
+

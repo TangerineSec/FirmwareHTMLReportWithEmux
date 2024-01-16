@@ -1,0 +1,281 @@
+#!/bin/sh
+#set -x
+#
+Parameter_num=$#
+Parameter_one=$1
+Parameter_two=$2
+Ipkdir=`dirname $0`
+TMP_USB_DIR="/tmp/usbdir"
+
+SAMBA_PATH=/opt/app
+INSTALL_LOG=/opt/app/samba/install.log
+
+Start() {
+
+	 if [ ! -f /etc/config/samba ]; then
+		ln -s  /opt/app/samba/etc/config/samba /etc/config/samba
+	fi
+	
+	 if [ ! -f /etc/init.d/samba ]; then
+		ln -s  /opt/app/samba/etc/init.d/samba /etc/init.d/samba
+	fi
+	
+	 if [ ! -f /etc/samba/lowcase.dat ]; then
+		ln -s  /opt/app/samba/etc/samba/lowcase.dat /etc/samba/lowcase.dat
+	fi
+	
+	 if [ ! -f /etc/samba/upcase.dat ]; then
+		ln -s  /opt/app/samba/etc/samba/upcase.dat /etc/samba/upcase.dat
+	fi
+	
+	 if [ ! -f /etc/samba/valid.dat ]; then
+		ln -s  /opt/app/samba/etc/samba/valid.dat /etc/samba/valid.dat
+	fi
+	
+	 if [ ! -f /etc/samba/smb.conf.template ]; then
+		ln -s  /opt/app/samba/etc/samba/smb.conf.template /etc/samba/smb.conf.template
+	fi
+	
+	 if [ ! -f /usr/sbin/nmbd ]; then
+		ln -s  /opt/app/samba/usr/sbin/nmbd /usr/sbin/nmbd
+	fi
+	
+	 if [ ! -f /usr/sbin/samba_multicall ]; then
+		ln -s  /opt/app/samba/usr/sbin/samba_multicall /usr/sbin/samba_multicall
+	fi
+	
+	 if [ ! -f /usr/sbin/smbd ]; then
+		ln -s  /opt/app/samba/usr/sbin/smbd /usr/sbin/smbd
+	fi
+	
+	 if [ ! -f /usr/sbin/smbpasswd ]; then
+			ln -s  /opt/app/samba/usr/sbin/smbpasswd /usr/sbin/smbpasswd
+	fi
+	
+	source /opt/app/samba/etc/config
+	local downdir_pre=`cat /tmp/usbdir |grep sd |awk '{print $2}'`
+	if [ "${downdir_pre}" == "" ]; then
+		echo "usb not mounted!"
+		exit 1
+	else
+		start_config $downdir_pre
+		if [ -f /etc/init.d/samba ]; then
+			/etc/init.d/samba start
+			exit 0
+	 fi
+	fi
+}
+start_config() {
+        if [ -f /usr/local/xcloud/bin/searchSharePath.sh ]; then
+		/usr/local/xcloud/bin/searchSharePath.sh $1
+	fi
+}
+unInstall() {
+	killall smbd
+	sleep 1
+	
+#	/etc/init.d/xcloud stop
+
+	rm -f /etc/config/samba
+	rm -f /etc/init.d/samba
+
+	rm -f /etc/samba/*
+
+	rm -f /usr/sbin/nmbd
+	rm -f /usr/sbin/samba_multicall
+	rm -f /usr/sbin/smbd
+	rm -f /usr/sbin/smbpasswd
+	
+	rm -rf $SAMBA_PATH/samba
+	if [ $? -ne 0 ];then
+	echo "can't remove $SAMBA_PATH !" >> $INSTALL_LOG
+	exit 1
+	fi
+	
+#	/etc/init.d/xcloud start
+	exit 0
+}
+
+Install() {
+
+	 if [ -f /rom/usr/sbin/smbd ]; then
+			exit 1
+	 fi
+	
+#	local temp=`cat /etc/opkg.conf | grep "dest root2 /opt/app"`
+	if [ ! -d /opt ];then
+#	echo "usb umount!" >> $INSTALL_LOG
+	exit 1
+	fi
+	
+	killall smbd
+	
+	sleep 1
+	
+
+	rm -f /etc/config/samba
+	rm -f /etc/init.d/samba
+
+	rm -f /etc/samba/*
+
+	rm -f /usr/sbin/nmbd
+	rm -f /usr/sbin/samba_multicall
+	rm -f /usr/sbin/smbd
+	rm -f /usr/sbin/smbpasswd
+	
+	if [ ! -d $SAMBA_PATH ];then 
+	mkdir -p $SAMBA_PATH
+	fi
+	
+for ipk in `ls $Ipkdir/*.ipk`
+do
+	tar -xvzf $ipk -C $SAMBA_PATH
+done
+	
+	if [ $? -ne 0 ];then
+#	echo "samba install" >> $INSTALL_LOG
+	exit 1
+	fi
+
+
+	chmod 755 /opt/app/samba -R
+	ln -s  /opt/app/samba/etc/config/samba /etc/config/samba
+	ln -s  /opt/app/samba/etc/init.d/samba /etc/init.d/samba
+
+	ln -s  /opt/app/samba/etc/samba/lowcase.dat /etc/samba/lowcase.dat
+	ln -s  /opt/app/samba/etc/samba/upcase.dat /etc/samba/upcase.dat
+	ln -s  /opt/app/samba/etc/samba/valid.dat /etc/samba/valid.dat
+	ln -s  /opt/app/samba/etc/samba/smb.conf.template /etc/samba/smb.conf.template
+
+	ln -s  /opt/app/samba/usr/sbin/nmbd /usr/sbin/nmbd
+	ln -s  /opt/app/samba/usr/sbin/samba_multicall /usr/sbin/samba_multicall
+	ln -s  /opt/app/samba/usr/sbin/smbd /usr/sbin/smbd
+	ln -s  /opt/app/samba/usr/sbin/smbpasswd /usr/sbin/smbpasswd
+	CheckMounted
+	Start
+	
+	exit 0
+}
+
+#
+
+
+
+
+
+Stop() {
+	 if [ -f /etc/init.d/samba ]; then
+		/etc/init.d/samba stop
+		exit 0
+	fi
+}
+Restart() {
+
+	if [ -f /etc/init.d/samba ]; then
+		/etc/init.d/samba stop
+	fi
+	sleep 4
+	Start
+}
+
+CheckRunStatus() {
+	local samba_pid=`pgrep smbd`
+	if [ "$samba_pid" = "" ]; then
+		echo "Fail:Stoped" 
+	exit 1
+	else
+	echo "starting" 
+	exit 0
+	fi
+} 
+
+#1，判断参数是否合法
+FunParamLegal()
+{
+	if [ ${Parameter_num} -ne 1 ];then
+		echo "Fail:Parameter Err."
+		exit 1
+	fi
+}
+
+samba_config() {
+	
+ samba_cmd=$1 
+
+ case "$samba_cmd" in
+        add)
+		samba_dev=$2 
+ 		samba_path=$3 
+		uci add samba samba
+		uci set samba.@samba[-1].name=xRouter
+		uci set samba.@samba[-1].workgroup=WORKGROUP
+		uci set samba.@samba[-1].description=xRouter
+		uci set samba.@samba[-1].homes=1
+		uci add samba sambashare
+		uci set samba.@sambashare[-1].name=xRouter_MNT_$samba_dev
+		uci set samba.@sambashare[-1].path=$samba_path
+		uci set samba.@sambashare[-1].read_only=no
+		uci set samba.@sambashare[-1].guest_ok=yes
+		uci set samba.@sambashare[-1].create_mask=0700
+		uci set samba.@sambashare[-1].dir_mask=0700
+ 		uci commit samba 
+	 ;;
+	del)	
+		samba_index=$2 
+		uci delete samba.@samba[$samba_index]
+		uci delete samba.@sambashare[$samba_index]
+		uci commit samba
+	 ;;
+    esac
+
+}
+CheckMounted() {
+	MountedDev=`cat /tmp/usbmounted | awk -F '//' '{print $1}'`
+
+	for EachDev in ${MountedDev} 
+	do
+
+	samba_config add $EachDev  /mnt/$EachDev 1>/dev/null 2>&1
+	
+	done
+}
+    
+
+Main()
+{
+	#安装
+	if [ "${Parameter_one}" = "install" ];then
+		Install
+	
+	#卸载
+	elif [ "${Parameter_one}" = "uninstall" ];then
+		unInstall
+	
+	#启动
+	elif [ "${Parameter_one}" = "start" ];then
+		Start
+	
+	#停止
+	elif [ "${Parameter_one}" = "stop" ];then
+		Stop	
+	
+	#重启
+	elif [ "${Parameter_one}" = "restart" ];then
+		Restart
+		
+	#查看运行状态
+	elif [ "${Parameter_one}" = "runstatus" ];then
+		CheckRunStatus
+		
+	#输入参数错误
+	else
+		echo "ERR:Parameter Err."
+		exit 1	
+	fi
+}
+
+#检查参数是否合法
+FunParamLegal
+
+#执行主函数
+Main

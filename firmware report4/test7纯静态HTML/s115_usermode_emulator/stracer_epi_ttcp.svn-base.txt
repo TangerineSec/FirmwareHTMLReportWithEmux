@@ -1,0 +1,74 @@
+
+-----------------------------------------------------------------
+
+[[0;33m*[0m] Initial strace run with [0;33mjchroot[0m on the command [0;33m./usr/sbin/.svn/text-base/epi_ttcp.svn-base[0m to identify missing areas
+
+[[0;33m*[0m] Emulating binary name: [0;33mepi_ttcp.svn-base[0m in [0;33mstrace[0m mode to identify missing areas (with [0;33mjchroot[0m)
+[[0;33m*[0m] Emulator used: [0;33mqemu-arm-static[0m
+[[0;33m*[0m] Chroot environment used: [0;33mjchroot[0m
+[[0;33m*[0m] Using root directory: [0;33m/logs/s115_usermode_emulator/firmware/squashfs-root[0m ([0;33m1/1[0m)
+[[0;33m*[0m] Using CPU config: [0;33mNONE[0m
+
+1 mmap2(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_UNINITIALIZED,-1,0) = 0x40810000
+1 open("/lib/libc.so.0",O_RDONLY) = 3
+1 fstat(3,0x40702dd0) = 0
+1 mmap2(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_UNINITIALIZED,-1,0) = 0x40811000
+1 read(3,0x40811000,4096) = 4096
+1 mmap2(NULL,475136,PROT_NONE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x40812000
+1 mmap2(0x40812000,413376,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_FIXED,3,0) = 0x40812000
+1 mmap2(0x4087f000,4980,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_FIXED,3,0x65) = 0x4087f000
+1 mmap2(0x40881000,17872,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x40881000
+1 close(3) = 0
+1 munmap(0x40811000,4096) = 0
+1 stat("/lib/ld-uClibc.so.0",0x407037f0) = 0
+1 open("/dev/urandom",O_RDONLY) = 3
+1 read(3,0x40703838,4) = 4
+1 close(3) = 0
+1 mprotect(0x4087f000,4096,PROT_READ) = 0
+1 mprotect(0x4080d000,4096,PROT_READ) = 0
+1 ioctl(0,TCGETS,0x40703614) = -1 errno=25 (Inappropriate ioctl for device)
+1 ioctl(1,TCGETS,0x40703614) = -1 errno=25 (Inappropriate ioctl for device)
+1 write(2,0x407023ac,2074)  Usage: ttcp -t [-options] host [ < in ]    ttcp -r [-options > out]
+Example: ttcp -t -s -v -n100 host            ttcp -r -s -v -n100
+Common options:
+    -V      prints version number and date of last modification
+    -L      create and append all results to a file named ttcp_log
+    -h      more help
+    -l ##   length of bufs read from or written to network (default 8192,
+            max 65535)
+    -u      use UDP instead of TCP
+    -p ##   port number to send to or listen at (default 5010)
+    -P ##   link-layer priority (default 0)
+    -s      (ttcp -t) : source a pattern to network
+            (ttcp -r) : sink (discard) all data from network
+    -A ##   align the start of buffers to this modulus (default 16384)
+    -O ##   start buffers at this offset from the modulus (default 0)
+    -v      verbose: print more statistics
+    -d      set SO_DEBUG socket option
+    -b ##   set socket buffer size (if supported)
+    -f X    format for rate: b,B = bits, bytes k,K = kilo{bits,bytes};
+                             m,M = mega{bits,bytes}; g,G = giga{bits,bytes}
+    -w ##   set timeout value (in milliseconds) to exit if no receive data or tcp connect
+Options specific to (ttcp -t) :
+    -n ##   number of source bufs written to network (default 2048)
+    -x      use random data in tcp/udp frames (-I provides seed)
+    -D      don't buffer TCP writes (sets TCP_NODELAY socket option)
+    -H      print hash marks to indicate progress, one per buffer
+    -# ##   number of buffers to send between hash marks (implies -H)
+    -I      init/seed value for RNG when sending random size bufs (default 1)
+    -N ##   number of source bufs per burst, i.e between sleeps (default 1)
+    -R ##   send random size buffers with minimum size specified, max size
+            is value of -l option
+    -S ##   millisecs between bursts (10ms resolution)
+Options specific to (ttcp -r) :
+    -B      for -s, only output full blocks as specified by -l (for TAR)
+    -T      "touch": access each byte as it's read
+    -i      report information on out of order sequence numbers
+ = 2074
+1 exit(1)
+
+[[0;33m*[0m] Identification of missing filesytem areas.
+[[0;33m*[0m] No missing areas found.
+
+-----------------------------------------------------------------
+

@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33macs_cli[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33macs_cli[0m
+
+    9288:	e3130001 	tst	r3, #1
+    928c:	0affff7b 	beq	9080 <_start+0x6d8>
+    9290:	ebfffdbb 	bl	8984 <__errno_location@plt>
+    9294:	e5900000 	ldr	r0, [r0]
+    9298:	ebfffd68 	bl	8840 <strerror@plt>
+    929c:	e59f1680 	ldr	r1, [pc, #1664]	; 9924 <_start+0xf7c>
+    92a0:	e1a03000 	mov	r3, r0
+    92a4:	e3002163 	movw	r2, #355	; 0x163
+    92a8:	e59f068c 	ldr	r0, [pc, #1676]	; 993c <_start+0xf94>
+    92ac:	ebfffd5d 	bl	8828 <printf@plt>
+    92b0:	e3e00000 	mvn	r0, #0
+    92b4:	eaffff72 	b	9084 <_start+0x6dc>
+    92b8:	e1a00004 	mov	r0, r4
+    92bc:	e59f15f0 	ldr	r1, [pc, #1520]	; 98b4 <_start+0xf0c>
+    92c0:	ebfffdfe 	bl	8ac0 <_start+0x118>
+    92c4:	eafffe6e 	b	8c84 <_start+0x2dc>
+    92c8:	e59f3670 	ldr	r3, [pc, #1648]	; 9940 <_start+0xf98>
+    92cc:	e1a02005 	mov	r2, r5
+    92d0:	e59f166c 	ldr	r1, [pc, #1644]	; 9944 <_start+0xf9c>
+    92d4:	e5930000 	ldr	r0, [r3]
+[31m    92d8:	ebfffd7c 	bl	88d0 <fprintf@plt>[0m
+    92dc:	eafffe8c 	b	8d14 <_start+0x36c>
+    92e0:	e1a00004 	mov	r0, r4
+--
+    9e48:	e5d53012 	ldrb	r3, [r5, #18]
+    9e4c:	e5972008 	ldr	r2, [r7, #8]
+    9e50:	e3530000 	cmp	r3, #0
+    9e54:	15941004 	ldrne	r1, [r4, #4]
+    9e58:	05941004 	ldreq	r1, [r4, #4]
+    9e5c:	16bf1f31 	revne	r1, r1
+    9e60:	e1520006 	cmp	r2, r6
+    9e64:	9a00000c 	bls	9e9c <_start+0x14f4>
+    9e68:	e0844001 	add	r4, r4, r1
+    9e6c:	e3530000 	cmp	r3, #0
+    9e70:	1affff52 	bne	9bc0 <_start+0x1218>
+    9e74:	e5943000 	ldr	r3, [r4]
+    9e78:	e353006b 	cmp	r3, #107	; 0x6b
+    9e7c:	13a03000 	movne	r3, #0
+    9e80:	03a03001 	moveq	r3, #1
+    9e84:	eaffff52 	b	9bd4 <_start+0x122c>
+    9e88:	e59f02e8 	ldr	r0, [pc, #744]	; a178 <_start+0x17d0>
+    9e8c:	e3a0306d 	mov	r3, #109	; 0x6d
+    9e90:	e59f12e4 	ldr	r1, [pc, #740]	; a17c <_start+0x17d4>
+    9e94:	e5900000 	ldr	r0, [r0]
+[31m    9e98:	ebfffa8c 	bl	88d0 <fprintf@plt>[0m
+    9e9c:	e28dd094 	add	sp, sp, #148	; 0x94
+    9ea0:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m2[0m times [0;33macs_cli[0m
+

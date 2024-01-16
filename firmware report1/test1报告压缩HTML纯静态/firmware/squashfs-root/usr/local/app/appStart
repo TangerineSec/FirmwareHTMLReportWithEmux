@@ -1,0 +1,212 @@
+#!/bin/sh
+#set -x
+
+######### 只有一个参数，有三种情况
+######### autorun, 开机自启动
+######### ustart , 随U盘启动
+######### ID	 , 启动指定ID的app
+
+
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_SuccessFlag=0   #0 ,表示全部开启成功，非零数字表示有几个程序没有开启成功
+G_APP_INSTALLED_DIR=""
+G_Parameter_all=$*
+G_ValueLast=
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 1 ];then
+		xRouterLog 2 "appStart" "FunParamLegal" "Parameter Err."
+		exit 1
+	fi
+}
+
+#获取配置文件的路径
+FunGetConfigPath()
+{
+
+		OfficeAppPath="/usr/local/app/appinstalled/"
+		AllOfficeAppFile=`ls $OfficeAppPath`
+		
+		for EachOfficeAppFile in ${AllOfficeAppFile}
+		do 
+			if [ ${G_Parameter_one} = "$EachOfficeAppFile" ];then
+					isOfficeApp="YES"
+					break
+			fi
+		done
+		
+		if [ ${isOfficeApp} = "YES" ];then
+			isOfficeApp="NO"
+			G_APP_INSTALLED_DIR="/usr/local/app/appinstalled/"
+		else
+			G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+			mkdir -p /opt/app/appinstalled
+		fi
+	
+	xRouterLog 0 "appStart" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+}
+
+#启动指定ID的app
+StartIdApp()
+{	
+	local Path=""
+	local ValueLast=""
+	
+	cd ${G_APP_INSTALLED_DIR}
+	#指定ID的文件不存在
+	if [ ! -f "${G_Parameter_one}" ];then
+		cd -
+		xRouterLog 2 "appStart" "StartIdApp" "${G_APP_INSTALLED_DIR}/${G_Parameter_one} is not exist."
+		exit 1
+	fi
+	
+	Path=`cat ${G_Parameter_one} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+	
+	#没有找到路径
+	if [ "${Path}" == "" ];then
+		cd -
+		xRouterLog 2 "appStart" "StartIdApp" "${Path} is not exist."
+		exit 1
+	else
+		G_AppPath=${Path}
+		cd -
+		cd ${G_AppPath}
+		./appshell start
+		ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 "appStart" "StartIdApp" "${G_AppPath}/appshell start fail.${ValueLast}"
+		fi
+		
+		cd -
+		xRouterLog 0 "appStart" "StartIdApp" "${G_AppPath}/appshell start success."
+		echo ${ValueLast}
+		exit ${ValueLast}
+	fi	
+}
+
+#启动开机自动启动app
+StartAutoRunApp()
+{	
+	local File=""
+	local Path=""
+	local RunWay=""
+	local ValueLast=
+	
+	cd ${G_APP_INSTALLED_DIR}
+	
+	for File in `ls`
+	do
+		RunWay=`cat ${File} | grep "plugin_Autorun" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+		
+		#启动方式为1 ，开机自启动
+		if [ "${RunWay}" == "1" ];then
+			Path=`cat ${File} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+			
+			#没有找到路径
+			if [ "${Path}" == "" ];then
+				xRouterLog 2 "appStart" "StartAutoRunApp" "plugin_IntallPath in ${File} is Null."
+				G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+				continue
+			else
+				G_AppPath=${Path}
+				cd ${G_AppPath}
+				./appshell start
+				ValueLast=$?
+				if [ ${ValueLast} -ne 0 ];then
+					xRouterLog 2 "appStart" "StartAutoRunApp" "${Path}/appshell start fail.${ValueLast}"
+					G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+				fi	
+			fi	
+			
+		#没有找到启动方式	
+		elif [ "${RunWay}" == "" ];then
+			G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+		fi
+		
+		cd ${G_APP_INSTALLED_DIR}
+	done
+	
+	if [ ${G_SuccessFlag} -eq 0 ];then
+		xRouterLog 0 "appStart" "StartAutoRunApp" "Start all success."
+	fi
+	
+	exit ${G_SuccessFlag}
+}
+
+#启动随U盘启动的APP
+StartUstartApp()
+{	
+	local File=""
+	local Path=""
+	local RunWay=""
+	local ValueLast=
+	
+	cd ${G_APP_INSTALLED_DIR}
+	
+	for File in `ls`
+	do
+		RunWay=`cat ${File} | grep "plugin_Autorun" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+		
+		#启动方式为2 ，随U盘启动
+		if [ "${RunWay}" == "2" ];then
+			Path=`cat ${File} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+			
+			#没有找到路径
+			if [ "${Path}" == "" ];then
+				xRouterLog 2 "appStart" "StartUstartApp" "plugin_IntallPath in ${File} is Null."
+				G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+			else
+				G_AppPath=${Path}
+				cd ${G_AppPath}
+				./appshell start
+				ValueLast=$?
+				if [ ${ValueLast} -ne 0 ];then
+					xRouterLog 2 "appStart" "StartUstartApp" "${Path}/appshell start fail.${ValueLast}"
+					G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+				fi	
+			fi	
+			
+		#没有找到启动方式	
+		elif [ "${RunWay}" == "" ];then
+			G_SuccessFlag=`expr ${G_SuccessFlag} + 1`
+		fi
+		
+		cd ${G_APP_INSTALLED_DIR}
+	done
+	
+	if [ ${G_SuccessFlag} -eq 0 ];then
+		xRouterLog 0 "appStart" "StartUstartApp" "Start all success."
+	fi
+	
+	exit ${G_SuccessFlag}
+}
+
+StartApp()
+{
+	if [ "${G_Parameter_one}" == "autorun" ];then
+		StartAutoRunApp
+	elif [ "${G_Parameter_one}" == "ustart" ];then
+		StartUstartApp
+	else
+		StartIdApp
+	fi
+	
+	
+}
+
+############## 开始执行程序，程序入口
+xRouterLog 0 "appStart" - "`basename $0` ${G_Parameter_all}."
+
+############## 检查参数合法性
+FunParamLegal
+
+#获取配置文件路径
+FunGetConfigPath
+
+############## 开启APP
+StartApp

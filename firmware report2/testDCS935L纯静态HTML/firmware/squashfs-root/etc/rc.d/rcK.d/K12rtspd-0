@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# rtspd: This starts and stops rtsp server.
+#
+# chkconfig: 2345 92 12
+# description: rtspd
+#
+# processname: /usr/sbin/rtsp/rtspd
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+port=`/usr/sbin/userconfig -read RTSP Port`
+
+start() {
+	echo "Starting rtsp..."
+	mkdir -p /tmp/rtspd
+	cp /usr/sbin/rtsp/mime.types /tmp/rtspd/mime.types
+	/usr/sbin/rtsp/rtspd -p $port -v 1>/dev/null 2>/dev/null
+}
+
+stop() {
+	kill `pidof rtspd`
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo "Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

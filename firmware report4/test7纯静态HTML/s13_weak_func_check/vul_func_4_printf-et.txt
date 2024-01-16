@@ -1,0 +1,99 @@
+[[0;33m*[0m] Binary protection state of [0;33met[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33met[0m
+
+    8e74:	da00003c 	ble	8f6c <_start+0x814>
+    8e78:	e2899003 	add	r9, r9, #3
+    8e7c:	e1560009 	cmp	r6, r9
+    8e80:	ca000039 	bgt	8f6c <_start+0x814>
+    8e84:	0a00011d 	beq	9300 <_start+0xba8>
+    8e88:	e3a01000 	mov	r1, #0
+    8e8c:	e7940102 	ldr	r0, [r4, r2, lsl #2]
+    8e90:	e1a02001 	mov	r2, r1
+    8e94:	ebfffdf3 	bl	8668 <strtoul@plt>
+    8e98:	e30819f9 	movw	r1, #35321	; 0x89f9
+    8e9c:	e58d02f8 	str	r0, [sp, #760]	; 0x2f8
+    8ea0:	e28d3fbe 	add	r3, sp, #760	; 0x2f8
+    8ea4:	e1a00007 	mov	r0, r7
+    8ea8:	e28d2fb6 	add	r2, sp, #728	; 0x2d8
+    8eac:	e58d32e8 	str	r3, [sp, #744]	; 0x2e8
+    8eb0:	ebfffddd 	bl	862c <ioctl@plt>
+    8eb4:	e3500000 	cmp	r0, #0
+    8eb8:	ba0000a4 	blt	9150 <_start+0x9f8>
+    8ebc:	e59d12fc 	ldr	r1, [sp, #764]	; 0x2fc
+    8ec0:	e59f0734 	ldr	r0, [pc, #1844]	; 95fc <_start+0xea4>
+[31m    8ec4:	ebfffddb 	bl	8638 <printf@plt>[0m
+    8ec8:	eafffea3 	b	895c <_start+0x204>
+    8ecc:	e5940000 	ldr	r0, [r4]
+--
+    91e4:	e30819f6 	movw	r1, #35318	; 0x89f6
+    91e8:	13a03005 	movne	r3, #5
+    91ec:	03a03004 	moveq	r3, #4
+    91f0:	e58d330c 	str	r3, [sp, #780]	; 0x30c
+    91f4:	e28d3fbe 	add	r3, sp, #760	; 0x2f8
+    91f8:	e58d3314 	str	r3, [sp, #788]	; 0x314
+    91fc:	e1a00007 	mov	r0, r7
+    9200:	e28d3fc3 	add	r3, sp, #780	; 0x30c
+    9204:	e28d2fb6 	add	r2, sp, #728	; 0x2d8
+    9208:	e58d32e8 	str	r3, [sp, #744]	; 0x2e8
+    920c:	ebfffd06 	bl	862c <ioctl@plt>
+    9210:	e3500000 	cmp	r0, #0
+    9214:	aa000001 	bge	9220 <_start+0xac8>
+    9218:	e59f0408 	ldr	r0, [pc, #1032]	; 9628 <_start+0xed0>
+    921c:	ebfffd82 	bl	882c <_start+0xd4>
+    9220:	e59d3310 	ldr	r3, [sp, #784]	; 0x310
+    9224:	e3530000 	cmp	r3, #0
+    9228:	1afffdcb 	bne	895c <_start+0x204>
+    922c:	e59d12f8 	ldr	r1, [sp, #760]	; 0x2f8
+    9230:	e59f03f8 	ldr	r0, [pc, #1016]	; 9630 <_start+0xed8>
+[31m    9234:	ebfffcff 	bl	8638 <printf@plt>[0m
+    9238:	eafffdc7 	b	895c <_start+0x204>
+    923c:	e3a0c001 	mov	ip, #1
+--
+    94c8:	e28d2fb6 	add	r2, sp, #728	; 0x2d8
+    94cc:	e58d32e8 	str	r3, [sp, #744]	; 0x2e8
+    94d0:	ebfffc55 	bl	862c <ioctl@plt>
+    94d4:	e3500000 	cmp	r0, #0
+    94d8:	aa000001 	bge	94e4 <_start+0xd8c>
+    94dc:	e59f0168 	ldr	r0, [pc, #360]	; 964c <_start+0xef4>
+    94e0:	ebfffcd1 	bl	882c <_start+0xd4>
+    94e4:	e59d3310 	ldr	r3, [sp, #784]	; 0x310
+    94e8:	e3530000 	cmp	r3, #0
+    94ec:	1afffd1a 	bne	895c <_start+0x204>
+    94f0:	e3540000 	cmp	r4, #0
+    94f4:	0a000013 	beq	9548 <_start+0xdf0>
+    94f8:	e59dc304 	ldr	ip, [sp, #772]	; 0x304
+    94fc:	e59d12f8 	ldr	r1, [sp, #760]	; 0x2f8
+    9500:	e59d22fc 	ldr	r2, [sp, #764]	; 0x2fc
+    9504:	e58dc000 	str	ip, [sp]
+    9508:	e59dc308 	ldr	ip, [sp, #776]	; 0x308
+    950c:	e59d3300 	ldr	r3, [sp, #768]	; 0x300
+    9510:	e59f0138 	ldr	r0, [pc, #312]	; 9650 <_start+0xef8>
+    9514:	e58dc004 	str	ip, [sp, #4]
+[31m    9518:	ebfffc46 	bl	8638 <printf@plt>[0m
+    951c:	eafffd0e 	b	895c <_start+0x204>
+    9520:	e7940102 	ldr	r0, [r4, r2, lsl #2]
+    9524:	e1a01003 	mov	r1, r3
+    9528:	e1a02003 	mov	r2, r3
+    952c:	e58d3310 	str	r3, [sp, #784]	; 0x310
+    9530:	ebfffc4c 	bl	8668 <strtoul@plt>
+    9534:	e58d02f8 	str	r0, [sp, #760]	; 0x2f8
+    9538:	e3500005 	cmp	r0, #5
+    953c:	13a04000 	movne	r4, #0
+    9540:	03a04001 	moveq	r4, #1
+    9544:	eaffffd6 	b	94a4 <_start+0xd4c>
+    9548:	e59d12f8 	ldr	r1, [sp, #760]	; 0x2f8
+    954c:	e59d22fc 	ldr	r2, [sp, #764]	; 0x2fc
+    9550:	e59f00fc 	ldr	r0, [pc, #252]	; 9654 <_start+0xefc>
+[31m    9554:	ebfffc37 	bl	8638 <printf@plt>[0m
+    9558:	eafffcff 	b	895c <_start+0x204>
+    955c:	e58d3310 	str	r3, [sp, #784]	; 0x310
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m4[0m times [0;33met[0m
+

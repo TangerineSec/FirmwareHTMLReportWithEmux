@@ -1,0 +1,24 @@
+#!/bin/sh
+
+preopt()
+{
+	ParamInput="$1"
+	xRouterLog 2 "PhoneMTDFirmware" "-" "start down $ParamInput"
+	echo 1 > /usr/local/xcloud/etc/RomUpdateStage
+	/usr/local/localshell/download $ParamInput
+	if [ $? -ne 0 ]
+	then
+		xRouterLog 2 "PhoneMTDFirmware" "-" "down error"
+		echo "start down error"
+		echo 0 > /usr/local/xcloud/etc/RomUpdateStage
+		rm /tmp/firmware.img
+		exit 1
+	fi
+	xRouterLog 2 "PhoneMTDFirmware" "-" "start write Rom"
+	echo 2 > /usr/local/xcloud/etc/RomUpdateStage
+
+} &>/tmp/upgrade.log
+
+preopt $1
+/sbin/sysupgrade /tmp/firmware.img &>/tmp/upgrade.log
+

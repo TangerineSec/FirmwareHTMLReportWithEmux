@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# camsvr: This starts and stops camsvr.
+#
+# chkconfig: 2345 81 10
+# description: eventd
+#
+# processname: /usr/sbin/eventd
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+start() {
+	echo -n "Starting eventd ... "
+	cd /usr/sbin; ./eventd &
+	echo "."
+}
+
+stop() {
+	echo -n "Stopping eventd ... "
+	#kill `pidof eventd`
+	#killall eventd
+	/usr/sbin/msger eventd 0 estop 0 1
+	echo "."
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

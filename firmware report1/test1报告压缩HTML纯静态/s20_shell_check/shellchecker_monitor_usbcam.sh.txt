@@ -1,0 +1,19 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/monitor_usbcam.sh line 3:[0m
+[0mfor PID in `/bin/ps | grep mjpg_streamer | grep -v grep | awk  '{print $1}'`[0m
+[32m           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+for PID in $(/bin/ps | grep mjpg_streamer | grep -v grep | awk  '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/lib/monitor_usbcam.sh line 5:[0m
+[0m	/bin/kill -9 $PID[0m
+[32m                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	/bin/kill -9 "$PID"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

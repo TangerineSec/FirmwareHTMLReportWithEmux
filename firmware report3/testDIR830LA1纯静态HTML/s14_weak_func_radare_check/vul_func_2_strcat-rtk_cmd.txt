@@ -1,0 +1,63 @@
+[[0;33m*[0m] Binary protection state of [0;33mrtk_cmd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mrtk_cmd[0m
+
+sltiu v0, v0, 2
+beqz v0, 0x4025fc
+addiu s0, sp, 0xb8
+b 0x402588
+lui a1, 0x40
+lw t9, -sym.imp.puts(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x504c
+b 0x40269c
+addiu v1, zero, -1
+lw t9, -sym.imp.strcpy(gp)
+move a0, s0
+lui s4, 0x40
+addiu a1, a1, 0x4fdc
+jalr t9
+addiu s1, zero, 3
+lw gp, 0x10(sp)
+b 0x4025d0
+addiu s4, s4, 0x4dc0
+lw a1, 8(s2)
+jalr t9
+nop
+move a0, s0
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+move a1, s4
+lw gp, 0x10(sp)
+slt v0, s1, s3
+[31mlw t9, -sym.imp.strcat(gp)[0m
+addiu s2, s2, 4
+move a0, s0
+bnez v0, 0x4025ac
+addiu s1, s1, 1
+jal 0x400e74
+addiu a1, sp, 0x2c
+lw gp, 0x10(sp)
+bnez v0, 0x40269c
+addiu v1, zero, -1
+lw s0, 0x28(sp)
+addiu v0, zero, 1
+bne s0, v0, 0x402648
+addiu v1, zero, 2
+addiu v0, zero, 0x90
+sw v1, 0x28(sp)
+addiu v1, sp, 0x28
+lw t9, -sym.rtk_netlink(gp)
+addiu a0, zero, 0x16
+sw v1, 0x1c(sp)
+addiu v1, sp, 0x4b8
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m2[0m times [0;33mrtk_cmd[0m
+

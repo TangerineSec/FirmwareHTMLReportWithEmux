@@ -1,0 +1,141 @@
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 8:[0m
+[0msrv=`nvram get DDNS_Provider`[0m
+[32m    ^-----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+srv=$(nvram get DDNS_Provider)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 9:[0m
+[0mddns=`nvram get DDNS_host_name`[0m
+[32m     ^------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ddns=$(nvram get DDNS_host_name)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 10:[0m
+[0mu=`nvram get DDNS_Account`[0m
+[32m  ^----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+u=$(nvram get DDNS_Account)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 11:[0m
+[0mpw=`nvram get DDNS_Password`[0m
+[32m   ^-----------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+pw=$(nvram get DDNS_Password)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 13:[0m
+[0mif [ "$srv" = "" -o "$srv" = "none" ]; then[0m
+[33m                 ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 18:[0m
+[0mif [ "$ddns" = "" -o "$u" = "" -o "$pw" = "" ]; then[0m
+[33m                  ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+[33m                               ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 26:[0m
+[0mwanConnectionMode=`nvram get wan_proto`[0m
+[32m                  ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+wanConnectionMode=$(nvram get wan_proto)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 27:[0m
+[0mif [ "$wanConnectionMode" == "dhcp" -o "$wanConnectionMode" == "static" ]; then[0m
+[33m                          ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+[33m                                    ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+[33m                                                            ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 28:[0m
+[0m        wanif=`nvram get wandevs`[0m
+[32m              ^-----------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+        wanif=$(nvram get wandevs)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 33:[0m
+[0mwanIP=`ifconfig $wanif | grep 'inet addr' | awk '{print $2}' | sed -e 's/addr://'`[0m
+[32m      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+wanIP=$(ifconfig "$wanif" | grep 'inet addr' | awk '{print $2}' | sed -e 's/addr://')
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 35:[0m
+[0mif [ "$wanIP" == "" ]; then[0m
+[33m              ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 43:[0m
+[0m        wanIP_old=`cat /tmp/DDNS_IP`[0m
+[32m                  ^----------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+        wanIP_old=$(cat /tmp/DDNS_IP)
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 45:[0m
+[0m        if [ "$wanIP_old" == "$wanIP" ]; then[0m
+[33m                          ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 64:[0m
+[0m	inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system dyndns@$srv &[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                                    ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	inadyn -u "$u" -p "$pw" -a "$ddns" --update_period_sec 600 --dyndns_system dyndns@"$srv" &
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 66:[0m
+[0m	inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	inadyn -u "$u" -p "$pw" -a "$ddns" --update_period_sec 600 --dyndns_system default@"$srv" &
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 68:[0m
+[0m	inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	inadyn -u "$u" -p "$pw" -a "$ddns" --update_period_sec 600 --dyndns_system default@"$srv" &
+
+
+[1mIn /logs/firmware/squashfs-root/bin/ddns.sh line 70:[0m
+[0m	inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	inadyn -u "$u" -p "$pw" -a "$ddns" --update_period_sec 600 --dyndns_system default@"$srv" &
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] || [ q ] as [ p -o q...
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

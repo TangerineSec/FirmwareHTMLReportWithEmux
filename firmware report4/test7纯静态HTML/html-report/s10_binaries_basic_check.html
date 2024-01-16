@@ -1,0 +1,1434 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./index.html"><img class="inherit" id="logoImage" src="./style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./index.html">&laquo; Back to main</a>
+      <!-- navigation start --><a class="modul" href="#check_binaries_for_critical_functions" title="#check_binaries_for_critical_functions" >Check binaries for critical functions</a>
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>[</span><span class="blue">+</span>] </span><span class="cyan"><span class="bold"><a id="check_binaries_for_critical_functions">Check binaries for critical functions</a></span></pre>
+<pre><span class="bold"><hr class="double" /></span></pre>
+<pre>This module identifies the usage of critical binary functions in firmware via </span><span class="orange">readelf</span>.</pre>
+<pre>Examples of binary functions are system, strcpy, printf and strcat. These functions are listed in the configuration</pre>
+<pre>file config/functions.cfg.</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Interesting functions: fprintf mmap popen printf sprintf strcat strcpy system</pre>
+<br />
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/bin/vmstat (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008b80	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00008bb0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	48:	00008d30	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/dnsmasq (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00009488	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	000094ac	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	7:	000094b8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	54:	000096bc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	57:	000096e0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	95:	00009878	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/igd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	13:	00008d34	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	49:	00008e90	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	53:	00008ec0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	66:	00008f44	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	69:	00008f68	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/xtables-multi (-rw-r--r-- root root) found:</span></pre>
+<pre>    	29:	00009ea8	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	103:	0000a184	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	127:	0000a280	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	145:	0000a334	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/igmp (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008a54	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008a6c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00008afc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	48:	00008c28	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/pppoecd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00009010	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00009034	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	31:	00009154	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/wlconf (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008bf0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	20:	00008cbc	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	44:	00008dac	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ses (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00008f58	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	29:	00009078	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	31:	00009090	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	64:	000091ec	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/acs_cli (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	0000881c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008828	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	000088d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	00008954	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/openl2tpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	0000ccbc	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	25:	0000ccec	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	181:	0000ce78	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	341:	0000d0a0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/sbin/xtables-multi (-rw-r--r-- root root) found:</span></pre>
+<pre>    	29:	00009e74	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	103:	0000a150	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	127:	0000a24c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	145:	0000a300	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/wl (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008cc8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008ce0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	28:	00008ddc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	00008df4	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	56:	00008ef0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/et (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008638	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00008698	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/httpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	0000a180	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	0000a1bc	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	9:	0000a1c8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	39:	0000a324	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	77:	0000a4e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	79:	0000a4f8	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	144:	0000a7d4	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/ntpclient (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	0000892c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008938	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	11:	00008980	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	21:	000089e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/radvd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	29:	00008fa4	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/brctl (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	000088d0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00008954	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/igs (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008598	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	11:	000085ec	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/lld2d (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008d2c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008d44	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	22:	00008e04	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/utelnetd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008b8c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008ba4	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	22:	00008c4c	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/pppd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	0000d88c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	28:	0000d8c8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	197:	0000da84	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	258:	0000db38	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	443:	0000ddcc	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/nas (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008f94	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00008fb8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/acsd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008cb8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008cd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	25:	00008db4	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	51:	00008ebc	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/udhcpd.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008e80	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00008eb0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00008f40	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	35:	00008fd0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	72:	0000915c	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/emf.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008604	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	11:	00008658	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/httpd.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00009a34	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	7:	00009a64	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	26:	00009b3c	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	53:	00009c74	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	55:	00009c8c	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	108:	00009ed8	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/wlconf.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008bf0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	20:	00008cbc	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	44:	00008dac	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/pppoecd.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00009010	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00009034	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	31:	00009154	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/ses_cl.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00008fe0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	28:	000090f4	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	0000910c	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	61:	00009250	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/et.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008638	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00008698	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/igdnat.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	7:	000085d8	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/nvram.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	6:	00008554	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/acsd.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008cb8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008cd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	25:	00008db4	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	51:	00008ebc	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/igd.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008cbc	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00008cec	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	28:	00008ddc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	00008df4	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	53:	00008ed8	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/epi_ttcp.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008adc	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	21:	00008b9c	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	50:	00008cb0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/igmp.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008a54	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008a6c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00008afc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	48:	00008c28	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/ntpclient.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008870	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	0000890c	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/.svn/text-base/vconfig.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008560	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	10:	000085a8	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/udhcpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008eac	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00008edc	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00008f6c	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	35:	00008ffc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	72:	00009188	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/tc (-rw-r--r-- root root) found:</span></pre>
+<pre>    	89:	0000c478	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	315:	0000c664	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	326:	0000c694	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	398:	0000c73c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	432:	0000c7a8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/sbin/KC_SMB (-rw-r--r-- root root) found:</span></pre>
+<pre>    	16:	00008fac	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	59:	00009174	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	77:	00009234	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	78:	00009240	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	82:	00009264	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libnetconf.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	31:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/openl2tp/ppp_unix.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	35:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	58:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/openl2tp/ipsec.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/openl2tp/event_sock.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libbcm.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_helper.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_connlimit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_REJECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_ipv6header.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_statistic.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_CT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TPROXY.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_frag.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_icmp6.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_NFLOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_limit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_addrtype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_REJECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_mac.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_state.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_socket.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TEE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_connbytes.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_dst.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_DSCP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_string.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_mh.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_ah.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_webstr.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_comment.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_CHECKSUM.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_CONNMARK.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_SKIPLOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_pkttype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_AUDIT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_NETMAP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_MASQUERADE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_ipvs.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	14:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_tcp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_REDIRECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_iprange.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	13:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_SET.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_NFQUEUE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TOS.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_esp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_ULOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TRIGGER.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_HL.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_time.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TCPOPTSTRIP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_TCPMSS.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_hashlimit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_ah.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_DNAT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_SNAT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_icmp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_CLUSTERIP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_conntrack.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	15:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_devgroup.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	13:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_LOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_length.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_hbh.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_cluster.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_ECN.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_SAME.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_multiport.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libipt_CLUSTERIP.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libip6t_HL.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_policy.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libip6t_rt.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libip6t_LOG.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_SECMARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_osf.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_u32.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_udp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_quota.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_MARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_cpu.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_LED.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	14:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_owner.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libipt_TTL.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_IDLETIMER.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_CONNSECMARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_recent.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_physdev.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_CLASSIFY.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libipt_realm.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_dccp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_RATEEST.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/.svn/text-base/libxt_sctp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libxt_layer7.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libip6t_rt.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/xtables/libipt_weburl.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libshared.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	7:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	15:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	16:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	88:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	145:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libnvram.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	10:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	20:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libip6tc.so.0.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	26:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libip4tc.so.0.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	26:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/pppd/2.4.5/pppol2tp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	42:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/pppd/2.4.5/rp-pppoe.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	71:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/pppd/2.4.5/pptp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	65:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	117:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libip6tc.so.0.0.0.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	26:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libupnp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	70:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	105:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libbcm.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	21:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libnetconf.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	31:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libip4tc.so.0.0.0.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	26:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libxtables.so.7.0.0.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	59:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	60:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	104:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/.svn/text-base/libshared.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	7:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	13:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	62:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	112:	00000000	0	NOTYPE	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/libxtables.so.7.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	60:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	61:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	105:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_helper.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_connlimit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_REJECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_ipv6header.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_statistic.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_CT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TPROXY.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_frag.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_icmp6.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_NFLOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_limit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_addrtype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_REJECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_mac.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_state.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_socket.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TEE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_connbytes.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_dst.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_DSCP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_string.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_mh.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_ah.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_webstr.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_comment.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_CHECKSUM.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_CONNMARK.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_SKIPLOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_pkttype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_AUDIT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_NETMAP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_MASQUERADE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_ipvs.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	14:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_tcp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_REDIRECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_iprange.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	13:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_SET.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_NFQUEUE.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TOS.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_esp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_ULOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TRIGGER.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_HL.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_time.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TCPOPTSTRIP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_TCPMSS.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_hashlimit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_ah.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_DNAT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_SNAT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_icmp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_CLUSTERIP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_conntrack.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	15:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_devgroup.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	13:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_LOG.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_length.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libip6t_hbh.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_cluster.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_ECN.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_SAME.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_multiport.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_policy.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libip6t_rt.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libip6t_LOG.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_SECMARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_osf.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_u32.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_udp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_quota.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_MARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_cpu.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_LED.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	14:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_owner.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libipt_TTL.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_IDLETIMER.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_CONNSECMARK.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_recent.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_physdev.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_CLASSIFY.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libipt_realm.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_dccp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_RATEEST.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/.svn/text-base/libxt_sctp.so.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libxt_layer7.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /usr/lib/iptables/libipt_weburl.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/busybox (-rw-r--r-- root root) found:</span></pre>
+<pre>    	50:	0000b600	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	213:	0000bd20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	226:	0000bdbc	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	281:	0000c014	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	283:	0000c02c	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	308:	0000c140	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/um_wireless_led (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008660	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	2:	0000866c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/inadyn (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008a80	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	2:	00008a8c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	47:	00008c48	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/wps_monitor (-rw-r--r-- root root) found:</span></pre>
+<pre>    	15:	00009844	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	28:	000098d4	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	103:	00009c10	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	112:	00009c7c	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	126:	00009d0c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	134:	00009d6c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/eapd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00008c5c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00008c98	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	52:	00008e60	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/red (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008754	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008760	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	4:	0000876c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	11:	000087b4	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	15:	000087d8	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	32:	00008874	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/dhclient (-rw-r--r-- root root) found:</span></pre>
+<pre>    	21:	00009948	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	58:	00009af8	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	106:	00009cfc	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	113:	00009d50	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	140:	00009e7c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	141:	00009e88	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	148:	00009edc	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/um_nmbd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	000087ac	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	2:	000087b8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/.svn/text-base/wps_monitor.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	15:	00009844	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	28:	000098d4	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	103:	00009c10	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	112:	00009c7c	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	126:	00009d0c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	134:	00009d6c	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/.svn/text-base/hspotap.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00008f44	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00008f5c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	32:	00009088	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	33:	00009094	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	70:	00009220	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/um_gpio (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	000084d8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/mdnspr (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008bf8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008c10	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	20:	00008cc4	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /bin/um_check_default (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	000088bc	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	000088d4	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	4:	000088e0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	13:	00008940	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	40:	00008a48	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/rc (-rw-r--r-- root root) found:</span></pre>
+<pre>    	17:	00009fdc	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	28:	0000a054	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	124:	0000a48c	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	130:	0000a4d4	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	161:	0000a624	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	162:	0000a630	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	174:	0000a6c0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/dst (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	0000850c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	5:	00008530	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /sbin/.svn/text-base/rc.svn-base (-rw-r--r-- root root) found:</span></pre>
+<pre>    	14:	00009b20	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	25:	00009b98	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	111:	00009f58	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	117:	00009fa0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	141:	0000a09c	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	149:	0000a0fc	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libcrypt.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libdl.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libc.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	0003e508	24	FUNC	GLOBAL	DEFAULT	7	strcpy</pre>
+<pre>    	89:	0003657c	592	FUNC	GLOBAL	DEFAULT	7	popen</pre>
+<pre>    	91:	000360e0	64	FUNC	GLOBAL	DEFAULT	7	printf</pre>
+<pre>    	433:	0005a270	348	FUNC	WEAK	DEFAULT	7	system</pre>
+<pre>    	655:	00014f94	88	FUNC	GLOBAL	DEFAULT	7	mmap</pre>
+<pre>    	864:	00036160	36	FUNC	GLOBAL	DEFAULT	7	fprintf</pre>
+<pre>    	884:	0003e494	48	FUNC	GLOBAL	DEFAULT	7	strcat</pre>
+<pre>    	1526:	000361f0	40	FUNC	GLOBAL	DEFAULT	7	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libm.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	175:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /lib/libpthread.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	89:	000090f4	52	FUNC	WEAK	DEFAULT	8	system</pre>
+<pre>    	130:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in /wrt54g-linux/usr/sbin/lld2d (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00008ec8	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00008ee0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	30:	00009000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Found </span><span class="orange">256</span> binaries with interesting functions in </span><span class="orange">294</span> files (vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system)</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<a href="./s12_binary_protection.html" title="./s12_binary_protection.html" ><div id="buttonBack" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+<a href="./s09_firmware_base_version_check.html" title="./s09_firmware_base_version_check.html" ><div id="buttonForward" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div> </a>
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

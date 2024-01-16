@@ -1,0 +1,145 @@
+[[0;33m*[0m] Binary protection state of [0;33migs.ko[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mREL[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33migs.ko[0m
+
+     608:	e595200c 	ldr	r2, [r5, #12]
+     60c:	e2866001 	add	r6, r6, #1
+     610:	e5082010 	str	r2, [r8, #-16]
+     614:	e3a02010 	mov	r2, #16
+     618:	e5951008 	ldr	r1, [r5, #8]
+     61c:	e2800008 	add	r0, r0, #8
+     620:	e58d3004 	str	r3, [sp, #4]
+     624:	ebfffffe 	bl	0 <strncpy>
+     628:	e5955000 	ldr	r5, [r5]
+     62c:	e59d3004 	ldr	r3, [sp, #4]
+     630:	e155000a 	cmp	r5, sl
+     634:	1affffee 	bne	5f4 <igsc_cfg_request_process+0xa4>
+     638:	e5846020 	str	r6, [r4, #32]
+     63c:	e3a03001 	mov	r3, #1
+     640:	e5843018 	str	r3, [r4, #24]
+     644:	ea00000b 	b	678 <igsc_cfg_request_process+0x128>
+     648:	e59f1034 	ldr	r1, [pc, #52]	; 684 <igsc_cfg_request_process+0x134>
+     64c:	e2840020 	add	r0, r4, #32
+     650:	e3a03002 	mov	r3, #2
+     654:	e5843018 	str	r3, [r4, #24]
+[31m     658:	ebfffffe 	bl	0 <sprintf>[0m
+     65c:	ea000004 	b	674 <igsc_cfg_request_process+0x124>
+     660:	e3a03003 	mov	r3, #3
+     664:	e1a00005 	mov	r0, r5
+     668:	e5813018 	str	r3, [r1, #24]
+     66c:	e59f1014 	ldr	r1, [pc, #20]	; 688 <igsc_cfg_request_process+0x138>
+[31m     670:	ebfffffe 	bl	0 <sprintf>[0m
+     674:	e584001c 	str	r0, [r4, #28]
+     678:	e8bd8ffe 	pop	{r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+--
+    1224:	e3560000 	cmp	r6, #0
+    1228:	1afffff1 	bne	11f4 <igs_instance_del+0x28>
+    122c:	e59f5094 	ldr	r5, [pc, #148]	; 12c8 <igs_instance_del+0xfc>
+    1230:	e5950008 	ldr	r0, [r5, #8]
+    1234:	ebfffffe 	bl	0 <_raw_spin_unlock_bh>
+    1238:	e3560000 	cmp	r6, #0
+    123c:	1a000003 	bne	1250 <igs_instance_del+0x84>
+    1240:	e59f0084 	ldr	r0, [pc, #132]	; 12cc <igs_instance_del+0x100>
+    1244:	ebfffffe 	bl	0 <printk>
+    1248:	e3e00000 	mvn	r0, #0
+    124c:	ea00001b 	b	12c0 <igs_instance_del+0xf4>
+    1250:	e595300c 	ldr	r3, [r5, #12]
+    1254:	e2846004 	add	r6, r4, #4
+    1258:	e5940018 	ldr	r0, [r4, #24]
+    125c:	e2433001 	sub	r3, r3, #1
+    1260:	e585300c 	str	r3, [r5, #12]
+    1264:	ebfffffe 	bl	8a0 <igsc_exit>
+    1268:	e1a02006 	mov	r2, r6
+    126c:	e59f105c 	ldr	r1, [pc, #92]	; 12d0 <igs_instance_del+0x104>
+    1270:	e1a0000d 	mov	r0, sp
+[31m    1274:	ebfffffe 	bl	0 <sprintf>[0m
+    1278:	e1a0000d 	mov	r0, sp
+    127c:	e3a01000 	mov	r1, #0
+    1280:	ebfffffe 	bl	0 <remove_proc_entry>
+    1284:	e1a02006 	mov	r2, r6
+    1288:	e59f1044 	ldr	r1, [pc, #68]	; 12d4 <igs_instance_del+0x108>
+    128c:	e1a0000d 	mov	r0, sp
+[31m    1290:	ebfffffe 	bl	0 <sprintf>[0m
+    1294:	e1a0000d 	mov	r0, sp
+    1298:	e3a01000 	mov	r1, #0
+--
+    1380:	e1a02005 	mov	r2, r5
+    1384:	ebfffffe 	bl	68c <igsc_init>
+    1388:	e1500007 	cmp	r0, r7
+    138c:	e1a08000 	mov	r8, r0
+    1390:	e5840018 	str	r0, [r4, #24]
+    1394:	1a000009 	bne	13c0 <igs_instance_add+0xe8>
+    1398:	e59f00c4 	ldr	r0, [pc, #196]	; 1464 <igs_instance_add+0x18c>
+    139c:	ebfffffe 	bl	0 <printk>
+    13a0:	e1a01004 	mov	r1, r4
+    13a4:	e1a00005 	mov	r0, r5
+    13a8:	e3a02020 	mov	r2, #32
+    13ac:	e1a04008 	mov	r4, r8
+    13b0:	ebfffffe 	bl	0 <osl_mfree>
+    13b4:	e1a00005 	mov	r0, r5
+    13b8:	ebfffffe 	bl	0 <osl_detach>
+    13bc:	ea000021 	b	1448 <igs_instance_add+0x170>
+    13c0:	e28d5004 	add	r5, sp, #4
+    13c4:	e59f109c 	ldr	r1, [pc, #156]	; 1468 <igs_instance_add+0x190>
+    13c8:	e1a00005 	mov	r0, r5
+    13cc:	e1a02006 	mov	r2, r6
+[31m    13d0:	ebfffffe 	bl	0 <sprintf>[0m
+    13d4:	e1a00005 	mov	r0, r5
+    13d8:	e1a01007 	mov	r1, r7
+    13dc:	e1a02007 	mov	r2, r7
+    13e0:	e28d5004 	add	r5, sp, #4
+    13e4:	ebfffffe 	bl	0 <create_proc_entry>
+    13e8:	e3500000 	cmp	r0, #0
+    13ec:	e59f1078 	ldr	r1, [pc, #120]	; 146c <igs_instance_add+0x194>
+    13f0:	159f3078 	ldrne	r3, [pc, #120]	; 1470 <igs_instance_add+0x198>
+    13f4:	e1a02006 	mov	r2, r6
+    13f8:	15804034 	strne	r4, [r0, #52]	; 0x34
+    13fc:	15803038 	strne	r3, [r0, #56]	; 0x38
+    1400:	e1a00005 	mov	r0, r5
+[31m    1404:	ebfffffe 	bl	0 <sprintf>[0m
+    1408:	e3a01000 	mov	r1, #0
+    140c:	e1a00005 	mov	r0, r5
+--
+    1880:	08bd81f0 	popeq	{r4, r5, r6, r7, r8, pc}
+    1884:	e3570001 	cmp	r7, #1
+    1888:	1a00001e 	bne	1908 <igs_cfg_request_process+0x16c>
+    188c:	e3550000 	cmp	r5, #0
+    1890:	13a03002 	movne	r3, #2
+    1894:	12840020 	addne	r0, r4, #32
+    1898:	15843018 	strne	r3, [r4, #24]
+    189c:	159f108c 	ldrne	r1, [pc, #140]	; 1930 <igs_cfg_request_process+0x194>
+    18a0:	1a000009 	bne	18cc <igs_cfg_request_process+0x130>
+    18a4:	e1a00004 	mov	r0, r4
+    18a8:	e1a01006 	mov	r1, r6
+    18ac:	ebfffe89 	bl	12d8 <igs_instance_add>
+    18b0:	e3500000 	cmp	r0, #0
+    18b4:	15847018 	strne	r7, [r4, #24]
+    18b8:	18bd81f0 	popne	{r4, r5, r6, r7, r8, pc}
+    18bc:	e59f1070 	ldr	r1, [pc, #112]	; 1934 <igs_cfg_request_process+0x198>
+    18c0:	e2840020 	add	r0, r4, #32
+    18c4:	e3a03002 	mov	r3, #2
+    18c8:	e5843018 	str	r3, [r4, #24]
+    18cc:	e1a02004 	mov	r2, r4
+[31m    18d0:	ebfffffe 	bl	0 <sprintf>[0m
+    18d4:	ea000009 	b	1900 <igs_cfg_request_process+0x164>
+    18d8:	e1a00005 	mov	r0, r5
+    18dc:	ebfffe3a 	bl	11cc <igs_instance_del>
+    18e0:	e3500000 	cmp	r0, #0
+    18e4:	03a03001 	moveq	r3, #1
+    18e8:	05843018 	streq	r3, [r4, #24]
+    18ec:	08bd81f0 	popeq	{r4, r5, r6, r7, r8, pc}
+    18f0:	e59f1040 	ldr	r1, [pc, #64]	; 1938 <igs_cfg_request_process+0x19c>
+    18f4:	e2840020 	add	r0, r4, #32
+    18f8:	e5847018 	str	r7, [r4, #24]
+[31m    18fc:	ebfffffe 	bl	0 <sprintf>[0m
+    1900:	e584001c 	str	r0, [r4, #28]
+    1904:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m8[0m times [0;33migs.ko[0m
+

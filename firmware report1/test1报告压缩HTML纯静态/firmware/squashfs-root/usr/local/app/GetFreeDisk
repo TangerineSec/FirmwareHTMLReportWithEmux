@@ -1,0 +1,118 @@
+#!/bin/sh
+#set -x
+
+RomSize=""
+UsbSize=""
+Parameter_num=$#
+Parameter_one=$1
+TempFile="/tmp/UsbSizeFile"
+G_Parameter_all=$*
+G_ValueLast=
+
+xRouterLog 0 "GetFreeDisk" - "`basename $0` ${G_Parameter_all}."
+
+if [ ${Parameter_num} -ne 1 ];then
+	xRouterLog 2 "GetFreeDisk" "-" "Parameter Err."
+	exit 1
+elif [ "${Parameter_one}" == "rom" ];then	
+	local size_room=""
+	local size_dev=""
+	local size_mtdblock7=""
+	size_room=`df -k | grep "/rom" |awk -F " " '{print $4}'|awk -F " " '{print $1}'`
+	size_dev=`df -k |grep "tmpfs"| grep "/dev" |awk -F " " '{print $4}'|awk -F " " '{print $1}'`
+	size_mtdblock7=`df -k | grep "/dev/mtdblock7" |awk -F " " '{print $4}'|awk -F " " '{print $1}'`
+	
+	if [ "${size_room}" == "" ];then
+		xRouterLog 2 "GetFreeDisk" "-" "Rom:Size Error."
+		echo "ERROR"
+		exit 1
+	elif [ "${size_dev}" == "" ];then
+		xRouterLog 2 "GetFreeDisk" "-" "Dev:Size Error."
+		echo "ERROR"
+		exit 1
+	elif [ "${size_mtdblock7}" == "" ];then
+		xRouterLog 2 "GetFreeDisk" "-" "Mtdblock7:Size Error."
+		echo "ERROR"
+		exit 1		
+	fi
+	
+	size_room=`printf "%d" ${size_room}`
+	size_dev=`printf "%d" ${size_dev}`
+	size_mtdblock7=`printf "%d" ${size_mtdblock7}`
+	RomSize=`expr ${size_room} + ${size_dev} + ${size_mtdblock7}`
+	RomSize="${RomSize}K"
+	echo ${RomSize}
+	xRouterLog 0 "GetFreeDisk" "-" "Size is ${RomSize}."
+	exit 0
+elif [ "${Parameter_one}" == "usb" ];then
+	local size_usb=""
+	local usb_name=""
+	local temp=""
+	local line=""
+	
+	mount | grep "/dev/sd*" > ${TempFile} 
+	
+	temp=`wc ${TempFile} | awk -F " " '{printf $1}'`
+	if [ "${temp}" == "0" ];then
+		echo "ERROR"
+		xRouterLog 2 "GetFreeDisk" "-" "No usb disk mount."
+		rm -f ${TempFile} 
+		exit 1
+	else
+		while read line
+		do
+			usb_name=`echo ${line} | awk -F " " '{printf $1}'`
+			size_usb=`df -m | grep "${usb_name}" |awk -F " " '{print $4}'|awk -F " " '{print $1}'`
+			if [ "${size_usb}" == "" ];then
+				xRouterLog 2 "GetFreeDisk" "-" "Usb:Size Error."
+				rm -f ${TempFile}
+				echo "ERROR"
+				exit 1	
+			fi
+			
+			if [ "${UsbSize}" == "" ];then
+				UsbSize="${size_usb}M,${usb_name}"
+			else
+				UsbSize="${UsbSize}||||""${size_usb}M,${usb_name}"
+			fi
+				
+		done < ${TempFile} 
+
+	fi			
+	rm -f ${TempFile}
+	echo ${UsbSize}
+	xRouterLog 0 "GetFreeDisk" "-" "Size:${UsbSize}."
+	exit 0
+	
+elif [ "${Parameter_one}" == "usbiso" ];then
+	local temp=""
+	local usbiso_size=""
+	local dir=""
+	
+	temp=`mount | grep "/opt"`
+	dir=`echo ${temp} | awk -F " " '{print $1}'`
+	
+	#如果/opt 目录不存在
+	if [ ! -d "/opt" ];then
+		echo "ERROR"
+		xRouterLog 2 "GetFreeDisk" "-" "/opt is not exist."		
+		exit 2
+	elif [ "${temp}" == "" ];then
+		echo "ERROR"
+		xRouterLog 2 "GetFreeDisk" "-" "/opt is not mounted."
+		exit 2
+	else
+		usbiso_size=`df -m | grep "${dir}" | awk -F " " '{print $4}'|awk -F " " '{print $1}'`
+		echo "${usbiso_size}M"
+		xRouterLog 0 "GetFreeDisk" "-" "iso left size is ${usbiso_size}."
+		exit 0	
+	fi
+else
+	xRouterLog 2 "GetFreeDisk" "-" "Parameter Err."
+	echo "Error:Parameter Error!"
+	exit 1		
+fi
+
+
+
+

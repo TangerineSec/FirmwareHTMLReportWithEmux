@@ -1,0 +1,76 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibleopard.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibleopard.so[0m
+
+lw s1, 0x28(sp)
+lw s0, 0x24(sp)
+jr ra
+addiu sp, sp, 0x38
+lui gp, 3
+addiu gp, gp, 0x778
+addu gp, gp, t9
+addiu sp, sp, -0x30
+sw ra, 0x2c(sp)
+sw s2, 0x28(sp)
+sw s1, 0x24(sp)
+sw s0, 0x20(sp)
+sw gp, 0x10(sp)
+lw s2, -0x7fdc(gp)
+addiu s1, sp, 0x18
+move s0, a1
+lw t9, -sym.imp.strtok_r(gp)
+move a2, s1
+addiu s2, s2, -0x4e74
+sw zero, 0x18(sp)
+jalr t9
+move a1, s2
+lw gp, 0x10(sp)
+beqz v0, 0x3d80
+nop
+[31mlw t9, -sym.imp.strcat(gp)[0m
+move a1, v0
+move a0, s0
+jalr t9
+nop
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.strcpy(gp)
+jalr t9
+move a1, v0
+move a0, zero
+move a1, s2
+lw gp, 0x10(sp)
+lw t9, -sym.imp.strtok_r(gp)
+jalr t9
+move a2, s1
+move a0, s0
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+bnez v0, 0x3d38
+move a1, v0
+lw ra, 0x2c(sp)
+lw s2, 0x28(sp)
+lw s1, 0x24(sp)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x30
+lui gp, 3
+addiu gp, gp, 0x6b8
+addu gp, gp, t9
+addiu sp, sp, -0x60
+sw ra, 0x5c(sp)
+sw s0, 0x58(sp)
+sw gp, 0x20(sp)
+move a3, a0
+lw t9, -sym.imp.pthread_attr_init(gp)
+addiu s0, sp, 0x2c
+sw a3, 0x50(sp)
+jalr t9
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m2[0m times [0;33mlibleopard.so[0m
+

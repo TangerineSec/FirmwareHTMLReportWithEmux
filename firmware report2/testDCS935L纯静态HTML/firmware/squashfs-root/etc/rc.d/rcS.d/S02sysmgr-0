@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# ipfilter: This starts and stops httpd-manager.
+#
+# chkconfig: 2345 02 98
+# description: sysmgr
+#
+# processname: /usr/sbin/httpd-manager
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/bin:/usr/sbin
+
+[ -f $binpath ] || exit
+
+start(){
+    echo -n "Starting sysmgr ... "
+    /usr/sbin/sysmgr&
+    echo "."
+}
+
+stop(){
+    echo -n "Stopping sysmgr ... "
+    killall sysmgr
+    echo "."
+}
+
+# See how we are called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    *)
+        start
+        exit 1
+esac
+
+exit 0

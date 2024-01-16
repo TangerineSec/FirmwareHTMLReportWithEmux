@@ -1,0 +1,65 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 31:[0m
+[0mif [ ! -f "$CONFIG" -o ! -r "$CONFIG" ] ; then[0m
+[33m                    ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 36:[0m
+[0m. $CONFIG[0m
+[33m  ^-----^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+[32m  ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+. "$CONFIG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 59:[0m
+[0mPPPD_PID=`cat "$PPPD_PIDFILE"`[0m
+[32m         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+PPPD_PID=$(cat "$PPPD_PIDFILE")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 65:[0m
+[0m    if [ -r $i ] ; then[0m
+[32m            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    if [ -r "$i" ] ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 66:[0m
+[0m	PID=`cat $i`[0m
+[32m            ^------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	PID=$(cat "$i")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 68:[0m
+[0m	    IF=`basename $i .pid`[0m
+[32m               ^----------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	    IF=$(basename "$i" .pid)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 71:[0m
+[0m	    if [ "$?" != "0" ] ; then[0m
+[32m                 ^--^ SC2181 (style): Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-status line 76:[0m
+[0m	    /sbin/ifconfig $IF[0m
+[32m                           ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	    /sbin/ifconfig "$IF"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] || [ q ] as [ p -o q...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

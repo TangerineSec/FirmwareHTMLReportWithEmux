@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33minadyn[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33minadyn[0m
+
+0000a570 <os_printf>:
+    a570:	e92d000e 	push	{r1, r2, r3}
+    a574:	e3001401 	movw	r1, #1025	; 0x401
+    a578:	e92d4030 	push	{r4, r5, lr}
+    a57c:	e24dd008 	sub	sp, sp, #8
+    a580:	e28dc018 	add	ip, sp, #24
+    a584:	e3a0e000 	mov	lr, #0
+    a588:	e1a0300c 	mov	r3, ip
+    a58c:	e1a05000 	mov	r5, r0
+[31m    a590:	e59f4058 	ldr	r4, [pc, #88]	; a5f0 <os_printf+0x80>[0m
+    a594:	e59d2014 	ldr	r2, [sp, #20]
+    a598:	e58dc004 	str	ip, [sp, #4]
+    a59c:	e2840004 	add	r0, r4, #4
+    a5a0:	e5c4e404 	strb	lr, [r4, #1028]	; 0x404
+[31m    a5a4:	ebfff956 	bl	8b04 <vsnprintf@plt>[0m
+    a5a8:	e5943000 	ldr	r3, [r4]
+    a5ac:	e3530001 	cmp	r3, #1
+[31m    a5b0:	0a000009 	beq	a5dc <os_printf+0x6c>[0m
+[31m    a5b4:	e59f0038 	ldr	r0, [pc, #56]	; a5f4 <os_printf+0x84>[0m
+    a5b8:	e2841004 	add	r1, r4, #4
+[31m    a5bc:	ebfff932 	bl	8a8c <printf@plt>[0m
+[31m    a5c0:	e59f3030 	ldr	r3, [pc, #48]	; a5f8 <os_printf+0x88>[0m
+    a5c4:	e5930000 	ldr	r0, [r3]
+--
+    b510:	0affff79 	beq	b2fc <get_options_from_file_handler+0x94>
+    b514:	eaffffa3 	b	b3a8 <get_options_from_file_handler+0x140>
+    b518:	e3a0a000 	mov	sl, #0
+    b51c:	eaffffa1 	b	b3a8 <get_options_from_file_handler+0x140>
+    b520:	0000be30 	.word	0x0000be30
+    b524:	0000c19c 	.word	0x0000c19c
+    b528:	0000c1a0 	.word	0x0000c1a0
+
+0000b52c <print_help_page>:
+    b52c:	e92d4010 	push	{r4, lr}
+    b530:	e59f403c 	ldr	r4, [pc, #60]	; b574 <print_help_page+0x48>
+    b534:	e59f003c 	ldr	r0, [pc, #60]	; b578 <print_help_page+0x4c>
+    b538:	ebfff568 	bl	8ae0 <puts@plt>
+    b53c:	e59f0038 	ldr	r0, [pc, #56]	; b57c <print_help_page+0x50>
+    b540:	ebfff566 	bl	8ae0 <puts@plt>
+    b544:	e5941000 	ldr	r1, [r4]
+    b548:	e3510000 	cmp	r1, #0
+    b54c:	0a000005 	beq	b568 <print_help_page+0x3c>
+    b550:	e5942010 	ldr	r2, [r4, #16]
+    b554:	e59f0024 	ldr	r0, [pc, #36]	; b580 <print_help_page+0x54>
+[31m    b558:	ebfff54b 	bl	8a8c <printf@plt>[0m
+    b55c:	e5b41014 	ldr	r1, [r4, #20]!
+    b560:	e3510000 	cmp	r1, #0
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m2[0m times [0;33minadyn[0m
+

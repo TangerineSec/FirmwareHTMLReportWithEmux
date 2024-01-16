@@ -1,0 +1,22 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/20_reset_clear_jffs line 8:[0m
+[0m	rm -rf $jffs/* 2>&-[0m
+[33m               ^-----^ SC2115 (warning): Use "${var:?}" to ensure this never expands to /* .[0m
+[33m               ^---^ SC2154 (warning): jffs is referenced but not assigned.[0m
+[32m               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	rm -rf "$jffs"/* 2>&-
+
+
+[1mIn /logs/firmware/squashfs-root/lib/firstboot/20_reset_clear_jffs line 9:[0m
+[0m	mount -o remount $jffs / 2>&-[0m
+[32m                         ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o remount "$jffs" / 2>&-
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2115 -- Use "${var:?}" to ensure this nev...
+  https://www.shellcheck.net/wiki/SC2154 -- jffs is referenced but not assign...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

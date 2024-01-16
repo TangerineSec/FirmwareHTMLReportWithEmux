@@ -1,0 +1,362 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mntfs-3g[0m
+
+ldr r6, [r0]
+mov r5, r1
+mov r8, r2
+cmp r6, 0
+beq 0x16078
+mov r0, r6
+bl sym.strlen
+mov r7, r0
+mov r0, r5
+bl sym.strlen
+add r1, r8, 2
+add r1, r1, r7
+add r1, r1, r0
+mov r0, r6
+bl sym.realloc
+subs r6, r0, 0
+beq 0x16088
+add r0, r6, r7
+ldr r1, [0x000160a4]
+mov r2, r5
+[31mbl sym.sprintf[0m
+mov r0, 0
+str r6, [r4]
+--
+bne 0x16ac8
+mov r0, sb
+mov r1, 1
+bl sym.open64
+cmn r0, 1
+str r0, [sp, 8]
+beq 0x16c84
+mov r1, r4
+bl sym.fstat64
+cmn r0, 1
+beq 0x16bf0
+ldr r3, [sp, 0x1d0]
+and r3, r3, 0xf000
+cmp r3, segment.LOAD0
+bne 0x16b50
+mvn r3, 0
+ldr r0, obj.procfile.4891
+ldr r2, [sp, 8]
+ldr r1, str._proc_self_fd__i
+str r3, [sp, 0xc]
+[31mbl sym.sprintf[0m
+ldr ip, obj.procfile.4891
+str ip, [sp, 0x28]
+--
+mov r0, r4
+bl sym.strlen
+sub r0, r0, 1
+ldrb r3, [r4, r0]
+cmp r3, 0x2c
+strbeq r5, [r4, r0]
+bl sym.getuid
+cmp r0, 0
+bne 0x16cb8
+ldr r2, [sp, 0x24]
+and r6, r2, 0xf000
+bl sym.getuid
+mov r4, r0
+bl sym.getgid
+ldr r1, str.fd_i_rootmode_o_user_id_i_group_id_i
+mov r2, r8
+str r0, [sp, 4]
+mov r3, r6
+ldr r0, [sp, 0x1c]
+str r4, [sp]
+[31mbl sym.sprintf[0m
+cmp r7, 0
+moveq r4, r7
+--
+str r0, [sp]
+mov r3, sb
+mov r0, r4
+ldr r2, str.ntfs_3g_mount
+bl sym.fprintf
+b 0x16aec
+ldr r0, [sp, 0x18]
+ldr r1, [sp, 0x20]
+bl sym.strcpy
+b 0x1670c
+bl sym.__errno_location
+ldr r3, [r0]
+cmp r3, 0x16
+bne 0x16740
+bl sym.getuid
+ldr r1, str.fd_i_rootmode_o_user_id_i
+mov r2, r8
+str r0, [sp]
+mov r3, r6
+ldr r0, [sp, 0x1c]
+[31mbl sym.sprintf[0m
+ldr ip, [sp, 0x14]
+mov r3, sl
+--
+bl sym.malloc
+cmp r0, 0
+mov r5, r0
+mov r7, r0
+beq 0x17adc
+mov r0, r8
+bl sym.strlen
+cmp r0, 0
+beq 0x17a20
+add r3, sp, 0x1000
+add r3, r3, 8
+add r0, r3, r0
+sub r0, r0, 0x1000
+ldrb r3, [r0, -1]
+cmp r3, 0x2f
+beq 0x17b28
+mov r0, r7
+ldr r1, str._s__s
+mov r2, r8
+mov r3, r6
+[31mbl sym.sprintf[0m
+mov r0, r4
+bl sym.free
+--
+mov r2, sl
+ldr r1, str._s:_failed_to_allocate_memory_n
+mov r5, 0
+ldr r0, [r3]
+bl sym.fprintf
+b 0x17a3c
+mov r2, r0
+ldr r0, obj.stderr
+ldr r1, str._s:_invalid_mountpoint__s_n
+mov r3, r7
+ldr r0, [r0]
+bl sym.fprintf
+b 0x17a3c
+ldr r5, [0x00017ba0]
+mov r6, r4
+b 0x17a78
+mov r0, r5
+ldr r1, str._s_s
+mov r2, r8
+mov r3, r6
+[31mbl sym.sprintf[0m
+b 0x17a34
+ldr r3, obj.stderr
+--
+bne 0x464a0
+ldr r3, [r5, 0xc]
+ldr r2, [r5, 0x10]
+add r2, r2, r3, lsl 2
+subs r3, r3, 1
+bmi 0x464d8
+ldr r1, [r2, -4]!
+cmp r6, r1
+bne 0x464c4
+mvn r5, r3
+lsr r5, r5, 0x1f
+mov r0, r5
+add sp, sp, 0x64
+add sp, sp, 0x400
+pop {r4, r5, r6, r7, r8, sb, sl, fp, pc}
+ldr r2, [r0, 0x18]
+add fp, sp, 0x420
+ldr r1, str._proc__u_task__u_status
+mov r0, fp
+mov r3, r2
+[31mbl sym.sprintf[0m
+mov r1, r4
+mov r0, fp
+--
+ldr r2, [r3, 4]
+lsl r2, r2, 3
+bl 0x5a8d0
+tst r6, 0x3f8
+ldreq r3, [0x0005adb8]
+addeq r3, r4, r3
+ldreq r3, [r3, 4]
+orreq r6, r6, r3, lsl 3
+add r7, sp, 0x420
+add r8, sp, 0x14
+add r7, r7, 4
+mov r0, r7
+bl sym.__GI_time
+mov r0, r7
+bl sym.__GI_ctime
+ldr r1, [0x0005adbc]
+add r3, r0, 4
+mov r2, r6
+mov r0, r8
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+ldr r3, [0x0005adc0]
+add r8, r8, r0
+ldr r6, [r4, r3]
+mov r0, r6
+bl sym.strlen
+cmp r0, 0x3c0
+bhs 0x5ab9c
+ldr r1, [0x0005adc4]
+mov r0, r8
+mov r2, r6
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+b 0x5abac
+ldr r1, [0x0005adc8]
+mov r0, r8
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+ldr r3, [0x0005adb0]
+add r7, r8, r0
+add r3, r4, r3
+ldr r3, [r3, 4]
+tst r3, 1
+beq 0x5abe0
+bl sym.getpid
+ldr r1, [0x0005adcc]
+mov r2, r0
+mov r0, r7
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+add r7, r7, r0
+mov r6, r7
+--
+ble 0x63550
+add r3, r5, r2
+ldrb r3, [r3, -1]
+cmp r3, 0x2f
+beq 0x63534
+add r3, sl, 8
+add r3, r3, r2
+cmp r7, r3
+bhs 0x63574
+bl sym.__errno_location
+mov r3, 0x16
+str r3, [r0]
+mvn r0, 0
+b 0x63594
+ldr r1, [0x000635a4]
+mov r0, r6
+mov r3, r5
+str sl, [sp]
+str r8, [sp, 4]
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+mov r0, 0
+pop {r1, r2, r3, r4, r5, r6, r7, r8, sl, pc}
+--
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x410
+sub sp, sp, 4
+ldr r6, [0x0006bac4]
+mov r4, r0
+mov r7, r1
+bl 0x6b844
+subs r5, r0, 0
+add r6, pc, r6
+beq 0x6bab4
+ldr r3, [r4, 4]
+add r1, sp, 0x400
+mov r0, r4
+add r1, r1, 4
+ldr r3, [r3, 8]
+blx r3
+ldr r1, [0x0006bac8]
+mov r2, r7
+mov r0, r5
+add r1, r6, r1
+[31mbl sym.sprintf[0m
+add r4, r5, r0
+ldr r0, [sp, 0x404]
+--
+mov r7, 0
+ldr r1, [0x0006bad4]
+mov r0, r4
+add r1, r6, r1
+bl sym.strcpy
+mov r0, r4
+bl sym.strlen
+cmp r7, 0
+add r4, r4, r0
+beq 0x6ba64
+mov r0, r4
+mov r1, r7
+bl sym.strcpy
+mov r0, r4
+bl sym.strlen
+b 0x6baa0
+ldr r1, [0x0006bad8]
+mov r0, r4
+ldr r2, [sp, 0x408]
+add r1, r6, r1
+[31mbl sym.sprintf[0m
+b 0x6baa0
+mov r0, r4
+ldr r1, [0x0006badc]
+b 0x6ba90
+ldr r1, [0x0006bae0]
+mov r0, r4
+add r1, r6, r1
+ldr r2, [sp, 0x408]
+ldr r3, [sp, 0x40c]
+[31mbl sym.sprintf[0m
+add r4, r4, r0
+mov r3, 0xa
+--
+ldr r1, [r3]
+pop {r4, lr}
+b sym.__GI_fputs
+andeq fp, r1, r4, lsl 16
+andeq r0, r0, r8, ror 2
+push {r4, r5, r6, r7, lr}
+sub sp, sp, 0x400
+sub sp, sp, 4
+ldr r4, [0x0006bc2c]
+mov r7, r0
+bl 0x6b844
+subs r6, r0, 0
+add r4, pc, r4
+beq 0x6bc1c
+bl sym.__GI___rpc_thread_createerr
+ldr r1, [0x0006bc30]
+mov r2, r7
+mov r5, r0
+mov r0, r6
+add r1, r4, r1
+[31mbl sym.sprintf[0m
+add r7, r6, r0
+ldr r0, [r5]
+--
+bne 0x6c208
+ldr r4, [sp, 0xc]
+add r3, sp, 0x60
+rsb r2, r7, r3
+mov r1, r7
+sub r2, r2, 0x22
+add r0, r4, 0xc
+bl 0x6bee8
+cmp r0, 0
+beq 0x6c298
+mov r0, r7
+bl sym.strlen
+add r7, r7, r0
+b 0x6c240
+add r1, sp, 0x60
+mov r0, r7
+add r3, r1, sl, lsl 2
+mov r1, r4
+ldr r2, [r3, -0x20]
+str ip, [sp, 4]
+[31mbl sym.sprintf[0m
+ldr ip, [sp, 4]
+add r7, r7, r0
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m17[0m times [0;33mntfs-3g[0m
+

@@ -1,0 +1,699 @@
+[[0;34m+[0m] [0;36m[1mCheck binaries for weak functions (radare mode)[0m
+[1m=================================================================[0m
+This module identifies the usage of critical binary functions in firmware via [0;33mradare2[0m.
+Examples of binary functions are system, strcpy, printf and strcat. These functions are configured in the configuration
+file config/functions.cfg. The module counts the usages per binary. For strcpy functions it also counts strlen functions
+right before the strcpy function. Additionally it checks if the binary is a known Linux binary or unknown and probably
+a vendor binary.
+
+
+[[0;33m*[0m] Vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system
+
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/luci-bwc (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/lua (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/luci-bwc (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 2 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/iwinfo (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 56 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/luci-bwc (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 28 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/lua (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/bin/iwinfo (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 11 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 66 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 62 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mpopen [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 229 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mpopen [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 263 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 13 [0m/ [0;33mstrlen: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 18 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/lua/luci/template/parser.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 2 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 23 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mpopen [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/lua/luci/template/parser.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 16 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 12 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libmenu.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/lua/iwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/lua/iwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libplain.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 7 [0m/ [0;33mstrlen: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 12 [0m/ [0;33mstrlen: 18 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libcrammd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libanonymous.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 72 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/lua/iwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 12 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libcrammd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libplain.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 15 [0m/ [0;33mstrlen: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libcrammd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libplain.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libanonymous.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libusb-1.0.so.0.1.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libdigestmd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libelf.so.0.8.13 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libcrammd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 4 [0m/ [0;33mstrlen: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 81 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libanonymous.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 3 [0m/ [0;33mstrlen: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libdigestmd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiptbwctl.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libdigestmd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 20 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msystem [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip6tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcom_err.so.2.1 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libusb-1.0.so.0.1.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 8 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/sasl2/libdigestmd5.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 5 [0m/ [0;33mstrlen: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libelf.so.0.8.13 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjson-c.so.2.0.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 5 [0m/ [0;33mstrlen: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 7 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiptbwctl.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip6tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 22 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcom_err.so.2.1 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 13 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libusb-1.0.so.0.1.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libnfnetlink.so.0.2.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 6 [0m/ [0;33mstrlen: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjson-c.so.2.0.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiptbwctl.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 109 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcom_err.so.2.1 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjson-c.so.2.0.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjpeg.so.62.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip6tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 12 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcom_err.so.2.1 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 20 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip4tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libnfnetlink.so.0.2.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 17 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mpopen [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libform.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libform.so.5.7 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip4tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 21 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pppol2tp.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjpeg.so.62.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 7 [0m/ [0;33mstrlen: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libnfnetlink.so.0.2.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/rp-pppoe.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 7 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pptp.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pppol2tp.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/rp-pppoe.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libjpeg.so.62.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libz.so.1.2.7 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pptp.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 17 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libip4tc.so.0.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 12 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libebtc.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/rp-pppoe.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libz.so.1.2.7 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 27 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpthread.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 4 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libnl-tiny.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 15 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libz.so.1.2.7 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_http.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 1 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libz.so.1.2.7 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap_r-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_file.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msystem [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpthread.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libebtc.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 91 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_uvc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpthread.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libnl-tiny.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 16 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libebtc.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_uvc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 1 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_http.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 40 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 1 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_http.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 23 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 45 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libebtc.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 30 [0m/ [0;33mstrlen: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/input_uvc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 23 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libpthread.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msystem [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblber-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 19 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap_r-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 109 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/output_http.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 3 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblber-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/librt.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap_r-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libiwinfo.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 11 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/librt.so.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 83 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/liblber-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libldap_r-2.4.so.2.5.6 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_helper.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_statistic.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libsasl2.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_connbytes.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 17 [0m/ [0;33mstrlen: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 10 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_DSCP.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libsasl2.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 16 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_string.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 13 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_CONNMARK.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libsasl2.so.2.0.23 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 13 [0m/ [0;33mstrlen: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_iprange.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_pkttype.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_NETMAP.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 95 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_REDIRECT.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_tcpmss.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_iprange.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 38 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_SET.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_TOS.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libip6t_HL.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_time.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 18 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_hashlimit.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 29 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 13 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_layer7.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_length.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_ECN.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_owner.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_quota.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 10 [0m/ [0;33mstrlen: 12 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_layer7.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_recent.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 24 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_CLASSIFY.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_MARK.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_layer7.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_TTL.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_IMQ.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_physdev.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ulog.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_standard.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ip.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 26 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_pkttype.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_limit.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_arpreply.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ulog.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebtable_filter.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_nflog.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_mark_m.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 4 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_among.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 1 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_nflog.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_nat.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_redirect.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_stp.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 15 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ip6.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 28 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_log.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 13 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_among.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_802_3.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 7 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebtable_nat.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_vlan.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_log.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_mark.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_arp.so (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 40 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libssl.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/fdisk (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 50 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/blkid (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/swaplabel (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/fdisk (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 151 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/blkid (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 9 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libssl.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 25 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/losetup (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 44 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/swaplabel (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/blkid (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/fdisk (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 4 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/losetup (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 64 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/mkswap (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libssl.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 307 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/mkswap (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/swapon (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/sbin/swapon (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 8 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libpthread-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 4 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libxrouter_writelog.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 11 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 13 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libxrouter_writelog.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libpthread-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libpthread-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libm-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 26 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libm-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 10 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libpthread-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msystem [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libutil-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 10 [0m/ [0;33mstrlen: 5 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 4 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root)[0;36m - common linux file: yes - [0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 6 [0m/ [0;33mstrlen: 2 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 35 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libblobmsg_json.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librt-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 10 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libblobmsg_json.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 3 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libdl-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mfprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mmmap [0m/ [0;31mFunction count: 2 [0m/ [0;33mCorrect error handling: NA [0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librt-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libubus.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/ld-uClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 22 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libblobmsg_json.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libubus.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libubox.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 8 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libdl-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 6 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libubox.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 1 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 26 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libcrypt-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 2 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 10 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libubox.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 2 [0m/ [0;33mstrlen: 2 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mprintf [0m/ [0;31mFunction count: 62 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 2 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libcrypt-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 1 [0m/ [0;33mstrlen: 0 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 12 [0m/ [0;33mstrlen: 11 [0m/ [0;33mnetworking: yes[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36msprintf [0m/ [0;31mFunction count: 16 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcat [0m/ [0;31mFunction count: 1 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+[[0;32m+[0m][0;32m ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root)[0;31m - common linux file: no -[0m Vulnerable function: [0;36mstrcpy [0m/ [0;31mFunction count: 24 [0m/ [0;33mstrlen: 12 [0m/ [0;32mnetworking: no[0m[0m
+[0m
+
+[0;34m==>[0m [0;36mTop 10 legacy C functions - Radare2 disasm mode[0m
+-----------------------------------------------------------------
+
+
+[[0;32m+[0m][0;32m fprintf - top 10 results:[0m
+[0;33m	83    : libntfs-3g.so.8 : common linux file: no[0m
+[0;32m	72    : libe2p.so.2.3   : common linux file: yes[0m
+[0;32m	66    : mke2fs          : common linux file: yes[0m
+[0;32m	62    : e2fsck          : common linux file: yes[0m
+[0;32m	50    : fdisk           : common linux file: yes[0m
+[0;32m	44    : losetup         : common linux file: yes[0m
+[0;33m	35    : libuClibc-0.9.3 : common linux file: no[0m
+[0;32m	27    : libext2fs.so.2. : common linux file: yes[0m
+[0;33m	15    : libnl-tiny.so   : common linux file: no[0m
+[0;33m	13    : libxtables.so.5 : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m mmap - top 10 results:[0m
+[0;33m	4     : libpthread.so.0 : common linux file: no[0m
+[0;33m	4     : libpthread-0.9. : common linux file: no[0m
+[0;32m	2     : parser.so       : common linux file: yes[0m
+[0;33m	2     : luci-bwc        : common linux file: no[0m
+[0;33m	2     : libuClibc-0.9.3 : common linux file: no[0m
+[0;33m	1     : libiwinfo.so    : common linux file: no[0m
+[0;32m	1     : libext2fs.so.2. : common linux file: yes[0m
+[0;32m	1     : libebt_among.so : common linux file: yes[0m
+[0;33m	1     : input_uvc.so    : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m popen - top 10 results:[0m
+[0;32m	1     : mke2fs          : common linux file: yes[0m
+[0;33m	1     : liblua.so.5.1.4 : common linux file: no[0m
+[0;33m	1     : libericstools.s : common linux file: no[0m
+[0;32m	1     : e2fsck          : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m printf - top 10 results:[0m
+[0;32m	307   : libcrypto.so.1. : common linux file: yes[0m
+[0;32m	263   : e2fsck          : common linux file: yes[0m
+[0;32m	229   : mke2fs          : common linux file: yes[0m
+[0;32m	151   : fdisk           : common linux file: yes[0m
+[0;33m	109   : libldap_r-2.4.s : common linux file: no[0m
+[0;33m	109   : libldap-2.4.so. : common linux file: no[0m
+[0;33m	95    : libntfs-3g.so.8 : common linux file: no[0m
+[0;32m	91    : libebtc.so      : common linux file: yes[0m
+[0;32m	81    : libe2p.so.2.3   : common linux file: yes[0m
+[0;32m	64    : losetup         : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m sprintf - top 10 results:[0m
+[0;33m	23    : output_http.so  : common linux file: no[0m
+[0;32m	18    : e2fsck          : common linux file: yes[0m
+[0;33m	16    : libuClibc-0.9.3 : common linux file: no[0m
+[0;32m	12    : libpopt.so.0.0. : common linux file: yes[0m
+[0;32m	11    : mke2fs          : common linux file: yes[0m
+[0;33m	10    : libuci.so       : common linux file: no[0m
+[0;33m	10    : librpc.so       : common linux file: no[0m
+[0;33m	9     : libldap_r-2.4.s : common linux file: no[0m
+[0;33m	9     : libldap-2.4.so. : common linux file: no[0m
+[0;32m	9     : libe2p.so.2.3   : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcat - top 10 results:[0m
+[0;33m	20    : libdigestmd5.so : common linux file: no[0m
+[0;33m	16    : libsasl2.so.2.0 : common linux file: no[0m
+[0;33m	13    : libntfs-3g.so.8 : common linux file: no[0m
+[0;33m	10    : libncurses.so.5 : common linux file: no[0m
+[0;32m	8     : libext2fs.so.2. : common linux file: yes[0m
+[0;32m	7     : libpopt.so.0.0. : common linux file: yes[0m
+[0;32m	4     : mke2fs          : common linux file: yes[0m
+[0;32m	4     : libcrypto.so.1. : common linux file: yes[0m
+[0;33m	3     : liblua.so.5.1.4 : common linux file: no[0m
+[0;32m	3     : libe2p.so.2.3   : common linux file: yes[0m
+
+
+
+
+[[0;32m+[0m][0;32m strcpy - top 10 results:[0m
+[0;32m	30    : libebtc.so      : common linux file: yes[0m
+[0;33m	24    : libuClibc-0.9.3 : common linux file: no[0m
+[0;32m	17    : libext2fs.so.2. : common linux file: yes[0m
+[0;33m	15    : libncurses.so.5 : common linux file: no[0m
+[0;32m	13    : mke2fs          : common linux file: yes[0m
+[0;33m	13    : libsasl2.so.2.0 : common linux file: no[0m
+[0;33m	12    : librpc.so       : common linux file: no[0m
+[0;32m	12    : libpopt.so.0.0. : common linux file: yes[0m
+[0;33m	12    : libip6tc.so.0.0 : common linux file: no[0m
+[0;33m	12    : libip4tc.so.0.0 : common linux file: no[0m
+
+
+
+
+[[0;32m+[0m][0;32m system - top 10 results:[0m
+[0;33m	1     : output_file.so  : common linux file: no[0m
+[0;33m	1     : libpthread.so.0 : common linux file: no[0m
+[0;33m	1     : libpthread-0.9. : common linux file: no[0m
+[0;33m	1     : liblua.so.5.1.4 : common linux file: no[0m
+
+
+
+[*] Statistics:299
+
+[*] Statistics1:MIPS

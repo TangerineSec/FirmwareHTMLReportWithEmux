@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mrtk_cmd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mrtk_cmd[0m
+
+jalr t9
+addiu a2, zero, 0x410
+lw gp, 0x10(sp)
+b 0x402380
+nop
+lw v0, (s3)
+blez v0, 0x4023a8
+nop
+lw a0, (s4)
+jalr t9
+nop
+move a0, s0
+move a1, zero
+lw gp, 0x10(sp)
+lw t9, -sym.imp.memset(gp)
+jalr t9
+addiu a2, zero, 0x410
+lw gp, 0x10(sp)
+lw t9, -sym.imp.recvmsg(gp)
+move a2, zero
+move a1, s6
+jalr t9
+move a0, s2
+move a1, s1
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+bnez v0, 0x40234c
+move a2, s5
+lw t9, -sym.imp.close(gp)
+jalr t9
+move a0, s2
+move v0, zero
+lw ra, 0x74(sp)
+lw s6, 0x70(sp)
+lw s5, 0x6c(sp)
+lw s4, 0x68(sp)
+lw s3, 0x64(sp)
+lw s2, 0x60(sp)
+lw s1, 0x5c(sp)
+lw s0, 0x58(sp)
+jr ra
+addiu sp, sp, 0x78
+addiu sp, sp, -0x8d8
+sw ra, 0x8d4(sp)
+sw s4, 0x8d0(sp)
+sw s3, 0x8cc(sp)
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m1[0m times [0;33mrtk_cmd[0m
+

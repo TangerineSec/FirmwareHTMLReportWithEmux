@@ -1,0 +1,231 @@
+<%+xc_header%>
+<%
+	require "luci.template"
+	local uci = require "luci.model.uci".cursor()
+
+	local show_lan_ip = uci.get('network','lan','ipaddr') or '自动'
+
+	-- 硬件版本
+	local hard_version = luci.common.trim(luci.sys.exec('/usr/local/localshell/getcapability'))
+%>
+<div class='navigation'>
+	<div class='navigation_title'>
+		<a href='<%=pcdata(build_url("admin/xcloud"))%>'>主页</a>>>快速设置
+	</div>
+	<a class="app_return" href="<%=pcdata(build_url("admin/xcloud"))%>">
+		<span class="app_return_img"></span>&nbsp;返回
+	</a>	
+</div>
+<div class='fast_setup'>
+	<div class='wansetup fast_box'>
+		<%
+			luci.template.render('admin_xcloud/wansetup')
+		%>
+	</div>
+	<div class='wifisetup fast_box'>
+		<%
+			luci.template.render('admin_xcloud/wireless_24_fast')
+		%>
+	</div>
+	<div class='clr'></div>
+	<% if hard_version == 'RY-02' then %>
+		<div class='wifisetup fast_box' style="margin:15px 0px 0px 0px;float:left;">
+			<%
+				luci.template.render('admin_xcloud/wireless_5_fast')
+			%>
+		</div>
+		<div class='wifisetup fastlan' style="margin:15px 0px 0px 0px;float:right;">
+			<%
+				luci.template.render('admin_xcloud/lansetup',{flag=1})
+			%>
+		</div>
+	<% else %>
+		<div class='wifisetup fastlan' style="margin:15px 0px 0px 0px;float:left;">
+			<%
+				luci.template.render('admin_xcloud/lansetup',{flag=1})
+			%>
+		</div>
+	<% end %>
+</div>
+<script type='text/javascript'>
+	function updatestatus(){}
+	var netipaddr = '<%=show_lan_ip%>';
+	var lanipaddrurl = '<%=pcdata(luci.dispatcher.build_url("admin/xcloud/lanipaddrsetup"))%>';
+	var landhcpurl = '<%=pcdata(luci.dispatcher.build_url("admin/xcloud/lansetup2dhcp"))%>';
+
+	//提示语
+	function alert_word(content){
+		$('.alert_word').html(content);
+	}
+
+	function chkwanconnect(){
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wanchkconnect"))%>',
+			dataType:'json',
+			success:function(r){
+				if (r.result == 'inconnect'){
+					if (r.proto == 'pppoe'){
+						 alert_word('连接失败，请重试');
+					}
+				}else{
+					if (r.proto == 'pppoe'){
+						$('.dial').after("<a href='javascript:void(0)' class='pppoetype subbtn pppoe_off' style='display:block;'><b>断开</b></a>");
+						$('.dial').remove();
+
+						alert_word('已连接');
+					}else{
+						alert_word('已保存');
+
+						window.setTimeout(function(){
+							$('.alert_word').html('');
+						}, 3000);
+					}
+				}
+				$('.setup_head h4').attr('rel','0');						
+				updatestatus();
+			}
+		})
+	}
+
+	$('.dial').live('click',function(){
+		var running = 0;
+		if ($('.setup_head h4').attr('rel') != '0'){
+			return false;
+		}
+
+		var flag = $('.wanchange').children('option:selected').val();
+		var o = {};
+
+		// check info
+		if (flag == "dhcp"){
+			alert_word('正在保存...');
+			o = {type:"dhcp"}
+		}else if(flag == "pppoe"){
+			$('.pppoestatus').css('display','none');
+
+			var pppoe_pst = $('.pppoe_pst').val();
+			var pppoe_pwd = $('.pppoe_pwd').val();
+
+			if (pppoe_pst == '' || pppoe_pwd == ''){
+				alert_word('请输入必要信息');
+				return false;
+			}
+
+			alert_word('正在连接...');
+			o = {type:"pppoe", name:pppoe_pst, pwd:pppoe_pwd}
+		}else if (flag == "static"){
+			var wan_ip = $('.wanstatic_ip').val();
+			var wan_netmask = $('.wanstatic_netmask').val();
+			var wan_gateway = $('.wanstatic_gateway').val();
+			var wan_dns = $('.wanstatic_dns').val();
+
+			if (wan_ip == '' || wan_gateway == '' || wan_dns == ''|| wan_netmask ==''){
+				alert_word('请输入必要信息');
+				return false;
+			}
+
+			var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+
+			var reg = wan_ip.match(exp);
+
+			if(reg==null){
+				alert_word('请输入正确IP地址');
+				return false;
+			}
+
+			var reg0 = wan_netmask.match(exp);
+			if (reg0==null){
+				alert_word('请输入正确子网掩码');
+				return false;
+			}
+
+			var reg1 = wan_gateway.match(exp);
+
+			if (reg1==null){
+				alert_word('请输入正确网关');
+				return false;
+			}
+			var reg2 = wan_dns.match(exp);
+			if (reg2==null){
+				alert_word('请输入正确DNS');
+				return false;
+			}
+			
+			alert_word('正在保存...');
+			o = {type:"static",ipads:wan_ip,gateway:wan_gateway,dns:wan_dns,netmask:wan_netmask}
+		}else if(flag == "others"){
+			alert_word('正在保存...');
+			o = {type:"others"}
+		}
+
+		$('.setup_head h4').attr('rel','1');
+
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wantypechange"))%>',
+			type:'POST',
+			data:o,
+			dataType:'json',
+			timeout:30000,
+			success:function(r){
+				var r = eval(r);
+				if(r['result'] == 'success'){
+					chkwanconnect();
+				}
+			},
+			error:function(){
+				chkwanconnect();
+			}
+		});
+		return false;
+	});
+
+	$('.pppoe_off').live('click',function(){
+		if ($('.setup_head h4').attr('rel') != '0'){
+			return false;
+		}
+
+		$('.setup_head h4').attr('rel','1');
+		alert_word('正在断开...');
+		var o = $(this);
+
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wantypechange"))%>',
+			dataType:'json',
+			data:{type:'others'},
+			type:'POST',
+			success:function(r){
+				alert_word('已断开');
+				updatestatus();
+				$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>连接</b></a>");
+				$('.setup_head h4').attr('rel','0');					
+			},
+			error:function(){
+				alert_word('已断开');
+				updatestatus();
+				$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>连接</b></a>");
+				$('.setup_head h4').attr('rel','0');	
+			}
+		});
+	});
+
+	//路由器重启
+	function reboot_router(ip){
+		$.ajax({
+			url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/reboot_router"))%>',
+			type:'GET',
+			dataType:'HTML',
+			success:function(){
+				return false;
+			},
+
+			error:function(){
+				return false;
+			}
+		});
+
+		var interval = window.setInterval(function() {
+			window.location.href = 'http://'+ip+'/';
+		}, 100000);	
+	}
+</script>
+<%+xc_footer%>

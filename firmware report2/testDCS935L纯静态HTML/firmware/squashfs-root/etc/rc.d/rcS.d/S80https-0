@@ -1,0 +1,74 @@
+#!/bin/sh
+
+# https: This starts and stops https.
+#
+# chkconfig: 2345 80 20
+# description: https
+#
+# processname: /bin/stunnel
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+http_port=8088
+http_port_real=`/usr/sbin/userconfig -read HTTP Port`
+https_port=`/usr/sbin/userconfig -read HTTPS Port`
+https_enable=`/usr/sbin/userconfig -read HTTPS Enable`
+if [ -z $https_port ]; then
+	https_port=443
+fi
+
+if [ -z $http_port_real ]; then
+	http_port_real=80
+fi
+/usr/sbin/cfg -a w -p /var stunnel-https.conf https accept $https_port
+/usr/sbin/cfg -a w -p /var stunnel-https.conf https connect $http_port
+/usr/sbin/cfg -a w -p /var stunnel-https.conf https localconnect $http_port_real
+
+
+start() {
+	if [ $https_enable = 0x01 ]; then
+	echo "Starting private httpd for https..."
+		cd /web; ./ssl-httpd $http_port 1 0 0&
+	echo "Starting https..."
+		/bin/stunnel /var/stunnel-https.conf
+	fi
+}
+
+stop() {
+	/bin/kill `pidof stunnel`
+	/bin/kill `pidof ssl-httpd`
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+reload() {
+	echo -n "Reloading httpd for https... "
+	kill -USR1 `pidof ssl-httpd` 
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	reload)
+		reload
+		;;	
+	*)
+		echo $"Usage $0 {start|stop|restart|reload}"
+		exit 1
+esac
+
+exit $?

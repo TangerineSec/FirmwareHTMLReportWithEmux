@@ -1,0 +1,127 @@
+[[0;33m*[0m] Binary protection state of [0;33migmp[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33migmp[0m
+
+    91a8:	0000b9f0 	strdeq	fp, [r0], -r0
+    91ac:	0000ba02 	andeq	fp, r0, r2, lsl #20
+    91b0:	0000ba55 	andeq	fp, r0, r5, asr sl
+    91b4:	0000b970 	andeq	fp, r0, r0, ror r9
+    91b8:	00014230 	andeq	r4, r1, r0, lsr r2
+    91bc:	0000ba68 	andeq	fp, r0, r8, ror #20
+    91c0:	0000ba6e 	andeq	fp, r0, lr, ror #20
+    91c4:	0001420c 	andeq	r4, r1, ip, lsl #4
+    91c8:	e92d4038 	push	{r3, r4, r5, lr}
+    91cc:	e1a04000 	mov	r4, r0
+    91d0:	e5900000 	ldr	r0, [r0]
+    91d4:	ebfffe87 	bl	8bf8 <inet_ntoa@plt>
+    91d8:	e594c008 	ldr	ip, [r4, #8]
+    91dc:	e1a01000 	mov	r1, r0
+    91e0:	e59f3070 	ldr	r3, [pc, #112]	; 9258 <_start+0x5ac>
+    91e4:	e59f2070 	ldr	r2, [pc, #112]	; 925c <_start+0x5b0>
+    91e8:	e35c0000 	cmp	ip, #0
+    91ec:	e59f006c 	ldr	r0, [pc, #108]	; 9260 <_start+0x5b4>
+    91f0:	01a02003 	moveq	r2, r3
+    91f4:	e5943004 	ldr	r3, [r4, #4]
+[31m    91f8:	ebfffe1b 	bl	8a6c <printf@plt>[0m
+    91fc:	e5945018 	ldr	r5, [r4, #24]
+    9200:	e3550000 	cmp	r5, #0
+    9204:	0a000007 	beq	9228 <_start+0x57c>
+    9208:	e5950000 	ldr	r0, [r5]
+    920c:	ebfffe79 	bl	8bf8 <inet_ntoa@plt>
+    9210:	e5952004 	ldr	r2, [r5, #4]
+    9214:	e1a01000 	mov	r1, r0
+    9218:	e59f0044 	ldr	r0, [pc, #68]	; 9264 <_start+0x5b8>
+[31m    921c:	ebfffe12 	bl	8a6c <printf@plt>[0m
+    9220:	e595500c 	ldr	r5, [r5, #12]
+    9224:	eafffff5 	b	9200 <_start+0x554>
+    9228:	e5944014 	ldr	r4, [r4, #20]
+    922c:	e3540000 	cmp	r4, #0
+    9230:	08bd8038 	popeq	{r3, r4, r5, pc}
+    9234:	e5940000 	ldr	r0, [r4]
+    9238:	ebfffe6e 	bl	8bf8 <inet_ntoa@plt>
+    923c:	e1a01000 	mov	r1, r0
+    9240:	e59f0020 	ldr	r0, [pc, #32]	; 9268 <_start+0x5bc>
+[31m    9244:	ebfffe08 	bl	8a6c <printf@plt>[0m
+    9248:	e5944004 	ldr	r4, [r4, #4]
+    924c:	e3540000 	cmp	r4, #0
+--
+    9d60:	e3a00000 	mov	r0, #0
+    9d64:	e8bd8008 	pop	{r3, pc}
+    9d68:	000f4240 	andeq	r4, pc, r0, asr #4
+    9d6c:	e59f3008 	ldr	r3, [pc, #8]	; 9d7c <_start+0x10d0>
+    9d70:	e3a02000 	mov	r2, #0
+    9d74:	e5832000 	str	r2, [r3]
+    9d78:	e12fff1e 	bx	lr
+    9d7c:	0001425c 	andeq	r4, r1, ip, asr r2
+    9d80:	e59f3048 	ldr	r3, [pc, #72]	; 9dd0 <_start+0x1124>
+    9d84:	e92d4013 	push	{r0, r1, r4, lr}
+    9d88:	e5934000 	ldr	r4, [r3]
+    9d8c:	ea000009 	b	9db8 <_start+0x110c>
+    9d90:	e2843048 	add	r3, r4, #72	; 0x48
+    9d94:	e1a01004 	mov	r1, r4
+    9d98:	e58d3000 	str	r3, [sp]
+    9d9c:	e2842008 	add	r2, r4, #8
+    9da0:	e5943068 	ldr	r3, [r4, #104]	; 0x68
+    9da4:	e59f0028 	ldr	r0, [pc, #40]	; 9dd4 <_start+0x1128>
+    9da8:	e58d3004 	str	r3, [sp, #4]
+    9dac:	e2843028 	add	r3, r4, #40	; 0x28
+[31m    9db0:	ebfffb2d 	bl	8a6c <printf@plt>[0m
+    9db4:	e594406c 	ldr	r4, [r4, #108]	; 0x6c
+    9db8:	e3540000 	cmp	r4, #0
+--
+    a020:	e58d4118 	str	r4, [sp, #280]	; 0x118
+    a024:	e58d313c 	str	r3, [sp, #316]	; 0x13c
+    a028:	e5953054 	ldr	r3, [r5, #84]	; 0x54
+    a02c:	e58d3140 	str	r3, [sp, #320]	; 0x140
+    a030:	e28d3f4f 	add	r3, sp, #316	; 0x13c
+    a034:	e58d3110 	str	r3, [sp, #272]	; 0x110
+    a038:	e3a03001 	mov	r3, #1
+    a03c:	e58d3114 	str	r3, [sp, #276]	; 0x114
+    a040:	e283304b 	add	r3, r3, #75	; 0x4b
+    a044:	e58d311c 	str	r3, [sp, #284]	; 0x11c
+    a048:	e28d3f49 	add	r3, sp, #292	; 0x124
+    a04c:	e58d3108 	str	r3, [sp, #264]	; 0x108
+    a050:	e3a03010 	mov	r3, #16
+    a054:	e58d310c 	str	r3, [sp, #268]	; 0x10c
+    a058:	ebfffb07 	bl	8c7c <recvmsg@plt>
+    a05c:	e3500014 	cmp	r0, #20
+    a060:	e1a0a000 	mov	sl, r0
+    a064:	8a000005 	bhi	a080 <_start+0x13d4>
+    a068:	e1a0100a 	mov	r1, sl
+    a06c:	e59f0378 	ldr	r0, [pc, #888]	; a3ec <_start+0x1740>
+[31m    a070:	ebfffa7d 	bl	8a6c <printf@plt>[0m
+    a074:	e1a00004 	mov	r0, r4
+    a078:	ebfffb08 	bl	8ca0 <free@plt>
+--
+    b468:	b3a00000 	movlt	r0, #0
+    b46c:	ba000003 	blt	b480 <_start+0x27d4>
+    b470:	e1a00005 	mov	r0, r5
+    b474:	e1a0100d 	mov	r1, sp
+    b478:	e3a02010 	mov	r2, #16
+    b47c:	ebfff5bc 	bl	8b74 <strncpy@plt>
+    b480:	e28dd024 	add	sp, sp, #36	; 0x24
+    b484:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+    b488:	e92d401f 	push	{r0, r1, r2, r3, r4, lr}
+    b48c:	e3a02001 	mov	r2, #1
+    b490:	e28d3010 	add	r3, sp, #16
+    b494:	e5631001 	strb	r1, [r3, #-1]!
+    b498:	e3a01000 	mov	r1, #0
+    b49c:	e58d2000 	str	r2, [sp]
+    b4a0:	e2822021 	add	r2, r2, #33	; 0x21
+    b4a4:	ebfff5a3 	bl	8b38 <setsockopt@plt>
+    b4a8:	e3500000 	cmp	r0, #0
+    b4ac:	aa000002 	bge	b4bc <_start+0x2810>
+    b4b0:	e59f000c 	ldr	r0, [pc, #12]	; b4c4 <_start+0x2818>
+    b4b4:	e5dd100f 	ldrb	r1, [sp, #15]
+[31m    b4b8:	ebfff56b 	bl	8a6c <printf@plt>[0m
+    b4bc:	e28dd014 	add	sp, sp, #20
+    b4c0:	e8bd8000 	ldmfd	sp!, {pc}
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m6[0m times [0;33migmp[0m
+

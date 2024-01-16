@@ -1,0 +1,95 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibxtables.so.7.0.0.svn-base[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibxtables.so.7.0.0.svn-base[0m
+
+    3f5c:	ffff6e2c 	.word	0xffff6e2c
+    3f60:	ffff6e00 	.word	0xffff6e00
+    3f64:	ffff6e74 	.word	0xffff6e74
+
+00003f68 <xtables_ipaddr_to_numeric>:
+    3f68:	e59fc044 	ldr	ip, [pc, #68]	; 3fb4 <xtables_ipaddr_to_numeric+0x4c>
+    3f6c:	e92d4030 	push	{r4, r5, lr}
+    3f70:	e24dd00c 	sub	sp, sp, #12
+    3f74:	e59f403c 	ldr	r4, [pc, #60]	; 3fb8 <xtables_ipaddr_to_numeric+0x50>
+    3f78:	e08fc00c 	add	ip, pc, ip
+    3f7c:	e59f1038 	ldr	r1, [pc, #56]	; 3fbc <xtables_ipaddr_to_numeric+0x54>
+    3f80:	e5d05002 	ldrb	r5, [r0, #2]
+    3f84:	e08c4004 	add	r4, ip, r4
+    3f88:	e5d0e003 	ldrb	lr, [r0, #3]
+    3f8c:	e284400c 	add	r4, r4, #12
+    3f90:	e5d02000 	ldrb	r2, [r0]
+    3f94:	e08c1001 	add	r1, ip, r1
+    3f98:	e5d03001 	ldrb	r3, [r0, #1]
+    3f9c:	e1a00004 	mov	r0, r4
+    3fa0:	e88d4020 	stm	sp, {r5, lr}
+[31m    3fa4:	ebfff7cf 	bl	1ee8 <sprintf@plt>[0m
+    3fa8:	e1a00004 	mov	r0, r4
+    3fac:	e28dd00c 	add	sp, sp, #12
+--
+    4024:	e6bf3f33 	rev	r3, r3
+    4028:	e3730001 	cmn	r3, #1
+    402c:	e08f5005 	add	r5, pc, r5
+    4030:	0a00001d 	beq	40ac <xtables_ipmask_to_numeric+0x94>
+    4034:	e3730002 	cmn	r3, #2
+    4038:	13e01003 	mvnne	r1, #3
+    403c:	13a0201e 	movne	r2, #30
+    4040:	1a000002 	bne	4050 <xtables_ipmask_to_numeric+0x38>
+    4044:	ea00001b 	b	40b8 <xtables_ipmask_to_numeric+0xa0>
+    4048:	e2522001 	subs	r2, r2, #1
+    404c:	3a00000b 	bcc	4080 <xtables_ipmask_to_numeric+0x68>
+    4050:	e1510003 	cmp	r1, r3
+    4054:	e1a01081 	lsl	r1, r1, #1
+    4058:	1afffffa 	bne	4048 <xtables_ipmask_to_numeric+0x30>
+    405c:	e59f4060 	ldr	r4, [pc, #96]	; 40c4 <xtables_ipmask_to_numeric+0xac>
+    4060:	e59f1060 	ldr	r1, [pc, #96]	; 40c8 <xtables_ipmask_to_numeric+0xb0>
+    4064:	e0854004 	add	r4, r5, r4
+    4068:	e2844020 	add	r4, r4, #32
+    406c:	e0851001 	add	r1, r5, r1
+    4070:	e1a00004 	mov	r0, r4
+[31m    4074:	ebfff79b 	bl	1ee8 <sprintf@plt>[0m
+    4078:	e1a00004 	mov	r0, r4
+    407c:	e8bd8038 	pop	{r3, r4, r5, pc}
+    4080:	e59f403c 	ldr	r4, [pc, #60]	; 40c4 <xtables_ipmask_to_numeric+0xac>
+    4084:	ebfff71c 	bl	1cfc <xtables_ipaddr_to_numeric@plt>
+    4088:	e59f103c 	ldr	r1, [pc, #60]	; 40cc <xtables_ipmask_to_numeric+0xb4>
+    408c:	e1a02000 	mov	r2, r0
+    4090:	e0854004 	add	r4, r5, r4
+    4094:	e2844020 	add	r4, r4, #32
+    4098:	e0851001 	add	r1, r5, r1
+    409c:	e1a00004 	mov	r0, r4
+[31m    40a0:	ebfff790 	bl	1ee8 <sprintf@plt>[0m
+    40a4:	e1a00004 	mov	r0, r4
+    40a8:	e8bd8038 	pop	{r3, r4, r5, pc}
+--
+    48a8:	e1a06fa1 	lsr	r6, r1, #31
+    48ac:	e1a01081 	lsl	r1, r1, #1
+    48b0:	e1953083 	orrs	r3, r5, r3, lsl #1
+    48b4:	e187e08e 	orr	lr, r7, lr, lsl #1
+    48b8:	e186c08c 	orr	ip, r6, ip, lsl #1
+    48bc:	e2822001 	add	r2, r2, #1
+    48c0:	4afffff6 	bmi	48a0 <xtables_ip6mask_to_numeric+0x3c>
+    48c4:	e18e3003 	orr	r3, lr, r3
+    48c8:	e183c00c 	orr	ip, r3, ip
+    48cc:	e19cc001 	orrs	ip, ip, r1
+    48d0:	1a00000c 	bne	4908 <xtables_ip6mask_to_numeric+0xa4>
+    48d4:	e3720001 	cmn	r2, #1
+    48d8:	0a00000a 	beq	4908 <xtables_ip6mask_to_numeric+0xa4>
+    48dc:	e59f5060 	ldr	r5, [pc, #96]	; 4944 <xtables_ip6mask_to_numeric+0xe0>
+    48e0:	e59f1060 	ldr	r1, [pc, #96]	; 4948 <xtables_ip6mask_to_numeric+0xe4>
+    48e4:	e0840005 	add	r0, r4, r5
+    48e8:	e2800e47 	add	r0, r0, #1136	; 0x470
+    48ec:	e0841001 	add	r1, r4, r1
+    48f0:	e2800004 	add	r0, r0, #4
+    48f4:	e0844005 	add	r4, r4, r5
+[31m    48f8:	ebfff57a 	bl	1ee8 <sprintf@plt>[0m
+    48fc:	e2840e47 	add	r0, r4, #1136	; 0x470
+    4900:	e2800004 	add	r0, r0, #4
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m4[0m times [0;33mlibxtables.so.7.0.0.svn-base[0m
+

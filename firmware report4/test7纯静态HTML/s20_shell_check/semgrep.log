@@ -1,0 +1,140 @@
+METRICS: Using configs from the Registry (like --config=p/ci) reports pseudonymous rule metrics to semgrep.dev.
+To disable Registry rule metrics, use "--metrics=off".
+Using configs only from local files (like --config=xyz.yml) does not enable metrics.
+
+More information: https://semgrep.dev/docs/metrics
+
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 1471 files tracked by git with 7 Code rules:
+  Scanning 5 files with 7 bash rules.
+                    
+                    
+┌──────────────────┐
+│ 35 Code Findings │
+└──────────────────┘
+                                             
+    /logs/firmware/squashfs-root/bin/ddns.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           33┆ wanIP=`ifconfig $wanif | grep 'inet addr' | awk '{print $2}' | sed -e 's/addr://'`
+            ⋮┆----------------------------------------
+           64┆ inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system dyndns@$srv &
+            ⋮┆----------------------------------------
+           66┆ inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &
+            ⋮┆----------------------------------------
+           68┆ inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &
+            ⋮┆----------------------------------------
+           70┆ inadyn -u $u -p $pw -a $ddns --update_period_sec 600 --dyndns_system default@$srv &
+                                                     
+    /logs/firmware/squashfs-root/bin/u-media_nmbd.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           25┆ um_nmbd $CONF > /dev/null 2>&1
+                                                     
+    /logs/firmware/squashfs-root/sbin/monitor_usb.sh 
+       external.semgrep-rules.bash.lang.best-practice.useless-cat                                    
+          Useless call to 'cat' in a pipeline. Use '<' and '>' for any command to read from a file or
+          write to a file.                                                                           
+                                                                                                     
+           17┆ device=`cat /proc/bus/usb/devices | grep 'Ver=' | grep -v 'hub'`
+            ⋮┆----------------------------------------
+           17┆ device=`cat /proc/bus/usb/devices | grep 'Ver=' | grep -v 'hub'`
+            ⋮┆----------------------------------------
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           53┆ umount /tmp/media/$mnt_dev
+            ⋮┆----------------------------------------
+           54┆ rmdir /tmp/media/$mnt_dev
+            ⋮┆----------------------------------------
+           67┆ sleep $SLEEP_TIME
+                                                
+    /logs/firmware/squashfs-root/sbin/udhcpc.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           27┆ route del default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           30┆ route add default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           38┆ ifconfig $interface $LAN_IP_ADDR
+            ⋮┆----------------------------------------
+           47┆ route del default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           50┆ echo $ip > $WPS_DHCP_IP_FILE
+            ⋮┆----------------------------------------
+           62┆ ifconfig $interface $ip $BROADCAST $NETMASK
+            ⋮┆----------------------------------------
+           63┆ nvram set lan_ipaddr=$ip
+            ⋮┆----------------------------------------
+           64┆ nvram set lan_gateway=$router
+            ⋮┆----------------------------------------
+           69┆ WAIT_TIMER=`expr $WAIT_TIMER + 1`
+            ⋮┆----------------------------------------
+           76┆ ifconfig $interface $ip $BROADCAST $NETMASK
+            ⋮┆----------------------------------------
+           77┆ nvram set lan_ipaddr=$ip
+            ⋮┆----------------------------------------
+           78┆ nvram set lan_gateway=$router
+            ⋮┆----------------------------------------
+           81┆ rm -rf $WPS_DHCP_IP_FILE
+            ⋮┆----------------------------------------
+           84┆ rm -rf $DHCP_STATUS_FILE
+                                                       
+    /logs/firmware/squashfs-root/sbin/udhcpc_router.sh 
+       external.semgrep-rules.bash.lang.correctness.unquoted-variable-expansion-in-command            
+          Variable expansions must be double-quoted so as to prevent being split into multiple pieces 
+          according to whitespace or whichever separator is specified by the IFS variable. If you     
+          really wish to split the variable's contents, you may use a variable that starts with an    
+          underscore e.g. $_X instead of $X, and semgrep will ignore it. If what you need is an array,
+          consider using a proper bash array.                                                         
+                                                                                                      
+           34┆ route del default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           37┆ route add default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           40┆ ifconfig $interface 0.0.0.0
+            ⋮┆----------------------------------------
+           48┆ route del default gateway $LAN_IP_ADDR dev $interface
+            ⋮┆----------------------------------------
+           51┆ echo $ip > $WPS_DHCP_IP_FILE
+            ⋮┆----------------------------------------
+           63┆ ifconfig $interface $ip $BROADCAST $NETMASK
+            ⋮┆----------------------------------------
+           67┆ WAIT_TIMER=`expr $WAIT_TIMER + 1`
+            ⋮┆----------------------------------------
+           74┆ ifconfig $interface $ip $BROADCAST $NETMASK
+            ⋮┆----------------------------------------
+           91┆ rm -rf $WPS_DHCP_IP_FILE
+            ⋮┆----------------------------------------
+           94┆ rm -rf $DHCP_STATUS_FILE
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+
+Ran 7 rules on 5 files: 35 findings.
+

@@ -1,0 +1,33 @@
+#!/bin/sh /etc/rc.common
+
+START=19
+
+#get dynamic ip
+lan_ip="$(uci get network.lan.ipaddr 2>/dev/null)"
+if [ -n "$lan_ip" ];then
+	uci set firewall.@redirect[0].dest_ip="$lan_ip"
+	uci set firewall.@redirect[1].dest_ip="$lan_ip"
+	uci commit firewall
+fi
+
+boot() {
+	# Be silent on boot, firewall might be started by hotplug already,
+	# so don't complain in syslog.
+	fw3 -q start
+}
+
+start() {
+	fw3 start
+}
+
+stop() {
+	fw3 flush
+}
+
+restart() {
+	fw3 restart
+}
+
+reload() {
+	fw3 reload
+}

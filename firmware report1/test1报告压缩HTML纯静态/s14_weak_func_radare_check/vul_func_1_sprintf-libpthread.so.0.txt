@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibpthread.so.0[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[33mPartial RELRO[0m  [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibpthread.so.0[0m
+
+jalr t9
+move a0, s1
+lw gp, 0x18(sp)
+b 0x58b8
+addiu v1, zero, 0x2f
+slti a0, v0, 2
+bnez a0, 0x58d4
+addu a0, s1, v0
+lbu a0, -1(a0)
+beq a0, v1, 0x58b8
+addiu v0, v0, -1
+addiu v0, v0, 1
+addiu v1, s0, 8
+addu v1, v1, v0
+sltu s4, s4, v1
+beqz s4, 0x5908
+lw a1, -0x7fa8(gp)
+rdhwr v1, 29
+move v0, v1
+lw v1, -0x7cf4(gp)
+addu v0, v1, v0
+addiu v1, zero, 0x16
+sw v1, (v0)
+b 0x592c
+addiu v0, zero, -1
+[31mlw t9, -sym.imp.sprintf(gp)[0m
+sw s0, 0x10(sp)
+sw s2, 0x14(sp)
+move a0, s5
+addiu a1, a1, 0x15a0
+move a2, v0
+jalr t9
+move a3, s1
+move v0, zero
+lw ra, 0x3c(sp)
+lw s5, 0x38(sp)
+lw s4, 0x34(sp)
+lw s3, 0x30(sp)
+lw s2, 0x2c(sp)
+lw s1, 0x28(sp)
+lw s0, 0x24(sp)
+jr ra
+addiu sp, sp, 0x40
+lui gp, 2
+addiu gp, gp, 0x56e0
+addu gp, gp, t9
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m1[0m times [0;33mlibpthread.so.0[0m
+

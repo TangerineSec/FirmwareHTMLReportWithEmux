@@ -1,0 +1,113 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 16:[0m
+[0mhttp_port_real=`/usr/sbin/userconfig -read HTTP Port`[0m
+[32m               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+http_port_real=$(/usr/sbin/userconfig -read HTTP Port)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 17:[0m
+[0mhttps_port=`/usr/sbin/userconfig -read HTTPS Port`[0m
+[32m           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+https_port=$(/usr/sbin/userconfig -read HTTPS Port)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 18:[0m
+[0mhttps_enable=`/usr/sbin/userconfig -read HTTPS Enable`[0m
+[32m             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+https_enable=$(/usr/sbin/userconfig -read HTTPS Enable)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 19:[0m
+[0mif [ -z $https_port ]; then[0m
+[32m        ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ -z "$https_port" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 23:[0m
+[0mif [ -z $http_port_real ]; then[0m
+[32m        ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ -z "$http_port_real" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 26:[0m
+[0m/usr/sbin/cfg -a w -p /var stunnel-https.conf https accept $https_port[0m
+[32m                                                           ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+/usr/sbin/cfg -a w -p /var stunnel-https.conf https accept "$https_port"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 28:[0m
+[0m/usr/sbin/cfg -a w -p /var stunnel-https.conf https localconnect $http_port_real[0m
+[32m                                                                 ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+/usr/sbin/cfg -a w -p /var stunnel-https.conf https localconnect "$http_port_real"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 32:[0m
+[0m	if [ $https_enable = 0x01 ]; then[0m
+[32m             ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ "$https_enable" = 0x01 ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 34:[0m
+[0m		cd /web; ./ssl-httpd $http_port 1 0 0&[0m
+[33m                ^-----^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.[0m
+
+[1mDid you mean: [0m
+		cd /web || exit; ./ssl-httpd $http_port 1 0 0&
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 41:[0m
+[0m	/bin/kill `pidof stunnel`[0m
+[33m                  ^-------------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                  ^-------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	/bin/kill $(pidof stunnel)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 42:[0m
+[0m	/bin/kill `pidof ssl-httpd`[0m
+[33m                  ^---------------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                  ^---------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	/bin/kill $(pidof ssl-httpd)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 52:[0m
+[0m	echo -n "Reloading httpd for https... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 53:[0m
+[0m	kill -USR1 `pidof ssl-httpd` [0m
+[33m                   ^---------------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                   ^---------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	kill -USR1 $(pidof ssl-httpd) 
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/https-0 line 70:[0m
+[0m		echo $"Usage $0 {start|stop|restart|reload}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC2164 -- Use 'cd ... || exit' or 'cd ... |...
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.

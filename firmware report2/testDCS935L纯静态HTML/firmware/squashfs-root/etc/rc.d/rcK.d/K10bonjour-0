@@ -1,0 +1,106 @@
+#!/bin/sh
+
+# mDNSResponderPosix: This starts and stops bonjour.
+#
+# chkconfig: 2345 90 10
+# description: bonjour
+#
+# processname: /usr/sbin/mDNSResponderPosix
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+prog="mDNSResponderPosix"
+binpath="/usr/sbin/mDNSResponderPosix"
+configpath="/usr/sbin/userconfig"
+make_bonjour_file_binpath="/usr/sbin/makeBonjourFile"
+bonjour_dhnap_service_file="/var/bonjour-dhnap_service.txt"
+bonjour_http_service_file="/var/bonjour-http_service.txt"
+bonjour_wac_service_file="/var/bonjour-wac_service.txt"
+bonjour_presentationURL=`/usr/sbin/userconfig -read Bonjour PresentationURL`
+mac=`rtkmib mac|tr '[a-z]' '[A-Z]'`
+CameraName=`/usr/sbin/userconfig -read CAMSYSTEM CameraName|tr '[A-Z]' '[a-z]'`
+ModelName=`/usr/sbin/userconfig -read System ModelName`
+BrandName=`/usr/sbin/userconfig -read INFO BrandName`
+start(){
+	enable=`$configpath -read Bonjour Enable`
+	if [ $enable == "0x01" ]; then
+		echo -n "Launch $prog ..."
+   	# force stop server again before start
+   	killall -2 $prog
+		$make_bonjour_file_binpath
+		if [ $BrandName == "D-Link" ]; then
+			#dhnap service
+			if [ -f $bonjour_dhnap_service_file ]; then
+				$binpath -f $bonjour_dhnap_service_file -b
+			fi
+			if [ -z $CameraName ]; then
+				CameraName=$ModelName
+			fi
+			Target1=$CameraName
+			Target2=$CameraName`echo $mac|cut -d: -f 5``echo $mac|cut -d: -f 6`
+			Target3=$bonjour_presentationURL
+			Target1=`echo $Target1|tr '[A-Z]' '[a-z]'`
+			Target2=`echo $Target2|tr '[A-Z]' '[a-z]'`
+			Target3=`echo $Target3|tr '[A-Z]' '[a-z]'`
+			#http service
+			if [ -f $bonjour_http_service_file ]; then
+				$binpath -f $bonjour_http_service_file -h $Target1 -b
+				$binpath -f $bonjour_http_service_file -h $Target2 -b
+				if [ -n "$Target3" ] && [ "$Target3" != "$Target1" ] && [ "$Target3" != "$Target2" ]; then
+					$binpath -f $bonjour_http_service_file -h $Target3 -b
+				fi
+			fi
+			#wac service
+			if [ -f $bonjour_wac_service_file ]; then
+				$binpath -f $bonjour_wac_service_file -b
+			fi			
+		else
+			#http service
+			if [ -f $bonjour_http_service_file ]; then
+				$binpath -f $bonjour_http_service_file -b
+			fi
+		fi
+		echo "."
+	fi
+}
+
+stop(){
+	echo -n "Stopping $prog: "
+	killall -2 $prog
+	echo "."
+}
+
+reload(){
+	echo -n "Reloading configuration $prog: "	
+	killall -1 $prog
+	echo "."
+}
+
+# See how we were called.
+case "$1" in
+	start)
+		stop
+		sleep 1
+		start
+		;;
+	stop)
+		stop
+		;;
+	reload)
+		reload
+		;;
+	restart)
+		stop
+		sleep 1
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|reload}"
+		exit 1
+esac
+
+exit 0
+

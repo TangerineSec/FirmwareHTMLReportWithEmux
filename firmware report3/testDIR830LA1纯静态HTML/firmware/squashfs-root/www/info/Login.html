@@ -1,0 +1,420 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns= "http://www.w3c.org/1999/xhtml" xml:lang="zh_TW" lang="zh_TW">
+
+<head>
+<title>D-LINK</title>
+<meta http-equiv="X-UA-Compatible" content="IE=9">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/css">
+<link rel=stylesheet type="text/css" href="/css/jquery.selectbox.css?v=TimeStamp_QzwsxDcRfvTGByHn" />
+<script type="text/javascript" charset="utf-8" src="/js/initialJSDefault.js?v=TimeStamp_QzwsxDcRfvTGByHn"></script>
+<script type="text/javascript" charset="utf-8" src="/js/initialCSSDefault.js?v=TimeStamp_QzwsxDcRfvTGByHn"></script>
+<script type="text/javascript" charset="utf-8" src="/js/initialJQ.js?v=TimeStamp_QzwsxDcRfvTGByHn"></script>
+<script type="text/javascript" charset="utf-8" src="../config/features.js"></script>
+</head>
+<script type="text/javascript">
+	// Auto Detecting Language, Timmy 2013/05/03, 2013/05/31(Modify)
+	var SetLang = 0;
+	var IsPrivateBrowseing = 0;
+	var ShowShareportLink = 0;
+	try
+	{
+		// Try to set localstorage
+		localStorage.setItem('Test', 'test');
+		localStorage.removeItem('Test');
+		// Language List
+		var LangList = new Array("en-us", "zh-tw", "zh-cn", "ko-kr", "fr-fr", "pt-br", "es-es", "it-it", "de-de", "ru-ru");
+		if (localStorage.getItem('language') === null)
+		{
+			if (navigator.appName == 'Netscape')	{	var language = navigator.language;			}
+			else									{	var language = navigator.browserLanguage;	}
+			var SetLanguage = language.toLowerCase();
+			var IsSuccessSetupLang = "false";
+			for (var i = 0; i < LangList.length; i ++)
+			{
+				if (SetLanguage == LangList[i])
+				{
+					localStorage.setItem('language', LangList[i]);
+					localStorage.language = LangList[i];
+					InitLANG(localStorage.language);
+					IsSuccessSetupLang = "true";
+					SetLang = i;
+				}
+			}
+		}
+		else
+		{
+			InitLANG(localStorage.language);
+			for (var i = 0; i < LangList.length; i ++)	{	if (localStorage.language == LangList[i])	{	SetLang = i;	}	}
+		}
+	}
+	catch (error)
+	{
+		if (error.code === DOMException.QUOTA_EXCEEDED_ERR && localStorage.length === 0)
+		{
+			InitLANG("en-us");
+			alert(I18N("j", "The Private Browsing feature of Safari is incompatible with this device's interface. You will need to disable Private Browsing to log in."));
+			IsPrivateBrowseing = 1;
+		}
+		else throw error;
+	}
+
+</script>
+<script type="text/javascript">
+	var HNAP = new HNAP_XML();
+	var Challenge = null;
+	var Cookie = null;
+	var PublicKey = null;
+	var PrivateKey = null;
+	var Login_Password = null;
+	var Login_Captcha = null;
+	var HasCAPTCHA = 0;
+	
+	//model information object
+	function ModelInfo(modelName, hwVer, fwVer)
+	{
+		this.modelName = modelName;
+		this.hwVer = hwVer;
+		this.fwVer = fwVer;
+	}
+	
+	function generate_Captcha()
+	{
+		var AJAX = GetAjaxObj("captcha");
+		AJAX.release();
+		AJAX.createRequest();
+		AJAX.onCallback = function(xml)
+		{
+			switch (xml.Get("/captcha/result"))
+			{
+				case "OK":
+					self.captcha = xml.Get("/captcha/message");
+					document.getElementById("captcha_image").innerHTML = "<img src="+self.captcha+"?"+COMM_RandomStr(6)+" />";
+					break;
+			}
+			AJAX.release();
+		}
+		AJAX.setHeader("Content-Type", "application/x-www-form-urlencoded");
+		AJAX.sendRequest("/captcha.cgi", "DUMMY=YES");
+	}
+	if (navigator.cookieEnabled)	{	document.cookie = "uid="+COMM_RandomStr(10)+"; path=/";	}
+	function changText(str)
+	{
+		var ar = str.split('');
+		for(var i = 0; i < ar.length; i ++)
+		{
+			if(ar[i].charCodeAt(0) >= 65 && ar[i].charCodeAt(0) <= 90)	{	ar[i] = ar[i].toLowerCase();	}
+			else														{	ar[i] = ar[i].toUpperCase();	}
+		}
+		str = "";
+		for(var i = 0; i < ar.length; i ++)	{	str += ar[i];	}
+		return str;
+	}
+	function SetXML()
+	{
+		if (HasCAPTCHA == 0)
+		{
+			Login_Password = document.getElementById("admin_Password").value;
+			Login_Captcha = "";
+		}
+		else
+		{
+			Login_Password = document.getElementById("admin_Password_with_Captcha").value;
+			Login_Captcha = document.getElementById("input_Captcha").value;
+		}
+		document.getElementById("admin_Password").disabled = true;
+		document.getElementById("admin_Password_with_Captcha").disabled = true;
+		document.getElementById("logIn_btn").setAttribute("class", "styled_button_dis");
+		document.getElementById("logIn_btn_c").setAttribute("class", "styled_button_dis");
+		document.getElementById("logIn_btn").disabled = true;
+		document.getElementById("logIn_btn_c").disabled = true;
+		
+		var xml_Login = HNAP.GetXML("Login");
+		/* Login request */
+		xml_Login.Set("Login/Action", "request");
+		xml_Login.Set("Login/Username", "Admin");
+		xml_Login.Set("Login/LoginPassword", "");
+		xml_Login.Set("Login/Captcha", Login_Captcha);
+		// Send HNAP to DUT
+		HNAP.SetXMLAsync("Login", xml_Login, function(xml)	{	SetResult_1st(xml);	});
+	}
+	function SetResult_1st(result_xml)
+	{
+		var SetResult_1st = result_xml.Get("LoginResponse/LoginResult");
+		if (SetResult_1st == "OK")
+		{
+			Challenge = result_xml.Get("LoginResponse/Challenge");
+			Cookie = result_xml.Get("LoginResponse/Cookie");
+			PublicKey = result_xml.Get("LoginResponse/PublicKey");
+			PrivateKey = hex_hmac_md5(PublicKey + Login_Password, Challenge);
+			PrivateKey = changText(PrivateKey);
+			/* Set Cookie */
+			if (navigator.cookieEnabled && Cookie != "")	{	document.cookie = "uid=" + Cookie + "; path=/";	}
+			/* Storage data in DOM */
+			if (IsPrivateBrowseing == 0)
+			{
+				localStorage.setItem("PrivateKey", PrivateKey);
+			}
+			if (Challenge != null || Cookie != null || PublicKey != null)
+			{
+				var Login_Passwd = hex_hmac_md5(PrivateKey, Challenge);
+				var xml_Login = HNAP.GetXML("Login");
+				Login_Passwd = changText(Login_Passwd);
+				xml_Login.Set("Login/Action", "login");
+				xml_Login.Set("Login/Username", "Admin");
+				xml_Login.Set("Login/LoginPassword", Login_Passwd);
+				if (HasCAPTCHA == 1)	{	xml_Login.Set("Login/Captcha", Login_Captcha);	}
+				// Send HNAP to DUT
+				HNAP.SetXMLAsync("Login", xml_Login, function(xml)	{	SetResult_2nd(xml);	});
+			}
+		}
+		else
+		{
+			document.getElementById("admin_Password_with_Captcha").disabled = false;
+			document.getElementById("logIn_btn").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn_c").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn").disabled = false;
+			document.getElementById("logIn_btn_c").disabled = false;
+			if (HasCAPTCHA == 1)
+			{
+				alert(I18N("j", "Invalid password or captcha, please try again."));
+				document.getElementById("admin_Password_with_Captcha").value = "";
+				document.getElementById("input_Captcha").value = "";
+				document.getElementById("admin_Password_with_Captcha").focus();
+				generate_Captcha();
+			}
+			else
+			{
+				alert(I18N("j", "Invalid password, please try again."));
+				document.getElementById("admin_Password").value = "";
+				document.getElementById("admin_Password").focus();
+			}
+		}
+	}
+	function SetResult_2nd(result_xml)
+	{
+		var SetResult_2nd = result_xml.Get("LoginResponse/LoginResult");
+		if (SetResult_2nd == "success")
+		{
+			var redirect_url = sessionStorage.getItem("RedirectUrl");
+			if((redirect_url == null) || (redirect_url.indexOf("Login.html") > 0) || (redirect_url.indexOf("html") < 0))
+			{
+				window.location.href = "/IndexHome.html";	
+			}
+			else								
+			{	
+				window.location.href = redirect_url;		
+			}
+		}
+		else
+		{
+			document.getElementById("admin_Password").disabled = false;
+			document.getElementById("admin_Password_with_Captcha").disabled = false;
+			document.getElementById("logIn_btn").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn_c").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn").disabled = false;
+			document.getElementById("logIn_btn_c").disabled = false;
+			if (HasCAPTCHA == 1)
+			{
+				alert(I18N("j", "Invalid password or captcha, please try again."));
+				document.getElementById("admin_Password_with_Captcha").value = "";
+				document.getElementById("input_Captcha").value = "";
+				document.getElementById("admin_Password_with_Captcha").focus();
+				generate_Captcha();
+			}
+			else
+			{
+				alert(I18N("j", "Invalid password, please try again."));
+				document.getElementById("admin_Password").value = "";
+				document.getElementById("admin_Password").focus();
+			}
+		}
+	}
+	function GetXML()	{	HNAP.GetXMLAsync("GetDeviceSettings", null, "GetValue", function(xml)	{	GetResult_1st(xml)	});	}
+	function GetResult_1st(result_xml)
+	{
+		if (result_xml != null)
+		{
+			var getModelName = result_xml.Get("GetDeviceSettingsResponse/ModelName");
+			var getHardwareVersion = result_xml.Get("GetDeviceSettingsResponse/HardwareVersion");
+			var getFirmwareVersion = result_xml.Get("GetDeviceSettingsResponse/FirmwareVersion");
+			var getHasCaptcha =  result_xml.Get("GetDeviceSettingsResponse/CAPTCHA");
+			var getSharePortStatus = result_xml.Get("GetDeviceSettingsResponse/SharePortStatus");
+			var getURL = result_xml.Get("GetDeviceSettingsResponse/PresentationURL");
+			getURL = getURL.replace("http://", "");
+			getURL = getURL.split(/[\s.]+/);
+			var Host_Name = getURL[getURL.length - 2].toLowerCase();
+			//	Show the hyperlinks of web file access if we make sure the IP is private IP.
+			if (window.location.hostname.search(Host_Name) != -1 || window.location.hostname.substr(0, 8)=="192.168." || window.location.hostname.substr(0, 3)=="10." || window.location.hostname.substr(0, 7)=="172.16.")
+			{
+				ShowShareportLink = 1;
+			}
+			
+			document.getElementById("modelName").innerHTML = getModelName;
+			document.getElementById("HWversion").innerHTML = getHardwareVersion;
+			document.getElementById("FWversion").innerHTML = getFirmwareVersion;
+			if (getSharePortStatus != "true" || ShowShareportLink==0)	{	document.getElementById("sharePortAccess").style.display = "none";	}
+			if (getHasCaptcha == "true")
+			{
+				document.getElementById("logIn_captcha").style.display = "table";
+				generate_Captcha();
+				HasCAPTCHA = 1;
+			}
+			else
+			{
+				document.getElementById("logIn").style.display = "table";
+				HasCAPTCHA = 0;
+			}
+			// Firmware Check
+			var getDeviceLastFirmwareVersion = result_xml.Get("GetDeviceSettingsResponse/LatestFirmwareVersion");
+			if (getDeviceLastFirmwareVersion == "" || getDeviceLastFirmwareVersion == ".")
+			{	
+				getDeviceLastFirmwareVersion = 0;
+			}
+			var modelInfo = new ModelInfo(getModelName, getHardwareVersion, getFirmwareVersion);
+			//var modelInfo = new ModelInfo("DIR-880", "A1", getFirmwareVersion);
+			sessionStorage.setItem('currentFWVersion', getFirmwareVersion);
+			sessionStorage.setItem('newFWVersion', getDeviceLastFirmwareVersion);
+			sessionStorage.setItem('modelInfomation', JSON.stringify(modelInfo));
+			$("#Language").selectbox('detach');
+			$("#Language").val(SetLang);
+			$("#Language").selectbox({width:120});
+			document.getElementById("main").style.display = "inline";
+			document.getElementById("admin_Password").disabled = false;
+			document.getElementById("admin_Password_with_Captcha").disabled = false;
+			document.getElementById("logIn_btn").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn_c").setAttribute("class", "styled_button_s");
+			document.getElementById("logIn_btn").disabled = false;
+			document.getElementById("logIn_btn_c").disabled = false;
+			if (getHasCaptcha == "true")	{	document.getElementById("admin_Password_with_Captcha").focus();	}
+			else							{	document.getElementById("admin_Password").focus();				}
+		}
+		else	{	if (DebugMode == 1)	{	alert("[!!GetXML Error!!] Function: GetResult_1st");	}	}
+	}
+	function switch_Language(value)
+	{
+		localStorage.setItem('language', LangList[value]);
+		localStorage.language = LangList[value];
+		location.reload();
+	}
+	function detect_KeyValue(e)
+	{
+		var key = window.event ? e.keyCode : e.which;
+		if (key == 13)	{	document.getElementById("logIn_btn").click();	}
+	}
+	
+	//OnLoad
+	$(document).ready( function() {	
+		GetXML();
+		$(function () {
+			$("#Language").selectbox({width:120});
+			if (IsPrivateBrowseing == 1)
+			{
+				$("#Language").selectbox("disable");
+			}	
+		});
+	});
+</script>
+<body id="main" style="display:none">
+	<div id="wrapper">
+		<!-------------------- Logo ------------------------->
+		<div id="Lheader">
+				<div id="logo">
+						<img id="DLink_logo" src="/image/logo_2.gif?v=TimeStamp_QzwsxDcRfvTGByHn" width="105" height="95"  />
+				</div>
+				<table class="versionTable" id="versionTable" border="0" cellspacing="0">
+					<tbody>
+						<thead>
+					     <td><script>I18N("h", "Model Name");</script>:&nbsp;<label id="modelName">--</label></td>
+					     <td><script>I18N("h", "Hardware Version");</script>:&nbsp;<label id="HWversion">--</label></td>
+					     <td><script>I18N("h", "Firmware Version");</script>:&nbsp;<label id="FWversion">--</label></td>
+					     <td align="right"><script>I18N("h", "Language");</script>:</td>
+ 							 <td>
+					     		<div class="styled-select">
+										<select name="Language" id="Language" onChange="switch_Language(this.value)">
+											<option value="0">English</option>
+											<option value="1">繁體中文</option>
+											<option value="2">简体中文</option>
+											<option value="3">한국</option>
+											<option value="4">français</option>
+											<option value="5">português</option>
+											<option value="6">Español</option>
+											<option value="7">Italiano</option>
+											<option value="8">Deutsch</option>
+											<option value="9">русский</option>
+										</select>
+									</div>
+							 </td>
+						</thead>
+					</tbody>
+				</table>
+		</div>
+		<!-------------------- Content ---------------------->
+		<div id="content">
+			</br>
+			<div id="logIn" style="display:none">
+				<table class="logInTable" id="logInTable" border="0" cellspacing="0">
+					<tbody>
+					<thead>
+					     <tr>
+					     	 <th><script>I18N("h", "Admin Password");</script>:</th>
+					     </tr>
+					     <tr>
+					     	 <td><input class="styled-text" type="password" name="admin_Password" size="27" id="admin_Password" onkeydown="detect_KeyValue(event)"></td>
+					     </tr>
+					</thead>
+					</tbody>
+				</table>
+				<center><button type="button" id="logIn_btn" class="styled_button_s" onclick="SetXML()"><script>I18N("h", "Log In");</script></button></center>
+			</div>
+			<div id="logIn_captcha" style="display:none">
+				<table id="logInTable_captcha_left" border="0" cellspacing="0">
+					<tbody>
+					<thead>
+					     <tr>
+					     	 <th><script>I18N("h", "Admin Password");</script>:</th>
+					     </tr>
+					     <tr>
+					     	 <td><input class="styled-text" type="password" name="admin_Password_with_Captcha" size="27" id="admin_Password_with_Captcha"></td>
+					     </tr>
+					</thead>
+					</tbody>
+				</table>
+				<table id="logInTable_captcha_right" border="0" cellspacing="0">
+					<thead>
+				     <tr>
+				     	  <td><script>I18N("h", "Type the characters you see in the picture below.");</script></td>
+				     </tr>
+				     <tr>
+				     	<td align="center" height="50px"><input class="styled-text" type="text" name="input_Captcha" size="15" id="input_Captcha"></td>
+				     </tr>
+				     <tr>
+				     	<td align="center" height="30px">
+				     		<label id="captcha_image"></label>
+				     		<img id="refresh_button" src="/image/refresh.png?v=TimeStamp_QzwsxDcRfvTGByHn" width="37" height="37" onclick="generate_Captcha()" />
+				     	</td>
+				     </tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<center><button type="button" id="logIn_btn_c" class="styled_button_s" onclick="SetXML()"><script>I18N("h", "Log In");</script></button></center>
+			</div>
+		</div>
+		<br />
+		<div id="sharePortAccess"><script>I18N("h", "To access your storage with SharePort Web Access,");</script><a target="_blank" href="http://shareport.local/"><script>I18N("h", "click here.");</script></a></div>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<div id="footer_login">
+			<div id="copyright"><script>I18N("h", "COPYRIGHT");</script></div>
+			<div id="eula"><a target="_blank" href="EULA.html"><script>I18N("h", "License Agreement");</script></a></div>
+		</div>
+	</div>
+</body>
+</html>

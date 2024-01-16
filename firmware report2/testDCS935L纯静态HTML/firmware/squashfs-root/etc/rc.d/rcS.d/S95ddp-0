@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# ddp: This starts and stops ddp.
+#
+# chkconfig: 2345 95 5
+# description: ddp
+#
+# processname: /usr/sbin/ddp
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+prog="ddp"
+binpath="/usr/sbin/ddp"
+args="1>/dev/null 2>&1"
+
+[ -f $binpath ] || exit
+
+start(){
+        echo -n "Starting $prog ... "
+	/usr/bin/logger -t ipcam "DDP start"
+	$binpath br0 1>/dev/null 2>&1 &
+	echo "."
+}
+
+#default --stop send signal 15 (SIGTERM)
+stop(){
+    echo -n "Stopping $prog ... "
+    /usr/bin/logger -t ipcam "DDP stop"
+    /usr/bin/killall $prog
+    echo "."
+}
+
+# See how we are called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+esac
+
+exit 0

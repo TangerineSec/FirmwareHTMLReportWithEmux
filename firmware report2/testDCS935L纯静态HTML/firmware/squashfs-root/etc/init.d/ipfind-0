@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# ipfind: This starts and stops ipfind.
+#
+# chkconfig: 2345 91 09
+# description: ipfind
+#
+# processname: /usr/sbin/ipfind
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+prog="ipfind"
+binpath="/usr/sbin/ipfind"
+netinterface="br0"
+args="$netinterface"
+pidfile="/var/run/ipfind-$netinterface.pid"
+
+[ -f $binpath ] || exit
+
+start(){
+    echo -n "Starting $prog ... "
+    $binpath $netinterface &
+    echo "."
+}
+
+#default --stop send signal 15 (SIGTERM)
+stop(){
+    echo -n "Stopping $prog ... "
+    if [ -f $pidfile ]; then
+        local line p
+        read line < $pidfile
+        kill $line
+    fi
+    echo "."
+}
+
+# See how we are called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit 0

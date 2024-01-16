@@ -1,0 +1,29 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/share/miniupnpd/firewall.include line 7:[0m
+[0mlocal ext_iface[0m
+[33m^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/share/miniupnpd/firewall.include line 9:[0m
+[0m	local ext_zone[0m
+[33m        ^------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/share/miniupnpd/firewall.include line 11:[0m
+[0m		iptables -t filter -I zone_${ext_zone}_forward -j MINIUPNPD[0m
+[32m                                           ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		iptables -t filter -I zone_"${ext_zone}"_forward -j MINIUPNPD
+
+
+[1mIn /logs/firmware/squashfs-root/usr/share/miniupnpd/firewall.include line 12:[0m
+[0m		iptables -t nat -I zone_${ext_zone}_prerouting -j MINIUPNPD[0m
+[32m                                        ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		iptables -t nat -I zone_"${ext_zone}"_prerouting -j MINIUPNPD
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

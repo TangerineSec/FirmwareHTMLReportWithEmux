@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33mnmbd[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msystem[0m tear down of [0;33mnmbd[0m
+
+bne v0, a0, 0x437cb4
+addiu v1, zero, 1
+move v1, zero
+lw ra, 0x3c(sp)
+move v0, v1
+jr ra
+addiu sp, sp, 0x40
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+lui gp, 0x47
+addiu gp, gp, -0x5760
+sw gp, 0x10(sp)
+lw t9, -sym.decrement_smbd_process_count(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+lw t9, -sym.lp_panic_action(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+beqz v0, 0x437d1c
+nop
+lb v1, (v0)
+beqz v1, 0x437d1c
+nop
+[31mlw t9, -sym.imp.system(gp)[0m
+jalr t9
+move a0, v0
+lw gp, 0x10(sp)
+lw t9, -sym.dump_core(gp)
+jalr t9
+nop
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+lui gp, 0x47
+addiu gp, gp, -0x5760
+sw gp, 0x10(sp)
+lw t9, -sym.imp.strdup(gp)
+jalr t9
+nop
+bnez v0, 0x437d58
+lui a0, 0x45
+jal sym.smb_panic
+addiu a0, a0, -0x4950
+lw ra, 0x1c(sp)
+jr ra
+--
+addiu v0, zero, -1
+beq s1, v0, 0x43a050
+addiu s3, zero, -1
+lw t9, -sym.imp.close(gp)
+b 0x43a048
+move a0, s1
+jalr t9
+move a0, s3
+lw gp, 0x10(sp)
+lw t9, -sym.imp.close(gp)
+jalr t9
+move a0, zero
+lw gp, 0x10(sp)
+lw t9, -sym.imp.close(gp)
+jalr t9
+addiu a0, zero, 1
+lw gp, 0x10(sp)
+lw t9, -sym.imp.dup(gp)
+jalr t9
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.dup(gp)
+jalr t9
+move a0, s0
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.system(gp)[0m
+jalr t9
+move a0, s5
+lw gp, 0x10(sp)
+lw t9, -sym.imp.exit(gp)
+jalr t9
+move a0, v0
+jalr t9
+nop
+move v0, s3
+lw ra, 0x5c(sp)
+lw s5, 0x58(sp)
+lw s4, 0x54(sp)
+lw s3, 0x50(sp)
+lw s2, 0x4c(sp)
+lw s1, 0x48(sp)
+lw s0, 0x44(sp)
+jr ra
+addiu sp, sp, 0x60
+lw t9, -sym.imp.close(gp)
+jalr t9
+
+[[0;33m*[0m] Function [0;33msystem[0m used [0;33m2[0m times [0;33mnmbd[0m
+

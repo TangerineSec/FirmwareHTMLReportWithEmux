@@ -1,0 +1,35 @@
+#!/bin/sh
+#set -x
+
+G_PathTmp="/opt"
+G_AppName=`basename $1`
+G_ValueLast=
+WGET_TMP="/tmp/wget"
+G_Parameter_all=$*
+
+
+xRouterLog 0 "appUpdate" - "`basename $0` ${G_Parameter_all}."
+
+#下载前先删除文件
+rm -f ${G_PathTmp}/${G_AppName}
+wget -P ${G_PathTmp} $1 1>${WGET_TMP} 2>&1
+ValueLast=$?
+if [ ${ValueLast} -ne 0 ];then
+	xRouterLog 2 "appUpdate" "-" "wget -P ${G_PathTmp} $1 fail."
+fi 	
+
+wgetRet=$(sed -n "/100%/p" ${WGET_TMP})	#查看是否下载成功
+
+if  [ ""  =  "$wgetRet" ];then	#为空表示下载错误
+	#更新安装态为 2：下载失败
+	./appUpdateInstallStatus $1 2 
+	#下载失败也删除文件
+	rm -f ${G_PathTmp}/${G_AppName}
+	
+	xRouterLog 2 "appUpdate" "-" "Update Get xipk error."
+	exit 1
+fi
+	
+#rm -f ${WGET_TMP}
+echo 0
+exit 0

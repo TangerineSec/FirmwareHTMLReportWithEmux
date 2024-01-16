@@ -1,0 +1,39 @@
+#!/bin/sh
+#startup wds when system boot
+local enable=$(uci get wireless.wds.enable)
+if [ "$(uci get wireless.@wifi-iface[0].disabled 2>/dev/null)" = "1" ];then
+	exit 0
+fi
+if [ "$enable" = "1" ];then
+	local ssid=$(uci get wireless.wds.ssid)
+	local bssid=$(uci get wireless.wds.bssid)
+	local channel=$(uci get wireless.wds.channel)
+	local authmode=$(uci get wireless.wds.authmode)
+	local encryptype=$(uci get wireless.wds.encryptype)
+	local key=$(uci get wireless.wds.key)
+	local id
+
+	ifconfig apcli0 down
+	iwpriv apcli0 set ApCliEnable=0
+        iwpriv apcli0 set ApCliSsid=$ssid
+        iwpriv apcli0 set ApCliBssid=$bssid
+        iwpriv apcli0 set Channel=$channel
+        iwpriv apcli0 set ApCliAuthMode=$authmode
+        iwpriv apcli0 set ApCliEncrypType=$encryptype
+        if [ "$authmode" = "OPEN" ] && [ "$encryptype" = "WEP" ];then
+		id=$(uci get wireless.wds.defaultkeyid)
+		iwpriv apcli0 set ApCliKey${id}=$key
+        elif [ "$authmode" = "SHARED" ] || [ "$authmode" = "WEPAUTO" ];then
+		id=$(uci get wireless.wds.defaultkeyid)
+		iwpriv apcli0 set ApCliKey${id}=$key
+        elif [ "$authmode" = "WPA2PSK" ] || [ "$authmode" = "WPAPSK" ];then
+		iwpriv apcli0 set ApCliWPAPSK=$key
+	elif [ "$authmode" = "OPEN" ] && [ "$encryptype" = "NONE" ];then
+                echo ""
+        else
+		echo "not support $authmode"
+		exit
+        fi
+        iwpriv apcli0 set ApCliEnable=1
+	ifconfig apcli0 up
+fi

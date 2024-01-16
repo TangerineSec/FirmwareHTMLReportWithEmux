@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# Copyright Eric Bishop, 2008
+# This is free software licensed under the terms of the GNU GPL v2.0
+#
+
+DFL_HTTP_SERV_PORT=18017
+DFL_DNS_SERV_PORT=18018
+WAN_CHECK_CHACHAIN="wancheck_ingress"
+wan_redirect()
+{
+	if [ -n "$1" ];then
+		
+		iptables -t nat -F $WAN_CHECK_CHACHAIN 2> /dev/null
+		if [ $1 -eq 1 ];then
+			#lan_ip="$(ifconfig br-lan 2>/dev/null | grep "inet addr" | awk -F ':' '{print $2}' | awk -F ' ' '{print $1}')"
+			lan_ip="$(uci get network.lan.ipaddr 2>/dev/null)" 
+			if [ -z "$lan_ip" ];then
+				lan_ip="192.168.99.1"
+			fi
+
+			iptables -t nat -N $WAN_CHECK_CHACHAIN 2>/dev/null
+			iptables -t nat -A PREROUTING -i br-lan -j $WAN_CHECK_CHACHAIN
+			iptables -t nat -I $WAN_CHECK_CHACHAIN ! -d $lan_ip/255.255.255.0 -p tcp --dport 80 -j DNAT --to-destination $lan_ip:$DFL_HTTP_SERV_PORT
+			iptables -t nat -I $WAN_CHECK_CHACHAIN -p udp --dport 53 -j DNAT --to-destination $lan_ip:$DFL_DNS_SERV_PORT
+			#wan connection stat
+			uci set user.@wan_conn[-1].connection="0"
+		else
+			uci set user.@wan_conn[-1].connection="1"
+		fi
+	fi
+	if [ -n "$2" ];then
+		#uci delete user.@wan_conn[-1] 2>/dev/null
+		#uci add user wan_conn 2>/dev/null
+		 wan_tmp_stat="$(uci get user.@wan_conn[-1].status 2>/dev/null)"
+		if [ -n "$wan_tmp_stat" ] && [ ! "$wan_tmp_stat" = "$2" ];then
+			if [ "$2" = "1" ];then
+				/etc/init.d/network wan_reconn
+			else
+				#ifdown -w wan
+				/etc/init.d/network stop
+			fi
+		fi
+		#wan phy stat
+		uci set user.@wan_conn[-1].status="$2"
+		uci commit user
+	fi
+}
+
+
+wan_redirect $1 $2

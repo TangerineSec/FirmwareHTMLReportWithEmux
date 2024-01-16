@@ -1,0 +1,36 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/wan-check line 15:[0m
+[0m		if [ $1 -eq 1 ];then[0m
+[32m                     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		if [ "$1" -eq 1 ];then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/wan-check line 24:[0m
+[0m			iptables -t nat -I $WAN_CHECK_CHACHAIN ! -d $lan_ip/255.255.255.0 -p tcp --dport 80 -j DNAT --to-destination $lan_ip:$DFL_HTTP_SERV_PORT[0m
+[32m                                                                    ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                                                                                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			iptables -t nat -I $WAN_CHECK_CHACHAIN ! -d "$lan_ip"/255.255.255.0 -p tcp --dport 80 -j DNAT --to-destination "$lan_ip":$DFL_HTTP_SERV_PORT
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/wan-check line 25:[0m
+[0m			iptables -t nat -I $WAN_CHECK_CHACHAIN -p udp --dport 53 -j DNAT --to-destination $lan_ip:$DFL_DNS_SERV_PORT[0m
+[32m                                                                                                          ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			iptables -t nat -I $WAN_CHECK_CHACHAIN -p udp --dport 53 -j DNAT --to-destination "$lan_ip":$DFL_DNS_SERV_PORT
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/wan-check line 51:[0m
+[0mwan_redirect $1 $2[0m
+[32m             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+wan_redirect "$1" "$2"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

@@ -1,0 +1,38 @@
+
+[1mIn /logs/firmware/squashfs-root/bin/samba_add_dir.sh line 5:[0m
+[0mif [ ! -n "$2" ]; then[0m
+[32m     ^-- SC2236 (style): Use -z instead of ! -n.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/bin/samba_add_dir.sh line 15:[0m
+[0m["$1"][0m
+[33m  ^-- SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m    ^-- SC1078 (warning): Did you forget to close this double quoted string?[0m
+
+[1mDid you mean: [0m
+[""$1""]
+
+
+[1mIn /logs/firmware/squashfs-root/bin/samba_add_dir.sh line 16:[0m
+[0mpath = "$2"[0m
+[32m       ^-- SC1079 (info): This is actually an end quote, but due to next char it looks suspect.[0m
+[33m        ^-- SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+path = ""$2""
+
+
+[1mIn /logs/firmware/squashfs-root/bin/samba_add_dir.sh line 17:[0m
+[0m#valid users = "$ALLOWUSERS"[0m
+[33m                ^---------^ SC2027 (warning): The surrounding quotes actually unquote this. Remove or escape them.[0m
+[32m                ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+#valid users = ""$ALLOWUSERS""
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1078 -- Did you forget to close this doub...
+  https://www.shellcheck.net/wiki/SC2027 -- The surrounding quotes actually u...
+  https://www.shellcheck.net/wiki/SC1079 -- This is actually an end quote, bu...

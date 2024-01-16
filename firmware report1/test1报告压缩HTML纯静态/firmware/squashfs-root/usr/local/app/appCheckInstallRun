@@ -1,0 +1,50 @@
+#!/bin/sh 
+set -x
+BinName="/xipk install"
+ProcessNum=""
+G_Parameter_all=$*
+
+#查看进程号
+CheckProgressNum()
+{
+	local L_NumProgress=""
+	local L_Line=""
+	local L_TmpFile="/tmp/NumProgress"
+	local L_Tmp=""
+	
+	ps | grep "${BinName}" > ${L_TmpFile}
+	
+	while read L_Line
+	do
+		L_Tmp=`echo ${L_Line} | grep "grep ${BinName}"`
+		if [ "${L_Tmp}" == "" ];then
+			L_Tmp=`echo ${L_Line} | awk -F " " '{print $5}' | awk -F " " '{print $1}'`
+			if [ "${L_Tmp}" != "{xipk}" ];then
+				continue
+			else
+				L_NumProgress=`echo ${L_Line} | awk -F " " '{print $1}'`
+			fi
+		fi
+		
+		break			
+	done < ${L_TmpFile}
+
+	rm -f ${L_TmpFile}
+	
+	echo ${L_NumProgress}
+}
+
+ProcessNum=`CheckProgressNum`
+
+xRouterLog 0 "appCheckInstallRun" - "`basename $0` ${G_Parameter_all}"
+if [ "${ProcessNum}" == "" ];then
+	xRouterLog 0 "appCheckInstallRun" - "No xipk install processnum ."	
+	exit 0
+else
+	xRouterLog 0 "appCheckInstallRun" - "xipk install processnum is ${ProcessNum}."	
+	exit 1
+fi
+
+
+
+

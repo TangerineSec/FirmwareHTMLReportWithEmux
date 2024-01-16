@@ -1,0 +1,38 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/getcapability line 5:[0m
+[0mcpu=`cat /proc/cpuinfo | awk '/system type/{print $5}'`[0m
+[32m    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m         ^-----------^ SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.[0m
+
+[1mDid you mean: [0m
+cpu=$(cat /proc/cpuinfo | awk '/system type/{print $5}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/getcapability line 6:[0m
+[0mflashsize=`cat /proc/mtd | awk '/fullflash/{print $2}'`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m               ^-------^ SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.[0m
+
+[1mDid you mean: [0m
+flashsize=$(cat /proc/mtd | awk '/fullflash/{print $2}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/getcapability line 8:[0m
+[0mif [ $flashsize = "01000000" ]; then[0m
+[32m     ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$flashsize" = "01000000" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/localshell/getcapability line 9:[0m
+[0m	if [ $cpu = "MT7620A" ]; then[0m
+[32m             ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ "$cpu" = "MT7620A" ]; then
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2002 -- Useless cat. Consider 'cmd < file...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

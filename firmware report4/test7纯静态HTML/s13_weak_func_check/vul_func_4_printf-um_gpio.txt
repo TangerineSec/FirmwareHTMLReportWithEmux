@@ -1,0 +1,100 @@
+[[0;33m*[0m] Binary protection state of [0;33mum_gpio[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m tear down of [0;33mum_gpio[0m
+
+    8610:	08bd8008 	popeq	{r3, pc}
+    8614:	e59f301c 	ldr	r3, [pc, #28]	; 8638 <frame_dummy+0x50>
+    8618:	e3530000 	cmp	r3, #0
+    861c:	08bd8008 	popeq	{r3, pc}
+    8620:	e12fff33 	blx	r3
+    8624:	e8bd8008 	pop	{r3, pc}
+    8628:	00000000 	.word	0x00000000
+    862c:	00008af4 	.word	0x00008af4
+    8630:	00010c28 	.word	0x00010c28
+    8634:	00010b00 	.word	0x00010b00
+    8638:	00000000 	.word	0x00000000
+
+0000863c <usage>:
+    863c:	e30809d4 	movw	r0, #35284	; 0x89d4
+    8640:	e92d4008 	push	{r3, lr}
+    8644:	e3400000 	movt	r0, #0
+    8648:	ebffffa5 	bl	84e4 <puts@plt>
+    864c:	e3080a08 	movw	r0, #35336	; 0x8a08
+    8650:	e3a0101f 	mov	r1, #31
+    8654:	e3400000 	movt	r0, #0
+[31m    8658:	ebffff9e 	bl	84d8 <printf@plt>[0m
+    865c:	e3080a34 	movw	r0, #35380	; 0x8a34
+    8660:	e3400000 	movt	r0, #0
+--
+    87e8:	ebffff58 	bl	8550 <atoi@plt>
+    87ec:	e1a01007 	mov	r1, r7
+    87f0:	e1a0aa10 	lsl	sl, r0, sl
+    87f4:	e1a00005 	mov	r0, r5
+    87f8:	ebffff3f 	bl	84fc <bcmgpio_connect@plt>
+    87fc:	e3500000 	cmp	r0, #0
+    8800:	e1a06007 	mov	r6, r7
+    8804:	0affffc1 	beq	8710 <main+0xa0>
+    8808:	e59f01a0 	ldr	r0, [pc, #416]	; 89b0 <main+0x340>
+    880c:	ebffff34 	bl	84e4 <puts@plt>
+    8810:	e3560000 	cmp	r6, #0
+    8814:	e3a00001 	mov	r0, #1
+    8818:	e1a00510 	lsl	r0, r0, r5
+    881c:	1affffbf 	bne	8720 <main+0xb0>
+    8820:	e28d1004 	add	r1, sp, #4
+    8824:	ebffff31 	bl	84f0 <bcmgpio_in@plt>
+    8828:	e3500000 	cmp	r0, #0
+    882c:	0a000036 	beq	890c <main+0x29c>
+    8830:	e1a01005 	mov	r1, r5
+    8834:	e59f0178 	ldr	r0, [pc, #376]	; 89b4 <main+0x344>
+[31m    8838:	ebffff26 	bl	84d8 <printf@plt>[0m
+    883c:	eaffffbe 	b	873c <main+0xcc>
+    8840:	e1a00006 	mov	r0, r6
+--
+    88d0:	ebffff18 	bl	8538 <strcmp@plt>
+    88d4:	e3500000 	cmp	r0, #0
+    88d8:	1a000028 	bne	8980 <main+0x310>
+    88dc:	e1a00006 	mov	r0, r6
+    88e0:	e3a07001 	mov	r7, #1
+    88e4:	ebffff19 	bl	8550 <atoi@plt>
+    88e8:	e3a06002 	mov	r6, #2
+    88ec:	e1a0aa10 	lsl	sl, r0, sl
+    88f0:	eaffff81 	b	86fc <main+0x8c>
+    88f4:	e3a07000 	mov	r7, #0
+    88f8:	ebffff4f 	bl	863c <usage>
+    88fc:	e1a06007 	mov	r6, r7
+    8900:	eaffff7d 	b	86fc <main+0x8c>
+    8904:	ebffff4c 	bl	863c <usage>
+    8908:	eaffff60 	b	8690 <main+0x20>
+    890c:	e59d2004 	ldr	r2, [sp, #4]
+    8910:	e1a01005 	mov	r1, r5
+    8914:	e59f00a0 	ldr	r0, [pc, #160]	; 89bc <main+0x34c>
+    8918:	e2522000 	subs	r2, r2, #0
+    891c:	13a02001 	movne	r2, #1
+[31m    8920:	ebfffeec 	bl	84d8 <printf@plt>[0m
+    8924:	eaffff84 	b	873c <main+0xcc>
+    8928:	ebffff43 	bl	863c <usage>
+    892c:	eaffff8c 	b	8764 <main+0xf4>
+    8930:	ebffff41 	bl	863c <usage>
+    8934:	e3a06000 	mov	r6, #0
+    8938:	eaffff6f 	b	86fc <main+0x8c>
+    893c:	e3a07001 	mov	r7, #1
+    8940:	e1a06007 	mov	r6, r7
+    8944:	eaffff6c 	b	86fc <main+0x8c>
+    8948:	e1a0100a 	mov	r1, sl
+    894c:	ebfffef3 	bl	8520 <bcmgpio_out@plt>
+    8950:	e3500000 	cmp	r0, #0
+    8954:	0affff78 	beq	873c <main+0xcc>
+    8958:	e1a01005 	mov	r1, r5
+    895c:	e59f005c 	ldr	r0, [pc, #92]	; 89c0 <main+0x350>
+[31m    8960:	ebfffedc 	bl	84d8 <printf@plt>[0m
+    8964:	eaffff74 	b	873c <main+0xcc>
+    8968:	ebffff33 	bl	863c <usage>
+
+[0m
+[[0;33m*[0m] Function [0;33mprintf[0m used [0;33m4[0m times [0;33mum_gpio[0m
+

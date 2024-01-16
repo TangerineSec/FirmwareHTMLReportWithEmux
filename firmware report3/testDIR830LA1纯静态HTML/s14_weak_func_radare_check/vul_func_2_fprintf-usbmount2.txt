@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33musbmount2[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33musbmount2[0m
+
+beq v0, v1, 0x401044
+nop
+beq v0, s2, 0x401048
+addiu s0, s0, 1
+lw t9, -sym.imp.fopen(gp)
+lui a0, 0x40
+lui a1, 0x40
+addiu a0, a0, 0x2f10
+jalr t9
+addiu a1, a1, 0x2f20
+lw gp, 0x10(sp)
+beqz v0, 0x401170
+move s0, v0
+lw t9, -sym.imp.__stdprintf_info__(gp)
+lui a1, 0x40
+move a0, v0
+lui a3, 0x40
+addiu a1, a1, 0x2f24
+addiu a2, zero, 0x36a
+jalr t9
+addiu a3, a3, 0x32a0
+lui a1, 0x40
+move a2, s1
+lw gp, 0x10(sp)
+addiu a1, a1, 0x2f50
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+move a0, s0
+lw ra, 0x3c(sp)
+lw s5, 0x38(sp)
+lw s4, 0x34(sp)
+lw s3, 0x30(sp)
+lw s2, 0x2c(sp)
+lw s1, 0x28(sp)
+lw s0, 0x24(sp)
+jr ra
+addiu sp, sp, 0x40
+addiu sp, sp, -0x158
+sw ra, 0x154(sp)
+sw fp, 0x150(sp)
+sw s7, 0x14c(sp)
+sw s6, 0x148(sp)
+--
+lui a0, 0x40
+lw gp, 0x10(sp)
+lw t9, -sym.imp.puts(gp)
+jalr t9
+addiu a0, a0, 0x3270
+lw gp, 0x10(sp)
+lw t9, -sym.imp.exit(gp)
+jalr t9
+move a0, zero
+lw t9, -sym.imp.fopen(gp)
+lui a0, 0x40
+lui a1, 0x40
+addiu a0, a0, 0x2ef0
+jalr t9
+addiu a1, a1, 0x3290
+lw gp, 0x10(sp)
+beqz v0, 0x402a68
+move s0, v0
+lw t9, -sym.imp.getpid(gp)
+jalr t9
+nop
+lui a1, 0x40
+move a0, s0
+lw gp, 0x10(sp)
+addiu a1, a1, 0x3294
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a2, v0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+move a0, s0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.signal(gp)
+lui s0, 0x40
+addiu a1, s0, 0xff4
+jalr t9
+addiu a0, zero, 0x10
+addiu a1, s0, 0xff4
+lw gp, 0x10(sp)
+lw t9, -sym.imp.signal(gp)
+jalr t9
+addiu a0, zero, 0x11
+lui a1, 0x40
+lw gp, 0x10(sp)
+addiu a1, a1, 0x16b0
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m2[0m times [0;33musbmount2[0m
+

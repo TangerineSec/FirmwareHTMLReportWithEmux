@@ -1,0 +1,61 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 3:[0m
+[0m. /lib/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 4:[0m
+[0m. ../netifd-proto.sh[0m
+[32m  ^----------------^ SC1091 (info): Not following: ../netifd-proto.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 19:[0m
+[0m	local config="$1"[0m
+[33m        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 20:[0m
+[0m	local iface="$2"[0m
+[33m        ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 22:[0m
+[0m	local ipaddr hostname clientid vendorid broadcast reqopts iface6rd[0m
+[33m        ^-- SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 25:[0m
+[0m	local opt dhcpopts[0m
+[33m        ^----------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 31:[0m
+[0m	[ -n "$clientid" ] && clientid="-x 0x3d:${clientid//:/}" || clientid="-C"[0m
+[33m                                                ^-------------^ SC3060 (warning): In POSIX sh, string replacement is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 36:[0m
+[0m		-p /var/run/udhcpc-$iface.pid \[0m
+[32m                                   ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		-p /var/run/udhcpc-"$iface".pid \
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 42:[0m
+[0m		$clientid $broadcast $dhcpopts[0m
+[32m                ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		"$clientid" $broadcast "$dhcpopts"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/proto/dhcp.sh line 46:[0m
+[0m	local interface="$1"[0m
+[33m        ^-------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC3060 -- In POSIX sh, string replacement i...
+  https://www.shellcheck.net/wiki/SC1091 -- Not following: ../netifd-proto.sh...

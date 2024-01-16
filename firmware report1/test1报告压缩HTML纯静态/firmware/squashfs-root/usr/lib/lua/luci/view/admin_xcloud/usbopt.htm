@@ -1,0 +1,55 @@
+<div class='usb_opt'>
+	<div class='setup_head'>
+		<h4>USB管理</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+	<div id="device_list"></div>
+</div>
+
+<script language="javascript">
+//初始化
+get_usb_device();
+
+//获取USB列表的定时器
+var list_timer = window.setInterval(function(){
+	get_usb_device();
+}, 5000);
+
+function get_usb_device(){
+	$.ajax({
+		url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/get_usb_device"))%>',
+		type:'GET',
+		dataType:'HTML',
+		success:function(data){
+			if(data == null || data == '' || data == 'NULL'){
+				$('#device_list').html("<div class='usb_setup'><p class='no_usb_support'>亲，未发现USB存储设备哦</p></div>");
+				return false;
+			}else{
+				var tmp_html = "<div class='qosip_tabledata' style='margin-left:26px;margin-top:20px'><table cellspacing=0 cellpadding=0 class='qosip_table'><tr class='firstmacfilter'><th><p>设备名</p></th><th><p>容量</p></th><th><p>小云数据源</p></th><th>安全拔出</th></tr>";
+				data = data.split('/////');
+				for(i in data){
+					var tmp_order = parseInt(i) + 1;
+					if(data[i] != null && data[i] != 'NULL' && data[i] != ''){
+						var info = data[i].split('///');
+						if(info[3] == 'DATA'){
+							tmp_html += "<tr><td><p>设备" + tmp_order + "</p></td><td><p>" + info[2] + "</p></td><td><p><img src='<%=media%>/xcloud_datas.png' width='16px' height='13px' /></p></td><td id='showmsg_" + info[1] + "'><a class='usb_out' data-devid='" + info[1] + "'>拔出</a></td></tr>";
+						}else if(info[3]=="NeedDiskSpace"){
+							tmp_html += "<tr><td><p>设备" + tmp_order + "</p></td><td><p>" + info[2] + "</p></td><td><p style='color:red;'>设备空间不足</p></td><td id='showmsg_" + info[1] + "'><a class='usb_out' data-devid='" + info[1] + "'>拔出</a></td></tr>";
+						}else{
+							tmp_html += "<tr><td><p>设备" + tmp_order + "</p></td><td><p>" + info[2] + "</p></td><td><p>&nbsp;</p></td><td id='showmsg_" + info[1] + "'><a class='usb_out' data-devid='" + info[1] + "'>拔出</a></td></tr>";
+						}
+					}
+				}
+
+				tmp_html += '</table>';
+
+				$('#device_list').html(tmp_html);
+				return false;
+			}
+		}
+	});
+}
+</script>

@@ -1,0 +1,1216 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./index.html"><img class="inherit" id="logoImage" src="./style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./index.html">&laquo; Back to main</a>
+      <!-- navigation start --><a class="modul" href="#check_binaries_for_critical_functions" title="#check_binaries_for_critical_functions" >Check binaries for critical functions</a>
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<pre>[</span><span class="blue">+</span>] </span><span class="cyan"><span class="bold"><a id="check_binaries_for_critical_functions">Check binaries for critical functions</a></span></pre>
+<pre><span class="bold"><hr class="double" /></span></pre>
+<pre>This module identifies the usage of critical binary functions in firmware via </span><span class="orange">readelf</span>.</pre>
+<pre>Examples of binary functions are system, strcpy, printf and strcat. These functions are listed in the configuration</pre>
+<pre>file config/functions.cfg.</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Interesting functions: fprintf mmap popen printf sprintf strcat strcpy system</pre>
+<br />
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/luci-bwc (-rw-r--r-- root root) found:</span></pre>
+<pre>    	44:	00402c70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	47:	00402c40	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	60:	00402b80	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/ntfs-3g.secaudit (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	31:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	35:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/iwinfo (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	004026e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	34:	00402650	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	35:	00402640	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/gargoyle_header_footer (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	29:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	55:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/ntfs-3g (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	61:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/lua (-rw-r--r-- root root) found:</span></pre>
+<pre>    	38:	00401ff0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/mjpg_streamer (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	14:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/lowntfs-3g (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	66:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	105:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/gpioctl (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/pure-pw (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	24:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/pure-pwconvert (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/delete_chain_from_table (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/ntfs-3g.usermap (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	20:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	30:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/usbreset (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/bw_get (-rw-r--r-- root root) found:</span></pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/jshn (-rw-r--r-- root root) found:</span></pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	37:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/pure-statsdecode (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/bw_set (-rw-r--r-- root root) found:</span></pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/lsusb (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	28:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	48:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/bin/hd-idle (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/rpc.mountd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	69:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	72:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	124:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/dnsmasq (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	11:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	63:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	67:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	116:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-authd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/rpc.statd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	7:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	68:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	70:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	121:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/xl2tpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	27:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	29:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	71:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/portmap (-rw-r--r-- root root) found:</span></pre>
+<pre>    	28:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	54:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/nfsstat (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	18:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/samba_multicall (-rw-r--r-- root root) found:</span></pre>
+<pre>    	31:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	57:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	215:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	232:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	276:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	297:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-ftpwho (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/exportfs (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	40:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	41:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	72:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/rpc.nfsd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	22:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/mfg (-rw-r--r-- root root) found:</span></pre>
+<pre>    	15:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	30:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/wancheck (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	23:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	49:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/iwconfig (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	30:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	56:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/sm-notify (-rw-r--r-- root root) found:</span></pre>
+<pre>    	45:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	46:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-mrtginfo (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/xl2tpd-control (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	12:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-quotacheck (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/p910nd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	18:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/e2fsck (-rw-r--r-- root root) found:</span></pre>
+<pre>    	550:	0044cbe0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	683:	0044c3e0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	715:	0044c210	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	717:	0044c1f0	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	781:	0044be10	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	789:	0044bd90	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pppd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	28:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	242:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	416:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/mke2fs (-rw-r--r-- root root) found:</span></pre>
+<pre>    	289:	0042e8f0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	367:	0042e460	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	389:	0042e330	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	390:	0042e320	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	429:	0042e0d0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	438:	0042e040	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/maccalc (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	7:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-uploadscript (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/showmount (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	30:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	47:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/pure-ftpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	77:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/miniupnpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	37:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/tc (-rw-r--r-- root root) found:</span></pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	403:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	428:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	429:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	454:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/ip (-rw-r--r-- root root) found:</span></pre>
+<pre>    	15:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	293:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	317:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	318:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	341:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/uhttpd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	49:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/iptables (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	60:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	62:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/sbin/dropbear (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	70:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	72:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/local/thunder/portal (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	66:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	137:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/local/thunder/lib/ETMDaemon (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	24:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/local/thunder/lib/EmbedThunderManager (-rw-r--r-- root root) found:</span></pre>
+<pre>    	986:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	1881:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	7255:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	7631:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	9544:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	10217:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/local/xcloud/bin/qrencode (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/local/xcloud/bin/xCloudClient (-rw-r--r-- root root) found:</span></pre>
+<pre>    	37:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	65:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	231:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	244:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	313:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	315:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	344:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libhistory.so.5.2 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	59:	00006020	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	81:	00005f70	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	110:	00005ed0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libblkid.so.1.1.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	91:	0001fab0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	137:	0001f8b0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	202:	0001f630	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	211:	0001f5d0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libncurses.so.5.7 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	352:	00024590	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	448:	00024420	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	563:	00024240	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/liblua.so.5.1.4 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	83:	00027480	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	154:	000271e0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	156:	000271c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	200:	00027100	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	243:	00027010	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	254:	00026fa0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libmenu.so.5.7 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	122:	00005090	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libpopt.so.0.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	47:	00005f10	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	60:	00005e70	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	62:	00005e50	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	85:	00005d70	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/lua/luci/template/parser.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	50:	00003510	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/lua/iwinfo.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	31:	00004740	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	87:	00004520	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/sasl2/libplain.so.2.0.23 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	36:	00002b10	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	50:	00002ab0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/sasl2/libcrammd5.so.2.0.23 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	31:	00003160	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	40:	00003110	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	53:	000030b0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/sasl2/libanonymous.so.2.0.23 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	39:	00002920	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	51:	000028c0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/sasl2/libdigestmd5.so.2.0.23 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	32:	000081e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	48:	00008170	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	66:	000080e0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libe2p.so.2.3 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	45:	00004140	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	59:	000040b0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	61:	00004090	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	79:	00003ff0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libreadline.so.5.2 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	237:	0002a1e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	386:	0002a080	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	391:	0002a050	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	616:	00029e90	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/input_file.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	42:	00001a00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	57:	00001940	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libusb-1.0.so.0.1.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	100:	0000ad30	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	128:	0000ac30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libelf.so.0.8.13 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	118:	00010e80	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libwrap.so.0.7.6 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	46:	00004c00	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	83:	00004a30	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	84:	00004a20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	128:	000048a0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libiptbwctl.so.1 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	62:	00003450	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	72:	000033c0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	74:	000033a0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libldap-2.4.so.2.5.6 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	289:	00026650	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	371:	00026440	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	375:	00026420	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	502:	00026160	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libip6tc.so.0.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	49:	00004cb0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	63:	00004c40	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	66:	00004c30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libpng12.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	158:	00023980	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	207:	00023870	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	258:	00023750	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libcom_err.so.2.1 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	44:	00001af0	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	46:	00001ae0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	64:	000019f0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libstdc++.so.6 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1931:	000a6d30	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	2420:	000a6a00	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libxtables.so.5.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	57:	00004b20	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	75:	00004a90	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	76:	00004a80	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	107:	00004960	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	111:	00004940	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libnfnetlink.so.0.2.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	74:	00004420	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	90:	00004390	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	92:	00004380	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libform.so.5.7 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	104:	0000b180	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libjpeg.so.62.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	65:	0001c500	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	97:	0001c490	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libericstools.so.1 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	72:	00005740	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	127:	000055e0	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	129:	000055d0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libip4tc.so.0.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	42:	00004870	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	59:	00004810	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	60:	00004800	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pppol2tp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	27:	00001ac0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/rp-pppoe.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	30:	000037a0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	82:	000035f0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/pppd/2.4.5/pptp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	51:	00006e70	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libz.so.1.2.7 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	78:	0000d5c0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	90:	0000d580	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	109:	0000d520	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/output_file.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	55:	000020d0	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	64:	00002060	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libcrypto.so.1.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3626:	000ff200	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	3662:	000fefe0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	3671:	000fef70	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	3690:	000fee50	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3693:	000fee20	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libext2fs.so.2.4 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	369:	000332f0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	459:	00033160	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	462:	00033140	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	493:	000330c0	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	608:	00032eb0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	624:	00032e50	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libpthread.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	65:	00009fb4	24	FUNC	GLOBAL	DEFAULT	8	system</pre>
+<pre>    	274:	000113d0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	318:	000111e0	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	340:	000110d0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libebtc.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	75:	0000c380	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	108:	0000c260	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	160:	0000c120	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	162:	0000c110	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libuuid.so.1.3.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	32:	00002750	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	46:	00002670	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	68:	00002550	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libstdc++.so.6.0.16 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1927:	000a6890	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	2417:	000a6560	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libnl-tiny.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	112:	00006220	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/output_http.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	39:	00005910	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	64:	000057f0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	94:	000056c0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libldap_r-2.4.so.2.5.6 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	343:	00029010	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	429:	00028e10	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	432:	00028e00	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	569:	00028b30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/input_uvc.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	62:	00005280	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	69:	00005230	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libiwinfo.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	43:	00007110	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	71:	00006fd0	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	87:	00006f10	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	89:	00006ef0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/liblber-2.4.so.2.5.6 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	98:	00007940	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	171:	00007850	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/librt.so.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	75:	000024d8	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libntfs-3g.so.81.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	239:	0004ce00	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	372:	0004cb40	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	377:	0004cb20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	540:	0004c820	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libsasl2.so.2.0.23 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	148:	00011580	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	200:	00011460	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	205:	00011430	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_helper.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000970	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_statistic.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	27:	00000f60	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_connbytes.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00000dc0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_DSCP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	00000b80	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_string.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	27:	000013f0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_CONNMARK.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	00000d50	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_pkttype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000b60	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_NETMAP.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000c40	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_REDIRECT.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000c80	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_iprange.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	00001880	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	35:	00001800	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_tcpmss.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00000b30	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_SET.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	33:	00001580	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_TOS.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000f00	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libip6t_HL.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	000009e0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_time.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	26:	00001900	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_hashlimit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	36:	00002510	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_length.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00000b60	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_ECN.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00000d20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_owner.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00001c20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_quota.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	21:	000008b0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_layer7.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	32:	000014d0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	42:	00001470	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	44:	00001450	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_recent.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	26:	00000fc0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_CLASSIFY.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	000008f0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_MARK.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	00000d40	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libipt_TTL.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000b00	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_IMQ.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	19:	00000830	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/iptables/libxt_physdev.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000dd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ulog.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000b40	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	23:	00000b30	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_standard.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	15:	00000520	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ip.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	28:	00001350	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_pkttype.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000820	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_limit.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	24:	00000b50	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_arpreply.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	000009b0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebtable_filter.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	14:	00000470	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_nflog.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	22:	00000a90	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	23:	00000a80	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_mark_m.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	000007c0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_nat.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	000010e0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_redirect.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	00000790	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_stp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	28:	00001320	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_among.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	25:	00001d50	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	34:	00001cd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_ip6.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	33:	00001c20	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_log.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000dd0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	24:	00000dc0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_802_3.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	20:	00000970	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebtable_nat.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	14:	00000470	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_vlan.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	23:	00000bb0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_mark.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	21:	00000a50	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/ebtables/libebt_arp.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	29:	000017c0	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/usr/lib/libssl.so.1.0.0 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	724:	000411a0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	817:	00040bf0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/bin/busybox (-rw-r--r-- root root) found:</span></pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	81:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	138:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	143:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	278:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/bin/ubus (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	17:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/bin/WOIagent (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	19:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	40:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/bin/opkg (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	5:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	55:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	58:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	106:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/i2ccmd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/ubusd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	25:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/fdisk (-rw-r--r-- root root) found:</span></pre>
+<pre>    	190:	00412b10	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	223:	00412930	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	225:	00412910	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/swconfig (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	16:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/uci (-rw-r--r-- root root) found:</span></pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	21:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	43:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/blkid (-rw-r--r-- root root) found:</span></pre>
+<pre>    	75:	00405580	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	109:	00405390	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	114:	00405340	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/swaplabel (-rw-r--r-- root root) found:</span></pre>
+<pre>    	39:	00401a20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	51:	00401980	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/switch (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	21:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/spicmd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/losetup (-rw-r--r-- root root) found:</span></pre>
+<pre>    	113:	00407db0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	142:	00407c10	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/mtd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	10:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	20:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/fw3 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	8:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	34:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	62:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	64:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	120:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/mmap (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	9:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/mii_mgr (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/mkswap (-rw-r--r-- root root) found:</span></pre>
+<pre>    	58:	00403b20	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	87:	00403980	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/netifd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	6:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	popen</pre>
+<pre>    	63:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	123:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/pciephy (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	10:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/i2scmd (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	16:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/ated (-rw-r--r-- root root) found:</span></pre>
+<pre>    	1:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<pre>    	3:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/swapon (-rw-r--r-- root root) found:</span></pre>
+<pre>    	71:	00404260	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	92:	00404140	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/reg (-rw-r--r-- root root) found:</span></pre>
+<pre>    	2:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/sbin/hotplug2 (-rw-r--r-- root root) found:</span></pre>
+<pre>    	4:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	25:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	system</pre>
+<pre>    	40:	00000000	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libxrouter_writelog.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	38:	00003510	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libpthread-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	65:	00009f54	24	FUNC	GLOBAL	DEFAULT	8	system</pre>
+<pre>    	274:	00011370	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	318:	00011180	0	FUNC	GLOBAL	DEFAULT	UND	mmap</pre>
+<pre>    	340:	00011070	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libm-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	148:	000140b0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libuci.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	55:	000080e0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	70:	00008040	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	72:	00008030	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	95:	00007f20	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libutil-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	41:	00000d70	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libuClibc-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	18:	000380b0	40	FUNC	GLOBAL	DEFAULT	7	strcpy</pre>
+<pre>    	54:	0002ccb0	568	FUNC	GLOBAL	DEFAULT	7	popen</pre>
+<pre>    	56:	0002c760	80	FUNC	GLOBAL	DEFAULT	7	printf</pre>
+<pre>    	245:	00050938	188	FUNC	WEAK	DEFAULT	7	system</pre>
+<pre>    	356:	0000a0d0	112	FUNC	GLOBAL	DEFAULT	7	mmap</pre>
+<pre>    	462:	0002c810	64	FUNC	GLOBAL	DEFAULT	7	fprintf</pre>
+<pre>    	471:	00037e50	68	FUNC	GLOBAL	DEFAULT	7	strcat</pre>
+<pre>    	805:	0002c910	68	FUNC	GLOBAL	DEFAULT	7	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libblobmsg_json.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	26:	000019d0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	42:	000018f0	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/librt-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	75:	00002488	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libubus.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	42:	00003a80	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libubox.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	127:	00006700	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/librpc.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	110:	000114b0	0	FUNC	GLOBAL	DEFAULT	UND	sprintf</pre>
+<pre>    	171:	00011280	0	FUNC	GLOBAL	DEFAULT	UND	strcat</pre>
+<pre>    	174:	00011270	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<pre>    	244:	00011040	0	FUNC	GLOBAL	DEFAULT	UND	printf</pre>
+<pre>    	251:	00011000	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libdl-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	36:	000022c0	0	FUNC	GLOBAL	DEFAULT	UND	fprintf</pre>
+<br />
+<br />
+<pre>[</span><span class="green">+</span>]</span><span class="green"> Interesting function in ./logs/firmware/squashfs-root/lib/libcrypt-0.9.33.2.so (-rw-r--r-- root root) found:</span></pre>
+<pre>    	26:	00005100	0	FUNC	GLOBAL	DEFAULT	UND	strcpy</pre>
+<br />
+<br />
+<pre>[</span><span class="orange">*</span>] Found </span><span class="orange">194</span> binaries with interesting functions in </span><span class="orange">416</span> files (vulnerable functions: fprintf mmap popen printf sprintf strcat strcpy system)</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<a href="./s12_binary_protection.html" title="./s12_binary_protection.html" ><div id="buttonBack" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div></a>
+<a href="./s09_firmware_base_version_check.html" title="./s09_firmware_base_version_check.html" ><div id="buttonForward" class="rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/></svg></div> </a>
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

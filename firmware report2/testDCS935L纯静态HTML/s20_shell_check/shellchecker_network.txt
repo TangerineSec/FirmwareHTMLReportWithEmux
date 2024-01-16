@@ -1,0 +1,70 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 7:[0m
+[0mRETVAL=0[0m
+[33m^----^ SC2034 (warning): RETVAL appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 15:[0m
+[0m	hostname=`/usr/sbin/userconfig -read System ModelName`[0m
+[32m                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	hostname=$(/usr/sbin/userconfig -read System ModelName)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 19:[0m
+[0m		macaddress=`rtkmib mac|tr '[a-z]' '[A-Z]'`[0m
+[32m                           ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                          ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+[32m                                                  ^-----^ SC2021 (info): Don't use [] around classes in tr, it replaces literal square brackets.[0m
+
+[1mDid you mean: [0m
+		macaddress=$(rtkmib mac|tr '[a-z]' '[A-Z]')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 20:[0m
+[0m		mac=$mac`echo $macaddress | cut -d: -f$cnt`[0m
+[32m                        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                              ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		mac=$mac$(echo "$macaddress" | cut -d: -f$cnt)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 21:[0m
+[0m		cnt=$(($cnt+1))[0m
+[32m                       ^--^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 31:[0m
+[0m	echo -n "Starting $prog: "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 39:[0m
+[0m	echo -n "Stopping $prog: "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 41:[0m
+[0m		local line p[0m
+[33m                ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m                           ^-- SC2034 (warning): p appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 42:[0m
+[0m		read line < $pidfile[0m
+[32m                ^--^ SC2162 (info): read without -r will mangle backslashes.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/network line 43:[0m
+[0m		kill $line[0m
+[32m                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		kill "$line"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- RETVAL appears unused. Verify use...
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.

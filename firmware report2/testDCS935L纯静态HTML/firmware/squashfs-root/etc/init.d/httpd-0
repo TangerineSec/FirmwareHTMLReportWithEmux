@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# httpd: This starts and stops http server.
+#
+# chkconfig: 2345 90 10
+# description: httpd
+#
+# processname: /web/httpd
+
+# automatically export variables to the environment
+set -a
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+http_port=`/usr/sbin/userconfig -read HTTP Port`
+https_enable=`/usr/sbin/userconfig -read HTTPS Enable`
+
+start() {
+	echo -n "Starting httpd ... "
+	#if [ $https_enable = 0x01 ]; then
+		cd /web; ./httpd $http_port 1 1 1&
+	#else
+	#	cd /web; ./httpd $http_port 1 0 1&
+	#fi
+	echo "."
+}
+
+stop() {
+	echo -n "Stopping httpd ... "
+	kill `pidof httpd`
+	echo "."
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+reload() {
+	echo -n "Reloading httpd ... "
+	kill -USR1 `pidof httpd` 
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	reload)
+		reload
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

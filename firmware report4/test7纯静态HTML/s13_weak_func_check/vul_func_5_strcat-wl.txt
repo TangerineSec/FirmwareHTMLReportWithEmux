@@ -1,0 +1,123 @@
+[[0;33m*[0m] Binary protection state of [0;33mwl[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mwl[0m
+
+   172b8:	e24dd014 	sub	sp, sp, #20
+   172bc:	e1a07002 	mov	r7, r2
+   172c0:	e3530000 	cmp	r3, #0
+   172c4:	b3e05000 	mvnlt	r5, #0
+   172c8:	ba000034 	blt	173a0 <_start+0xe3cc>
+   172cc:	e3a00b7f 	mov	r0, #130048	; 0x1fc00
+   172d0:	ebffc6a6 	bl	8d70 <malloc@plt>
+   172d4:	e2504000 	subs	r4, r0, #0
+   172d8:	0a000051 	beq	17424 <_start+0xe450>
+   172dc:	e3a06b7f 	mov	r6, #130048	; 0x1fc00
+   172e0:	e3a01000 	mov	r1, #0
+   172e4:	e1a02006 	mov	r2, r6
+   172e8:	ebffc6f1 	bl	8eb4 <memset@plt>
+   172ec:	e5972004 	ldr	r2, [r7, #4]
+   172f0:	e3520000 	cmp	r2, #0
+   172f4:	11a06007 	movne	r6, r7
+   172f8:	1a000006 	bne	17318 <_start+0xe344>
+   172fc:	ea000032 	b	173cc <_start+0xe3f8>
+   17300:	e5b61004 	ldr	r1, [r6, #4]!
+   17304:	e1a00004 	mov	r0, r4
+[31m   17308:	ebffc6b9 	bl	8df4 <strcat@plt>[0m
+   1730c:	e5963004 	ldr	r3, [r6, #4]
+   17310:	e3530000 	cmp	r3, #0
+   17314:	0a00000e 	beq	17354 <_start+0xe380>
+   17318:	e5d43000 	ldrb	r3, [r4]
+   1731c:	e3530000 	cmp	r3, #0
+   17320:	0afffff6 	beq	17300 <_start+0xe32c>
+   17324:	e1a00004 	mov	r0, r4
+   17328:	ebffc711 	bl	8f74 <strlen@plt>
+   1732c:	e59f1148 	ldr	r1, [pc, #328]	; 1747c <_start+0xe4a8>
+   17330:	e3a02002 	mov	r2, #2
+   17334:	e0840000 	add	r0, r4, r0
+   17338:	ebffc67d 	bl	8d34 <memcpy@plt>
+   1733c:	e5b61004 	ldr	r1, [r6, #4]!
+   17340:	e1a00004 	mov	r0, r4
+[31m   17344:	ebffc6aa 	bl	8df4 <strcat@plt>[0m
+   17348:	e5963004 	ldr	r3, [r6, #4]
+   1734c:	e3530000 	cmp	r3, #0
+--
+   32828:	e5826000 	str	r6, [r2]
+   3282c:	e5836000 	str	r6, [r3]
+   32830:	e5816000 	str	r6, [r1]
+   32834:	e5816004 	str	r6, [r1, #4]
+   32838:	e58d6040 	str	r6, [sp, #64]	; 0x40
+   3283c:	ebff59cc 	bl	8f74 <strlen@plt>
+   32840:	e1a01005 	mov	r1, r5
+   32844:	e2402008 	sub	r2, r0, #8
+   32848:	e1a00004 	mov	r0, r4
+   3284c:	ebff5980 	bl	8e54 <strncpy@plt>
+   32850:	e1a02006 	mov	r2, r6
+   32854:	e59d100c 	ldr	r1, [sp, #12]
+   32858:	ebff5947 	bl	8d7c <strtoul@plt>
+   3285c:	e59d3088 	ldr	r3, [sp, #136]	; 0x88
+   32860:	e1a07000 	mov	r7, r0
+   32864:	e1a00004 	mov	r0, r4
+   32868:	e5c36000 	strb	r6, [r3]
+   3286c:	ebff59c0 	bl	8f74 <strlen@plt>
+   32870:	e0851000 	add	r1, r5, r0
+   32874:	e28d003c 	add	r0, sp, #60	; 0x3c
+[31m   32878:	ebff595d 	bl	8df4 <strcat@plt>[0m
+   3287c:	e59d100c 	ldr	r1, [sp, #12]
+   32880:	e1a02006 	mov	r2, r6
+--
+   3478c:	ea000002 	b	3479c <_start+0x2b7c8>
+   34790:	e5b64014 	ldr	r4, [r6, #20]!
+   34794:	e3540000 	cmp	r4, #0
+   34798:	0a000026 	beq	34838 <_start+0x2b864>
+   3479c:	e1a00004 	mov	r0, r4
+   347a0:	ebffffca 	bl	346d0 <_start+0x2b6fc>
+   347a4:	e3500000 	cmp	r0, #0
+   347a8:	0afffff8 	beq	34790 <_start+0x2b7bc>
+   347ac:	e5d43000 	ldrb	r3, [r4]
+   347b0:	e1530008 	cmp	r3, r8
+   347b4:	0a000001 	beq	347c0 <_start+0x2b7ec>
+   347b8:	e1590003 	cmp	r9, r3
+   347bc:	1afffff3 	bne	34790 <_start+0x2b7bc>
+   347c0:	e59d2004 	ldr	r2, [sp, #4]
+   347c4:	e0875107 	add	r5, r7, r7, lsl #2
+   347c8:	e28ba001 	add	sl, fp, #1
+   347cc:	e1a01004 	mov	r1, r4
+   347d0:	e08a418a 	add	r4, sl, sl, lsl #3
+   347d4:	e0825205 	add	r5, r2, r5, lsl #4
+   347d8:	e1a00005 	mov	r0, r5
+[31m   347dc:	ebff5184 	bl	8df4 <strcat@plt>[0m
+   347e0:	e1a00005 	mov	r0, r5
+   347e4:	ebff51e2 	bl	8f74 <strlen@plt>
+--
+   37d4c:	e1a07000 	mov	r7, r0
+   37d50:	e24dd014 	sub	sp, sp, #20
+   37d54:	e3a00c01 	mov	r0, #256	; 0x100
+   37d58:	e1a08001 	mov	r8, r1
+   37d5c:	e1a06002 	mov	r6, r2
+   37d60:	ebff4402 	bl	8d70 <malloc@plt>
+   37d64:	e2504000 	subs	r4, r0, #0
+   37d68:	0a0000a2 	beq	37ff8 <_start+0x2f024>
+   37d6c:	e3a02000 	mov	r2, #0
+   37d70:	e1a03004 	mov	r3, r4
+   37d74:	e4c32001 	strb	r2, [r3], #1
+   37d78:	e2833001 	add	r3, r3, #1
+   37d7c:	e5c42001 	strb	r2, [r4, #1]
+   37d80:	e1a05008 	mov	r5, r8
+   37d84:	e4c32001 	strb	r2, [r3], #1
+   37d88:	e5c32000 	strb	r2, [r3]
+   37d8c:	e5981000 	ldr	r1, [r8]
+   37d90:	e3510000 	cmp	r1, #0
+   37d94:	0a00000d 	beq	37dd0 <_start+0x2edfc>
+   37d98:	e1a00004 	mov	r0, r4
+[31m   37d9c:	ebff4414 	bl	8df4 <strcat@plt>[0m
+   37da0:	e5b53004 	ldr	r3, [r5, #4]!
+   37da4:	e3530000 	cmp	r3, #0
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m5[0m times [0;33mwl[0m
+

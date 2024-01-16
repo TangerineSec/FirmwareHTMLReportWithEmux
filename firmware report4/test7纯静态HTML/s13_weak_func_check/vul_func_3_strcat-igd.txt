@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33migd[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33migd[0m
+
+    9dd8:	e5a74004 	str	r4, [r7, #4]!
+    9ddc:	e3a00000 	mov	r0, #0
+    9de0:	e59d418c 	ldr	r4, [sp, #396]	; 0x18c
+    9de4:	e1540000 	cmp	r4, r0
+    9de8:	1afffff4 	bne	9dc0 <_start+0xe34>
+    9dec:	e3a02000 	mov	r2, #0
+    9df0:	e1a00006 	mov	r0, r6
+    9df4:	e59f109c 	ldr	r1, [pc, #156]	; 9e98 <_start+0xf0c>
+    9df8:	e1a03002 	mov	r3, r2
+    9dfc:	ebfffc0b 	bl	8e30 <_eval@plt>
+    9e00:	e28dde19 	add	sp, sp, #400	; 0x190
+    9e04:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+    9e08:	e1a00005 	mov	r0, r5
+    9e0c:	ebfffbdd 	bl	8d88 <strlen@plt>
+    9e10:	e59f1084 	ldr	r1, [pc, #132]	; 9e9c <_start+0xf10>
+    9e14:	e3a0200a 	mov	r2, #10
+    9e18:	e0850000 	add	r0, r5, r0
+    9e1c:	ebfffbc1 	bl	8d28 <memcpy@plt>
+    9e20:	e1a00005 	mov	r0, r5
+    9e24:	e1a01004 	mov	r1, r4
+[31m    9e28:	ebfffbc1 	bl	8d34 <strcat@plt>[0m
+    9e2c:	e5d43012 	ldrb	r3, [r4, #18]
+    9e30:	e3530000 	cmp	r3, #0
+    9e34:	0affffd6 	beq	9d94 <_start+0xe08>
+    9e38:	e1a00005 	mov	r0, r5
+    9e3c:	ebfffbd1 	bl	8d88 <strlen@plt>
+    9e40:	e59f1058 	ldr	r1, [pc, #88]	; 9ea0 <_start+0xf14>
+    9e44:	e3a02009 	mov	r2, #9
+    9e48:	e0850000 	add	r0, r5, r0
+    9e4c:	ebfffbb5 	bl	8d28 <memcpy@plt>
+    9e50:	e1a00005 	mov	r0, r5
+    9e54:	e2841012 	add	r1, r4, #18
+[31m    9e58:	ebfffbb5 	bl	8d34 <strcat@plt>[0m
+    9e5c:	e5d4301c 	ldrb	r3, [r4, #28]
+    9e60:	e3530000 	cmp	r3, #0
+    9e64:	0affffcd 	beq	9da0 <_start+0xe14>
+    9e68:	e1a00005 	mov	r0, r5
+    9e6c:	ebfffbc5 	bl	8d88 <strlen@plt>
+    9e70:	e59f102c 	ldr	r1, [pc, #44]	; 9ea4 <_start+0xf18>
+    9e74:	e0850000 	add	r0, r5, r0
+    9e78:	e3a0200a 	mov	r2, #10
+    9e7c:	ebfffba9 	bl	8d28 <memcpy@plt>
+    9e80:	e1a00005 	mov	r0, r5
+    9e84:	e284101c 	add	r1, r4, #28
+[31m    9e88:	ebfffba9 	bl	8d34 <strcat@plt>[0m
+    9e8c:	eaffffc3 	b	9da0 <_start+0xe14>
+    9e90:	0000b5ec 	andeq	fp, r0, ip, ror #11
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m3[0m times [0;33migd[0m
+

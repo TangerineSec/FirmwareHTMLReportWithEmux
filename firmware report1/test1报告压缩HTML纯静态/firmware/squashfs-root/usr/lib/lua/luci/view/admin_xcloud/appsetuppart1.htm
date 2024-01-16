@@ -1,0 +1,134 @@
+<%
+	require "luci.sys"
+
+	require "luci.sys";
+	require "luci.dispatcher"
+	require "luci.common"
+
+	local appsetup = luci.sys.exec('/usr/local/app/ReadInstallPlugin BASE')
+
+	local applength = string.len(appsetup)
+
+	local appsetupdata = {}
+
+	if applength ~= 3 then
+		appsetupdata = luci.common.split(appsetup,"////")
+	end	
+
+	local hasinstall = ""
+	local tmp = {}
+
+	local count = #appsetupdata
+	local appsetuped = {}
+	
+	for i,v in pairs (appsetupdata) do
+		tmp = luci.common.split(v,",")
+		table.insert(appsetuped,tmp)
+		if (i ~= count) then
+			hasinstall = hasinstall .. tmp[1] .. "_".. tmp[3] .. "|||"
+		else
+			hasinstall = hasinstall .. tmp[1] .. "_".. tmp[3]
+		end
+	end
+%>
+
+<div class='app_part part1'>
+	<ul>
+		<%
+			local n_size = 0
+			local n_len = 0
+			
+			function calctmp(number,std)
+			    return tonumber(string.format("%." .. std .. "f",number))
+			end
+
+			local show=0
+			for i,v in pairs (appsetuped) do
+					n_len = string.len(v[5])
+					if n_len < 8 then
+						n_size = v[5]/1024
+					else
+						n_size = (v[5]/1024)/1024
+					end
+
+					n_size = calctmp(n_size,2)
+					
+					if n_len < 8 then
+						n_size = n_size ..'KB'
+					else
+						n_size = n_size ..'M'
+					end
+
+					show = show + 1
+				%>
+				<li>
+					<%
+						local appinfo = luci.sys.exec('/usr/local/app/ReadInstallPlugin NEEDONE '..v[1]..' Officeapp Smallicon')
+						local tmp1 = Split(appinfo,",")
+						local img_small = pcdata(luci.dispatcher.build_url("admin/xcloud/showimg")).."?id="..v[1].."&small=1"
+
+						if tmp1[1] =="1" then
+							img_small = string.gsub(tmp1[2], "/www", "")
+						end
+					%>
+					<img class='app_opt_img' src='<%=img_small%>'>
+					<span class='app_opt_title'><%=v[2]%></span><span class='app_opt_size'><%=n_size%></span>
+					<div class='app_opt_btn'>
+						<% 						
+							if tmp1[1] ~= "1" then
+						%>
+							<a href='javascript:void(0)' class='uninstall app_opt_btn_right appstatus<%=v[1]%>' rel='<%=v[1]%>'><b>卸载</b></a>
+							<span class="appstr uninstalling">卸载中</span>
+						<%
+							end
+						%>
+					</div>
+					<div class='clr'></div>
+				</li>
+			<%	
+			end
+		%>
+	</ul>
+	<%if show == 0 then%>
+		<div class='appsetupmention'>
+			尚未安装应用
+		</div>
+	<%end%>
+</div>
+
+<script type='text/javascript'>
+	var o = "<%=hasinstall%>";
+
+	$.getJSON("http://r.xcloud.cc/router/index.php?m=Index&a=checkStatus&callback=?",{ids:o,type:'1',nicon:"1"},function(json){
+		str = eval(json);
+
+		n = str.length;
+
+		var tmp = "";
+		var tmpstr = "";
+
+		for (var i=0;i<n;i++)
+		{	
+			if (json[i].version != ""){
+				tmpstr = "<a href='javascript:void(0)' class='updateapp app_opt_btn_left' rel='"+json[i].appid+"'><b>更新</b></a><span class='appstr1 updating'>更新中</span>";
+				$('.appstatus'+json[i].appid).before(tmpstr);
+			}
+		}
+	});
+</script>
+
+<div class="dev_info">
+<%
+	require 'luci.common'
+	local outsize = luci.sys.exec('/usr/local/app/GetFreeDisk usbiso')
+		  outsize = luci.common.trim(outsize)
+
+	local tmp1 = "未插入移动存储设备"
+
+	if outsize ~= 'ERROR' then
+		local tmp2 = Split(outsize,",")
+		tmp1 = "可用空间：<span class='appstoreout'>"..tmp2[1].."</span>"
+	end
+%>
+<%=tmp1%>
+</div>

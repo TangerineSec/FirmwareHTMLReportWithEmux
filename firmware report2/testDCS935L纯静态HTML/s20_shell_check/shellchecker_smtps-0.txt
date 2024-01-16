@@ -1,0 +1,80 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 15:[0m
+[0mserver_port=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP ServerPort`[0m
+[32m            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+server_port=$(/usr/sbin/userconfig -read EVENT_SERVER_SMTP ServerPort)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 16:[0m
+[0mserver_addr=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP ServerAddr`[0m
+[32m            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+server_addr=$(/usr/sbin/userconfig -read EVENT_SERVER_SMTP ServerAddr)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 17:[0m
+[0mstarttls_enable=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP STARTTLS`[0m
+[32m                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+starttls_enable=$(/usr/sbin/userconfig -read EVENT_SERVER_SMTP STARTTLS)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 19:[0m
+[0m/usr/sbin/cfg -a w -p /var stunnel-smtps.conf smtps connect $server_addr:$server_port[0m
+[32m                                                            ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                         ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+/usr/sbin/cfg -a w -p /var stunnel-smtps.conf smtps connect "$server_addr":"$server_port"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 20:[0m
+[0mif [ $starttls_enable = 0x01 ]; then[0m
+[32m     ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$starttls_enable" = 0x01 ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 27:[0m
+[0m	encrypt=`/usr/sbin/userconfig -read EVENT_SERVER_SMTP SSL`[0m
+[32m                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	encrypt=$(/usr/sbin/userconfig -read EVENT_SERVER_SMTP SSL)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 28:[0m
+[0m	if [ $encrypt = 0x01 ]; then[0m
+[32m             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ "$encrypt" = 0x01 ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 29:[0m
+[0m		echo -n "Starting smtps stunnel:"[0m
+[33m                     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 35:[0m
+[0m	/bin/kill `pidof stunnel-smtps`[0m
+[33m                  ^-------------------^ SC2046 (warning): Quote this to prevent word splitting.[0m
+[32m                  ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	/bin/kill $(pidof stunnel-smtps)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/smtps-0 line 55:[0m
+[0m		echo $"Usage $0 {start|stop|restart}"[0m
+[33m                     ^-- SC3004 (warning): In POSIX sh, $".." is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2046 -- Quote this to prevent word splitt...
+  https://www.shellcheck.net/wiki/SC3004 -- In POSIX sh, $".." is undefined.
+  https://www.shellcheck.net/wiki/SC3037 -- In POSIX sh, echo flags are undef...

@@ -1,0 +1,86 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 2:[0m
+[0m. /lib/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 11:[0m
+[0m	[ -n "$init" ] && reload_init "$2" "$init" "$test"[0m
+[33m                                                    ^---^ SC2154 (warning): test is referenced but not assigned (for output from commands, use "$(test ...)" ).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 16:[0m
+[0m	local service="$1"[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 17:[0m
+[0m	local ok="$3"[0m
+[33m        ^------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 18:[0m
+[0m	set -- $2[0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	set -- "$2"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 19:[0m
+[0m	local cmd="$1"; shift[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 24:[0m
+[0m		[ -n "$ok" -a "$?" != "$ok" ] && echo '!!! Failed to reload' $service '!!!'[0m
+[33m                           ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[32m                                                                             ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		[ -n "$ok" -a "$?" != "$ok" ] && echo '!!! Failed to reload' "$service" '!!!'
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 29:[0m
+[0m	[ -x /etc/init.d/$2 ] && /etc/init.d/$2 enabled && {[0m
+[32m                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -x /etc/init.d/"$2" ] && /etc/init.d/"$2" enabled && {
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 31:[0m
+[0m		/etc/init.d/$2 reload >/dev/null 2>&1[0m
+[32m                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		/etc/init.d/"$2" reload >/dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 32:[0m
+[0m		[ -n "$3" -a "$?" != "$3" ] && echo '!!! Failed to reload' $1 '!!!'[0m
+[33m                          ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[32m                                                                           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		[ -n "$3" -a "$?" != "$3" ] && echo '!!! Failed to reload' "$1" '!!!'
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 40:[0m
+[0mfor i in $*; do[0m
+[33m         ^-- SC2048 (warning): Use "$@" (with quotes) to prevent whitespace problems.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/luci-reload line 41:[0m
+[0m	config_foreach apply_config $i $i[0m
+[32m                                    ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                       ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	config_foreach apply_config "$i" "$i"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2048 -- Use "$@" (with quotes) to prevent...
+  https://www.shellcheck.net/wiki/SC2154 -- test is referenced but not assign...
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] && [ q ] as [ p -a q...

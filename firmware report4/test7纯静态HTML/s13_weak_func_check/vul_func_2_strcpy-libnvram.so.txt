@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibnvram.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mlibnvram.so[0m
+
+ 6f8:	e1a03007 	mov	r3, r7
+ 6fc:	ebffff9e 	bl	57c <sprintf@plt>
+ 700:	e59f3074 	ldr	r3, [pc, #116]	; 77c <nvram_init+0x1a0>
+ 704:	e1a01005 	mov	r1, r5
+ 708:	e1a02004 	mov	r2, r4
+ 70c:	e5930000 	ldr	r0, [r3]
+ 710:	ebffff93 	bl	564 <write@plt>
+ 714:	e2507000 	subs	r7, r0, #0
+ 718:	ba00000c 	blt	750 <nvram_init+0x174>
+ 71c:	e1550006 	cmp	r5, r6
+ 720:	0a000001 	beq	72c <nvram_init+0x150>
+ 724:	e1a00005 	mov	r0, r5
+ 728:	ebffffa8 	bl	5d0 <free@plt>
+ 72c:	e1570004 	cmp	r7, r4
+ 730:	11a00007 	movne	r0, r7
+ 734:	03a00000 	moveq	r0, #0
+ 738:	e28dd068 	add	sp, sp, #104	; 0x68
+ 73c:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ 740:	e1a00005 	mov	r0, r5
+ 744:	e1a01008 	mov	r1, r8
+[31m 748:	ebffff76 	bl	528 <strcpy@plt>[0m
+ 74c:	eaffffeb 	b	700 <nvram_init+0x124>
+ 750:	e59f0028 	ldr	r0, [pc, #40]	; 780 <nvram_init+0x1a4>
+--
+ 780:	00000928 	andeq	r0, r0, r8, lsr #18
+
+00000784 <nvram_get>:
+ 784:	e92d40f0 	push	{r4, r5, r6, r7, lr}
+ 788:	e24dd06c 	sub	sp, sp, #108	; 0x6c
+ 78c:	e1a07000 	mov	r7, r0
+ 790:	ebffff7f 	bl	594 <strlen@plt>
+ 794:	e1a06000 	mov	r6, r0
+ 798:	e3a00000 	mov	r0, #0
+ 79c:	ebffff82 	bl	5ac <nvram_init@plt>
+ 7a0:	e3500000 	cmp	r0, #0
+ 7a4:	13a06000 	movne	r6, #0
+ 7a8:	1a000016 	bne	808 <nvram_get+0x84>
+ 7ac:	e2866001 	add	r6, r6, #1
+ 7b0:	e28d5004 	add	r5, sp, #4
+ 7b4:	e3560064 	cmp	r6, #100	; 0x64
+ 7b8:	91a04005 	movls	r4, r5
+ 7bc:	8a000014 	bhi	814 <nvram_get+0x90>
+ 7c0:	e1a01007 	mov	r1, r7
+ 7c4:	e1a00004 	mov	r0, r4
+[31m 7c8:	ebffff56 	bl	528 <strcpy@plt>[0m
+ 7cc:	e59f305c 	ldr	r3, [pc, #92]	; 830 <nvram_get+0xac>
+ 7d0:	e1a02006 	mov	r2, r6
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33mlibnvram.so[0m
+

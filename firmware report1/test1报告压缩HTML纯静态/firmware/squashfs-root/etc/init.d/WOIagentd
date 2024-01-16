@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+
+START=96
+stop=90
+clean_WOIagent()
+{
+	for WOIagent_PID in `/bin/ps|grep /bin/WOIagent | grep -v grep | awk '{print $1}'`
+	do
+    		kill -9 ${WOIagent_PID}
+	done
+}
+stop()
+{
+	clean_WOIagent
+}
+start() 
+{
+	if [ -e /bin/WOIagent ]
+	then
+		clean_WOIagent
+		/bin/WOIagent &
+	fi
+}

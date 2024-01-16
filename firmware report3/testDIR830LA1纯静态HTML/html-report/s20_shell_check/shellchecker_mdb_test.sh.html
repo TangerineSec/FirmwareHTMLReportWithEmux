@@ -1,0 +1,1455 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s20_shell_check.html" title="./../s20_shell_check.html" >&laquo; Back to s20_shell_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 6:</span></pre>
+<pre></span>MDB_PATH=`mdb`</span></pre>
+<pre><span class="orange">^------^ SC2034 (warning): MDB_PATH appears unused. Verify use (or export if used externally).</span></pre>
+<pre><span class="green">         ^---^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MDB_PATH=$(mdb)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 8:</span></pre>
+<pre></span>echo -e "mdb test start...." &gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 13:</span></pre>
+<pre></span>echo -e "  ------------------------------System Requirements testing------------- " &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 17:</span></pre>
+<pre></span>ls /tmp/test | grep test</span></pre>
+<pre><span class="orange">^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 18:</span></pre>
+<pre></span>if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 19:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">............................../tmp read write ok.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 22:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]............................../tmp read write fail.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 26:</span></pre>
+<pre></span>cd /mydlink</span></pre>
+<pre><span class="orange">^---------^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>cd /mydlink || exit</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 27:</span></pre>
+<pre></span>if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 28:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">............................../mydlink folder exist.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 30:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]............................../mydlink folder not exist.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 34:</span></pre>
+<pre></span>echo $PATH | grep mydlink</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>echo "$PATH" | grep mydlink</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 35:</span></pre>
+<pre></span>if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 36:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">............................../mydlink in lib path.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 38:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]............................../mydlink NOT in lib path.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 45:</span></pre>
+<pre></span>ls $libPath_1 | grep libssl</span></pre>
+<pre><span class="orange">^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 46:</span></pre>
+<pre></span>if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 47:</span></pre>
+<pre></span>    ls $libPath_1 | grep libcrypto</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 48:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 49:</span></pre>
+<pre></span>        echo -e "\033[1<span class="green">..............................Openssl in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 51:</span></pre>
+<pre></span>        echo -e "\033[1<span class="red">[Fail]..............................Can not find libcrypto.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 54:</span></pre>
+<pre></span>    ls $libPath_2 | grep libssl</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 55:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 56:</span></pre>
+<pre></span>        ls $libPath_2 | grep libcrypto</span></pre>
+<pre><span class="orange">        ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 57:</span></pre>
+<pre></span>        if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">             ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 58:</span></pre>
+<pre></span>            echo -e "\033[1<span class="green">..............................Openssl in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">                 ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 60:</span></pre>
+<pre></span>            echo -e "\033[1<span class="red">[Fail]..............................Can not find libcrypto.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">                 ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 63:</span></pre>
+<pre></span>        echo -e "\033[1<span class="red">[Fail]..............................Can not find openssl.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 68:</span></pre>
+<pre></span>ls $libPath_1 | grep libpthread</span></pre>
+<pre><span class="orange">^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 69:</span></pre>
+<pre></span>if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 70:</span></pre>
+<pre></span>   echo -e "\033[1<span class="green">..............................libpthread in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">        ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 72:</span></pre>
+<pre></span>    ls $libPath_2 | grep libpthread</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 73:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 74:</span></pre>
+<pre></span>        echo -e "\033[1<span class="green">..............................libpthread in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 76:</span></pre>
+<pre></span>        echo -e "\033[1<span class="red">[Fail]..............................Can not find libpthread.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 81:</span></pre>
+<pre></span>echo -e "\n------------------------------System Commands testing------------------" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 89:</span></pre>
+<pre></span>    ls $word | grep reboot</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<pre><span class="green">       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    ls "$word" | grep reboot</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 90:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 95:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................reboot command in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 97:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................reboot command NOT in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 105:</span></pre>
+<pre></span>    ls $word | grep killall</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<pre><span class="green">       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    ls "$word" | grep killall</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 106:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 111:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................killall command in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 113:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................killall command NOT in system.\033[0m" &gt;&gt; $TEST_RESULT </span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 122:</span></pre>
+<pre></span>    ls $word | grep factory_reset</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<pre><span class="green">       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    ls "$word" | grep factory_reset</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 123:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 128:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................factory_reset command in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 130:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................factory_reset command NOT in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 139:</span></pre>
+<pre></span>    ls $word | grep fw_upgrade</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<pre><span class="green">       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    ls "$word" | grep fw_upgrade</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 140:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 145:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................fw_upgrade command in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 147:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................fw_upgrade command NOT in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 156:</span></pre>
+<pre></span>    ls $word | grep sed</span></pre>
+<pre><span class="orange">    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.</span></pre>
+<pre><span class="green">       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    ls "$word" | grep sed</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 157:</span></pre>
+<pre></span>    if [ $? = "0" ]; then</span></pre>
+<pre><span class="green">         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 162:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................sed command in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 164:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................sed command NOT in system.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 173:</span></pre>
+<pre></span>echo -e "\n------------------------------MDB testing------------------------------" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 176:</span></pre>
+<pre></span>FW_VERSION=`mdb get fw_version 2&gt;/dev/null`</span></pre>
+<pre><span class="green">           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>FW_VERSION=$(mdb get fw_version 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 177:</span></pre>
+<pre></span>if [ $FW_VERSION ]; then</span></pre>
+<pre><span class="green">     ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$FW_VERSION" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 178:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get fw_version [$FW_VERSION]\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 180:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get fw_version fail.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 184:</span></pre>
+<pre></span>MODEL=`mdb get dev_model 2&gt;/dev/null`</span></pre>
+<pre><span class="green">      ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MODEL=$(mdb get dev_model 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 185:</span></pre>
+<pre></span>if [ $MODEL ]; then</span></pre>
+<pre><span class="green">     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$MODEL" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 186:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get dev_model[$MODEL]\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 188:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get dev_model fail.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 192:</span></pre>
+<pre></span>NAME=`mdb get dev_name 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>NAME=$(mdb get dev_name 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 193:</span></pre>
+<pre></span>if [ $NAME ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$NAME" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 194:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get dev_name[$NAME] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 196:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get dev_name fail.\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 200:</span></pre>
+<pre></span>OLD_PASSWD=`mdb get admin_passwd 2&gt;/dev/null`</span></pre>
+<pre><span class="green">           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>OLD_PASSWD=$(mdb get admin_passwd 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 205:</span></pre>
+<pre></span>PASSWD=`mdb get admin_passwd 2&gt;/dev/null`</span></pre>
+<pre><span class="green">       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>PASSWD=$(mdb get admin_passwd 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 208:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="green">..............................mdb set admin_passwd OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 210:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="red">[Fail]..............................mdb set admin_passwd failed SET:[$testPasswd], GET:[$PASSWD]\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 214:</span></pre>
+<pre></span>db set admin_passwd $OLD_PASSWD</span></pre>
+<pre><span class="green">                     ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>mdb set admin_passwd "$OLD_PASSWD"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 219:</span></pre>
+<pre></span>HTTP=`mdb get http_port 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>HTTP=$(mdb get http_port 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 220:</span></pre>
+<pre></span>if [ $HTTP ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$HTTP" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 221:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get http_port($HTTP) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 223:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get http_port failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 227:</span></pre>
+<pre></span>HTTPS=`mdb get https_port 2&gt;/dev/null`</span></pre>
+<pre><span class="green">      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>HTTPS=$(mdb get https_port 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 228:</span></pre>
+<pre></span>if [ $HTTPS ]; then</span></pre>
+<pre><span class="green">     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$HTTPS" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 229:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get https_port($HTTPS) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 231:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get https_port failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 235:</span></pre>
+<pre></span>REG=`mdb get register_st 2&gt;/dev/null`</span></pre>
+<pre><span class="green">    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>REG=$(mdb get register_st 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 236:</span></pre>
+<pre></span>if [ $REG ]; then</span></pre>
+<pre><span class="green">     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$REG" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 237:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get register_st($REG) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 239:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get register_st failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 246:</span></pre>
+<pre></span>SET_REG=`mdb set register_st 1 2&gt;/dev/null`</span></pre>
+<pre><span class="orange">^-----^ SC2034 (warning): SET_REG appears unused. Verify use (or export if used externally).</span></pre>
+<pre><span class="green">        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>SET_REG=$(mdb set register_st 1 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 249:</span></pre>
+<pre></span>REG=`mdb get register_st 2&gt;/dev/null`</span></pre>
+<pre><span class="green">    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>REG=$(mdb get register_st 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 250:</span></pre>
+<pre></span>if [ $REG = "1" ]; then</span></pre>
+<pre><span class="green">     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$REG" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 251:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="green">..............................mdb set register_st($REG) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 253:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="red">[Fail]..............................mdb set register_st failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 255:</span></pre>
+<pre></span>db set register_st $REG</span></pre>
+<pre><span class="green">                    ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>mdb set register_st "$REG"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 259:</span></pre>
+<pre></span>MAC=`mdb get mac_addr 2&gt;/dev/null`</span></pre>
+<pre><span class="green">    ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MAC=$(mdb get mac_addr 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 260:</span></pre>
+<pre></span>if [ $MAC ]; then</span></pre>
+<pre><span class="green">     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$MAC" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 261:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get mac_addr($MAC) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 263:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get mac_addr failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 266:</span></pre>
+<pre></span>db set attr_0 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 267:</span></pre>
+<pre></span>db set attr_1 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 268:</span></pre>
+<pre></span>db set attr_2 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 269:</span></pre>
+<pre></span>db set attr_3 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 270:</span></pre>
+<pre></span>db set attr_4 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 271:</span></pre>
+<pre></span>db set attr_5 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 272:</span></pre>
+<pre></span>db set attr_6 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 273:</span></pre>
+<pre></span>db set attr_7 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 274:</span></pre>
+<pre></span>db set attr_8 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 275:</span></pre>
+<pre></span>db set attr_9 1 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 280:</span></pre>
+<pre></span>ATTR=`mdb get attr_0 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_0 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 281:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 282:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_0 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 284:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_0 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 288:</span></pre>
+<pre></span>ATTR=`mdb get attr_1 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_1 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 289:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 290:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_1 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 292:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_1 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 296:</span></pre>
+<pre></span>ATTR=`mdb get attr_2 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_2 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 297:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 298:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_2 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 300:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_2 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 304:</span></pre>
+<pre></span>ATTR=`mdb get attr_3 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_3 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 305:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 306:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_3 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 308:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_3 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 312:</span></pre>
+<pre></span>ATTR=`mdb get attr_4 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_4 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 313:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 314:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_4 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 316:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_4 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 320:</span></pre>
+<pre></span>ATTR=`mdb get attr_5 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_5 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 321:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 322:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_5 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 324:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_5 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 328:</span></pre>
+<pre></span>ATTR=`mdb get attr_6 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_6 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 329:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 330:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_6 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 332:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_6 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 336:</span></pre>
+<pre></span>ATTR=`mdb get attr_7 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_7 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 337:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 338:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_7 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 340:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_7 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 344:</span></pre>
+<pre></span>ATTR=`mdb get attr_8 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_8 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 345:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 346:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_8 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 348:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_8 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 352:</span></pre>
+<pre></span>ATTR=`mdb get attr_9 2&gt;/dev/null`</span></pre>
+<pre><span class="green">     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>ATTR=$(mdb get attr_9 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 353:</span></pre>
+<pre></span>if [ $ATTR = "1" ]; then</span></pre>
+<pre><span class="green">     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$ATTR" = "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 354:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set attr_9 OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 356:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set attr_9 failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 360:</span></pre>
+<pre></span>echo -e "  ------------------------------Shared Port device specific test------------- " &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 362:</span></pre>
+<pre></span>SP_HTTP=`mdb get sp_http_port 2&gt;/dev/null`</span></pre>
+<pre><span class="green">        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>SP_HTTP=$(mdb get sp_http_port 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 363:</span></pre>
+<pre></span>if [ $SP_HTTP ]; then</span></pre>
+<pre><span class="green">     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$SP_HTTP" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 364:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get sp_http_port($SP_HTTP) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 366:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get sp_http_port failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 370:</span></pre>
+<pre></span>SP_HTTPS=`mdb get sp_https_port 2&gt;/dev/null`</span></pre>
+<pre><span class="green">         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>SP_HTTPS=$(mdb get sp_https_port 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 371:</span></pre>
+<pre></span>if [ $SP_HTTPS ]; then</span></pre>
+<pre><span class="green">     ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$SP_HTTPS" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 372:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get sp_https_port($SP_HTTPS) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 374:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get sp_https_port failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 379:</span></pre>
+<pre></span>echo -e "  ------------------------------NAS and Camera specific test------------- " &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 381:</span></pre>
+<pre></span>LV_PORT=`mdb get liveview 2&gt;/dev/null`</span></pre>
+<pre><span class="green">        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>LV_PORT=$(mdb get liveview 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 382:</span></pre>
+<pre></span>if [ $LV_PORT ]; then</span></pre>
+<pre><span class="green">     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$LV_PORT" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 383:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get liveview($LV_PORT) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 385:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get liveview failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 389:</span></pre>
+<pre></span>PB_PORT=`mdb get playback 2&gt;/dev/null`</span></pre>
+<pre><span class="green">        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>PB_PORT=$(mdb get playback 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 390:</span></pre>
+<pre></span>if [ $PB_PORT ]; then</span></pre>
+<pre><span class="green">     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$PB_PORT" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 391:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get playback($PB_PORT) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 393:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get playback failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 397:</span></pre>
+<pre></span>CONFIG_PORT=`mdb get config 2&gt;/dev/null`</span></pre>
+<pre><span class="green">            ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>CONFIG_PORT=$(mdb get config 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 398:</span></pre>
+<pre></span>if [ $CONFIG_PORT ]; then</span></pre>
+<pre><span class="green">     ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$CONFIG_PORT" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 399:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get config($CONFIG_PORT) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 401:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get config failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 407:</span></pre>
+<pre></span>OLD_TIME=`mdb get time 2&gt;/dev/null`</span></pre>
+<pre><span class="green">         ^------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>OLD_TIME=$(mdb get time 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 409:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get time[$OLD_TIME] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 411:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">..............................mdb get time[$OLD_TIME] failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 417:</span></pre>
+<pre></span>MY_TIME=`mdb get time 2&gt;/dev/null`</span></pre>
+<pre><span class="green">        ^------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MY_TIME=$(mdb get time 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 418:</span></pre>
+<pre></span>if [ $MY_TIME == ${NEW_TIME} ]; then</span></pre>
+<pre><span class="green">     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="orange">              ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$MY_TIME" == ${NEW_TIME} ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 419:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb set time[$NEW_TIME] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 421:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb set time failed[$MY_TIME][$NEW_TIME]\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 423:</span></pre>
+<pre></span>db set time $OLD_TIME</span></pre>
+<pre><span class="green">             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>mdb set time "$OLD_TIME"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 429:</span></pre>
+<pre></span>WAN=`mdb get wan_mode 2&gt;/dev/null`</span></pre>
+<pre><span class="green">    ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>WAN=$(mdb get wan_mode 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 430:</span></pre>
+<pre></span>if [ $WAN ]; then</span></pre>
+<pre><span class="green">     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$WAN" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 431:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get wan_mode OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 433:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get wan_mode failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 436:</span></pre>
+<pre></span>if [ $WAN == "1" ]; then</span></pre>
+<pre><span class="green">     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="orange">          ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$WAN" == "1" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 442:</span></pre>
+<pre></span>db set wan_mode ${swap} 2&gt;&amp;1 &gt;/dev/null</span></pre>
+<pre><span class="orange">                         ^--^ SC2069 (warning): To redirect stdout+stderr, 2&gt;&amp;1 must be last (or use '{ cmd &gt; file; } 2&gt;&amp;1' to clarify).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 443:</span></pre>
+<pre></span>if [ $? == "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<pre><span class="orange">        ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 446:</span></pre>
+<pre></span>    WAN=`mdb get wan_mode 2&gt;/dev/null`</span></pre>
+<pre><span class="green">        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    WAN=$(mdb get wan_mode 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 447:</span></pre>
+<pre></span>    if [ $WAN == ${swap} ]; then</span></pre>
+<pre><span class="green">         ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="orange">              ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    if [ "$WAN" == ${swap} ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 448:</span></pre>
+<pre></span>        echo -e "\n\033[1<span class="green">..............................mdb set wan_mode($swap) OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 449:</span></pre>
+<pre></span>        mdb set wan_mode $WAN_TMP</span></pre>
+<pre><span class="green">                         ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>        mdb set wan_mode "$WAN_TMP"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 453:</span></pre>
+<pre></span>        echo -e "\n\033[1<span class="red">[Fail]..............................mdb set wan_mode failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 456:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="red">[Fail]..............................mdb set wan_mode failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 460:</span></pre>
+<pre></span>MY_STATIC_IP=`mdb get static_ip_info 2&gt;/dev/null`</span></pre>
+<pre><span class="green">             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MY_STATIC_IP=$(mdb get static_ip_info 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 461:</span></pre>
+<pre></span>if [ $MY_STATIC_IP ]; then</span></pre>
+<pre><span class="green">     ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$MY_STATIC_IP" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 462:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get static_ip_info[$MY_STATIC_IP] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 464:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get static_ip_info failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 473:</span></pre>
+<pre></span>if [ $? == "0" ]; then</span></pre>
+<pre><span class="green">     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.</span></pre>
+<pre><span class="orange">        ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 476:</span></pre>
+<pre></span>    VALUE=`mdb get static_ip_info 2&gt;/dev/null`</span></pre>
+<pre><span class="green">          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    VALUE=$(mdb get static_ip_info 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 477:</span></pre>
+<pre></span>    if [ $VALUE == ${EXPECT} ]; then</span></pre>
+<pre><span class="green">         ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="orange">                ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>    if [ "$VALUE" == ${EXPECT} ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 478:</span></pre>
+<pre></span>        echo -e "\n\033[1<span class="green">..............................mdb set static_ip_info OK![$VALUE][$EXPECT]\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 479:</span></pre>
+<pre></span>        mdb set static_ip_info $MY_STATIC_IP</span></pre>
+<pre><span class="green">                               ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>        mdb set static_ip_info "$MY_STATIC_IP"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 483:</span></pre>
+<pre></span>        echo -e "\n\033[1<span class="red">..............................mdb set static_ip_info failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 486:</span></pre>
+<pre></span>    echo -e "\n\033[1<span class="red">[Fail]..............................mdb set static_ip_info cmd  failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 488:</span></pre>
+<pre></span>db set wan_mode $WAN_TMP</span></pre>
+<pre><span class="green">                 ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>mdb set wan_mode "$WAN_TMP"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 493:</span></pre>
+<pre></span>MY_CURRENT_IP=`mdb get cur_ip_info 2&gt;/dev/null`</span></pre>
+<pre><span class="green">              ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>MY_CURRENT_IP=$(mdb get cur_ip_info 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 494:</span></pre>
+<pre></span>if [ $MY_CURRENT_IP ]; then</span></pre>
+<pre><span class="green">     ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$MY_CURRENT_IP" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 495:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get cur_ip_info[$MY_CURRENT_IP] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 497:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get cur_ip_info failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 501:</span></pre>
+<pre></span>CABLE_ST=`mdb get eth_cable_st 2&gt;/dev/null`</span></pre>
+<pre><span class="green">         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>CABLE_ST=$(mdb get eth_cable_st 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 502:</span></pre>
+<pre></span>if [ $CABLE_ST ]; then</span></pre>
+<pre><span class="green">     ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>if [ "$CABLE_ST" ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 503:</span></pre>
+<pre></span>    echo -e "\033[1<span class="green">..............................mdb get eth_cable_st[$CABLE_ST] OK!\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/sbin/mdb_test.sh line 505:</span></pre>
+<pre></span>    echo -e "\033[1<span class="red">[Fail]..............................mdb get eth_cable_st failed\033[0m" &gt;&gt; $TEST_RESULT</span></pre>
+<pre><span class="orange">         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.</span></pre>
+<br />
+<pre>For more information:</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2010" title="https://www.shellcheck.net/wiki/SC2010" target="_blank" >https://www.shellcheck.net/wiki/SC2010</a> -- Don't use ls | grep. Use a glob o...</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2034" title="https://www.shellcheck.net/wiki/SC2034" target="_blank" >https://www.shellcheck.net/wiki/SC2034</a> -- MDB_PATH appears unused. Verify u...</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2069" title="https://www.shellcheck.net/wiki/SC2069" target="_blank" >https://www.shellcheck.net/wiki/SC2069</a> -- To redirect stdout+stderr, 2&gt;&amp;1 m...</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

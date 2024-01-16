@@ -1,0 +1,698 @@
+<!-- 
+EMBA - EMBEDDED LINUX ANALYZER
+
+Copyright 2020-2023 Siemens AG
+Copyright 2020-2024 Siemens Energy AG
+
+EMBA comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+welcome to redistribute it under the terms of the GNU General Public License.
+See LICENSE file for usage of this software.
+
+EMBA is licensed under GPLv3
+
+Author(s) and contributors from the EMBA project are listed here: https://github.com/e-m-b-a/emba/blob/master/CONTRIBUTORS.md
+-->
+
+<!-- Used icons: https://github.com/CoreyGinnivan/system-uicons -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMBA firmware report</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./../style/style.css" type="text/css">
+  <link rel="icon" type="image/png" href="./../style/favicon.png">
+</head>
+<body>
+
+<div id="sidenav" class="side">
+  <div id="logo">
+    <a class="inherit" href="./../index.html"><img class="inherit" id="logoImage" src="./../style/emba.svg" alt="logo"></a>
+  </div>
+  <div id="nav">
+      <a id="embark" class="hidden" href="{{ embarkBackUrl }}">&laquo; Back to EMBArk</a> <!-- nosem -->
+      <a class="backButton" href="./../index.html">&laquo; Back to main</a>
+<a class="modul" href="./../s20_shell_check.html" title="./../s20_shell_check.html" >&laquo; Back to s20_shell_check</a>
+      <!-- navigation start -->
+      <!-- navigation end -->
+      <input id="expand" class="expand_njs hidden" type="button" value="More results:" onclick="this.value=this.value=='+ Show more results'?'- Hide more results':'+ Show more results';">
+      <div class="expand_area">
+        <!-- etc start -->
+        <!-- etc end -->
+      </div>
+  </div>
+  <a href="TIMELINK"><div id="buttonTimeInvisible" class="rectButton"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 19 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 5.5v4H5"/></g></svg></div></a>
+  <div id="buttonSizer" class="rectButton buttonClose" onclick="buttonNav()"></div>
+</div>
+<div id="main" class="main">
+  <!-- content start -->
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 22:</span></pre>
+<pre></span>		uci set samba.&commat;sambashare[-1].name=xRouter_MNT_$samba_dev</span></pre>
+<pre><span class="green">                                                               ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		uci set samba.&commat;sambashare[-1].name=xRouter_MNT_"$samba_dev"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 23:</span></pre>
+<pre></span>		uci set samba.&commat;sambashare[-1].path=$samba_path</span></pre>
+<pre><span class="green">                                                   ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		uci set samba.&commat;sambashare[-1].path="$samba_path"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 33:</span></pre>
+<pre></span>		uci delete samba.&commat;samba[$samba_index]</span></pre>
+<pre><span class="green">                                        ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		uci delete samba.&commat;samba["$samba_index"]</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 34:</span></pre>
+<pre></span>		uci delete samba.&commat;sambashare[$samba_index]</span></pre>
+<pre><span class="green">                                             ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		uci delete samba.&commat;sambashare["$samba_index"]</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 39:</span></pre>
+<pre></span>		del_samba_index=`uci show samba | grep $samba_path | awk -F "]" '{print $1}' | awk -F "[" '{print $2}'`</span></pre>
+<pre><span class="green">                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                       ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		del_samba_index=$(uci show samba | grep "$samba_path" | awk -F "]" '{print $1}' | awk -F "[" '{print $2}')</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 60:</span></pre>
+<pre></span>		/usr/local/xcloud/bin/searchSharePath.sh $1</span></pre>
+<pre><span class="green">                                                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		/usr/local/xcloud/bin/searchSharePath.sh "$1"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 62:</span></pre>
+<pre></span>	samba_config add $1 /mnt/$1</span></pre>
+<pre><span class="green">                         ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="green">                                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	samba_config add "$1" /mnt/"$1"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 88:</span></pre>
+<pre></span>	capbility=`/usr/local/localshell/getcapability`</span></pre>
+<pre><span class="green">                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	capbility=$(/usr/local/localshell/getcapability)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 91:</span></pre>
+<pre></span>		echo 255 &gt; /sys/class/leds/usb\:blue/brightness</span></pre>
+<pre><span class="green">                                              ^-- SC1001 (info): This \: will be a regular ':' in this context.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 93:</span></pre>
+<pre></span>		echo 255 &gt; /sys/class/leds/ry01\:usb/brightness</span></pre>
+<pre><span class="green">                                               ^-- SC1001 (info): This \: will be a regular ':' in this context.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 100:</span></pre>
+<pre></span>	check_mount=`mount | grep /dev/sd`</span></pre>
+<pre><span class="green">                    ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	check_mount=$(mount | grep /dev/sd)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 102:</span></pre>
+<pre></span>	if [ ! -z "$check_mount" ]; then</span></pre>
+<pre><span class="green">             ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 107:</span></pre>
+<pre></span>	capbility=`/usr/local/localshell/getcapability`</span></pre>
+<pre><span class="green">                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	capbility=$(/usr/local/localshell/getcapability)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 110:</span></pre>
+<pre></span>		echo 0 &gt; /sys/class/leds/usb\:blue/brightness</span></pre>
+<pre><span class="green">                                            ^-- SC1001 (info): This \: will be a regular ':' in this context.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 111:</span></pre>
+<pre></span>		echo 255 &gt; /sys/class/leds/usb\:yellow/brightness</span></pre>
+<pre><span class="green">                                              ^-- SC1001 (info): This \: will be a regular ':' in this context.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 122:</span></pre>
+<pre></span>	samba_config search /mnt/$1</span></pre>
+<pre><span class="green">                                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	samba_config search /mnt/"$1"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 123:</span></pre>
+<pre></span>	samba_config del $del_samba_index</span></pre>
+<pre><span class="green">                         ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	samba_config del "$del_samba_index"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 129:</span></pre>
+<pre></span>	delete_samba_share $1	</span></pre>
+<pre><span class="green">                           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	delete_samba_share "$1"	</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 133:</span></pre>
+<pre></span>	PIDS=`fuser -m $1`</span></pre>
+<pre><span class="green">             ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                       ^-- SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	PIDS=$(fuser -m "$1")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 135:</span></pre>
+<pre></span>	 if [ ! -z "$PIDS" ];then</span></pre>
+<pre><span class="green">              ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 142:</span></pre>
+<pre></span>  			kill -9 $line </span></pre>
+<pre><span class="green">                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>  			kill -9 "$line" </pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 151:</span></pre>
+<pre></span>		AllFile=`ls $Path`</span></pre>
+<pre><span class="green">                        ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		AllFile=$(ls $Path)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 154:</span></pre>
+<pre></span>			OneFilePath=`printf "%s%s" "$Path" "$EachFile"`</span></pre>
+<pre><span class="green">                                    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>			OneFilePath=$(printf "%s%s" "$Path" "$EachFile")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 155:</span></pre>
+<pre></span>			AutoRun=`cat ${OneFilePath} | grep "plugin_Autorun" |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`</span></pre>
+<pre><span class="green">                                ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                     ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>			AutoRun=$(cat "${OneFilePath}" | grep "plugin_Autorun" |awk -F ":" '{print $2}' | awk -F " " '{print $1}')</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 157:</span></pre>
+<pre></span>				AppInstallPath=`cat ${OneFilePath} | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}'`</span></pre>
+<pre><span class="green">                                               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                    ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				AppInstallPath=$(cat "${OneFilePath}" | grep "plugin_IntallPath"  |awk -F ":" '{print $2}' | awk -F " " '{print $1}')</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 158:</span></pre>
+<pre></span>				AppShellCtl=`printf "%sappshell %s" "$AppInstallPath" "$1"`</span></pre>
+<pre><span class="green">                                            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				AppShellCtl=$(printf "%sappshell %s" "$AppInstallPath" "$1")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 167:</span></pre>
+<pre></span>USB_PATITION_TMP="/tmp/usbdev"</span></pre>
+<pre><span class="orange">^--------------^ SC2034 (warning): USB_PATITION_TMP appears unused. Verify use (or export if used externally).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 171:</span></pre>
+<pre></span>local dev_detcet=0</span></pre>
+<pre><span class="orange">^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 182:</span></pre>
+<pre></span>		cur_line=`printf "%sp" "$num"`</span></pre>
+<pre><span class="green">                         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		cur_line=$(printf "%sp" "$num")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 184:</span></pre>
+<pre></span>		while [ "null" = "null" ]; do</span></pre>
+<pre><span class="orange">                               ^-- SC2050 (warning): This expression is constant. Did you forget the $ on a variable?</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 185:</span></pre>
+<pre></span>		line=`sed -n $cur_line /tmp/usbdev`</span></pre>
+<pre><span class="green">                     ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		line=$(sed -n "$cur_line" /tmp/usbdev)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 187:</span></pre>
+<pre></span>		let num=$num+1</span></pre>
+<pre><span class="orange">                ^------------^ SC3039 (warning): In POSIX sh, 'let' is undefined.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 188:</span></pre>
+<pre></span>		cur_line=`printf "%sp" "$num"`</span></pre>
+<pre><span class="green">                         ^-------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		cur_line=$(printf "%sp" "$num")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 194:</span></pre>
+<pre></span>		dev_sdxx=`echo $line | grep $device`</span></pre>
+<pre><span class="green">                         ^-------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<pre><span class="green">                                            ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		dev_sdxx=$(echo "$line" | grep "$device")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 196:</span></pre>
+<pre></span>		if [ ! -z "$dev_sdxx" ] ;then</span></pre>
+<pre><span class="green">                     ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 199:</span></pre>
+<pre></span>		sdxx=`echo $line | awk -F ":" '{print $2}'`</span></pre>
+<pre><span class="green">                     ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		sdxx=$(echo "$line" | awk -F ":" '{print $2}')</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 202:</span></pre>
+<pre></span>		devicedir=`cat ${USB_MNT_TMP} | grep $sdxx 2&gt;/dev/null`</span></pre>
+<pre><span class="green">                          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		devicedir=$(cat ${USB_MNT_TMP} | grep "$sdxx" 2&gt;/dev/null)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 204:</span></pre>
+<pre></span>			mount_check=$(mount | grep -w $sdxx )</span></pre>
+<pre><span class="green">                                                      ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>			mount_check=$(mount | grep -w "$sdxx" )</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 205:</span></pre>
+<pre></span>			if [ ! -z "$mount_check" ]; then</span></pre>
+<pre><span class="green">                             ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 207:</span></pre>
+<pre></span>				kill_all /mnt/$sdxx 1&gt;/dev/null 2&gt;&amp<span class="bold"></span></pre>
+<pre><span class="green">                                              ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				kill_all /mnt/"$sdxx" 1&gt;/dev/null 2&gt;&amp;1</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 209:</span></pre>
+<pre></span>				if [ -f /dev/${sdxx}/swapfile ]; then</span></pre>
+<pre><span class="green">                                             ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				if [ -f /dev/"${sdxx}"/swapfile ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 210:</span></pre>
+<pre></span>				swapoff /dev/${sdxx}/swapfile</span></pre>
+<pre><span class="green">                                             ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				swapoff /dev/"${sdxx}"/swapfile</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 213:</span></pre>
+<pre></span>				umount_device_ret=$(umount /mnt/$sdxx 2&gt;&amp;1 ) </span></pre>
+<pre><span class="green">                                                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				umount_device_ret=$(umount /mnt/"$sdxx" 2&gt;&amp;1 ) </pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 215:</span></pre>
+<pre></span>				umount_device_ret_erro=`echo $umount_device_ret | grep "can't"`</span></pre>
+<pre><span class="green">                                                       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                             ^----------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				umount_device_ret_erro=$(echo "$umount_device_ret" | grep "can't")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 218:</span></pre>
+<pre></span>					delete_samba_share ${sdxx}</span></pre>
+<pre><span class="green">                                                           ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>					delete_samba_share "${sdxx}"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 219:</span></pre>
+<pre></span>					unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`</span></pre>
+<pre><span class="green">                                                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>					unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 222:</span></pre>
+<pre></span>				unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`</span></pre>
+<pre><span class="green">                                                 ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 226:</span></pre>
+<pre></span>		  stop_all ${sdxx}  </span></pre>
+<pre><span class="green">                           ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		  stop_all "${sdxx}"  </pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 228:</span></pre>
+<pre></span>	 	  kill_all /mnt/$sdxx 1&gt;/dev/null 2&gt;&amp<span class="bold"></span></pre>
+<pre><span class="green">                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>	 	  kill_all /mnt/"$sdxx" 1&gt;/dev/null 2&gt;&amp;1</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 231:</span></pre>
+<pre></span>		  if [ -f /dev/${sdxx}/swapfile ]; then</span></pre>
+<pre><span class="green">                               ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		  if [ -f /dev/"${sdxx}"/swapfile ]; then</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 232:</span></pre>
+<pre></span>			swapoff /dev/${sdxx}/swapfile</span></pre>
+<pre><span class="green">                                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>			swapoff /dev/"${sdxx}"/swapfile</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 235:</span></pre>
+<pre></span>		  	check_opt=`mount | grep /opt`</span></pre>
+<pre><span class="green">                                  ^-----------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		  	check_opt=$(mount | grep /opt)</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 237:</span></pre>
+<pre></span>		  if [ ! -z "$check_opt" ];then</span></pre>
+<pre><span class="green">                       ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 239:</span></pre>
+<pre></span>				umount_ret=$(umount /opt 2&gt;&amp;1)</span></pre>
+<pre><span class="orange">                                ^--------^ SC2034 (warning): umount_ret appears unused. Verify use (or export if used externally).</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 241:</span></pre>
+<pre></span>		 		 umount_ret_erro=`echo $umount_ret | grep can't `	</span></pre>
+<pre><span class="green">                                                                     ^-- SC1009 (info): The mentioned syntax error was in this simple command.</span></pre>
+<pre><span class="red">                                                                             ^-- SC1073 (error): Couldn't parse this single quoted string. Fix to allow more checks.</span></pre>
+<pre><span class="red">                                                                                ^-- SC1072 (error): Expected end of single quoted string. Fix any mentioned problems and try again.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 247:</span></pre>
+<pre></span>		   			  losetup_ret_erro=`echo $losetup_ret | grep failed `</span></pre>
+<pre><span class="green">                                                           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                                 ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		   			  losetup_ret_erro=$(echo "$losetup_ret" | grep failed )</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 249:</span></pre>
+<pre></span>		    		 	  if [ ! -z "$losetup_ret_erro" ]; then</span></pre>
+<pre><span class="green">                                               ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 250:</span></pre>
+<pre></span>						start_all $sdxx </span></pre>
+<pre><span class="green">                                                          ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>						start_all "$sdxx" </pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 257:</span></pre>
+<pre></span>				        start_all $sdxx</span></pre>
+<pre><span class="green">                                                  ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				        start_all "$sdxx"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 264:</span></pre>
+<pre></span>		  	check_sdxx=`mount | grep -w /mnt/$sdxx`</span></pre>
+<pre><span class="green">                                   ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                         ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		  	check_sdxx=$(mount | grep -w /mnt/"$sdxx")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 266:</span></pre>
+<pre></span>			if [ ! -z "$check_sdxx" ];then</span></pre>
+<pre><span class="green">                             ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 268:</span></pre>
+<pre></span>				umount_device_ret=$(umount /mnt/$sdxx 2&gt;&amp;1 )</span></pre>
+<pre><span class="green">                                                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				umount_device_ret=$(umount /mnt/"$sdxx" 2&gt;&amp;1 )</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 270:</span></pre>
+<pre></span>		  				umount_device_ret_erro=`echo $umount_device_ret | grep "can't"`</span></pre>
+<pre><span class="green">                                                                       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                                             ^----------------^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		  				umount_device_ret_erro=$(echo "$umount_device_ret" | grep "can't")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 273:</span></pre>
+<pre></span>           	  	    				rm -r /mnt/$sdxx 1&gt;/dev/null 2&gt;&amp<span class="bold"></span></pre>
+<pre><span class="orange">                                                              ^--------^ SC2115 (warning): Use "${var:?}" to ensure this never expands to /mnt .</span></pre>
+<pre><span class="green">                                                                   ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>           	  	    				rm -r /mnt/"$sdxx" 1&gt;/dev/null 2&gt;&amp;1</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 277:</span></pre>
+<pre></span>			    				unmounted_dev_xx=`printf "%s %s" "$unmounted_dev_xx" "$sdxx"`</span></pre>
+<pre><span class="green">                                                                         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>			    				unmounted_dev_xx=$(printf "%s %s" "$unmounted_dev_xx" "$sdxx")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 279:</span></pre>
+<pre></span>		 	  			 	start_all $sdxx</span></pre>
+<pre><span class="green">                                                                  ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>		 	  			 	start_all "$sdxx"</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 295:</span></pre>
+<pre></span>			 if [ ! -z "$unmounted_dev_xx" ] ;then</span></pre>
+<pre><span class="green">                              ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 307:</span></pre>
+<pre></span>				   rm -r /mnt/$sdxx 1&gt;/dev/null 2&gt;&amp<span class="bold"></span></pre>
+<pre><span class="orange">                                         ^--------^ SC2115 (warning): Use "${var:?}" to ensure this never expands to /mnt .</span></pre>
+<pre><span class="green">                                              ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				   rm -r /mnt/"$sdxx" 1&gt;/dev/null 2&gt;&amp;1</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 311:</span></pre>
+<pre></span>				   mount_check_all=`mount | grep $device`</span></pre>
+<pre><span class="green">                                                   ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<pre><span class="green">                                                                 ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>				   mount_check_all=$(mount | grep "$device")</pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 319:</span></pre>
+<pre></span>					check_all_mount=`cat /tmp/usbdev 2&gt;/dev/null ` </span></pre>
+<pre><span class="green">                                                        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>					check_all_mount=$(cat /tmp/usbdev 2&gt;/dev/null ) </pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 321:</span></pre>
+<pre></span>				    if [ ! -z "$check_all_mount" ]; then</span></pre>
+<pre><span class="green">                                         ^-- SC2236 (style): Use -n instead of ! -z.</span></pre>
+<br />
+<br />
+<pre><span class="bold">In /logs/firmware/squashfs-root/usr/local/localshell/usb-mount line 323:</span></pre>
+<pre></span>					start_samba $device  1&gt;/dev/null 2&gt;&amp<span class="bold"></span></pre>
+<pre><span class="green">                                                    ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.</span></pre>
+<br />
+<pre><span class="bold">Did you mean: </span></pre>
+<pre>					start_samba "$device"  1&gt;/dev/null 2&gt;&amp;1</pre>
+<br />
+<pre>For more information:</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2034" title="https://www.shellcheck.net/wiki/SC2034" target="_blank" >https://www.shellcheck.net/wiki/SC2034</a> -- USB_PATITION_TMP appears unused. ...</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2050" title="https://www.shellcheck.net/wiki/SC2050" target="_blank" >https://www.shellcheck.net/wiki/SC2050</a> -- This expression is constant. Did ...</pre>
+<pre>  <a href="https://www.shellcheck.net/wiki/SC2115" title="https://www.shellcheck.net/wiki/SC2115" target="_blank" >https://www.shellcheck.net/wiki/SC2115</a> -- Use "${var:?}" to ensure this nev...</pre>
+  <!-- content end -->
+</div>
+
+<a href="https://github.com/e-m-b-a/emba" title="github.com/e-m-b-a/emba" target="_blank">
+  <div id="buttonInfo" class="rectButtonVisible">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="white" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="M8.5 12.5v-4h-1"/><path d="M7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" fill="white" r="1"/></g></svg>
+  </div>
+</a>
+<div id="buttonBack" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M9.5 14.5l4-4l-4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="buttonForward" class="nonClickable rectButtonVisible"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><path d="M11.5 14.5l-4-4l4-4" fill="none" stroke="#444" stroke-linecap="round" stroke-linejoin="round"/></svg></div> 
+<div id="buttonDown" class="rectButton" onclick="scrollDown()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5l-4 4l-4-4"/><path d="M14.5 10.5l-4 4l-4-4"/></g></svg></div>
+<div id="buttonUp" class="rectButton" onclick="scrollUp()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 14.5l4-4l4 4"/><path d="M6.5 10.5l4-4l4 4"/></g></svg></div> 
+
+<script>
+window.onload = function () {
+  var buttons = document.getElementsByClassName("rectButton");
+  for (let i=0; i<buttons.length; i++) {
+    buttons[i].style.visibility = "visible";
+  }
+  var buttonDown = document.getElementById("buttonDown");
+  buttonDown.classList.add('rectButtonVisible');
+  buttonDown.classList.remove('rectButton');
+
+  var buttonUp = document.getElementById("buttonUp");
+  buttonUp.classList.add('rectButtonVisible');
+  buttonUp.classList.remove('rectButton');
+    
+  var buttonSizer = document.getElementById("buttonSizer");
+  buttonSizer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+  if (document.getElementById("buttonTime") !== null) {
+    var buttonTime = document.getElementById("buttonTime");
+    buttonTime.style.bottom = "50px";
+  }
+  document.getElementById("expand").value = "+ Show more results";
+  document.getElementById("expand").className += " expand";
+  var embarkButton = document.getElementById("embark");
+  if ( !(embarkButton.href.includes("embarkBackUrl")) ) {
+    embarkButton.classList.remove('hidden');
+    document.getElementById("logoImage").src = "./../style/embark.svg";
+    document.getElementById("logo").style.background = "#2d2d2d";
+  }
+}
+
+function openNav() {
+  document.getElementById("sidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("nav").style.visibility = "visible";
+}
+
+function closeNav() {
+  document.getElementById("sidenav").style.width = "50px";
+  document.getElementById("sidenav").scrollTop = 0;
+  document.getElementById("main").style.marginLeft = "50px";
+  document.getElementById("nav").style.visibility = "hidden";
+}
+
+function scrollDown() {
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function scrollUp() {
+  window.scrollTo(0,0);
+}
+
+function buttonNav() {
+  var button = document.getElementById("buttonSizer");
+  if ( button.classList.contains('buttonOpen') ) {
+    button.classList.remove('buttonOpen');
+    button.classList.add('buttonClose');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 16.5v-4.978l-5-.022"/><path d="M18.5 2.5l-7 7"/><path d="M16.5 9.5l-5 .023V4.5"/><path d="M9.5 11.5l-7 7"/></g></svg>';
+    openNav();
+  } else if( button.classList.contains('buttonClose') ) {
+    button.classList.remove('buttonClose');
+    button.classList.add('buttonOpen');
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="40" height="40" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="white" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 7.5v-5h-5"/><path d="M18.5 2.5l-6 5.929"/><path d="M7.5 18.5l-5 .023V13.5"/><path d="M8.5 12.5l-6 6"/></g></svg>';
+    closeNav();
+  };
+}
+
+// the following function is currently not used
+// it is for future extensions
+function overlay_output(link) {
+  var rawfile = new XMLHttpRequest();
+  rawfile.open('GET', link, false);
+  rawfile.overrideMimeType("text");
+  rawfile.onreadystatechange = function()
+  {
+    alert(rawfile.responseText);
+    //console.log(rawfile.responseText);
+  }
+  rawfile.send(null);
+}
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        document.getElementById("buttonForward").parentNode.click(); 
+        break;
+      case 39:
+        document.getElementById("buttonBack").parentNode.click();       
+        break;
+    }
+};
+</script>
+
+</body>
+</html>

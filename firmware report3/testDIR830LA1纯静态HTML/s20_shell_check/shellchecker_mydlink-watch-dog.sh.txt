@@ -1,0 +1,85 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 5:[0m
+[0mwhile [ 1 ][0m
+[32m        ^-- SC2161 (style): Instead of '[ 1 ]', use 'true'.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 10:[0m
+[0m  num=`ps | grep /mydlink/$1 | grep -v grep -c`[0m
+[32m      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m       ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+[32m                          ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+  num=$(ps | grep /mydlink/"$1" | grep -v grep -c)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 12:[0m
+[0m    echo "[`date`] Duplicate signalc ..."[0m
+[32m           ^----^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    echo "[$(date)] Duplicate signalc ..."
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 16:[0m
+[0m  pid=`ps | grep /mydlink/$1 | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' `[0m
+[32m      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m       ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+[32m                          ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+  pid=$(ps | grep /mydlink/"$1" | grep -v grep | sed 's/^[ \t]*//'  | sed 's/ .*//' )
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 18:[0m
+[0m    echo "[`date`] $1 is not running!"[0m
+[32m           ^----^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    echo "[$(date)] $1 is not running!"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 20:[0m
+[0m    killall -9 $1[0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    killall -9 "$1"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 21:[0m
+[0m    if [ -f /mydlink/$1 ]; then[0m
+[32m                     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    if [ -f /mydlink/"$1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 22:[0m
+[0m      /mydlink/$1 > /dev/null 2>&1 & [0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+      /mydlink/"$1" > /dev/null 2>&1 & 
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 23:[0m
+[0m    elif [ -f /opt/$1 ]; then[0m
+[32m                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    elif [ -f /opt/"$1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mydlink-watch-dog.sh line 24:[0m
+[0m      /opt/$1 > /dev/null 2>&1 & [0m
+[32m           ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+      /opt/"$1" > /dev/null 2>&1 & 
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2009 -- Consider using pgrep instead of g...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

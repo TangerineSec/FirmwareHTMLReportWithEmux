@@ -1,0 +1,1600 @@
+<%+xc_header%>
+		<%
+			require "luci.template"
+		%>
+		<div class='apps common'>
+			<%
+				luci.template.render('admin_xcloud/appsbanner')
+			%>
+		</div>
+
+		<div class='content common'>
+			<div class='status'>
+				<h1>如意云状态</h1>
+				<div id="left_nav">
+					<%=luci.template.render("admin_xcloud/xcloudstatus")%>
+				</div>
+			</div>
+			<div class='setup'>
+				<h1>如意云配置</h1>
+				<div class="right_header"></div>
+					<div class="right_body">
+						<div class='setup_c'>
+							<%=luci.template.render("admin_xcloud/setup")%>
+						</div>
+					</div>
+				<div class="right_footer"></div>
+				<div class='clr'></div>
+			</div>
+			<div class='clr'></div>
+		</div>
+	<script type='text/javascript'>
+			function updatepluginstatus(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/pluginstatus"))%>',
+					type:'POST',
+					dataType:'html',
+					success:function(html){
+						$('.apps').html(html);
+					}
+				})
+			}
+
+			function updatestatus(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/xcloudstatus"))%>',
+					type:'POST',
+					dataType:'html',
+					success:function(html){
+						if (html != "")
+							$('#left_nav').html(html);
+					}
+				})
+			}
+
+			var nowid = "";
+			function changePanel(flag,o){
+				if(nowid==flag){
+					return ;
+				}
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url())%>/admin/xcloud/'+flag,
+					type:'POST',
+					data:o,
+					dataType:'html',
+					success:function(r){
+						var key = "nxcloud.css";
+						nowid = flag;
+						if (r.indexOf(key) == -1)
+							$('.setup_c').html(r);
+						else
+							window.location.href='http://xyun.co/';
+					}
+				});
+			}
+
+			$('.setup_return').live('click',function(){
+				nowid="";
+			});
+
+			$('.status_btn').live('click',function(){
+				var flag = $(this).attr('id');
+				changePanel(flag);
+			});
+
+			$('.setup_return').live('click',function(){
+				//清除定时器
+				if(window.list_timer){
+					window.clearInterval(list_timer);
+				}
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/setupreturn"))%>',
+					type:'POST',
+					data:{},
+					dataType:'html',
+					success:function(r){
+						var key = "nxcloud.css";
+						if (r.indexOf(key) == -1)
+							$('.setup_c').html(r);
+						else
+							window.location.href='http://xyun.co/';
+					}
+				})
+			})
+
+			var netipaddr = '<%=show_lan_ip%>';
+			var lanipaddrurl = '<%=pcdata(luci.dispatcher.build_url("admin/xcloud/lanipaddrsetup"))%>';
+			var landhcpurl = '<%=pcdata(luci.dispatcher.build_url("admin/xcloud/lansetup2dhcp"))%>';
+		
+			/**********/
+
+			function appsetup_change(flag,obj){
+				//alert(flag);
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetupselect"))%>',
+					dataType:'html',
+					data:{choose:flag},
+					type:'post',
+					success:function(html){
+						$('.app_list').html(html);
+						obj.attr('rel','0');
+					}
+				})
+			}	
+
+			$('.appinstall').live('click',function(){
+				if ($(this).attr('rel') == '1')
+					return false;
+				$(this).attr('rel','1');
+				var o = $(this);
+
+				$(this).css({'border-top':'none','background':'none'});
+				$('.lan_setup_dhcp').css({'border-top':'1px solid #CECECE','background':'#EEE'})
+			
+				appsetup_change('install',o);
+			})
+
+			$('.appuninstall').live('click',function(){
+				if ($(this).attr('rel') == '1')
+					return false;
+				$(this).attr('rel','1');
+				var o = $(this);
+
+				$(this).css({'border-top':'none','background':'none'});
+				$('.lan_setup_lan').css({'border-top':'1px solid #CECECE','background':'#EEE'})
+			
+				appsetup_change('notinstall',o);
+			})
+
+			$('.uninstall').live('click',function(){
+				var unid = $(this).attr('rel');
+				var o = $(this).parent().parent();
+
+				$(this).css('display','none');
+				$(this).next().css('display','block');
+
+				TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">卸载中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+				
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetup/appuninstall"))%>',
+					data:{uid:unid},
+					dataType:'json',
+					type:'post',
+					success:function(r){
+						var tmp = r.result;
+						var o3 = tmp.split("\n");
+						var tmp1 = o3[o3.length-2]; 						
+						if (tmp1.length == 7){
+							$('.iso_box_text').html('卸载成功');
+							TINY.box.hide();
+							o.remove();
+						}else{
+							alert('卸载失败');
+						}
+						updatepluginstatus();
+					},
+					error:function(o,info,o1){
+						o.remove();
+						alert('卸载失败');
+						//alert(info);
+						updatepluginstatus();
+					}
+				})
+			})
+
+			$('.updateapp').live('click',function(){
+				var path = $(this).attr('rel');
+				var o = $(this);
+
+				$(this).css('display','none');
+				$(this).next().css('display','block');
+
+				tinyBox_init('正在更新...');
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetup/startinstall"))%>',
+					data:{type:'1',dir:path},
+					dataType:'json',
+					type:'post',
+					success:function(r){
+						var tmp = r.result;
+						var tmp1 = tmp.split("\n");
+						var res = tmp1[tmp1.length-2];
+						if(res == 'Success'){
+							tinyBox_change('更新完成');
+							tinyBox_hide();
+							$(o).next().css('display','none');
+						}
+					}
+				});
+			});
+
+			/*******usb********/
+			$('.usb_obt_n').live('click',function(){
+				if ($('.usb_devadd h4').attr('rel') == '1'){
+					return false;
+				}
+
+				var o = $(this).parent();
+				var i = $(this).parent().parent();
+				var idx = $('.usb_devopt tr').index(i);
+				var flag = $(this).attr('rel');
+
+				//$(this).css('display','none');
+				$('.usb_obt_n').css('display','none');
+				$('.usb_devopt tr').each(function(index,obj){
+					$(obj).children('td:eq(2)').children('span').remove();
+				})
+				$(this).parent().attr('rel','1').append("<span>挂载中...</span>");
+				$('.usb_devadd h4').attr('rel','1');
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/usbinfo/usbaddmain"))%>',
+					data:{dev:flag},
+					dataType:'json',
+					type:'post',
+					time:50000,
+					success:function(r){
+						//alert(r.result);
+						if (r.result == 8){
+							$('.ndevhasopt').show();
+							$('.ndevremove').css('display','block');
+							$('.ndevremove').attr('rel',flag);
+							$('.usb_devadd h4').attr('rel','0');
+							o.children('span').remove();
+							o.append('<span>主分区</span>');
+
+							// 清掉非主分区的rel
+							$('.usb_devopt tr').each(function(index,obj){
+								if (index != idx){
+									$(obj).children('td:eq(2)').removeAttr('rel');
+									$(obj).children('td:eq(2)').children('span').remove();
+									$(obj).children('td:eq(2)').children('a').css('display','block');
+								}
+							})
+							updatestatus();
+							updatepluginstatus();
+						}else{
+							$('.ndevremove').attr('rel',flag);
+							$('.usb_devadd h4').attr('rel','0');
+							o.children('span').remove();
+							o.append('<span>挂载失败</span>');							
+
+							$('.usb_devopt tr').each(function(index,obj){
+								if (index != idx){
+									$(obj).children('td:eq(2)').removeAttr('rel');
+									$(obj).children('td:eq(2)').children('span').remove();
+									$(obj).children('td:eq(2)').children('a').css('display','block');
+								}
+							})
+							updatestatus();
+							updatepluginstatus();
+						}
+					},
+					error:function(){
+						changePanel('usbinfo');
+					}
+				})
+			})
+
+			$('.ndevremove').live('click',function(){
+				var flag=$(this).attr('rel');
+				$('.ndevremoving').css('display','block');
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/usbinfo/usbremovemain"))%>',
+					data:{dev:flag},
+					dataType:'json',
+					type:'post',
+					time:50000,
+					success:function(r){
+						//alert(r.result);
+						if (r.result == 8){
+							$('.ndevhasopt').hide();
+							$('.ndevremoving').css('display','none');
+							$('.ndevremove').css('display','none');
+
+							$('.usb_devopt tr').each(function(index,obj){
+								$(obj).children('td:eq(2)').removeAttr('rel');
+								$(obj).children('td:eq(2)').children('span').remove();
+								$(obj).children('td:eq(2)').children('a').css('display','block');
+							})
+							updatestatus();
+							updatepluginstatus();
+						}else{
+							$('.ndevremoving').css('display','none');
+							$('.ndevremovefailed').show();
+						
+							$('.usb_devopt tr').each(function(index,obj){
+								$(obj).children('td:eq(2)').removeAttr('rel');
+								$(obj).children('td:eq(2)').children('span').remove();
+								$(obj).children('td:eq(2)').children('a').css('display','block');
+							})
+							updatestatus();
+							updatepluginstatus();
+						}
+					}
+				})
+			})
+
+			/*******************wds**********************/
+			$('.wdsoptbegin').live('click',function(){
+				var flag = $(this).attr('id');
+				var enable = $("input[name='wdsturn']:checked").val();
+				var ssid = $('#wds_ssid').val();
+				var bssid = $('#wds_bssid').val();
+				var channel = $('.wds_chanel').val();
+
+				var codetype = $('.wds_code').val();
+				tmp = codetype.split("/");
+				var authmode = tmp[0];
+				var encryptype = tmp[1];
+				
+				var key = $('#code_val').val();
+				
+				$.cookie('enable', enable);
+				$.cookie('ssid', ssid);
+				$.cookie('bssid', bssid);
+				$.cookie('channel', channel);
+				$.cookie('encryptype', encryptype);
+				$.cookie('authmode', authmode);
+				$.cookie('key', key);
+				changePanel(flag);
+			});
+
+			$('.wdsconect').live('click',function(){
+				var flag 	= $(this).attr('id');
+				var parent 	= $(this).parent().parent();
+				var ssid 	= parent.children('td:eq(1)').children('input').val();
+				var bssid	= parent.children('td:eq(2)').html();
+				var channel  = parent.children('td:eq(4)').html();
+				var encryptype	= parent.children('td:eq(5)').children('input').val();
+
+				var data = {enable:'1',ssid:ssid,bssid:bssid,channel:channel,encryptype:encryptype}
+				changePanel(flag, data);
+			});
+
+			$('.wdsreturn').live('click',function(){
+				var flag = $(this).attr('id');
+
+				var enable = $.cookie('enable');
+				var ssid = $.cookie('ssid');
+				var bssid = $.cookie('bssid');
+				var channel = $.cookie('channel');
+				var encryptype = $.cookie('encryptype');
+				var authmode = $.cookie('authmode');
+				var key = $.cookie('key');
+
+				var data = {enable:enable,ssid:ssid,bssid:bssid,channel:channel,encryptype:encryptype,authmode:authmode,key:key}
+
+				$.removeCookie('enable');
+				$.removeCookie('ssid');
+				$.removeCookie('bssid');
+				$.removeCookie('channel');
+				$.removeCookie('encryptype');
+				$.removeCookie('authmode');
+				$.removeCookie('key');
+				changePanel(flag, data);
+			});
+
+			$('.wdsave').live('click',function(){
+				var wdsturn = $("input[name='wdsturn']:checked").val();
+
+				if(wdsturn == 1){
+					// get data
+					var ssid = $('#wds_ssid').val();
+					var bssid = $('#wds_bssid').val();
+					var channel = $('.wds_chanel').val();
+					var codetype = $('.wds_code').val();
+					var codeval = $('#code_val').val();
+
+					var authmode='';
+					var encryptype='';
+					var tmp = '';
+
+					if (ssid==''){
+						messageAlert('ssid为空');
+						return false;
+					}
+
+					if (bssid==''){
+						messageAlert('bssid为空');
+						return false;	
+					}
+
+					var reg = /^[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}$/;
+					if (!reg.test(bssid)){
+					     messageAlert('bssid格式不正确');
+					     return false;
+					}	
+
+					if(codetype == 'WPA2PSK/AES'){
+						if(codeval.length < 8 || codeval > 63){
+							messageAlert('请输入正确的密码');
+							return false;
+						}
+					}else if(codetype == 'OPEN/WEP'){
+						if(codeval.length != 5 && codeval != 10){
+							messageAlert('请输入正确的密码');
+							return false;
+						}
+					}else if(codetype == 'OPEN/NONE'){
+						codeval = '';
+					}
+
+					tmp = codetype.split("/");
+					authmode = tmp[0];
+					encryptype = tmp[1];
+
+					messageAlert('正在连接' + ssid + '...');
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wdsstart"))%>',
+						dataType:'json',
+						data:{ssid:ssid,bssid:bssid,channel:channel,authmode:authmode,encryptype:encryptype,codeval:codeval},
+						method:'post',
+						timeOut:15000,
+						success:function(r){
+							if(r.result == 'success'){
+								messageAlert('正在获取IP地址...');
+								wan_check();
+								return false;
+							}else{
+								messageAlert('连接失败，请重试');
+								return false;
+							}
+						},
+						error:function(){
+							messageAlert('连接失败，请重试');
+							return false;
+						}
+					});
+				}else{
+					messageAlert('正在保存...');
+
+					//停止WDS
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wds_stop"))%>',
+						dataType:'json',
+						success:function(r){
+							if (r.result == 'success'){
+								messageAlert('保存成功', 3000);
+								updatestatus();
+								return false;
+							}else{
+								messageAlert('保存失败', 3000);
+								updatestatus();
+								return false;
+							}
+						}
+					});
+				}
+			});
+
+			$('.wdsturn').live('click',function(){
+				var wdsturn = $(this).val();
+				
+				if (wdsturn == 1){
+					$('.wdsoptturnon input,select').attr('disabled', false);
+					$('#checkAll').css('color', '');
+					$('#checkAll').html("<a href='javascript:void(0)' id='wdslist' class='subbtn1 wdsoptbegin'><b>扫描</b></a>");
+				}else{
+					$('.wdsoptturnon input,select').attr('disabled', true);
+					$('#checkAll').css('color', 'red');
+					$('#checkAll').css('margin-left', '13px');
+					$('#checkAll').html('请先开启无线中继');
+				}
+			});
+
+			//---------------------mac clone-----------------
+			function formention(o,word){
+				o.html(word).stop().animate({'opacity':1},1000,"",function(){
+					o.stop().animate({'opacity':0},3000);
+				});		
+			}
+
+			function checkmac(curmac){
+				var temp = /^[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}$/;
+				return temp.test(curmac);
+			}
+
+			$('.macsave').live('click',function(){
+				var savemac = $('.clone_cur_inputmac').val();
+
+				if (savemac == ""){
+					formention($('.macmention'),'mac地址不能为空');
+					return false;
+				}
+
+				if (!checkmac(savemac)){
+					formention($('.macmention'),'mac地址格式不正确');
+					return false;
+				}
+
+				tinyBox_init('正在保存...');
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/clonemac/savemacclone"))%>',
+					dataType:'json',
+					data:{mac:savemac},
+					type:'post',
+					timeout: 20000,
+					success:function(r){
+						tinyBox_change('已保存');
+						tinyBox_hide();
+					},
+					error:function(){
+						tinyBox_change('已保存');
+						tinyBox_hide();
+					}
+				})
+			})
+
+			var firmdownload = null;
+			var firmdownload = null;
+			// firmware update 
+			$('.check_firmware a').live('click',function(){
+				var uri = $(this).attr('rel');
+				if (uri == "")
+					return false;				
+				
+				$('.firmware_setup').hide();
+				$('.firmware_download').show();
+				$('.firmware_down_rate').html('0%');
+
+				// 开启监控
+				firmdownload = window.setInterval(function() {
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/firmware/downrate"))%>',
+						method:'post',
+						dataType:'json',
+						timeout:5000,
+						success:function(r){
+							//alert(r.result);
+							if ($('.firmware_down_rate').html != '100%')
+								$('.firmware_down_rate').html(r.result);
+						},
+						error:function(){
+						}
+					})
+				}, 2000);				
+
+				var kep = $('.firmware_down_panel input').val();
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/firmware/onkey"))%>',
+					dataType:'json',
+					data:{url:uri},
+					type:'POST',
+					success:function(r){
+						var d = r.result;
+						var tmp = d.split("\n");
+						var tmp1 = tmp[tmp.length-2];
+						if (tmp1.length == 4){
+							$('.firmware_down_rate').html('100%');
+							window.clearInterval(firmdownload);
+							startUpload(kep);
+						}
+					}
+				})
+			})
+
+			//cancel
+			$('.firmware_down_panel a').live('click',function(){
+				window.clearInterval(firmdownload);
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/firmware/downcancel"))%>',
+					dataType:'json',
+					type:'POST',
+					success:function(r){
+						if (r.result == 'success'){
+							$('.firmware_setup').show();
+							$('.firmware_download').hide();
+						}
+					}
+				})
+			})
+
+			/**************************macfilter****************************/
+			$('.macfilter_check').live('click',function(){
+				if ($(this).attr('checked'))
+					$('.macfilterShow').show();
+				else
+					$('.macfilterShow').hide();
+			})
+
+			$('.addmacfilter').live('click',function(){
+				var num = 0;
+				// 计算序号
+				$('.macfilterT tr').each(function(){
+					num += 1;
+				})
+				$('.addfilter').children('tbody').children('tr').children('td:eq(0)').children('p').html(num);
+
+				var nod = $('.addfilter').children('tbody').html();
+				$('.macfilterT').children('tbody').append(nod);
+			})
+
+			$('.deletefilter').live('click',function(){
+				var node = $(this).parent();
+				node.remove();
+				$('.macfilterT tr').each(function(idx,o){
+					if (idx != 0)
+						$(o).children('td:eq(0)').children('p').html(idx);
+				})				
+			})
+
+			$('.macfiltersave').live('click',function(){
+				var saveflag = false;
+
+				if ($('.macfilter_check').attr('checked'))
+					saveflag = true;
+
+				var o = $('.macfiltermention');
+				var obj = $('.macfilterT .macfilterCodes');
+				var submit_lock = false;
+				
+				var mac_reg = /^[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}$/;
+				obj.each(function(child_idx, child_obj){
+					if(!mac_reg.test(child_obj.value)){
+						child_obj.style.border = '1px solid red';
+						submit_lock = true;
+					}
+				});
+				
+				if(submit_lock === true){
+					$('.macfiltermention').html('请输入正确格式的MAC地址').stop().animate({'opacity':1},1000);
+					return false;
+				}
+
+				tinyBox_init('保存中...');
+
+				if (!saveflag){
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/macfilter/macfiltersave"))%>',
+						data:{type:'0'},
+						type:'POST',
+						dataType:'json',
+						success:function(r){
+							tinyBox_change('已保存', 1);
+			 				tinyBox_hide(2000);
+						},
+						error:function(){
+							tinyBox_change('保存失败', 0);
+			 				tinyBox_hide(2000);
+						}
+					})
+				}else{
+					var macfiltercode = '';
+					var macfilterbackup = ' ';
+					var macfiltereffect = 0;
+					var wrong = 0;
+					var totaldata = '';
+					$('.macfilterT tr').each(function(idx,o){
+						if (idx != 0){
+							//alert($(o).length);
+							macfiltercode = $(o).children('td:eq(1)').children('p').children('.macfilterCodes').val();
+							if (macfiltercode == "" || !checkmac(macfiltercode)){
+								//alert('请重新输入MAC');
+								wrong = -1;
+							}
+
+							macfilterbackup = $(o).children('td:eq(2)').children('p').children('.macfilterBack').val();
+							if (macfilterbackup == "")
+								macfilterbackup = ' ';
+
+							if ($(o).children('td:eq(3)').children('.savemacfilter').attr('checked'))
+								macfiltereffect = 1;
+							else
+								macfiltereffect = 0;
+
+							if (totaldata == '')
+								totaldata = macfiltercode + '|||' + macfilterbackup + '|||' + macfiltereffect;
+							else
+								totaldata = totaldata + '||||' + macfiltercode + '|||' + macfilterbackup + '|||' + macfiltereffect;
+						}
+					})
+
+					if (wrong == -1){
+						formention(o,'请输入正确格式的mac地址');
+						return false;
+					}
+					
+					// white black 1 2
+					var choose = 0; //white
+					if ($('.allowmac').attr('checked'))
+						choose = 1;
+					else if($('.rejectmac').attr('checked'))
+						choose = 2;
+					else
+						choose = 0;
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/macfilter/macfiltersave"))%>',
+						data:{type:'1',sel:choose,tdata:totaldata},
+						dataType:'json',
+						type:'POST',
+						success:function(r){
+							tinyBox_change('已保存', 1);
+			 				tinyBox_hide(2000);
+						},
+						error:function(){
+							tinyBox_change('保存失败', 0);
+			 				tinyBox_hide(2000);
+						}
+					})
+
+				}
+
+				return false;
+			})
+
+			/***************************restart******************************/
+			$('.restart_btn').live('click',function(){
+				$('.restart_correct p').html('确定要重启路由器吗？');
+				$('.cancelrestart').css('display','block');
+				$('.surerestart').css('display','block');
+				var content = $('.restart_popbox_main').html();
+				TINY.box.show({html:content,fixed:true,animate:false,close:false,boxid:'error',width:400,height:200});
+			})
+
+			function startrestart(ip){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/restart/startrestart"))%>',
+					data:{type:'1'},
+					type:'POST',
+					success:function(r){
+					}
+				})
+
+				var interval = window.setInterval(function() {
+					window.location.href = 'http://'+ip+'/';
+				}, 100000);				
+			}
+
+			$('.surerestart').live('click',function(){
+				//$('.restart_correct p').html('路由器重启中，请稍后...');
+				//$('.cancelrestart').css('display','none');
+				//$('.surerestart').css('display','none');
+				
+				//重启确认蒙版
+			 	TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">路由器重启中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+				
+				var ipaddr = '192.168.99.1';
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/restart/startrestart"))%>',
+					data:{type:'0'},
+					dataType:'json',
+					type:'POST',
+					success:function(r){
+						ipaddr = r.result;
+						startrestart(ipaddr);
+					}
+				})
+			})
+
+			$('.cancelrestart').live('click',function(){
+				TINY.box.hide();
+			})
+
+			/*************qos**********************/
+			$('.qosturn').live('click',function(){
+				//alert(123213);
+				if ($(this).attr('checked')){
+					$('.qosip_content').css('display','block');
+					$('.saveqos2').css('display','none');
+				}else{
+					$('.qosip_content').css('display','none');
+					$('.saveqos2').css('display','block');
+				}
+			});
+
+			$('.qoschange').live('click',function(){
+				var flag = $(this).attr('rel');
+
+				$('.qoschange').removeClass('curqos');
+
+				$(this).addClass('curqos');
+				if (flag != 'qosip'){
+					$(this).css('border-left','1px solid #CECECE');
+				}else{
+					$('.qosnet').css('border-left','none');
+				}
+
+				if (flag == 'qosip'){
+					$('.qosip_main').css('display','block');
+					$('.qosnet_main').css('display','none');
+				}else{
+					$('.qosip_main').css('display','none');
+					$('.qosnet_main').css('display','block');
+					if (!$('.qosturn').attr('checked')){
+						$('.qosnet_content').css('display','none');
+						$('.qosnet_n_content').css('display','block');
+					}else{
+						$('.qosnet_content').css('display','block');
+						$('.qosnet_n_content').css('display','none');
+					}
+				}
+			});
+
+			$('.addqosbtn').live('click',function(){
+				var num = 0;
+				// 计算序号
+				$('.qosip_table tr').each(function(){
+					num += 1;
+				})
+				$('.qosip_table_addr').children('tbody').children('tr').children('td:eq(0)').children('p').html(num);
+
+				var nod = $('.qosip_table_addr').children('tbody').html();
+				$('.qosip_table').children('tbody').append(nod);				
+			});
+
+			$('.deleteqos').live('click',function(){
+				var node = $(this).parent();
+				node.remove();
+				$('.qosip_table tr').each(function(idx,o){
+					if (idx != 0)
+						$(o).children('td:eq(0)').children('p').html(idx);
+				});
+			});
+
+			$('.saveqos').live('click',function(){
+				var flag = $('.qosturn').attr('checked');
+				var men = $('.saveqosip');
+				var men1 = $('.saveqosip1');
+
+				if (flag){
+					if ($('.setup_head h4').attr('rel') != '0'){
+						formention(men,'请不要重复点击');
+						return false;
+					}
+
+					// down net up net
+					var downkpbs 	= $('.downkbps').val();
+					var upkbps 		= $('.upkbps').val();
+
+					if (downkpbs == "" || upkbps == ""){
+						formention(men,'请填写外网带宽参数');
+						return false;
+					}
+					var reg = /^\d+$/;
+					if (!reg.test(downkpbs) || !reg.test(upkbps)){
+						formention(men,'输入格式错误');
+						return false;
+					}
+					if (downkpbs <= 0 || upkbps <= 0){
+						formention(men,'请输入大于等于1的整数');
+						return false;
+					}
+
+					var menflag = 0;
+					var lowerip = null;
+					var upperip = null;
+					var netlimit = null;
+					var canuse	= 0;
+					var totaldata = "";
+					var ryflag = 0;
+
+					$('.qosip_table tr').each(function(idx,obj){
+						if (idx != 0){
+							//alert($(obj).children('td:eq(0)').children('p').html());
+							lowerip = $(obj).children('td:eq(1)').children('p').children('.qosip_down').val();
+							upperip = $(obj).children('td:eq(1)').children('p').children('.qosip_up').val();
+							netlimit = $(obj).children('td:eq(2)').children('p').children('.qosnettape').val();
+							if ($(obj).children('td:eq(3)').children('.saveqosstatus').attr('checked')){
+								canuse = 1;
+							}else{
+								canuse = 0;
+							}
+
+							if (ryflag == 0)
+								ryflag = canuse;
+
+							// kong
+							//alert(lowerip+' '+upperip);
+							if (lowerip == "" || upperip == "" || netlimit == "")
+								menflag = -1;
+							// geshi
+							else if (!reg.test(lowerip) || !reg.test(upperip) || !reg.test(netlimit))
+								menflag = -2;
+							// daxiao
+							else if (parseInt(lowerip) > parseInt(upperip))
+								menflag = -3;
+							else if (parseInt(lowerip) <= 0 || parseInt(upperip) <= 0)
+								menflag = -4;
+							else if(upperip > 255){	
+								menflag = -5;
+							}
+
+							if (totaldata == "")
+								totaldata = netlimit+"|||"+canuse+"|||"+lowerip+"|||"+upperip;
+							else
+								totaldata = totaldata +"||||"+ netlimit+"|||"+canuse+"|||"+lowerip+"|||"+upperip;
+						}
+					})
+					
+					if (menflag == -1){
+						formention(men,'请确认信息填写完整');
+						return false;
+					}
+
+					if (menflag == -2){
+						formention(men,'限制带宽参数需为整数');
+						return false;
+					}
+
+					if (menflag == -3){
+						formention(men,'IP地址区间需为递增顺序');
+						return false;
+					}
+
+					if (menflag == -4){
+						formention(men,'请确认填写IP段格式');
+						return false;
+					}
+
+					if (menflag == -5){
+						formention(men,'最高IP段超过了255');
+						return false;
+					}
+
+
+
+					$('.setup_head h4').attr('rel','1');
+					tinyBox_init('正在保存...');
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/qos/qossave"))%>',
+						data:{type:'1',bpsd:downkpbs,bpsu:upkbps,tdata:totaldata,ryf:ryflag,limit_type:0},
+						dataType:'json',
+						type:'POST',
+						success:function(r){
+							$('.setup_head h4').attr('rel','0');
+							tinyBox_change('已保存', 1);
+			 				tinyBox_hide(2000);
+			 				return false;
+						}
+					});
+				}else{
+					if ($('.setup_head h4').attr('rel') != '0'){
+						formention(men1,'请不要重复点击');
+						return false;
+					}
+
+					$('.setup_head h4').attr('rel','1');
+					tinyBox_init('正在保存...');
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/qos/qossave"))%>',
+						data:{type:'0'},
+						dataType:'json',
+						type:'POST',
+						success:function(r){
+							$('.setup_head h4').attr('rel','0');
+							tinyBox_change('已保存', 1);
+			 				tinyBox_hide(2000);
+			 				return false;
+						}
+					});
+				}
+			});
+
+			$('.saveqosnet').live('click',function(){
+				var flag = 0;
+				var mennet = $('.menqosnet');
+
+				if ($('.setup_head h4').attr('p') != '0'){
+					mennet.html('请不要重复点击').stop().animate({'opacity':1},1000,"",function(){
+						mennet.stop().animate({'opacity':0},3000);
+					});	
+					return false;
+				}
+
+				if($('.qosnetdownload').attr('checked'))
+					flag = 0;
+				else if ($('.qosnetview').attr('checked'))
+					flag = 1;
+
+				$('.setup_head h4').attr('p','1');
+				tinyBox_init('正在保存...');
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/qos/qosnetsave"))%>',
+					data:{type:flag},
+					dataType:'json',
+					type:'POST',
+					success:function(r){
+						$('.setup_head h4').attr('p','0');
+						tinyBox_change('已保存', 1);
+		 				tinyBox_hide(2000);
+		 				return false;
+					}
+				});
+			});
+			
+			// app opt***************************
+			function startInstall(){
+				tinyBox_change('安装中..');
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetup/startinstall"))%>',
+					data:{type:'2'},
+					dataType:'json',
+					method:'post',
+					timeOut:600000,
+					success:function(r){
+						var tmp = r.result;
+						if(tmp != ''){
+							if(tmp.indexOf('Success') != -1){
+								tinyBox_change('安装完成', 1);
+								tinyBox_hide(2000);
+								updatepluginstatus();
+							}else{
+								tinyBox_change('安装失败', 0);
+								tinyBox_hide(2000);
+							}
+						}else{
+							tinyBox_change('安装失败', 0);
+							tinyBox_hide(2000);
+						}
+					},
+					error:function(o,info,o1){
+						tinyBox_change('安装失败', 0);
+						tinyBox_hide(2000);
+						updatepluginstatus();
+					}
+				});
+			}
+
+			function appstartsubmit(){
+				$('#upload_plugins').ajaxSubmit({
+					type:"post",
+					url:$('.upload_plugins').attr('action'),
+					dataType:"html",
+					success:function(flag){
+						if (flag == 'success'){
+							startInstall();
+						}else{
+							tinyBox_change('安装失败', 0);
+							tinyBox_hide(2000);
+						}
+					},
+					error:function(){
+						tinyBox_change('安装失败', 0);
+						tinyBox_hide(2000);
+					}
+				});
+			}
+
+			$('.hands').live('click',function(){
+				var inputstr = $('.installplug').val();
+
+				if(inputstr.length == 0){
+					messageAlert('请先选择应用安装文件', 3000);
+					return false;
+				}
+
+				//检测后缀
+				if(getExt(inputstr) != 'xipk'){
+					messageAlert('该应用安装文件无效', 3000);
+					return false;
+				}
+
+				tinyBox_init('上传插件包中...');
+
+				//检测是否挂载U盘
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/get_usb_nums"))%>',
+					type:'GET',
+					dataType:'json',
+					success:function(data){
+						if(data.data == 'NULL' || data.data == null || data.data == '' || data.data == 0){
+							messageAlert('请插入U盘', 3000);
+							return false;
+						}else{
+							appCheckNow();
+						}
+					}
+				});
+			});
+
+			//检查APP
+			function appCheckNow(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetup/appchecknow"))%>',
+					type:'post',
+					dataType:'json',
+					success:function(r){
+						if (r.result == '0'){
+							appstartsubmit();
+						}else{
+							tinyBox_change('该应用安装文件无效', 0);
+							tinyBox_hide(2000);
+						}
+					},
+					error:function(){
+						tinyBox_change('该应用安装文件无效', 0);
+						tinyBox_hide(2000);
+					}					
+				});
+			}
+
+			$('.appbtn').live('click',function(){
+				var path = $(this).attr('rel');
+				if ( $('.appstoreout').attr('p') == 1 ){
+					messageAlert('空间不足', 3000);
+					return false;
+				}else{
+					$('.appstorespace').html('');
+				}
+
+				$(this).css('display','none');
+
+				var o = $(this).next();
+				$(this).next().css('display','block');
+
+				tinyBox_init('安装中...');
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/appsetup/startinstall"))%>',
+					data:{type:'1',dir:path},
+					dataType:'json',  
+					method:'post',
+					timeOut:600000,
+					success:function(r){
+						var tmp = r.result;
+						if(tmp != ''){
+							var o1 = tmp.split("\n");
+							var tmp1 = o1[o1.length-2];
+							if(tmp1.length == 7){
+								tinyBox_change('安装完成', 1);
+								tinyBox_hide(2000);
+								updatepluginstatus();
+								$(o).text("安装完成");
+							}else{
+								tinyBox_change('安装失败', 0);
+								tinyBox_hide(2000);
+								$(o).text("安装失败");
+
+							}
+						}else{
+							tinyBox_change('安装失败', 0);
+							tinyBox_hide(2000);
+							$(o).text("安装失败");
+						}
+
+					},
+					error:function(){
+						tinyBox_change('安装失败', 0);
+						tinyBox_hide(2000);
+						updatepluginstatus();
+						$(o).text("安装失败");
+					}
+				});
+			});
+/******************************************分割线*************************************************************/
+			//检查镜像状态
+			$(document).ready(function(){
+				var tinybox_lock = false;
+				var timer = window.setInterval(function(){
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/get_iso_status"))%>',
+						type:'GET',
+						dataType:'HTML',
+						success:function(r){
+							get_usb_nums();	//获取数量
+							get_mount_status();	//获取OPT挂载状态
+
+							r = r.split('///');
+							if(r[0] == 'Mounting'){
+								if(tinybox_lock === false){
+									tinybox_lock = true;
+									TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate">0%</div><div class="iso_box_text">第一次挂载需较长时间，请耐心等待<br />挂载中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+								}else{
+									$('.iso_box_rate').html(r[1] + '%');
+								}
+							}else if(r[0] == 'Mounted'){
+								if(tinybox_lock === true){
+									TINY.box.hide();
+								}
+								
+								return false;
+							}else if(r[0] == 'NULL'){
+								if(tinybox_lock === true){
+									TINY.box.hide();
+								}
+								
+								return false;
+							}
+						}
+					});
+				}, 5000);
+			});
+			
+			//USB移除
+			$('.usb_out').live('click', function(){
+				//清除定时器
+				if(window.list_timer){
+					window.clearInterval(list_timer);
+				}
+
+				TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">拔出中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+
+				//找到显示信息的元素
+				var showmsg_obj = document.getElementById('showmsg_' + $(this).data('devid'));
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/usbinfo/usbremovemain"))%>',
+					type:'POST',
+					data:{dev:$(this).data('devid')},
+					dataType:'JSON',
+					success:function(r){
+						if(r.result == 'Success'){
+							$('#iso_box_text').html('已拔出');
+							TINY.box.hide();
+							get_usb_nums();
+							$(showmsg_obj).html('已拔出');
+						}else{
+							$('#iso_box_text').html('拔出失败');
+							TINY.box.hide();
+							get_usb_nums();
+							$(showmsg_obj).html('拔出失败');
+						}
+					}
+				});
+			});
+
+			//获取USB数量
+			function get_usb_nums(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/get_usb_nums"))%>',
+					type:'GET',
+					dataType:'JSON',
+					success:function(json){
+						if(typeof(json) == 'object'){
+							var setusb_num = 0;
+
+							if(json.data == 'NULL' || json.data == null || json.data == ''){
+								setusb_num = 0;
+							}else{
+								setusb_num = json.data;
+							}
+
+							$('#setusb').html(setusb_num);
+						}
+					}
+				});
+			}
+
+			//QOS mac和ip切换
+			$('#limit_type').live('change', function(){
+				changePanel($(this).val(), {qosturn:1});
+			});
+
+			//QOS mac 提交
+			$('.saveqos_mac').live('click',function(){
+				var flag = $('.qosturn').attr('checked');
+				var men = $('.saveqosip');
+				var men1 = $('.saveqosip1');
+
+				if (flag){
+					if ($('.setup_head h4').attr('rel') != '0'){
+						formention(men,'请不要重复点击');
+						return false;
+					}
+
+					// down net up net
+					var downkpbs = $('.downkbps').val();
+					var upkbps 	= $('.upkbps').val();
+
+					if (downkpbs == "" || upkbps == ""){
+						formention(men,'缺少下行带宽，上行带宽');
+						return false;
+					}
+
+					var reg = /^\d+$/;
+					if (!reg.test(downkpbs) || !reg.test(upkbps)){
+						formention(men,'输入格式错误');
+						return false;
+					}
+
+					if (downkpbs <= 0 || upkbps <= 0){
+						formention(men,'请输入大于等于1的整数');
+						return false;
+					}
+
+					var menflag = 0;
+					var lowerip = null;
+					var upperip = null;
+					var netlimit = null;
+					var canuse	= 0;
+					var totaldata = "";
+					var ryflag = 0;
+
+					$('.qosip_table tr').each(function(idx,obj){
+						if (idx != 0){
+							ip_with_mac = $(obj).children('td:eq(2)').children('p').children('#ip_with_mac').val();
+							netlimit = $(obj).children('td:eq(2)').children('p').children('.qosnettape').val();
+							if ($(obj).children('td:eq(3)').children('.saveqosstatus').attr('checked')){
+								canuse = 1;
+							}else{
+								canuse = 0;
+							}
+
+							if (ryflag == 0){
+								ryflag = canuse;
+							}
+
+							//如果写了MAC
+							if(netlimit){
+								if (totaldata == ""){
+									totaldata = netlimit + "|||" + canuse + "|||" + ip_with_mac;
+								}else{
+									totaldata = totaldata + "||||" + netlimit + "|||" + canuse + "|||" + ip_with_mac;
+								}
+							}
+						}
+					})
+
+					$('.setup_head h4').attr('rel','1');
+					tinyBox_init('正在保存...');
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/qos/qossave"))%>',
+						data:{type:'1',bpsd:downkpbs,bpsu:upkbps,tdata:totaldata,ryf:ryflag,limit_type:1},
+						dataType:'json',
+						type:'POST',
+						success:function(r){
+							$('.setup_head h4').attr('rel','0');
+							tinyBox_change('已保存', 1);
+							tinyBox_hide(2000);
+							return false;
+						}
+					});
+				}else{
+					if ($('.setup_head h4').attr('rel') != '0'){
+						formention(men1,'请不要重复点击');
+						return false;
+					}
+
+					$('.setup_head h4').attr('rel','1');
+					tinyBox_init('正在保存...');
+
+					$.ajax({
+						url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/qos/qossave"))%>',
+						data:{type:'0'},
+						dataType:'json',
+						type:'POST',
+						success:function(r){
+							$('.setup_head h4').attr('rel','0');
+							tinyBox_change('已保存', 1);
+							tinyBox_hide(2000);
+							return false;
+						}
+					});
+				}
+			});
+
+			//获取OPT是否挂载
+			function get_mount_status(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/get_mount_status"))%>',
+					type:'GET',
+					dataType:'JSON',
+					success:function(json){
+						if(typeof(json) == 'object'){
+							if(json.data != $('#setusb').attr('data')){
+								$('#setusb').attr('data', json.data);
+								updatepluginstatus();
+							}
+						}
+					}
+				});
+			}
+
+			//检测WAN口
+			function wan_check(){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wan_check"))%>',
+					type:'GET',
+					dataType:'HTML',
+					timeout:10000,
+					success:function(data){
+						if(data == '1'){
+							messageAlert('连接成功');
+						}else{
+							messageAlert('连接失败，请重试');
+						}
+
+						updatestatus();
+						return false;
+					},
+
+					error:function(){
+						messageAlert('操作超时，请重试');
+						return false;
+					}
+				});	
+			}
+
+			//路由器重启
+			function reboot_router(ip){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/reboot_router"))%>',
+					type:'GET',
+					dataType:'HTML',
+					success:function(){
+						return false;
+					},
+
+					error:function(){
+						return false;
+					}
+				});
+
+				var interval = window.setInterval(function() {
+					window.location.href = 'http://'+ip+'/';
+				}, 100000);	
+			}
+
+			/************* wlan connect *********/
+			//提示语
+			function alert_word(content, timeout){
+				if(timeout){
+					$('.alert_word').html(content);
+					window.setTimeout(function(){
+						$('.alert_word').html('');
+					}, timeout);
+				}else{
+					$('.alert_word').html(content);
+				}
+			}
+			
+			function chkwanconnect(type){
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wan_check"))%>',
+					dataType:'html',
+					success:function(data){
+						if (data == '0'){
+							if(type == 'pppoe'){
+								check_pppd();
+							}else{
+								alert_word('已保存', 3000);
+							}
+						}else{
+							if (type == 'pppoe'){
+								$('.dial').after("<a href='javascript:void(0)' class='pppoetype subbtn pppoe_off' style='display:block;'><b>断开</b></a>");
+								$('.dial').remove();
+
+								alert_word('已连接');
+							}else{
+								alert_word('已保存', 3000);
+							}
+						}
+						
+						$('.setup_head h4').attr('rel','0');						
+						updatestatus();
+					}
+				})
+			}
+
+			$('.dial').live('click',function(){
+				var running = 0;
+				if ($('.setup_head h4').attr('rel') != '0'){
+					return false;
+				}
+
+				var flag = $('.wanchange').children('option:selected').val();
+				var o = {};
+
+				// check info
+				if (flag == "dhcp"){
+					alert_word('正在保存...');
+					o = {type:"dhcp"}
+				}else if(flag == "pppoe"){
+					$('.pppoestatus').css('display','none');
+
+					var pppoe_pst = $('.pppoe_pst').val();
+					var pppoe_pwd = $('.pppoe_pwd').val();
+
+					if (pppoe_pst == '' || pppoe_pwd == ''){
+						alert_word('请输入必要信息');
+						return false;
+					}
+
+					alert_word('正在连接...');
+					o = {type:"pppoe", name:pppoe_pst, pwd:pppoe_pwd}
+				}else if (flag == "static"){
+					var wan_ip = $('.wanstatic_ip').val();
+					var wan_netmask = $('.wanstatic_netmask').val();
+					var wan_gateway = $('.wanstatic_gateway').val();
+					var wan_dns = $('.wanstatic_dns').val();
+
+					if (wan_ip == '' || wan_gateway == '' || wan_dns == ''|| wan_netmask ==''){
+						alert_word('请输入必要信息');
+						return false;
+					}
+
+					var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+
+					var reg = wan_ip.match(exp);
+
+					if(reg==null){
+						alert_word('请输入正确IP地址');
+						return false;
+					}
+
+					var reg0 = wan_netmask.match(exp);
+					if (reg0==null){
+						alert_word('请输入正确子网掩码');
+						return false;
+					}
+
+					var reg1 = wan_gateway.match(exp);
+
+					if (reg1==null){
+						alert_word('请输入正确网关');
+						return false;
+					}
+					var reg2 = wan_dns.match(exp);
+					if (reg2==null){
+						alert_word('请输入正确DNS');
+						return false;
+					}
+					
+					alert_word('正在保存...');
+					o = {type:"static",ipads:wan_ip,gateway:wan_gateway,dns:wan_dns,netmask:wan_netmask}
+				}
+				$('.setup_head h4').attr('rel','1');
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wantypechange"))%>',
+					type:'POST',
+					data:o,
+					dataType:'json',
+					timeout:30000,
+					success:function(r){
+						if(r.result == 'success'){
+							chkwanconnect(o.type);
+						}else{
+							alert_word('请插入WAN口网线', 3000);
+							$('.setup_head h4').attr('rel', 0);
+							return false;
+						}
+					},
+					error:function(){
+						alert_word('修改配置超时，请重试。', 3000);
+						$('.setup_head h4').attr('rel', 0);
+						updatestatus();
+					}
+				});
+				return false;
+			});
+
+			$('.pppoe_off').live('click',function(){
+				if ($('.setup_head h4').attr('rel') != '0'){
+					return false;
+				}
+
+				$('.setup_head h4').attr('rel','1');
+				alert_word('正在断开...');
+				var o = $(this);
+
+				$.ajax({
+					url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wantypechange"))%>',
+					dataType:'json',
+					data:{type:'others'},
+					type:'POST',
+					success:function(r){
+						alert_word('已断开');
+						updatestatus();
+						$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>拨号</b></a>");
+						$('.setup_head h4').attr('rel','0');					
+					},
+					error:function(){
+						alert_word('已断开');
+						updatestatus();
+						$('#pppoe_btn').html("<a href='javascript:void(0)' class='dial'><b>拨号</b></a>");
+						$('.setup_head h4').attr('rel','0');	
+					}
+				});
+			});
+	</script>
+<%+xc_footer%>

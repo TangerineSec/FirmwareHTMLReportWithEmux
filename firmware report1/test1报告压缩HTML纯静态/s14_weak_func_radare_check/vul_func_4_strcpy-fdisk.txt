@@ -1,0 +1,124 @@
+[[0;33m*[0m] Binary protection state of [0;33mfdisk[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mfdisk[0m
+
+lw s0, -0x5c30(s0)
+lw v0, -obj.MBRbuffer(gp)
+lw a0, (v0)
+beqz s0, 0x40da1c
+move v1, v0
+lui v0, 0x41a9
+b 0x40da24
+ori v0, v0, 0xe50b
+lui v0, 0xbe5
+ori v0, v0, 0xa941
+sw v0, (a0)
+lw a0, (v1)
+lw t9, -sym.imp.memset(gp)
+addiu v1, zero, 1
+addiu v0, zero, 0x100
+movz v0, v1, s0
+sh zero, 4(a0)
+sh v0, 6(a0)
+move a1, zero
+addiu a0, a0, 8
+jalr t9
+addiu a2, zero, 0x10
+lw gp, 0x10(sp)
+lw s1, -obj.MBRbuffer(gp)
+lw a1, -0x7fb4(gp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+lw a0, (s1)
+addiu a1, a1, 0x5e40
+jalr t9
+addiu a0, a0, 8
+lw a0, (s1)
+lw gp, 0x10(sp)
+lhu v0, 0x1a(sp)
+sb zero, 0x18(a0)
+sb zero, 0x19(a0)
+sb zero, 0x1a(a0)
+beqz s0, 0x40daa4
+sb zero, 0x1b(a0)
+sll v1, v0, 8
+srl v0, v0, 8
+or v0, v1, v0
+andi v0, v0, 0xffff
+sh v0, 0x1c(a0)
+sh zero, 0x1e(a0)
+beqz s0, 0x40dab8
+lbu v0, 0x18(sp)
+--
+sw s1, 0x20(sp)
+addiu a0, zero, 1
+jalr t9
+addiu a1, zero, 0x200
+move s0, v0
+bnez v0, 0x40dca4
+lw gp, 0x10(sp)
+lw a1, -0x7fb4(gp)
+lw t9, -sym.imp.err(gp)
+addiu a0, zero, 1
+addiu a1, a1, 0x3400
+jalr t9
+addiu a2, zero, 0x200
+lw v0, -0x7ed4(gp)
+lw s1, -0x5c30(v0)
+beql s1, zero, 0x40dcc0
+lui v0, 7
+lui v0, 0x5929
+b 0x40dcc4
+addiu v0, v0, 0x700
+addiu v0, v0, 0x2959
+sw v0, (s0)
+lw a1, -0x7fb4(gp)
+addiu v0, zero, -1
+addiu v1, zero, 1
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+sw v0, 0x10(s0)
+sh v0, 0x14(s0)
+addiu v0, zero, 0x100
+movz v0, v1, s1
+addiu a0, s0, 0x5e
+sh v0, 0x16(s0)
+jalr t9
+addiu a1, a1, 0x623c
+lw gp, 0x10(sp)
+addiu a0, s0, 0x90
+lw a1, -0x7fb4(gp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+jalr t9
+addiu a1, a1, 0x625c
+lw gp, 0x10(sp)
+addiu v1, zero, 0x1210
+addiu v0, zero, 0x1012
+lw a1, -0x7fb4(gp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+movz v0, v1, s1
+addiu a0, s0, 0x11c
+sh v0, 0x11a(s0)
+jalr t9
+addiu a1, a1, 0x6264
+lw ra, 0x24(sp)
+move v0, s0
+lw s1, 0x20(sp)
+lw s0, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x28
+lui gp, 2
+addiu gp, gp, 0x20b0
+addu gp, gp, t9
+addiu sp, sp, -0x30
+sw s1, 0x24(sp)
+lw v0, -obj.MBRbuffer(gp)
+lw s1, -0x7ed4(gp)
+sw s2, 0x28(sp)
+sw gp, 0x18(sp)
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m4[0m times [0;33mfdisk[0m
+

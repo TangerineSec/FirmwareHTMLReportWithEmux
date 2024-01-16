@@ -1,0 +1,1299 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 6:[0m
+[0mMDB_PATH=`mdb`[0m
+[33m^------^ SC2034 (warning): MDB_PATH appears unused. Verify use (or export if used externally).[0m
+[32m         ^---^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MDB_PATH=$(mdb)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 8:[0m
+[0mecho -e "mdb test start...." > $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 13:[0m
+[0mecho -e "  ------------------------------System Requirements testing------------- " >> $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 17:[0m
+[0mls /tmp/test | grep test[0m
+[33m^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 18:[0m
+[0mif [ $? = "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 19:[0m
+[0m    echo -e "\033[1;32;40m............................../tmp read write ok.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 22:[0m
+[0m    echo -e "\033[1;31;40m[Fail]............................../tmp read write fail.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 26:[0m
+[0mcd /mydlink[0m
+[33m^---------^ SC2164 (warning): Use 'cd ... || exit' or 'cd ... || return' in case cd fails.[0m
+
+[1mDid you mean: [0m
+cd /mydlink || exit
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 27:[0m
+[0mif [ $? = "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 28:[0m
+[0m    echo -e "\033[1;32;40m............................../mydlink folder exist.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 30:[0m
+[0m    echo -e "\033[1;31;40m[Fail]............................../mydlink folder not exist.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 34:[0m
+[0mecho $PATH | grep mydlink[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+echo "$PATH" | grep mydlink
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 35:[0m
+[0mif [ $? = "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 36:[0m
+[0m    echo -e "\033[1;32;40m............................../mydlink in lib path.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 38:[0m
+[0m    echo -e "\033[1;31;40m[Fail]............................../mydlink NOT in lib path.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 45:[0m
+[0mls $libPath_1 | grep libssl[0m
+[33m^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 46:[0m
+[0mif [ $? = "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 47:[0m
+[0m    ls $libPath_1 | grep libcrypto[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 48:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 49:[0m
+[0m        echo -e "\033[1;32;40m..............................Openssl in system.\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 51:[0m
+[0m        echo -e "\033[1;31;40m[Fail]..............................Can not find libcrypto.\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 54:[0m
+[0m    ls $libPath_2 | grep libssl[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 55:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 56:[0m
+[0m        ls $libPath_2 | grep libcrypto[0m
+[33m        ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 57:[0m
+[0m        if [ $? = "0" ]; then[0m
+[32m             ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 58:[0m
+[0m            echo -e "\033[1;32;40m..............................Openssl in system.\033[0m" >> $TEST_RESULT[0m
+[33m                 ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 60:[0m
+[0m            echo -e "\033[1;31;40m[Fail]..............................Can not find libcrypto.\033[0m" >> $TEST_RESULT[0m
+[33m                 ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 63:[0m
+[0m        echo -e "\033[1;31;40m[Fail]..............................Can not find openssl.\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 68:[0m
+[0mls $libPath_1 | grep libpthread[0m
+[33m^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 69:[0m
+[0mif [ $? = "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 70:[0m
+[0m   echo -e "\033[1;32;40m..............................libpthread in system.\033[0m" >> $TEST_RESULT[0m
+[33m        ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 72:[0m
+[0m    ls $libPath_2 | grep libpthread[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 73:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 74:[0m
+[0m        echo -e "\033[1;32;40m..............................libpthread in system.\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 76:[0m
+[0m        echo -e "\033[1;31;40m[Fail]..............................Can not find libpthread.\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 81:[0m
+[0mecho -e "\n------------------------------System Commands testing------------------" >> $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 89:[0m
+[0m    ls $word | grep reboot[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+[32m       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ls "$word" | grep reboot
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 90:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 95:[0m
+[0m    echo -e "\033[1;32;40m..............................reboot command in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 97:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................reboot command NOT in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 105:[0m
+[0m    ls $word | grep killall[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+[32m       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ls "$word" | grep killall
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 106:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 111:[0m
+[0m    echo -e "\033[1;32;40m..............................killall command in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 113:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................killall command NOT in system.\033[0m" >> $TEST_RESULT [0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 122:[0m
+[0m    ls $word | grep factory_reset[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+[32m       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ls "$word" | grep factory_reset
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 123:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 128:[0m
+[0m    echo -e "\033[1;32;40m..............................factory_reset command in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 130:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................factory_reset command NOT in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 139:[0m
+[0m    ls $word | grep fw_upgrade[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+[32m       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ls "$word" | grep fw_upgrade
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 140:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 145:[0m
+[0m    echo -e "\033[1;32;40m..............................fw_upgrade command in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 147:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................fw_upgrade command NOT in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 156:[0m
+[0m    ls $word | grep sed[0m
+[33m    ^-- SC2010 (warning): Don't use ls | grep. Use a glob or a for loop with a condition to allow non-alphanumeric filenames.[0m
+[32m       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    ls "$word" | grep sed
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 157:[0m
+[0m    if [ $? = "0" ]; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 162:[0m
+[0m    echo -e "\033[1;32;40m..............................sed command in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 164:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................sed command NOT in system.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 173:[0m
+[0mecho -e "\n------------------------------MDB testing------------------------------" >> $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 176:[0m
+[0mFW_VERSION=`mdb get fw_version 2>/dev/null`[0m
+[32m           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+FW_VERSION=$(mdb get fw_version 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 177:[0m
+[0mif [ $FW_VERSION ]; then[0m
+[32m     ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$FW_VERSION" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 178:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get fw_version [$FW_VERSION]\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 180:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get fw_version fail.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 184:[0m
+[0mMODEL=`mdb get dev_model 2>/dev/null`[0m
+[32m      ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MODEL=$(mdb get dev_model 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 185:[0m
+[0mif [ $MODEL ]; then[0m
+[32m     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$MODEL" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 186:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get dev_model[$MODEL]\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 188:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get dev_model fail.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 192:[0m
+[0mNAME=`mdb get dev_name 2>/dev/null`[0m
+[32m     ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+NAME=$(mdb get dev_name 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 193:[0m
+[0mif [ $NAME ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$NAME" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 194:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get dev_name[$NAME] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 196:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get dev_name fail.\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 200:[0m
+[0mOLD_PASSWD=`mdb get admin_passwd 2>/dev/null`[0m
+[32m           ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+OLD_PASSWD=$(mdb get admin_passwd 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 205:[0m
+[0mPASSWD=`mdb get admin_passwd 2>/dev/null`[0m
+[32m       ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+PASSWD=$(mdb get admin_passwd 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 208:[0m
+[0m    echo -e "\n\033[1;32;40m..............................mdb set admin_passwd OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 210:[0m
+[0m    echo -e "\n\033[1;31;40m[Fail]..............................mdb set admin_passwd failed SET:[$testPasswd], GET:[$PASSWD]\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 214:[0m
+[0mmdb set admin_passwd $OLD_PASSWD[0m
+[32m                     ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+mdb set admin_passwd "$OLD_PASSWD"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 219:[0m
+[0mHTTP=`mdb get http_port 2>/dev/null`[0m
+[32m     ^-----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+HTTP=$(mdb get http_port 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 220:[0m
+[0mif [ $HTTP ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$HTTP" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 221:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get http_port($HTTP) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 223:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get http_port failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 227:[0m
+[0mHTTPS=`mdb get https_port 2>/dev/null`[0m
+[32m      ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+HTTPS=$(mdb get https_port 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 228:[0m
+[0mif [ $HTTPS ]; then[0m
+[32m     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$HTTPS" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 229:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get https_port($HTTPS) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 231:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get https_port failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 235:[0m
+[0mREG=`mdb get register_st 2>/dev/null`[0m
+[32m    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+REG=$(mdb get register_st 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 236:[0m
+[0mif [ $REG ]; then[0m
+[32m     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$REG" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 237:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get register_st($REG) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 239:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get register_st failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 246:[0m
+[0mSET_REG=`mdb set register_st 1 2>/dev/null`[0m
+[33m^-----^ SC2034 (warning): SET_REG appears unused. Verify use (or export if used externally).[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+SET_REG=$(mdb set register_st 1 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 249:[0m
+[0mREG=`mdb get register_st 2>/dev/null`[0m
+[32m    ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+REG=$(mdb get register_st 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 250:[0m
+[0mif [ $REG = "1" ]; then[0m
+[32m     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$REG" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 251:[0m
+[0m    echo -e "\n\033[1;32;40m..............................mdb set register_st($REG) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 253:[0m
+[0m    echo -e "\n\033[1;31;40m[Fail]..............................mdb set register_st failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 255:[0m
+[0mmdb set register_st $REG[0m
+[32m                    ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+mdb set register_st "$REG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 259:[0m
+[0mMAC=`mdb get mac_addr 2>/dev/null`[0m
+[32m    ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MAC=$(mdb get mac_addr 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 260:[0m
+[0mif [ $MAC ]; then[0m
+[32m     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$MAC" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 261:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get mac_addr($MAC) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 263:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get mac_addr failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 266:[0m
+[0mmdb set attr_0 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 267:[0m
+[0mmdb set attr_1 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 268:[0m
+[0mmdb set attr_2 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 269:[0m
+[0mmdb set attr_3 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 270:[0m
+[0mmdb set attr_4 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 271:[0m
+[0mmdb set attr_5 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 272:[0m
+[0mmdb set attr_6 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 273:[0m
+[0mmdb set attr_7 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 274:[0m
+[0mmdb set attr_8 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 275:[0m
+[0mmdb set attr_9 1 2>&1 >/dev/null[0m
+[33m                 ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 280:[0m
+[0mATTR=`mdb get attr_0 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_0 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 281:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 282:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_0 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 284:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_0 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 288:[0m
+[0mATTR=`mdb get attr_1 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_1 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 289:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 290:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_1 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 292:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_1 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 296:[0m
+[0mATTR=`mdb get attr_2 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_2 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 297:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 298:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_2 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 300:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_2 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 304:[0m
+[0mATTR=`mdb get attr_3 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_3 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 305:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 306:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_3 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 308:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_3 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 312:[0m
+[0mATTR=`mdb get attr_4 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_4 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 313:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 314:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_4 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 316:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_4 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 320:[0m
+[0mATTR=`mdb get attr_5 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_5 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 321:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 322:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_5 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 324:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_5 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 328:[0m
+[0mATTR=`mdb get attr_6 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_6 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 329:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 330:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_6 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 332:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_6 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 336:[0m
+[0mATTR=`mdb get attr_7 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_7 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 337:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 338:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_7 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 340:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_7 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 344:[0m
+[0mATTR=`mdb get attr_8 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_8 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 345:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 346:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_8 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 348:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_8 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 352:[0m
+[0mATTR=`mdb get attr_9 2>/dev/null`[0m
+[32m     ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+ATTR=$(mdb get attr_9 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 353:[0m
+[0mif [ $ATTR = "1" ]; then[0m
+[32m     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$ATTR" = "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 354:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set attr_9 OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 356:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set attr_9 failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 360:[0m
+[0mecho -e "  ------------------------------Shared Port device specific test------------- " >> $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 362:[0m
+[0mSP_HTTP=`mdb get sp_http_port 2>/dev/null`[0m
+[32m        ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+SP_HTTP=$(mdb get sp_http_port 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 363:[0m
+[0mif [ $SP_HTTP ]; then[0m
+[32m     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$SP_HTTP" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 364:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get sp_http_port($SP_HTTP) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 366:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get sp_http_port failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 370:[0m
+[0mSP_HTTPS=`mdb get sp_https_port 2>/dev/null`[0m
+[32m         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+SP_HTTPS=$(mdb get sp_https_port 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 371:[0m
+[0mif [ $SP_HTTPS ]; then[0m
+[32m     ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$SP_HTTPS" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 372:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get sp_https_port($SP_HTTPS) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 374:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get sp_https_port failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 379:[0m
+[0mecho -e "  ------------------------------NAS and Camera specific test------------- " >> $TEST_RESULT[0m
+[33m     ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 381:[0m
+[0mLV_PORT=`mdb get liveview 2>/dev/null`[0m
+[32m        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+LV_PORT=$(mdb get liveview 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 382:[0m
+[0mif [ $LV_PORT ]; then[0m
+[32m     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$LV_PORT" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 383:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get liveview($LV_PORT) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 385:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get liveview failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 389:[0m
+[0mPB_PORT=`mdb get playback 2>/dev/null`[0m
+[32m        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+PB_PORT=$(mdb get playback 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 390:[0m
+[0mif [ $PB_PORT ]; then[0m
+[32m     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$PB_PORT" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 391:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get playback($PB_PORT) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 393:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get playback failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 397:[0m
+[0mCONFIG_PORT=`mdb get config 2>/dev/null`[0m
+[32m            ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+CONFIG_PORT=$(mdb get config 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 398:[0m
+[0mif [ $CONFIG_PORT ]; then[0m
+[32m     ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$CONFIG_PORT" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 399:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get config($CONFIG_PORT) OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 401:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get config failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 407:[0m
+[0mOLD_TIME=`mdb get time 2>/dev/null`[0m
+[32m         ^------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+OLD_TIME=$(mdb get time 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 409:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get time[$OLD_TIME] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 411:[0m
+[0m    echo -e "\033[1;31;40m..............................mdb get time[$OLD_TIME] failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 417:[0m
+[0mMY_TIME=`mdb get time 2>/dev/null`[0m
+[32m        ^------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MY_TIME=$(mdb get time 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 418:[0m
+[0mif [ $MY_TIME == ${NEW_TIME} ]; then[0m
+[32m     ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m              ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+if [ "$MY_TIME" == ${NEW_TIME} ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 419:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb set time[$NEW_TIME] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 421:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb set time failed[$MY_TIME][$NEW_TIME]\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 423:[0m
+[0mmdb set time $OLD_TIME[0m
+[32m             ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+mdb set time "$OLD_TIME"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 429:[0m
+[0mWAN=`mdb get wan_mode 2>/dev/null`[0m
+[32m    ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+WAN=$(mdb get wan_mode 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 430:[0m
+[0mif [ $WAN ]; then[0m
+[32m     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$WAN" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 431:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get wan_mode OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 433:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get wan_mode failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 436:[0m
+[0mif [ $WAN == "1" ]; then[0m
+[32m     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m          ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+if [ "$WAN" == "1" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 442:[0m
+[0mmdb set wan_mode ${swap} 2>&1 >/dev/null[0m
+[33m                         ^--^ SC2069 (warning): To redirect stdout+stderr, 2>&1 must be last (or use '{ cmd > file; } 2>&1' to clarify).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 443:[0m
+[0mif [ $? == "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+[33m        ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 446:[0m
+[0m    WAN=`mdb get wan_mode 2>/dev/null`[0m
+[32m        ^----------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    WAN=$(mdb get wan_mode 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 447:[0m
+[0m    if [ $WAN == ${swap} ]; then[0m
+[32m         ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m              ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+    if [ "$WAN" == ${swap} ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 448:[0m
+[0m        echo -e "\n\033[1;32;40m..............................mdb set wan_mode($swap) OK!\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 449:[0m
+[0m        mdb set wan_mode $WAN_TMP[0m
+[32m                         ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+        mdb set wan_mode "$WAN_TMP"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 453:[0m
+[0m        echo -e "\n\033[1;31;40m[Fail]..............................mdb set wan_mode failed\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 456:[0m
+[0m    echo -e "\n\033[1;31;40m[Fail]..............................mdb set wan_mode failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 460:[0m
+[0mMY_STATIC_IP=`mdb get static_ip_info 2>/dev/null`[0m
+[32m             ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MY_STATIC_IP=$(mdb get static_ip_info 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 461:[0m
+[0mif [ $MY_STATIC_IP ]; then[0m
+[32m     ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$MY_STATIC_IP" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 462:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get static_ip_info[$MY_STATIC_IP] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 464:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get static_ip_info failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 473:[0m
+[0mif [ $? == "0" ]; then[0m
+[32m     ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+[33m        ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 476:[0m
+[0m    VALUE=`mdb get static_ip_info 2>/dev/null`[0m
+[32m          ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    VALUE=$(mdb get static_ip_info 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 477:[0m
+[0m    if [ $VALUE == ${EXPECT} ]; then[0m
+[32m         ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+[1mDid you mean: [0m
+    if [ "$VALUE" == ${EXPECT} ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 478:[0m
+[0m        echo -e "\n\033[1;32;40m..............................mdb set static_ip_info OK![$VALUE][$EXPECT]\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 479:[0m
+[0m        mdb set static_ip_info $MY_STATIC_IP[0m
+[32m                               ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+        mdb set static_ip_info "$MY_STATIC_IP"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 483:[0m
+[0m        echo -e "\n\033[1;31;40m..............................mdb set static_ip_info failed\033[0m" >> $TEST_RESULT[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 486:[0m
+[0m    echo -e "\n\033[1;31;40m[Fail]..............................mdb set static_ip_info cmd  failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 488:[0m
+[0mmdb set wan_mode $WAN_TMP[0m
+[32m                 ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+mdb set wan_mode "$WAN_TMP"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 493:[0m
+[0mMY_CURRENT_IP=`mdb get cur_ip_info 2>/dev/null`[0m
+[32m              ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+MY_CURRENT_IP=$(mdb get cur_ip_info 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 494:[0m
+[0mif [ $MY_CURRENT_IP ]; then[0m
+[32m     ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$MY_CURRENT_IP" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 495:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get cur_ip_info[$MY_CURRENT_IP] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 497:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get cur_ip_info failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 501:[0m
+[0mCABLE_ST=`mdb get eth_cable_st 2>/dev/null`[0m
+[32m         ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+CABLE_ST=$(mdb get eth_cable_st 2>/dev/null)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 502:[0m
+[0mif [ $CABLE_ST ]; then[0m
+[32m     ^-------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+if [ "$CABLE_ST" ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 503:[0m
+[0m    echo -e "\033[1;32;40m..............................mdb get eth_cable_st[$CABLE_ST] OK!\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/mdb_test.sh line 505:[0m
+[0m    echo -e "\033[1;31;40m[Fail]..............................mdb get eth_cable_st failed\033[0m" >> $TEST_RESULT[0m
+[33m         ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2010 -- Don't use ls | grep. Use a glob o...
+  https://www.shellcheck.net/wiki/SC2034 -- MDB_PATH appears unused. Verify u...
+  https://www.shellcheck.net/wiki/SC2069 -- To redirect stdout+stderr, 2>&1 m...

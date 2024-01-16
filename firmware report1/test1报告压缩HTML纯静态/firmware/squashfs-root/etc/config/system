@@ -1,0 +1,33 @@
+
+config system
+	option hostname 'xRouter'
+	option timezone 'CST-8'
+
+config timeserver 'ntp'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+	option enable_server '0'
+
+config led 'usb_led'
+	option name 'USB'
+	option trigger 'usbdev'
+	option interval '50'
+	option dev '1-1.4'
+	option sysfs 'usb:blue'
+
+config led 'w5g_led'
+	option name 'W5G'
+	option sysfs 'wifi:blue'
+	option trigger 'netdev'
+	option dev 'rai0'
+	option mode 'link tx rx set'
+
+config led 'wlan_led'
+	option name 'WLAN'
+	option sysfs 'wifi:yellow'
+	option trigger 'netdev'
+	option dev 'ra0'
+	option mode 'link tx rx ck'
+

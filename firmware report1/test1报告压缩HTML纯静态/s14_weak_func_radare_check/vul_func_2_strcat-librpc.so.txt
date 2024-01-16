@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibrpc.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mlibrpc.so[0m
+
+bne s2, v0, 0xc214
+lw gp, 0x10(fp)
+lw a0, -0x7fd8(gp)
+lw t9, -sym.imp.getenv(gp)
+jalr t9
+addiu a0, a0, 0x1d00
+beqz v0, 0xc214
+lw gp, 0x10(fp)
+lw t9, -sym.imp.strlen(gp)
+move a0, v0
+jalr t9
+sw v0, 0x4b0(fp)
+addiu v0, v0, 0x16
+lw gp, 0x10(fp)
+srl v0, v0, 3
+sll v0, v0, 3
+subu sp, sp, v0
+lw a1, 0x4b0(fp)
+lw t9, -sym.imp.strcpy(gp)
+addiu s3, sp, 0x10
+jalr t9
+move a0, s3
+lw gp, 0x10(fp)
+move a0, s3
+lw a1, -0x7fd8(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+addiu a1, a1, 0x1d08
+lw gp, 0x10(fp)
+move a0, s3
+lw a1, -0x7fd8(gp)
+lw t9, -sym.imp.fopen(gp)
+jalr t9
+addiu a1, a1, 0x1d10
+lw gp, 0x10(fp)
+lw s2, -0x7fe8(gp)
+bnez v0, 0xbec4
+sw v0, 0x3580(s2)
+lw t9, -sym.imp.__errno_location(gp)
+jalr t9
+move s0, zero
+lw v1, (v0)
+addiu v0, zero, 2
+beq v1, v0, 0xc214
+lw gp, 0x10(fp)
+lw a0, -0x7fd8(gp)
+--
+beqz s4, 0xf80c
+lw t9, -sym.imp.getpwnam(gp)
+jalr t9
+move a0, s1
+move s0, v0
+beqz v0, 0xf80c
+lw gp, 0x10(sp)
+lw a1, 0x14(v0)
+lw t9, -sym.imp.strlen(gp)
+move a0, a1
+jalr t9
+sw a1, 0x18(sp)
+lw gp, 0x10(sp)
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+addiu a0, v0, 9
+lw gp, 0x10(sp)
+lw a1, 0x18(sp)
+move a0, v0
+lw t9, -sym.imp.strcpy(gp)
+jalr t9
+move s6, v0
+lw gp, 0x10(sp)
+move a0, s6
+lw a1, -0x7fd8(gp)
+[31mlw t9, -sym.imp.strcat(gp)[0m
+jalr t9
+addiu a1, a1, 0x2050
+lw gp, 0x10(sp)
+lw t9, -sym.imp.geteuid(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+lw a0, 8(s0)
+lw t9, -sym.imp.seteuid(gp)
+jalr t9
+move s4, v0
+lw gp, 0x10(sp)
+lw a1, 8(s0)
+lw t9, -0x7fd8(gp)
+addiu t9, t9, -0xe70
+bal 0xf190
+move a0, s6
+lw gp, 0x10(sp)
+move s0, v0
+lw t9, -sym.imp.free(gp)
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m2[0m times [0;33mlibrpc.so[0m
+

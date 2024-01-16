@@ -1,0 +1,152 @@
+[[0;33m*[0m] Binary protection state of [0;33mntpclient[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mntpclient[0m
+
+sw a3, 0x34(sp)
+lb v1, (v0)
+beqz v1, 0x4027bc
+move a0, v0
+lw t9, -sym.imp.getaddrinfo(gp)
+addiu a3, sp, 0x18
+lw a1, 0x50(sp)
+jalr t9
+addiu a2, sp, 0x28
+lw gp, 0x10(sp)
+bnez v0, 0x402718
+nop
+lw v1, 0x18(sp)
+bnez v1, 0x402754
+nop
+lw t9, -sym.imp.gai_strerror(gp)
+move a0, v0
+lw v0, -0x7f98(gp)
+lw s0, (v0)
+jalr t9
+nop
+lui a1, 0x40
+lw gp, 0x10(sp)
+move a0, s0
+addiu a1, a1, 0x45e0
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a2, v0
+b 0x40279c
+nop
+lw t9, -sym.imp.connect(gp)
+lw a2, 0x10(v1)
+lw a1, 0x14(v1)
+lw a0, 0x48(sp)
+jalr t9
+nop
+addiu v1, zero, -1
+lw gp, 0x10(sp)
+bne v0, v1, 0x4027a4
+lui a0, 0x40
+lw t9, -sym.imp.perror(gp)
+jalr t9
+addiu a0, a0, 0x45f4
+lw gp, 0x10(sp)
+lw a0, 0x18(sp)
+lw t9, -sym.imp.freeaddrinfo(gp)
+--
+lw gp, 0x30(sp)
+b 0x402fcc
+move s0, v0
+lui a2, 0x41
+lw v0, 0x5208(a2)
+addiu v0, v0, 1
+b 0x402fcc
+sw v0, 0x5208(a2)
+lw s2, (s7)
+b 0x402fcc
+nop
+lw t9, -sym.imp.atoi(gp)
+lw a0, (s7)
+jalr t9
+nop
+lui a3, 0x41
+lw gp, 0x30(sp)
+b 0x402fcc
+sw v0, 0x520c(a3)
+bnez s1, 0x4031b0
+nop
+lw v0, -0x7f98(gp)
+lui a1, 0x40
+lw a2, (fp)
+lw a0, (v0)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+addiu a1, a1, 0x4634
+b 0x403594
+nop
+beqz s2, 0x4031ec
+addiu a1, zero, 0x501
+lw t9, -sym.imp.open(gp)
+move a0, s2
+jalr t9
+addiu a2, zero, 0x1a4
+lw gp, 0x30(sp)
+bgez v0, 0x4031ec
+move s4, v0
+lw t9, -sym.imp.perror(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x46d4
+b 0x403594
+nop
+lw t9, -sym.imp.getpid(gp)
+--
+sw zero, 0xcc(sp)
+lui a0, 0x40
+move a1, s6
+lw gp, 0x30(sp)
+addiu a0, a0, 0x4714
+move a2, s4
+lw t9, -sym.imp.getaddrinfo(gp)
+jalr t9
+addiu a3, sp, 0x3c
+lw gp, 0x30(sp)
+bnez v0, 0x403390
+nop
+lw v1, 0x3c(sp)
+bnez v1, 0x4033cc
+lui s4, 0x41
+lw t9, -sym.imp.gai_strerror(gp)
+move a0, v0
+lw v0, -0x7f98(gp)
+lw s0, (v0)
+jalr t9
+nop
+lui a1, 0x40
+lw gp, 0x30(sp)
+move a0, s0
+addiu a1, a1, 0x45e0
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a2, v0
+b 0x403474
+nop
+lw t9, -sym.imp.socket(gp)
+lw a2, 0xc(v1)
+lw a0, 4(v1)
+lw a1, 8(v1)
+jalr t9
+addiu s6, zero, -1
+lw gp, 0x30(sp)
+bne v0, s6, 0x403414
+sw v0, 0x5030(s4)
+lw t9, -sym.imp.perror(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x4718
+lw gp, 0x30(sp)
+lw a0, 0x3c(sp)
+lw t9, -sym.imp.freeaddrinfo(gp)
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m3[0m times [0;33mntpclient[0m
+

@@ -1,0 +1,220 @@
+#!/bin/sh
+#set -x
+
+G_AppPath=""
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_APP_INSTALLED_DIR=""
+G_StateFile="/usr/local/app/StateFile"  #用于存放app的运行状态，格式为ID,状态//ID，状态  
+G_Parameter_all=$*
+
+#判断参数是否合法
+FunParamLegal()
+{
+	if [ ${G_Parameter_num} -ne 1 ];then
+		xRouterLog 2 "CheckStatus" "FunParamLegal" "Parameter Err."
+		exit 1
+	fi
+}
+
+#获取配置文件的路径
+FunGetConfigPath()
+{
+	if [ "${G_Parameter_one}" == "rom" ];then
+		G_APP_INSTALLED_DIR="/usr/local/app/appshell/"
+	else
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		mkdir -p /opt/app/appinstalled
+	fi
+	
+	xRouterLog 0 "appCheckStatus" "FunGetConfigPath" "Path:${G_APP_INSTALLED_DIR}"
+}
+
+#删掉StateFile文件
+FunDelStateFile()
+{
+	rm -f ${G_StateFile}
+}
+
+#检查rom指定ID的app的状态
+CheckRomIDAppStatus()
+{
+	local Path=""
+	local ValueLast=""
+	local PramExit=$1
+	
+	G_APP_INSTALLED_DIR="/usr/local/app/appshell/"
+	cd ${G_APP_INSTALLED_DIR}
+
+	#指定ID的文件不存在
+	if [ ! -f "${G_Parameter_one}" ];then
+		G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+		CheckUdiskIDAppStatus 0		
+	
+	else
+
+	$G_APP_INSTALLED_DIR$G_Parameter_one runstatus 1>/dev/null
+		ValueLast=$?
+		xRouterLog 0 "CheckStatus" "CheckRomIDAppStatus" "appshell runstatus.${G_Parameter_one},${ValueLast}"
+		if [ "${String}" == "" ];then
+			String="${G_Parameter_one},${ValueLast}"
+		else
+			String=`printf "%s||%s,%s" "$String" "${G_Parameter_one}" "${ValueLast}"`
+		fi
+
+		echo "${String}" > ${G_StateFile}
+		exit 0
+	fi
+}
+#检查udisk指定ID的app的状态
+CheckUdiskIDAppStatus()
+{	
+	local Path=""
+	local ValueLast=""
+	local PramExit=$1
+
+	cd ${G_APP_INSTALLED_DIR}
+
+	#指定ID的文件不存在
+	if [ ! -f "${G_Parameter_one}" ];then
+		#cd -
+		if [ $PramExit -eq 0 ];then
+			echo "exit 1"
+			xRouterLog 2 "CheckStatus" "CheckIDAppStatus" "${G_Parameter_one} is not exist."
+			exit 1	
+		fi
+		
+	fi
+	
+	Path=`cat ${G_Parameter_one} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+	
+	#没有找到路径
+	if [ "${Path}" == "" ];then
+		#cd -
+		xRouterLog 2 "CheckStatus" "CheckIDAppStatus" "plugin_IntallPath is Null."
+		exit 1
+	else
+		G_AppPath=${Path}
+		#cd -
+		cd ${G_AppPath}
+		./appshell runstatus 1>/dev/null
+		ValueLast=$?
+		xRouterLog 0 "CheckStatus" "CheckIDAppStatus" "${G_Parameter_one},${ValueLast}."
+		echo "${G_Parameter_one},${ValueLast}" > ${G_StateFile}
+		#cd -	
+	fi	
+	exit 0
+}
+
+#检查u盘里所有app的状态
+CheckUdiskAppStatus()
+{	
+	local File=""
+	local Path=""
+	local ValueLast=
+	local String=""
+	local PluginId=""
+	local PramExit=$1
+	
+	cd ${G_APP_INSTALLED_DIR}
+
+	for File in `ls`
+	do
+		Path=`cat ${File} | grep "plugin_IntallPath" |awk -F ":" '{print $2}' |awk -F " " '{print $1}'`
+		
+		#没有找到?肪?
+		if [ "${Path}" == "" ];then
+			continue
+		else
+		PluginId=`cat ${File} | grep "plugin_ID" |awk -F ":" '{print $2}' |awk '{print $1}'`
+			cd ${Path}
+			./appshell runstatus 1>/dev/null
+
+			ValueLast=$?
+			xRouterLog 0 "CheckStatus" "CheckUdiskAppStatus" "appshell runstatus.${G_Parameter_one},${ValueLast}"
+			if [ "${String}" == "" ];then
+				String="${PluginId},${ValueLast}"
+			else
+				String=`printf "%s||%s,%s" "$String" "${PluginId}" "${ValueLast}"`
+			fi
+			
+		fi	
+		cd ${G_APP_INSTALLED_DIR}	
+	done
+
+	if [ $PramExit -eq 0 ];then
+		echo "${String}" > ${G_StateFile}
+	else
+		echo "${String}" >> ${G_StateFile}	
+	fi
+	
+	exit 0
+}
+
+#检查所有app的状态
+CheckAllAppStatus()
+{
+	G_APP_INSTALLED_DIR="/usr/local/app/appshell/"
+	CheckRomAppStatus 1
+
+	G_APP_INSTALLED_DIR="/opt/app/appinstalled/"
+	CheckUdiskAppStatus 1
+}
+
+#检查rom中app的状态
+CheckRomAppStatus()
+{
+	local File=""
+	local Path=""
+	local ValueLast=
+	local String=""
+	local PluginId=""
+	local PramExit=$1
+	cd ${G_APP_INSTALLED_DIR}
+
+	for File in `ls`
+	do			
+		$G_APP_INSTALLED_DIR$File runstatus 1>/dev/null
+		ValueLast=$?
+		xRouterLog 0 "CheckStatus" "CheckRomAppStatus" "appshell runstatus.${G_Parameter_one},${ValueLast}"
+		if [ "${String}" == "" ];then
+			String="${File},${ValueLast}"
+		else
+			String=`printf "%s||%s,%s" "$String" "${File}" "${ValueLast}"`
+		fi
+				
+	done
+	
+	if [ $PramExit -eq 0 ];then
+		echo "${String}" > ${G_StateFile}
+		exit 0	
+	else
+		echo -n "${String}||" > ${G_StateFile}
+	fi
+	
+}
+
+CheckAppStatus()
+{
+	if [ "${G_Parameter_one}" == "all" ];then
+		CheckAllAppStatus
+	elif [ "${G_Parameter_one}" == "udisk" ];then
+		CheckUdiskAppStatus 0
+	elif [ "${G_Parameter_one}" == "rom" ];then
+		CheckRomAppStatus 0	
+	else
+		CheckRomIDAppStatus
+	fi	
+}
+
+######### 开始执行程序，程序入口#############
+xRouterLog 0 "CheckStatus" - "`basename $0` ${G_Parameter_all}"
+#检查参数合法性
+FunParamLegal
+#获取配置文件路径
+FunGetConfigPath
+#删除状态文件
+FunDelStateFile
+#查询APP状态
+CheckAppStatus
+

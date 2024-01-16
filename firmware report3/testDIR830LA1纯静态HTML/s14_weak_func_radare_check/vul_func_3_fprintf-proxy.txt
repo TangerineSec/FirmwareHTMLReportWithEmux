@@ -1,0 +1,152 @@
+[[0;33m*[0m] Binary protection state of [0;33mproxy[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mproxy[0m
+
+lw v1, 0x46ec(v1)
+lw gp, 0x10(sp)
+bne v0, v1, 0x401098
+lui a0, 0x40
+lw t9, -sym.imp.fopen(gp)
+lui a1, 0x40
+addiu a0, a0, 0x3df0
+jalr t9
+addiu a1, a1, 0x3e00
+lw gp, 0x10(sp)
+beqz v0, 0x401098
+move s0, v0
+lw t9, -sym.imp.__stdprintf_info__(gp)
+lui a1, 0x40
+move a0, v0
+lui a3, 0x40
+addiu a1, a1, 0x3e04
+addiu a3, a3, 0x4480
+jalr t9
+addiu a2, zero, 0x8bc
+lui v0, 0x41
+move a0, s0
+lw gp, 0x10(sp)
+lui a1, 0x40
+lw a2, 0x4530(v0)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+addiu a1, a1, 0x3e0c
+move a0, s0
+lw gp, 0x10(sp)
+lw ra, 0x1c(sp)
+lw t9, -sym.imp.fclose(gp)
+lw s0, 0x18(sp)
+jr t9
+addiu sp, sp, 0x20
+lw ra, 0x1c(sp)
+lw s0, 0x18(sp)
+jr ra
+addiu sp, sp, 0x20
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+sw s0, 0x18(sp)
+lui gp, 0x42
+addiu gp, gp, -0x3ac0
+sw gp, 0x10(sp)
+b 0x4010cc
+--
+lui a1, 0x40
+move a0, v0
+lui a3, 0x40
+addiu a2, zero, 0x808
+addiu a1, a1, 0x3e04
+jalr t9
+addiu a3, a3, 0x4460
+andi t0, s1, 0xff
+lui a1, 0x40
+lw a3, 4(s0)
+move a0, s3
+addiu a1, a1, 0x3e70
+lw a2, 0x120(sp)
+sw t0, 0x24(sp)
+srl v0, a3, 8
+and v1, a2, a3
+lw t0, 0x1b8(sp)
+lw gp, 0x28(sp)
+andi a2, a2, 0xff
+andi v1, v1, 0xff
+sw t0, 0x18(sp)
+and v0, a2, v0
+lw t0, 0x1b4(sp)
+sw v1, 0x14(sp)
+lw v1, 0x1b0(sp)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+sw v0, 0x10(sp)
+srl v0, a3, 0x18
+srl a3, a3, 0x10
+sw t0, 0x1c(sp)
+and a3, a2, a3
+sw v1, 0x20(sp)
+jalr t9
+and a2, a2, v0
+move a0, s3
+lw gp, 0x28(sp)
+lw t9, -sym.imp.fclose(gp)
+jalr t9
+nop
+lw gp, 0x28(sp)
+b 0x401a30
+addiu s2, s2, 1
+sw s2, 0x1a8(sp)
+lw v0, 0x4530(fp)
+addiu s3, s3, 1
+lw t9, -sym.imp.usleep(gp)
+--
+addiu a0, zero, 0xd
+jalr t9
+addiu a1, zero, 1
+lw gp, 0x10(sp)
+lw t9, -sym.imp.fork(gp)
+jalr t9
+nop
+lw gp, 0x10(sp)
+bnez v0, 0x401ca8
+move s1, v0
+lw v1, 0x18(sp)
+lui v0, 0x41
+lw t9, -sym.imp.getpid(gp)
+lui s2, 0x41
+sw v1, 0x46b4(v0)
+jalr t9
+lui s3, 0x40
+lui a1, 0x40
+lw gp, 0x10(sp)
+addiu a1, a1, 0x3ea0
+sw v0, 0x46ec(s2)
+lw t9, -sym.imp.fopen(gp)
+jalr t9
+addiu a0, s3, 0x3e8c
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+bnez v0, 0x401bf8
+move s1, v0
+lw v0, -0x7f94(gp)
+lui a1, 0x40
+addiu a1, a1, 0x3ea4
+lw a0, (v0)
+jalr t9
+addiu a2, s3, 0x3e8c
+addiu a0, zero, 1
+lw gp, 0x10(sp)
+lw t9, -sym.imp.exit(gp)
+jalr t9
+nop
+lw a2, 0x46ec(s2)
+lui a1, 0x40
+move a0, v0
+addiu a1, a1, 0x3e20
+jalr t9
+lui s2, 0x40
+lw gp, 0x10(sp)
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m3[0m times [0;33mproxy[0m
+

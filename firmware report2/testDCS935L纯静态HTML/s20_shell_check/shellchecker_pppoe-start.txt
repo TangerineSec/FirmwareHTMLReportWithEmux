@@ -1,0 +1,159 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 26:[0m
+[0mprefix=/mnt/source/rtl8881ab/source/open/pppoe/build[0m
+[33m^----^ SC2034 (warning): prefix appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 42:[0m
+[0mME=`basename $0`[0m
+[32m   ^-----------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+ME=$(basename "$0")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 44:[0m
+[0mif [ "`/usr/bin/id -u`" != 0 ] ; then[0m
+[32m      ^--------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+if [ "$(/usr/bin/id -u)" != 0 ] ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 55:[0m
+[0m    if [ "$?" != 0 ] ; then[0m
+[32m         ^--^ SC2181 (style): Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 63:[0m
+[0m    $ECHO "* The following section contains information about your system" >> $DEBUG[0m
+[32m    ^-- SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 75:[0m
+[0m    if [ "`uname -s`" = "Linux" ] ; then[0m
+[32m          ^--------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    if [ "$(uname -s)" = "Linux" ] ; then
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 76:[0m
+[0m        $ECHO "* The following section contains information about kernel modules" >> $DEBUG[0m
+[32m        ^-- SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 83:[0m
+[0m    $ECHO "* The following section lists your routing table." >> $DEBUG[0m
+[32m    ^-- SC2129 (style): Consider using { cmd1; cmd2; } >> file instead of individual redirects.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 116:[0m
+[0mif [ ! -f "$CONFIG" -o ! -r "$CONFIG" ] ; then[0m
+[33m                    ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 121:[0m
+[0m. $CONFIG[0m
+[33m  ^-----^ SC1090 (warning): ShellCheck can't follow non-constant source. Use a directive to specify location.[0m
+[32m  ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+. "$CONFIG"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 126:[0m
+[0m	ETH="$1"[0m
+[33m        ^-^ SC2034 (warning): ETH appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 133:[0m
+[0m    PID=`cat "$PIDFILE"`[0m
+[32m        ^--------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+    PID=$(cat "$PIDFILE")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 135:[0m
+[0m    kill -0 $PID > /dev/null 2>&1[0m
+[32m            ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    kill -0 "$PID" > /dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 136:[0m
+[0m    if [ $? = 0 ] ; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 144:[0m
+[0mecho $$ > $PIDFILE.start[0m
+[32m          ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+echo $$ > "$PIDFILE".start
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 155:[0m
+[0mif [ "$CONNECT_TIMEOUT" = "" -o "$CONNECT_TIMEOUT" = 0 ] ; then[0m
+[33m                             ^-- SC2166 (warning): Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 160:[0m
+[0mif [ "$DEMAND" != "" -a "$DEMAND" != "no" ] ; then[0m
+[33m                     ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 166:[0m
+[0mwhile [ true ] ; do[0m
+[32m        ^--^ SC2160 (style): Instead of '[ true ]', just use 'true'.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 167:[0m
+[0m    ${exec_prefix}/sbin/pppoe-status $CONFIG > /dev/null 2>&1[0m
+[32m    ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    "${exec_prefix}"/sbin/pppoe-status "$CONFIG" > /dev/null 2>&1
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 170:[0m
+[0m    if [ $? = 0 ] ; then[0m
+[32m         ^-- SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 181:[0m
+[0m    sleep $CONNECT_POLL[0m
+[32m          ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    sleep "$CONNECT_POLL"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 182:[0m
+[0m    TIME=`expr $TIME + $CONNECT_POLL`[0m
+[32m         ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m          ^--^ SC2003 (style): expr is antiquated. Consider rewriting this using $((..)), ${} or [[ ]].[0m
+[32m               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                       ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    TIME=$(expr "$TIME" + "$CONNECT_POLL")
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/pppoe-start line 183:[0m
+[0m    if [ $TIME -gt $CONNECT_TIMEOUT ] ; then[0m
+[32m         ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                   ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+    if [ "$TIME" -gt "$CONNECT_TIMEOUT" ] ; then
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1090 -- ShellCheck can't follow non-const...
+  https://www.shellcheck.net/wiki/SC2034 -- ETH appears unused. Verify use (o...
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] && [ q ] as [ p -a q...

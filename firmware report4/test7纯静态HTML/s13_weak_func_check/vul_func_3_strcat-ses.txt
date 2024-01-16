@@ -1,0 +1,84 @@
+[[0;33m*[0m] Binary protection state of [0;33mses[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mses[0m
+
+    c3d0:	e59f5134 	ldr	r5, [pc, #308]	; c50c <_start+0x323c>
+    c3d4:	e1a07000 	mov	r7, r0
+    c3d8:	e28d6088 	add	r6, sp, #136	; 0x88
+    c3dc:	e1a00001 	mov	r0, r1
+    c3e0:	ebffff11 	bl	c02c <_start+0x2d5c>
+    c3e4:	e3a01080 	mov	r1, #128	; 0x80
+    c3e8:	e1a03000 	mov	r3, r0
+    c3ec:	e59f211c 	ldr	r2, [pc, #284]	; c510 <_start+0x3240>
+    c3f0:	e1a00006 	mov	r0, r6
+    c3f4:	ebfff2ec 	bl	8fac <snprintf@plt>
+    c3f8:	e5954000 	ldr	r4, [r5]
+    c3fc:	e3540000 	cmp	r4, #0
+    c400:	0a00001d 	beq	c47c <_start+0x31ac>
+    c404:	e28da008 	add	sl, sp, #8
+    c408:	ea00000b 	b	c43c <_start+0x316c>
+    c40c:	e1a01006 	mov	r1, r6
+    c410:	e1a0000a 	mov	r0, sl
+    c414:	ebfff2cf 	bl	8f58 <strcpy@plt>
+    c418:	e2841003 	add	r1, r4, #3
+    c41c:	e1a0000a 	mov	r0, sl
+[31m    c420:	ebfff31a 	bl	9090 <strcat@plt>[0m
+    c424:	e1a0000a 	mov	r0, sl
+    c428:	e1a01008 	mov	r1, r8
+--
+    c54c:	e1a06000 	mov	r6, r0
+    c550:	e3a01080 	mov	r1, #128	; 0x80
+    c554:	e1a03006 	mov	r3, r6
+    c558:	e1a00005 	mov	r0, r5
+    c55c:	e59f2138 	ldr	r2, [pc, #312]	; c69c <_start+0x33cc>
+    c560:	ebfff291 	bl	8fac <snprintf@plt>
+    c564:	e5d73022 	ldrb	r3, [r7, #34]	; 0x22
+    c568:	e3530000 	cmp	r3, #0
+    c56c:	0a000045 	beq	c688 <_start+0x33b8>
+    c570:	e59f9128 	ldr	r9, [pc, #296]	; c6a0 <_start+0x33d0>
+    c574:	e5998000 	ldr	r8, [r9]
+    c578:	e3580000 	cmp	r8, #0
+    c57c:	028d4088 	addeq	r4, sp, #136	; 0x88
+    c580:	0a00000c 	beq	c5b8 <_start+0x32e8>
+    c584:	e28d4088 	add	r4, sp, #136	; 0x88
+    c588:	e1a01005 	mov	r1, r5
+    c58c:	e1a00004 	mov	r0, r4
+    c590:	ebfff270 	bl	8f58 <strcpy@plt>
+    c594:	e2881003 	add	r1, r8, #3
+    c598:	e1a00004 	mov	r0, r4
+[31m    c59c:	ebfff2bb 	bl	9090 <strcat@plt>[0m
+    c5a0:	e5991004 	ldr	r1, [r9, #4]
+    c5a4:	e1a00004 	mov	r0, r4
+--
+    c6f4:	e5967000 	ldr	r7, [r6]
+    c6f8:	e3570000 	cmp	r7, #0
+    c6fc:	0a000035 	beq	c7d8 <_start+0x3508>
+    c700:	e59fa0e4 	ldr	sl, [pc, #228]	; c7ec <_start+0x351c>
+    c704:	e286600c 	add	r6, r6, #12
+    c708:	e1a0500d 	mov	r5, sp
+    c70c:	e3a08000 	mov	r8, #0
+    c710:	ea000002 	b	c720 <_start+0x3450>
+    c714:	e496700c 	ldr	r7, [r6], #12
+    c718:	e3570000 	cmp	r7, #0
+    c71c:	0a00002d 	beq	c7d8 <_start+0x3508>
+    c720:	e5163008 	ldr	r3, [r6, #-8]
+    c724:	e5d33000 	ldrb	r3, [r3]
+    c728:	e3530000 	cmp	r3, #0
+    c72c:	0afffff8 	beq	c714 <_start+0x3444>
+    c730:	e1a01004 	mov	r1, r4
+    c734:	e1a0000d 	mov	r0, sp
+    c738:	ebfff206 	bl	8f58 <strcpy@plt>
+    c73c:	e2871003 	add	r1, r7, #3
+    c740:	e1a0000d 	mov	r0, sp
+[31m    c744:	ebfff251 	bl	9090 <strcat@plt>[0m
+    c748:	e1a0000d 	mov	r0, sp
+    c74c:	ebfff288 	bl	9174 <nvram_get@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m3[0m times [0;33mses[0m
+

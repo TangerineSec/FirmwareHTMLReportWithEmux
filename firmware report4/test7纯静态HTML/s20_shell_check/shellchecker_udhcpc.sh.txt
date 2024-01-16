@@ -1,0 +1,126 @@
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 7:[0m
+[0mLAN_IP_ADDR=`nvram get lan_ipaddr`[0m
+[32m            ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+LAN_IP_ADDR=$(nvram get lan_ipaddr)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 9:[0m
+[0mif test -n "$broadcast"; then[0m
+[33m            ^--------^ SC2154 (warning): broadcast is referenced but not assigned (did you mean 'BROADCAST'?).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 14:[0m
+[0mif test -n "$subnet"; then[0m
+[33m            ^-----^ SC2154 (warning): subnet is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 27:[0m
+[0m		route del default gateway $LAN_IP_ADDR dev $interface[0m
+[32m                                          ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		route del default gateway "$LAN_IP_ADDR" dev $interface
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 30:[0m
+[0m		route add default gateway $LAN_IP_ADDR dev $interface[0m
+[32m                                          ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		route add default gateway "$LAN_IP_ADDR" dev $interface
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 38:[0m
+[0m			ifconfig $interface $LAN_IP_ADDR[0m
+[32m                                            ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			ifconfig $interface "$LAN_IP_ADDR"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 47:[0m
+[0m		route del default gateway $LAN_IP_ADDR dev $interface[0m
+[32m                                          ^----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		route del default gateway "$LAN_IP_ADDR" dev $interface
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 50:[0m
+[0m		echo $ip > $WPS_DHCP_IP_FILE[0m
+[33m                     ^-^ SC2154 (warning): ip is referenced but not assigned.[0m
+[32m                     ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		echo "$ip" > $WPS_DHCP_IP_FILE
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 62:[0m
+[0m					ifconfig $interface $ip $BROADCAST $NETMASK[0m
+[32m                                                            ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                           ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					ifconfig $interface "$ip" "$BROADCAST" "$NETMASK"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 63:[0m
+[0m					nvram set lan_ipaddr=$ip[0m
+[32m                                                             ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					nvram set lan_ipaddr="$ip"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 64:[0m
+[0m					nvram set lan_gateway=$router[0m
+[33m                                                              ^-----^ SC2154 (warning): router is referenced but not assigned.[0m
+[32m                                                              ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					nvram set lan_gateway="$router"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 69:[0m
+[0m				WAIT_TIMER=`expr $WAIT_TIMER + 1`[0m
+[32m                                           ^--------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                            ^--^ SC2003 (style): expr is antiquated. Consider rewriting this using $((..)), ${} or [[ ]].[0m
+[32m                                                 ^---------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				WAIT_TIMER=$(expr "$WAIT_TIMER" + 1)
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 76:[0m
+[0m			ifconfig $interface $ip $BROADCAST $NETMASK[0m
+[32m                                            ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                ^--------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                           ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			ifconfig $interface "$ip" "$BROADCAST" "$NETMASK"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 77:[0m
+[0m			nvram set lan_ipaddr=$ip[0m
+[32m                                             ^-^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			nvram set lan_ipaddr="$ip"
+
+
+[1mIn /logs/firmware/squashfs-root/sbin/udhcpc.sh line 78:[0m
+[0m			nvram set lan_gateway=$router[0m
+[32m                                              ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			nvram set lan_gateway="$router"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2154 -- broadcast is referenced but not a...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2003 -- expr is antiquated. Consider rewr...

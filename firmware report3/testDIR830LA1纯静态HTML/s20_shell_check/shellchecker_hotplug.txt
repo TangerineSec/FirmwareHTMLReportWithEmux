@@ -1,0 +1,27 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/hotplug line 9:[0m
+[0musbmount2_pid="`cat /var/run/usbmount2.pid`"[0m
+[32m               ^--------------------------^ SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+usbmount2_pid="$(cat /var/run/usbmount2.pid)"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/hotplug line 14:[0m
+[0m   kill -USR1 $usbmount2_pid[0m
+[32m              ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+   kill -USR1 "$usbmount2_pid"
+
+
+[1mIn /logs/firmware/squashfs-root/usr/hotplug line 18:[0m
+[0m   kill -USR2 $usbmount2_pid[0m
+[32m              ^------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+   kill -USR2 "$usbmount2_pid"
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

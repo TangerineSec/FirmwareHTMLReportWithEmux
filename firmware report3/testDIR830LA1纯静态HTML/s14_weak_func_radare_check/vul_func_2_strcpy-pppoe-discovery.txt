@@ -1,0 +1,105 @@
+[[0;33m*[0m] Binary protection state of [0;33mpppoe-discovery[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33mpppoe-discovery[0m
+
+sw a1, 0xbe8(sp)
+jalr t9
+addiu s2, sp, 0x614
+addiu v1, zero, 0x103
+sh v1, 0x18(sp)
+addiu v1, zero, 4
+sh v1, 0x1a(sp)
+lw gp, 0x10(sp)
+lw v1, 0x18(sp)
+sw v0, 4(s3)
+lw a1, 0xbe8(sp)
+sw v1, 0x60c(sp)
+sw v0, 0x1c(sp)
+beqz a1, 0x403148
+move a0, a1
+lw t9, -sym.imp.strlen(gp)
+addiu s1, s1, 4
+jalr t9
+sw a1, 0xbe8(sp)
+addiu v1, zero, 0x203
+lw gp, 0x10(sp)
+andi s3, v0, 0xffff
+addiu a0, sp, 0x1c
+lw a1, 0xbe8(sp)
+addiu s4, v0, 4
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+addu s1, s1, s3
+sh v1, 0x18(sp)
+andi s1, s1, 0xffff
+jalr t9
+sh s3, 0x1a(sp)
+move a0, s2
+addiu a1, sp, 0x18
+lw gp, 0x10(sp)
+move a2, s4
+lw t9, -sym.imp.memcpy(gp)
+jalr t9
+addu s2, s2, s4
+lw gp, 0x10(sp)
+lhu v0, 0x44(s0)
+beqz v0, 0x403194
+addiu v0, sp, 0x60c
+lhu a2, 0x46(s0)
+addiu a2, a2, 4
+subu v0, a2, v0
+addu v0, s2, v0
+--
+lw s0, 0xbf0(sp)
+jr ra
+addiu sp, sp, 0xc08
+addiu sp, sp, -0x28
+sw ra, 0x24(sp)
+sw s1, 0x20(sp)
+sw s0, 0x1c(sp)
+lui gp, 0x42
+addiu gp, gp, -0x3d00
+sw gp, 0x10(sp)
+lw t9, -sym.imp.strlen(gp)
+jalr t9
+move s1, a0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.malloc(gp)
+jalr t9
+addiu a0, v0, 1
+lw gp, 0x10(sp)
+bnez v0, 0x4032bc
+move s0, v0
+lw t9, -sym.rp_fatal(gp)
+lui a0, 0x40
+jalr t9
+addiu a0, a0, 0x4174
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s1
+jalr t9
+move a0, s0
+move v0, s0
+lw ra, 0x24(sp)
+lw s1, 0x20(sp)
+lw s0, 0x1c(sp)
+jr ra
+addiu sp, sp, 0x28
+lui gp, 0x42
+move a2, a0
+lui a1, 0x40
+addiu gp, gp, -0x3d00
+addiu a1, a1, 0x4184
+lw v0, -0x7f94(gp)
+lw t9, -sym.imp.fprintf(gp)
+lw a0, (v0)
+jr t9
+nop
+nop
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m2[0m times [0;33mpppoe-discovery[0m
+

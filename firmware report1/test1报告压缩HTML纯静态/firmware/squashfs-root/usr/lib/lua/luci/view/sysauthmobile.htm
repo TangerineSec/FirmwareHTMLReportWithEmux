@@ -1,0 +1,116 @@
+<%+xcmob_header%>
+	<style type='text/css'>
+		.xcmod_pwdsetuppanel{
+			width:260px;
+			margin:50px auto 0px auto;
+		}
+
+		#loginrouter{
+			background: url('<%=media%>/mobile/inputgray.png') no-repeat center;
+			color:white;
+		}
+
+		.loginpasswd{
+			display: block;
+			color:#999;
+			font-size:18px;
+			font-weight:700;
+			width:240px;
+			padding-left:10px;
+			padding-right:10px;
+			height:44px;
+			margin:15px auto 0px auto;
+			border: none;
+			background: url('<%=media%>/mobile/input1.png') no-repeat center;	
+		}
+
+		.loginsubmit{
+			display: block;
+			color:#50BBBC;
+			font-size:18px;
+			font-weight:700;
+			cursor: pointer;
+			width:260px;
+			height:44px;
+			margin:15px auto 0px auto;
+			border: none;
+			background: url('<%=media%>/mobile/input1.png') no-repeat center;	
+		}
+
+		.xcmod_foot{
+			width:200px;
+			margin:0px auto;
+			margin-top:100px;
+			padding-bottom:40px;
+			text-align: center;
+		}
+
+		.mob{
+			color:#50BBBC;
+		}
+
+		.full{
+			color:#999;
+		}
+
+		.xcmod_wancheck{
+			width:280px;
+			margin:0px auto;
+			padding-top:70px;
+		}
+
+		.xcmod_wancheck_img{
+			width:280px;
+		}
+
+		.xcmod_wancontent{
+			width:260px;
+			margin:0px auto;
+			padding-bottom:30px;
+		}
+
+		.xcmod_wancontent h2{
+			width:178px;
+			margin:0px auto;
+			color:#50BBBC;
+			font-size:18px;
+			font-weight: 700;
+			margin-top:10px;
+			margin-bottom:50px;
+		}		
+	</style>
+    <%- if pass==1 then %>
+		<form method="post" action="/cgi-bin/luci" class="login_form">
+			<input type="hidden" name="username" value="root">
+			<input id="focus_password" type="hidden" class="login_password" name="password" maxlength="20" size="20" value="54321">
+		</form>
+    	<script type='text/javascript'>
+    		$('.login_form').submit();
+    	</script>
+    <%else%>
+		<div class='xcmod_nav'>
+			<h2>new wifi</h2>
+			<a href='javascript:void(0)' class='xcmod_setup'></a>
+		</div>
+		<div class='xcmod_content'>
+			<div class='xcmod_img'>
+				<img src='<%=media%>/mobile/logo.png' class='xcmod_logo'>
+			</div>
+			<form  method='post' action="<%=pcdata(luci.http.getenv('REQUEST_URI'))%>">
+			<div class='xcmod_pwdsetuppanel'>
+			<input type='hidden' name='username' class='logininput' value='root'>
+			<input type='text' name='password' class='loginpasswd' value='输入您的路由器密码'>
+			<input type='submit' name='submit' class='loginsubmit' value='登录'>
+			</div>
+			</form>
+			<div class='xcmod_foot'>
+				<a href='javascript:void(0)' style='font-size:14px;' class='mob'>移动版</a>|<a href='javascript:void(0)' style='font-size:14px;' class='full'>完整版</a>
+			</div>
+		</div>
+    <%end%>
+    <script type='text/javascript'>
+    	$('.loginpasswd').focusin(function(){
+    		$(this).val('');
+    	})  	
+    </script>
+<%+xcmob_footer%>

@@ -1,0 +1,105 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 9:[0m
+[0mSTART=20[0m
+[33m^---^ SC2034 (warning): START appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 11:[0m
+[0mEXTRA_COMMANDS="overlay_enable whole_root_enable"[0m
+[33m^------------^ SC2034 (warning): EXTRA_COMMANDS appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 12:[0m
+[0mEXTRA_HELP="        overlay_enable    Reenable overlay rootfs. (After you fix it).[0m
+[33m^--------^ SC2034 (warning): EXTRA_HELP appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 16:[0m
+[0m	local extroot_type="$1"[0m
+[33m        ^----------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 18:[0m
+[0m	if [ ! -d /tmp/${extroot_type}-disabled ]; then[0m
+[32m                       ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	if [ ! -d /tmp/"${extroot_type}"-disabled ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 23:[0m
+[0m	rm -f /tmp/${extroot_type}-disabled/.extroot.md5sum[0m
+[32m                   ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	rm -f /tmp/"${extroot_type}"-disabled/.extroot.md5sum
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 24:[0m
+[0m	rm -f /tmp/${extroot_type}-disabled/etc/extroot.md5sum[0m
+[32m                   ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	rm -f /tmp/"${extroot_type}"-disabled/etc/extroot.md5sum
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 37:[0m
+[0m	local cfg="$1"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 42:[0m
+[0m	local cfg="$1"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 47:[0m
+[0m	local cfg="$1"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 51:[0m
+[0m	[ -n "$target" -a "$enabled" -gt 0 ] || return 0[0m
+[33m                       ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[33m                           ^------^ SC2154 (warning): enabled is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 52:[0m
+[0m	umount $target[0m
+[32m               ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	umount "$target"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 56:[0m
+[0m	local cfg="$1"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 60:[0m
+[0m	[ -n "$device" -a  "$enabled" -gt 0 ] && type swapoff >/dev/null || return 0[0m
+[33m                       ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 61:[0m
+[0m	swapoff $device[0m
+[32m                ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	swapoff "$device"
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 65:[0m
+[0m	. /lib/functions/mount.sh[0m
+[32m          ^---------------------^ SC1091 (info): Not following: /lib/functions/mount.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/init.d/fstab line 80:[0m
+[0m	. /lib/functions/mount.sh[0m
+[32m          ^---------------------^ SC1091 (info): Not following: /lib/functions/mount.sh was not specified as input (see shellcheck -x).[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- EXTRA_COMMANDS appears unused. Ve...
+  https://www.shellcheck.net/wiki/SC2154 -- enabled is referenced but not ass...
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] && [ q ] as [ p -a q...

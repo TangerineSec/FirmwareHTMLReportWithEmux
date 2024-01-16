@@ -1,0 +1,607 @@
+#!/bin/sh
+#set -x
+
+G_Parameter_num=$#
+G_Parameter_one=$1
+G_Parameter_two=$2
+G_Parameter_all=$*
+G_Url=""
+G_ValueLast=
+G_StateFile="/usr/local/app/StateFile"  #用于存放app的运行状态，格式为ID,状态//ID，状态 
+G_ConfigFile="/usr/local/app/ConfigFile" #用于存放app的config，格式为KEY1，VALUE1//KEY2，VALUE2//KEY3，VALUE3
+G_TmpFile="/tmp/urlfile"
+G_ID=""
+G_PathTmp="/opt"
+G_AppName=""
+
+xRouterLog 0 "xipk" "-" "`basename $0` ${G_Parameter_all}"
+
+#判断参数是否合法，除了setconfig命令，其余的命令只有2个参数
+#当参数小于2 ,不合法
+if [ ${G_Parameter_num} -lt 2 ];then
+	if [ "${G_Parameter_one}" != "CheckInstallRun" ];then
+		xRouterLog 2 "xipk" "-" "Parameter Err"
+		
+		echo "ERR:Parameter Err."
+		exit 1		
+	fi
+	
+#当参数等于2，并且第一个为setconfig时，不合法
+elif [ ${G_Parameter_num} -eq 2 ];then
+	if [ "${G_Parameter_one}" == "setconfig" ];then
+		xRouterLog 2 xipk - "Parameter Err"
+	
+		echo "ERR:Parameter Err."
+		exit 1		
+	fi
+#当参数大于2，并且第一个不为setconfig时，不合法	
+else
+	if [ "${G_Parameter_one}" != "setconfig" ];then
+		xRouterLog 2 xipk - "Parameter Err"
+	
+		echo "ERR:Parameter Err."
+		exit 1		
+	fi	
+fi
+
+#检车U盘是否挂载
+FunCheckUdiskExist()
+{
+	local L_Temp=""
+	local L_TempFile="/tmp/UdiskMount"
+	
+	mount | grep "/dev/sd*" > ${L_TempFile} 
+	L_Temp=`wc ${L_TempFile} | awk -F " " '{printf $1}'`
+	if [ "${L_Temp}" == "0" ];then
+		echo 10
+		rm -f ${L_TempFile} 
+		return 10
+	fi
+}
+
+G_AppPath=`dirname $0`
+cd ${G_AppPath}
+
+#############  install app   #########
+if [ "${G_Parameter_one}" == "install" ];then 
+	#剪切xipk文件至/opt目录下
+	G_AppName=`basename ${G_Parameter_two}`
+	mv ${G_Parameter_two} ${G_PathTmp}/${G_AppName}
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "mv ${G_Parameter_two} fail."
+	fi
+	
+	#获取ID
+	./appGetIdByXipk ${G_PathTmp}/${G_AppName} 1>/dev/null 2>&1
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -eq 100 ];then
+		xRouterLog 2 xipk - "appGetIdByXipk ${G_PathTmp}/${G_AppName} fail."
+		echo "ERR:Get id fail." 
+		exit ${G_ValueLast}		
+	else
+		G_ID=${G_ValueLast}
+	fi
+ 
+	#更新安装态为 3：安装中
+	./appUpdateInstallStatus ${G_ID} 3 1>/dev/null 2>&1
+	
+	FunCheckUdiskExist 
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		#更新安装态为 9：没有u盘
+		./appUpdateInstallStatus ${G_ID} 9 		
+		
+		echo "ERR:Udisk is not exist." 
+		exit ${G_ValueLast}
+	fi
+
+	./appInstall ${G_PathTmp}/${G_AppName} 1>/dev/null 2>&1 
+
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "Install ${G_PathTmp}/${G_AppName} fail."
+	
+		#更新安装态为 5：安装失败
+		./appUpdateInstallStatus ${G_ID} 5  1>/dev/null 2>&1 	
+	
+		echo "ERR:Install Err."
+		sync
+		exit ${G_ValueLast}	
+	else
+		xRouterLog 0 xipk - "Install ${G_PathTmp}/${G_AppName} success."
+	
+		#更新安装态为 4：安装成功
+		./appUpdateInstallStatus ${G_ID} 4  
+	
+		echo "Success"
+		sync
+		exit ${G_ValueLast}		
+	fi
+
+#############  update app   #########
+elif [ "${G_Parameter_one}" == "update" ];then
+	
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		#更新安装态为 9：没有u盘
+		./appUpdateInstallStatus ${G_Parameter_two} 9  
+		
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	fi	
+
+	#通过ID 获取地址，地址存放在 G_TmpFile="/tmp/urlfile"
+	./appGetUrlByid ${G_Parameter_two}
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "appGetUrlByid ${G_Parameter_two} fail."
+		
+		#更新安装态为 2：下载失败
+		./appUpdateInstallStatus ${G_Parameter_two} 2 	
+		sync
+		echo "ERR:Get url err."
+		exit ${G_ValueLast}			
+	fi
+	G_Url=`cat ${G_TmpFile}`
+	
+	#删掉存放地址的文件
+	rm -f ${G_TmpFile}
+	
+	#更新状态 改为卸载中
+	./appUpdateInstallStatus ${G_Parameter_two} 6 	
+		
+	#更新安装态为 1：下载中
+	./appUpdateInstallStatus ${G_Parameter_two} 1 
+	
+	#下载插件
+	./appUpdate ${G_Url}
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "Down ${G_Url} fail."
+	
+		#更新安装态为 5：下载失败
+		./appUpdateInstallStatus ${G_Parameter_two} 2  
+		sync
+		echo "ERR:Update Err."
+		exit ${G_ValueLast}		
+	fi
+		
+	#安装前先卸载
+	
+	L_TmpPath=`/usr/local/app/ReadInstallPlugin NEEDONE ${G_Parameter_two} IntallPath |  awk -F "," '{print $1}'`
+	if [ "${L_TmpPath}" == "Parameter error!" ];then
+		xRouterLog 0 xipk - "App not installed."
+	elif [ ! -d "${L_TmpPath}" ];then
+		xRouterLog 0 xipk - "${L_TmpPath} is not exist."
+	else		
+		./appUnInstall ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appUnInstall ${G_Parameter_two} fail."
+		
+			#更新安装态为 8：卸载失败
+			./appUpdateInstallStatus ${G_Parameter_two} 8		
+	
+			echo "ERR:UnInstall Err."
+			sync
+			exit ${G_ValueLast}		
+		else
+			#更新安装态为 7：卸载成功
+			./appUpdateInstallStatus ${G_Parameter_two} 7
+		fi	
+	fi
+	G_AppName=`basename ${G_Url}`
+	#安装	
+	./appInstall ${G_PathTmp}/${G_AppName}
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "appInstall ${G_PathTmp}/${G_AppName} fail."
+	
+		#更新安装态为 5：安装失败
+		./appUpdateInstallStatus ${G_Parameter_two} 5  	
+	
+		echo "ERR:Install Err."
+		sync
+		exit ${G_ValueLast}	
+	else
+		xRouterLog 0 "xipk" "-" "appInstall ${G_PathTmp}/${G_AppName} success."
+	
+		#更新安装态为 4：安装成功
+		./appUpdateInstallStatus ${G_Parameter_two} 4  
+		sync
+		echo "Success"
+		exit ${G_ValueLast}		
+	fi
+
+#############  uninstall app   #########	
+elif [ "${G_Parameter_one}" == "uninstall" ];then
+
+	#更新安装态为 6：卸载中
+	./appUpdateInstallStatus ${G_Parameter_two} 6	
+			
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		./appUnInstall ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then	
+			xRouterLog 2 xipk - "appUnInstall ${G_Parameter_two} fail."
+		
+			#更新安装态为 8：卸载失败
+			./appUpdateInstallStatus ${G_Parameter_two} 8		
+		
+			echo "ERR:UnInstall Err."
+			sync
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appUnInstall ${G_Parameter_two} success."
+		
+			#更新安装态为 7：卸载成功
+			./appUpdateInstallStatus ${G_Parameter_two} 7
+			sync
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi		
+	else	
+		./appUnInstall ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appUnInstall ${G_Parameter_two} fail."
+		
+			#更新安装态为 8：卸载失败
+			./appUpdateInstallStatus ${G_Parameter_two} 8
+			
+			echo "ERR:UnInstall Err."
+			sync
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appUnInstall ${G_Parameter_two} success."
+		
+			#更新安装态为 7：卸载成功
+			./appUpdateInstallStatus ${G_Parameter_two} 7
+			sync
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi		
+	fi
+	
+#############  start app   #########	
+elif [ "${G_Parameter_one}" == "start" ];then	
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+		
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	fi
+		
+	#开机启动	
+	if [ "${G_Parameter_two}" == "autorun" ];then	
+		./appStart autorun
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStart autorun fail."
+			echo "ERR:Start Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStart autorun success."
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+
+	#当U盘挂载上时，开启已经安装好并且随U盘启动的app		
+	elif [ "${G_Parameter_two}" == "ustart" ];then
+		./appStart ustart
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStart ustart fail."
+			
+			echo "ERR:Start Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStart ustart success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+		
+	#启动指定ID的app
+	else
+		./appStart ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStart ${G_Parameter_two} fail."
+		
+			echo "ERR:Start Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStart ${G_Parameter_two} success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi		
+	fi
+	
+#############  stop app   #########	
+elif [ "${G_Parameter_one}" == "stop" ];then	
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	fi
+	
+	#############  stop all app in rom and udisk #########	
+	if [ "${G_Parameter_two}" == "all" ];then
+		./appStop all
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStop all fail."
+		
+			echo "ERR:Stop Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStop all success."
+			
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+		
+	#############  stop all app in rom  #########	
+	elif [ "${G_Parameter_two}" == "rom" ];then
+		./appStop rom
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStop rom fail."
+		
+			echo "ERR:Stop Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStop rom success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+	
+	#############  stop all app in udisk  #########	
+	elif [ "${G_Parameter_two}" == "udisk" ];then
+		./appStop udisk
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStop udisk fail."
+		
+			echo "ERR:Stop Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStop udisk success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+
+	#############  stop one app #########			
+	else
+		./appStop ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStop ${G_Parameter_two} fail."
+		
+			echo "ERR:Stop Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStop ${G_Parameter_two} success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi
+	fi	
+
+#############  restart app   #########	
+elif [ "${G_Parameter_one}" == "restart" ];then	
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	else
+		./appStart ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appStart ${G_Parameter_two} fail."
+		
+			echo "ERR:Restart Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appStart ${G_Parameter_two} success."
+		
+			echo "Success"
+			exit ${G_ValueLast}	
+		fi		
+	fi
+	
+#############  check app runstatus  #########	
+elif [ "${G_Parameter_one}" == "runstatus" ];then
+
+	if [ "${G_Parameter_two}" != "rom" ];then
+
+		FunCheckUdiskExist
+
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+		fi
+	fi
+
+	#############  check all app runstatus in rom and udisk #########	
+	if [ "${G_Parameter_two}" == "all" ];then
+		./appCheckStatus all
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appCheckStatus all fail."
+		
+			echo "ERR:Check runstatus Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appCheckStatus all success."
+		
+			cat "${G_StateFile}"
+
+			exit ${G_ValueLast}	
+		fi	
+		
+	#############  check all app runstatus in rom  #########	
+	elif [ "${G_Parameter_two}" == "rom" ];then
+		./appCheckStatus rom
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appCheckStatus rom fail."
+		
+			echo "ERR:Check runstatus Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appCheckStatus rom success."
+		
+			cat "${G_StateFile}"
+			rm -f ${G_StateFile}
+			exit ${G_ValueLast}	
+		fi	
+	
+	#############  check all app runstatus in rom  #########	
+	elif [ "${G_Parameter_two}" == "udisk" ];then
+		./appCheckStatus udisk
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appCheckStatus udisk fail."
+		
+			echo "ERR:Check runstatus Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appCheckStatus udisk success."
+		
+			cat "${G_StateFile}"
+			rm -f ${G_StateFile}
+			exit ${G_ValueLast}	
+		fi			
+
+	#############  check one app runstatus      #########			
+	else
+		./appCheckStatus ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appCheckStatus ${G_Parameter_two} fail."
+		
+			echo "ERR:Check runstatus Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appCheckStatus ${G_Parameter_two} success."
+		
+			cat "${G_StateFile}"
+			rm -f ${G_StateFile}
+			exit ${G_ValueLast}	
+		fi			
+		
+	fi
+#查询插件的安装状态	
+elif [ "${G_Parameter_one}" == "installstatus" ];then	
+		./appCheckInstallStatus ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -eq 100 ];then
+			xRouterLog 2 xipk - "appCheckInstallStatus ${G_Parameter_two} fail."
+		
+			echo "ERR:Check install status err."
+			exit ${G_ValueLast}	
+		else
+			xRouterLog 0 xipk - "appCheckInstallStatus ${G_Parameter_two} success."
+		
+			echo "${G_ValueLast},${G_Parameter_two}"
+			exit ${G_ValueLast}		
+		fi
+		
+#查询配置文件		
+elif [ "${G_Parameter_one}" == "getconfig" ];then
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	else	
+		./appGetConfig ${G_Parameter_two}
+		G_ValueLast=$?
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appGetConfig ${G_Parameter_two} fail."
+		
+			echo "ERR:Get config Err."
+			exit ${G_ValueLast}		
+		else
+			xRouterLog 0 xipk - "appGetConfig ${G_Parameter_two} success."
+		
+			cat "${G_ConfigFile}"
+			rm -f ${G_ConfigFile}
+			exit ${G_ValueLast}	
+		fi		
+	
+	fi
+#更新配置文件
+elif [ "${G_Parameter_one}" == "setconfig" ];then	
+	FunCheckUdiskExist
+	G_ValueLast=$?
+	if [ ${G_ValueLast} -ne 0 ];then
+		xRouterLog 2 xipk - "No udisk."
+	
+		echo "ERR:Udisk is not exist."
+		exit ${G_ValueLast}
+	else			
+		#这里为了处理简单，直接将所有的参数传递给appSetConfig
+		./appSetConfig $*
+		G_ValueLast=$?	
+		if [ ${G_ValueLast} -ne 0 ];then
+			xRouterLog 2 xipk - "appSetConfig $* fail."
+			
+			echo "ERR:Set config fail."
+			exit ${G_ValueLast}	
+		else
+			xRouterLog 0 xipk - "appSetConfig $* success."
+		
+			echo "Success"
+			sync
+			exit ${G_ValueLast}		
+		fi		
+	fi
+elif [ "${G_Parameter_one}" == "CheckInstallRun" ];then		
+	./appCheckInstallRun 
+		G_ValueLast=$?	
+		if [ ${G_ValueLast} -eq 0 ];then
+			xRouterLog 0 xipk - "xipk install not run."
+			
+			echo "xipk install not run."
+			exit 0
+		else
+			xRouterLog 2 xipk - "xipk install is running."
+		
+			echo "xipk install is running."
+			exit 5		
+		fi		
+else
+	xRouterLog 2 xipk - "Parameter Err."
+
+	echo "ERR:Parameter Err."
+	exit 1
+fi
+
+

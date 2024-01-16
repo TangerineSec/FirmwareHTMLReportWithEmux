@@ -1,0 +1,207 @@
+<%
+	require 'luci.sys'
+	require 'luci.common'
+
+	local ssid = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-iface[1].ssid')) or ''
+	local channel = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-device[1].channel')) or ''
+	local wirestatus = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-iface[1].disabled')) or '0'
+	local encryption = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-iface[1].encryption')) or ''
+
+	if wirestatus and wirestatus == '1' then
+		wirestatus = false
+	else
+		wirestatus = true
+	end
+
+	-- wirelessSafe
+	local wireSafe = false
+	local wireSafePwd = nil
+	if encryption == "none" then
+		wireSafe = false
+	else
+		wireSafe = true
+		wireSafePwd = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-iface[1].key')) or ''
+	end
+
+	-- 广播SSID
+	local hidessid = luci.common.trim(luci.sys.exec('uci get wireless.@wifi-device[1].hidessid')) or ''
+%>
+<div class='wireless_setup' style="height:528px;">
+	<div class='setup_head'>
+		<h4>WiFi设置</h4>
+		<a class='setup_return' href='javascript:void(0)'><span class='setup_return_img'></span>&nbsp;返回</a>
+		<div class='clr'></div>
+		<div class='bottom_line'>
+		</div>
+	</div>
+
+	<div class="wireless_type">5GHZ频段WiFi设置</div>
+	<table cellspacing="25px" class="wireless_table">
+		<tr>
+			<td align="right">无线功能：</td>
+			<td>
+				<select class='setwireturn setType'>
+					<%if wirestatus then%>
+						<option value="close">关闭</option>
+						<option selected="selected" value="open">开启</option>
+					<%else%>
+						<option selected="selected" value="close">关闭</option>
+						<option value="open">开启</option>
+					<%end%>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">无线网络名称SSID：</td>
+			<td><input <%if wirestatus == false then%>disabled<%end%> class='netssid setwireturn_input' type='text' value='<%=ssid%>'></td>
+		</tr>
+		<tr>
+			<td align="right">无线加密：</td>
+			<td>
+				<select class='setwireturn wirelessSafe' <%if wirestatus == false then%>disabled<%end%>>
+					<%if wireSafe then%>
+					<option value="none">关闭</option>
+					<option selected="selected" value="psk+psk2">开启</option>
+					<%else%>
+					<option selected="selected" value="none">关闭</option>
+					<option value="psk+psk2">开启</option>
+					<%end%>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">无线密码：</td>
+			<td><input <%if wirestatus == false or wireSafe == false then%>disabled<%end%> class='setwireturn_input wirelessPass' type='text' value='<%=wireSafePwd%>'></td>
+		</tr>
+		<tr>
+			<td align="right">信道：</td>
+			<td>
+				<select id='wifi_channel' style="width:205px;" <%if wirestatus == false then%>disabled<%end%>>
+					<option value="0">自动</option>
+					<option value="149" <% if channel == '149' then %>selected="selected"<% end %>>149 (5.745 GHz)</option>
+					<option value="153" <% if channel == '153' then %>selected="selected"<% end %>>153 (5.765 GHz)</option>
+					<option value="157" <% if channel == '157' then %>selected="selected"<% end %>>157 (5.785 GHz)</option>
+					<option value="161" <% if channel == '161' then %>selected="selected"<% end %>>161 (5.805 GHz)</option>
+					<option value="165" <% if channel == '165' then %>selected="selected"<% end %>>165 (5.825 GHz)</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">广播SSID：</td>
+			<td>
+				<% if hidessid == '0' then%>
+				<input type='radio' name='broadcast' <%if wirestatus == false then%>disabled<%end%> class='broadcast' checked='checked' id='turnon'><label for="turnon">开启</label>&nbsp;&nbsp;&nbsp;<input type='radio' name='broadcast' class='broadcast' <%if wirestatus == false then%>disabled<%end%> id='turnoff'><label for="turnoff">关闭</label>
+				<% else %>
+				<input type='radio' name='broadcast' class='broadcast' <%if wirestatus == false then%>disabled<%end%> id='turnon'><label for="turnon">开启</label>&nbsp;&nbsp;&nbsp;<input type='radio' name='broadcast' class='broadcast' checked='checked' <%if wirestatus == false then%>disabled<%end%> id='turnoff'><label for="turnoff">关闭</label>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><span class='wireless_mention_24'></span><a class='subbtn saveStatus' href='javascript:void(0)' style="margin:0;"><b>保存</b></a></td>
+		</tr>
+	</table>
+</div>
+<script type='text/javascript'>
+	function wiremention(word){
+		$('.wireless_mention').html(word).stop().animate({'opacity':1},1000,"",function(){
+			$('.wireless_mention').stop().animate({'opacity':0},3000);
+		});		
+	}
+
+	$('.wirelessSafe').change(function(){
+		if($(this).val() == 'none'){
+			$('.wirelessPass').attr('disabled','disabled');
+		}else{
+			$('.wirelessPass').removeAttr('disabled');
+		}
+	})
+
+	$('.setType').change(function(){
+		if($(this).val() == 'close'){
+			$('.netssid').attr('disabled', 'disabled');
+			$('.wirelessPass').attr('disabled', 'disabled');
+			$('.wirelessSafe').attr('disabled', 'disabled');
+			$('#turnon').attr('disabled', 'disabled');
+			$('#turnoff').attr('disabled', 'disabled');
+			$('#wifi_channel').attr('disabled', 'disabled');
+		}else{
+			$('.netssid').removeAttr('disabled');
+
+			if($('.wirelessSafe').val() == 'none'){
+				$('.wirelessSafe').removeAttr('disabled');
+			}else{
+				$('.wirelessPass').removeAttr('disabled');
+				$('.wirelessSafe').removeAttr('disabled');
+			}
+
+			$('#wifi_channel').removeAttr('disabled');
+			$('#turnon').removeAttr('disabled');
+			$('#turnoff').removeAttr('disabled');
+		}
+	})
+
+	$('.saveStatus').click(function(){
+		 var wirelesstype	= $('.wirelessSafe').val()
+		 var wirelesspwd	= $('.wirelessPass').val()
+		 var wirelock = $('.setType').val();
+		 
+		 if (wirelock == 'open' && wirelesstype == 'psk+psk2' && wirelesspwd.length < 8){
+		 	wiremention('请输入8位及以上的密码');
+		 	return false;
+		 }
+
+		 var wirelessstatus = $('.setType').val()
+		 var wirelessssid	= $('.netssid').val()
+
+		 if (wirelessstatus == 'open' && wirelessssid == ''){
+		 	wiremention('请输入无线网络名称');
+		 	return false;
+		 }
+
+		 var wirelesscodetype	= $('.wirelessSafe').val()
+		 var wirelesscode 		= $('.wirelessPass').val()
+
+		 var ssidhide = null;
+		 if ($('#turnon').attr('checked'))
+		 	ssidhide = 0;
+		 else
+		 	ssidhide = 1;
+
+		 var wifi_channel = $('#wifi_channel').val();
+
+		 var o = {}
+		 o = {w_status:wirelessstatus,w_ssid:wirelessssid,w_type:wirelesstype,w_pwd:wirelesspwd,w_code_t:wirelesscodetype,w_code:wirelesscode,sid_hide:ssidhide,wifi_channel:wifi_channel,wifi_type:1}
+
+		tinyBox_init('保存中...');
+
+		 $.ajax({
+		 	url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloud/wiresetup"))%>',
+		 	method:'POST',
+		 	dataType:'json',
+		 	data:o,
+		 	timeout:30000,
+		 	success:function(json){
+			 	tinyBox_change('已保存', 1);
+				tinyBox_hide(2000);
+				updatestatus();
+		 	},
+		 	error:function(){
+			 	tinyBox_change('已保存', 1);
+				tinyBox_hide(2000);
+		 		updatestatus();
+		 	}
+		 });
+	});
+
+	$('.node_tab').click(function(){
+		changePanel('wifinfo_24');
+	});
+</script>
+
+<!--标签-->
+<div class="tab_nav">
+	<div class="node_tab">2.4 GHZ</div>
+	<div class="node_tab_active">5 GHZ</div>
+	<div class="node_tab_empty" style="width: 399px;"></div>
+</div>

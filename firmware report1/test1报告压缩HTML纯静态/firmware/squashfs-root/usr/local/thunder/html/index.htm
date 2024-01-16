@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>迅雷远程</title>
+		<script type='text/javascript' src='jqscripts'></script>
+		<script type='text/javascript' src="/luci-static/resources/tinybox.js"></script>
+		<style type='text/css'>
+			/*tinybox*/
+			.tbox {position:absolute; display:none; padding:14px 17px; z-index:900}/*../images/preload.gif*/
+			.tinner {padding:15px; }
+			.tmask {position:absolute; display:none; top:0px; left:0px; height:100%; width:100%; background:#000; z-index:800}
+			.tclose {position:absolute; top:0px; right:0px; width:30px; height:30px; cursor:pointer; background:url() no-repeat}/*images/close.png*/
+			.tclose:hover {background-position:0 -30px}
+			.iso_box{
+				width:100%;
+				height:100%;
+			}
+
+			.iso_box .iso_box_rate{
+				background: url('comimg?path=thunder_pending.gif') no-repeat center;
+				width:92px;
+				height:92px;
+				margin:0 auto;
+				text-align:center;
+				line-height:92px;
+				font-family:Microsoft Yahei;
+				font-size:24px;
+				color:#fff;
+			}
+
+			.iso_box .iso_box_text{
+				text-align:center;
+				font-family:Microsoft Yahei;
+				font-size:14px;
+				color:#fff;
+				margin-top:10px;
+			}
+
+			*{
+				margin:0 0;
+				padding:0 0;
+				font-family:'微软雅黑';
+			}
+
+			a{
+				text-decoration:none;
+			}
+			a:hover{text-decoration: underline;}
+			
+			ul{
+				list-style-type: none;
+			}
+
+			body{
+				background:#ededed;
+				color:#666;
+				font-size:14px;
+			}
+
+			.nav{
+				height:63px;
+				background:url('comimg?path=title_box.jpg') repeat-x center;
+			}
+
+			.common {
+				width: 940px;
+				margin: 0 auto;
+				position: relative;
+			}
+
+			.nav .nav_head .logo{
+				display: block;
+				float: left;
+				margin-top: 10px;
+				width: 112px;
+				height: 40px;
+				background: url('comimg?path=logo2.png') no-repeat center;
+			}
+
+			.navigation {
+				width: 940px;
+				height: 54px;
+				margin: 54px auto;
+				background: url('comimg?path=fast_box.png') no-repeat center;
+				position: relative;
+			}
+
+			.navigation .navigation_title {
+				color: #666;
+				padding-top: 15px;
+				padding-left: 17px;
+			}
+
+			.navigation .navigation_title a{
+				color:#666;
+			}
+
+			.app_content{
+				width:940px;
+				height:450px;
+				background:white;
+				border:1px solid #CCC;
+				margin:0 auto;
+			}
+
+			.app_content .app_box{
+				margin-top:50px;
+			}
+
+			.app_content .app_left{
+				float:left;
+				margin-left:100px;
+			}
+
+			.app_content .app_right{
+				float:right;
+				margin-right:50px;
+				position: relative;
+			}
+
+			.app_config{
+				width:370px;
+				color:#666;
+				visibility: hidden;
+			}
+
+			.app_config ul li{
+				margin-top:20px;
+				width:260px;
+				height: 40px;
+			}
+
+			.app_left_span{
+				display: block;
+				float:left;
+				width:100px;
+				margin-top:8px;
+			}
+
+			.app_right_input{
+				display: block;
+				float: right;
+				width:150px;
+				height:25px;
+				margin-top: 5px;
+			}
+
+			.app_btn{
+				display: block;
+				width:66px;
+				height:26px;
+				background: url('comimg?path=thunder_button1.png');
+				text-align: center;
+			}
+
+			.app_btn:hover{
+				background: url('comimg?path=thunder_button1_click.png');	
+			}
+
+			.app_btn b{
+				display: block;
+				font-weight: 300;
+				font-size:14px;
+				color:white;
+				padding-top:2px;
+			}
+
+			.app_save{
+				float: right;
+			}
+			
+			.author{
+				width: 125px;
+				position: absolute;
+				bottom: 0px;
+				right: 0px;
+				font-size: 14px;
+				text-align: right;
+				color: #666;
+			}
+			
+			.runstatus{
+				float:right;
+				color: #F00;
+			}
+			
+			.progress{
+				position: absolute;
+				bottom: 0px;
+				right: 0px;
+			}
+
+			.activateCode{
+			}
+			.app_refresh{
+				font-size: 14px;
+				color: #ff0000;
+			}
+			.xunleilogo{
+				position: absolute;
+				top: 4px;
+				right: 0px;
+			}
+			.label{
+				width: 40%;
+				text-align: right;
+			}
+			table tr td{padding: 10px 15px 10px 0;}
+			select{width:130px;border:1px solid #3CB6FF;height:25px;padding-left: 5px;}
+			#saveall{
+				color:#fff;
+				display:block;
+				line-height: 25px;
+				margin-left: 105px;
+				float: left;
+			}
+			.app_active_code{color:red;border: 0;width: 65px;}
+			.sub_child{visibility:hidden;}
+			.startWarning{color:red;}
+			#unbindthunder{display:none;}
+
+		</style>
+</head>
+	<body>
+		<div class='nav'>
+			<div class='nav_head common'>
+				<a href='http://r.xcloud.cc' target='_blank' class='logo'></a>
+				<span class='version'></span>
+				<a href='javascript:void(0)' id='getupdate' class='getupdate'><span class='getupdate_def'></span></a>
+				<span class='updatewords'></span>
+                <div class='xunleilogo'><a href="http://yuancheng.xunlei.com" target="_blank"><img src="comimg?path=thunder_logo_login.jpg" border="0px" alt="点击前往迅雷远程下载"></a></div>
+			</div>
+		</div>
+
+		<div class="navigation">
+			<div class="navigation_title">
+				<a href="comreturn">主页</a> >> 迅雷远程
+		  </div>
+		</div>
+
+		<div class="app_content">
+			<p style="margin:10px 0 0 20px;">迅雷远程下载配置</p>
+			<div class='app_box app_flag' rel='0'>
+            <div class="runstatus"></div>
+				<table style="width:100%;border-collapse: collapse;">
+					<tr>
+						<td class="label"><label>远程下载服务：</label></td>
+						<td>
+							<label for="start_thread"><input type="radio" name="wdsturn" value="start" class="start_thread" id="start_thread">&nbsp&nbsp启动</label>
+							&nbsp&nbsp&nbsp&nbsp<label for="stop_thread"><input type="radio" name="wdsturn" class="stop_thread"  value="stop" id="stop_thread">&nbsp&nbsp停止<span></span></label>
+
+						</td>
+					</tr>
+					<tr class="sub_child">
+						<td class="label"><label>绑定状态：</label></td>
+						<td><span id="bindthunder">未知</span>&nbsp&nbsp&nbsp&nbsp<a href="javascript:;" id="unbindthunder" style="color:#3CB6FF;">解除绑定</a></td>
+					</tr>
+					<tr class="sub_child">
+						<td class="label"><label>激活码：</label></td>
+						<td>
+							<input type='text' class='app_active_code' title="点击绑定设备" value='加载中...' readonly="readonly" status=-1>
+							<label class="codeTip">请登录<a href="http://yuancheng.xunlei.com" target="_blank" style="color:#3CB6FF;">yuancheng.xunlei.com</a>使用此激活码绑定</label>
+						</td>						
+					</tr>
+					<tr class="sub_child">
+						<td class="label"><label>传输速度：</label></td>
+						<td>
+							<label>上传&nbsp&nbsp
+							<select style="margin-bottom: 10px;" id="uploadSpeed">
+								<option value=-1>不限速</option>
+								<option value=64>64KB/s</option>
+								<option value=128>128KB/s</option>
+								<option value=256>256KB/s</option>
+								<option value=512>512KB/s</option>
+								<option value=1024>1MB/s</option>
+								<option value=2048>2MB/s</option>
+								<option value=4096>4MB/s</option>
+								<option value=8192>8MB/s</option>
+							</select>
+							<br/>
+							</label>
+
+							<label>下载&nbsp&nbsp
+							<select id="downloadSpeed">
+								<option value=-1>不限速</option>
+								<option value=64>64KB/s</option>
+								<option value=128>128KB/s</option>
+								<option value=256>256KB/s</option>
+								<option value=512>512KB/s</option>
+								<option value=1024>1MB/s</option>
+								<option value=2048>2MB/s</option>
+								<option value=4096>4MB/s</option>
+								<option value=8192>8MB/s</option>
+							</select>
+							</label>
+
+						</td>
+					</tr>
+
+					<tr class="sub_child">
+						<td class="label"><label>同时下载任务数：</label></td>
+						<td>
+							<select id="taskcount" style="width:170px;">
+								<option value=1>1</option>
+								<option value=2>2</option>
+								<option value=3>3</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr class="sub_child">
+						<td class="label"><label>网络连接状态：</label></td>
+						<td>
+							<span class="wan_status" status=-1 >未知</span>
+						</td>
+					</tr>
+
+					<tr class="sub_child">
+						<td class="label"></td>
+						<td>
+							<a href="javascript:;" id="saveall" class="app_btn">保存</a><span class="warning" style="color: red;"></span>
+						</td>
+					</tr>
+				</table>
+		</div>
+	</body>
+	<script type='text/javascript'>
+		var update_timer = null;
+
+		function init(){
+			getThunderStatus();
+
+			// start thread
+			$('.start_thread').live('click',function(){
+				TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">正在启动...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+				$.ajax({
+					url:'comcmd',
+					data:{cmd:'/usr/local/app/xipk start 2'},
+					dataType:'json',
+					type:'post',
+					success:function(r){
+						t = r.resdata;
+						t1 = t.split("\n");
+						t2 = t1[t1.length-2];
+						if(t2.length == 7)
+							window.location.reload();
+						TINY.box.hide();
+					}
+				});
+			});
+
+			$('.stop_thread').live('click',function(){
+				$('.sub_child').css("visibility","hidden");
+				TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">正在停止...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+				$.ajax({
+					url:'comcmd',
+					data:{cmd:'/usr/local/app/xipk stop 2'},
+					dataType:'json',
+					type:'post',
+					success:function(r){
+						t = r.resdata;
+						t1 = t.split("\n");
+						t2 = t1[t1.length-2];
+						if(t2.length == 7)
+							window.location.reload();
+						TINY.box.hide();
+					}
+				});	
+			})	;	
+			//获取speed
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/thunder/bin/runHttpCmd.sh "http://localhost:9000/getplanspeedlimit"'},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					var t = (r.resdata).replace(" ","");
+					$('#downloadSpeed').val(parseInt(t.split(",")[1]));
+					$('#uploadSpeed').val(parseInt(t.split(",")[2]));
+				}
+			});
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/thunder/bin/runHttpCmd.sh "http://localhost:9000/getrunningtaskslimit"'},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					var t = (r.resdata).replace(/ /g,"");
+					$('#taskcount').val(parseInt(t.split(",")[1]));
+				}
+			});
+
+			//check status;
+			update_timer = setInterval("updateInfo()",3000);			
+			//save 
+			$('#saveall').bind('click',function(){
+				if(getWanStatusByLocal()!=1){
+					return;
+				}
+				$(".warning").html("");
+				setSpeed();
+				setTaskNum();
+			});
+
+			$('#unbindthunder').bind('click',function(){
+				if(getWanStatusByLocal()!=1){
+					return;
+				}
+				window.clearInterval(update_timer);
+				TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">绑定解除中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+				$.ajax({
+					url:'comcmd',
+					data:{cmd:'/usr/local/thunder/bin/setUnbind.sh'},
+					dataType:'json',
+					type:'post',
+					success:function(r){
+						if(parseInt(r.resdata)==0){
+							window.location.reload();
+						}else{
+							update_timer = setInterval("updateInfo()",1000);
+						}
+						TINY.box.hide();
+					}
+				});
+
+			});
+		}
+
+
+
+		function updateInfo(){
+
+			getCode();
+			//获取WAN口连接状态
+			$.ajax({
+				url:'./wan_check',
+				type:'POST',
+				dataType:'html',
+				timeOut:10000,
+				success:function(data){
+					$('.wan_status').attr("status",data);
+					if(data == 0){
+						$('.wan_status').html('未连接');
+					}else{
+						$('.wan_status').html('已连接');
+					}
+				}
+			});		
+			// get bindinfo:
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/thunder/bin/checkBindStatus.sh'},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					var text="未知";
+					switch(parseInt(r.resdata)){
+						case 0:
+							text="已绑定";
+							$('.app_active_code').val("(已绑定)");
+							$('.codeTip').css('display','none');
+							$('#unbindthunder').css('display','inline');
+							break;                            
+						case 1:
+							text="已绑定其他路由器";
+							$('.app_active_code').val("(已绑定)");
+							$('#unbindthunder').css('display','inline');
+							break;
+
+						case 2:
+							text="连接错误";
+							$('#unbindthunder').css('display','none');
+							break;
+
+						case 3:
+							text="未绑定";
+							$('#unbindthunder').css('display','none');
+
+							break;
+					}
+
+					$('#bindthunder').text(text);
+
+				}
+			});
+
+		}
+
+		function setTaskNum(){
+			var url ="'http://localhost:9000/setrunningtaskslimit?runningtaskscount="+$("#taskcount").val()+"'";
+
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/thunder/bin/runHttpCmd.sh '+url},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					var t = (r.resdata).replace(/ /g,"");
+					if(t.indexOf('[0]')!=-1){
+						$(".warning").html($(".warning").html()+"&nbsp&nbsp&nbsp&nbsp同时下载数保存成功<br/>");
+					}else{
+						$(".warning").html($(".warning").html()+"&nbsp&nbsp&nbsp&nbsp同时下载数保存失败<br/>");					
+					}
+					TINY.box.hide();
+					setTimeout('$(".warning").html("");',2000);
+
+				}
+			});	
+		}
+
+		function setSpeed(){
+			TINY.box.show({html:'<div class="iso_box"><div class="iso_box_rate"></div><div class="iso_box_text">保存中...</div></div>',fixed:true,animate:false,close:false,boxid:'error',width:400,height:0});
+			var dspeed = ($('#downloadSpeed').val());
+			var uspeed = ($('#uploadSpeed').val());
+			var url ='http://localhost:9000/setplanspeedlimit?';//download_speed=100&upload_speed=100&
+			if(dspeed!='null'){
+				url+='download_speed='+dspeed;
+			}
+			if(uspeed!='null'){
+				url+='&upload_speed='+uspeed;			
+			}
+			url +='&slstart_time=10&slend_time=1440';
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:"/usr/local/thunder/bin/runHttpCmd.sh '"+url+"'"},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					if((r.resdata).indexOf('[0]')!=-1){
+						$(".warning").html($(".warning").html()+"&nbsp&nbsp&nbsp&nbsp限速控制保存成功<br/>");
+					}else{
+						$(".warning").html($(".warning").html()+"&nbsp&nbsp&nbsp&nbsp限速控制保存失败<br/>");
+					}
+				}
+			});		
+
+		}
+
+		function setWarning(text){
+			$(".warning").html("&nbsp&nbsp&nbsp&nbsp"+text+"<br/>");
+			setTimeout('$(".warning").html("");',2000);
+		}
+
+		function getWanStatusByLocal(){
+			var wan_status = parseInt($('.wan_status').attr("status"));
+			if(wan_status!=1){
+				setWarning("未连接网络");
+			}
+			return wan_status;
+		}
+
+		function getThunderStatus(){
+			// get status
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/app/xipk runstatus 2'},
+				dataType:'json',
+				type:'post',
+				timeOut:60000,
+				success:function(r){
+					t = r.resdata;
+					t1 = t.split("\n");
+					t2 = t1[t1.length-2].split(",");
+					t2 = t2[t2.length-1];
+					if(t2 == "0"){
+						$('.start_thread').attr("checked", "checked");
+						$('.sub_child').css("visibility","visible");
+					}else{
+						$('.stop_thread').attr("checked", "checked");
+						$('.sub_child').css("visibility","hidden");
+
+						setTimeout("getThunderStatus()",1000);
+					}
+				}
+			});		
+		}
+
+		function getCode(){
+			var status = parseInt($('.app_active_code').attr("status"));
+			if(status!=-1)
+				return;
+			$.ajax({
+				url:'comcmd',
+				data:{cmd:'/usr/local/thunder/bin/getCode.sh'},
+				dataType:'json',
+				type:'post',
+				success:function(r){
+					t = r.resdata;
+					if(t.length >= 0){
+						t = t.replace(/[\r\n]/g,"");
+						
+						if(t=='(已绑定)')
+							$('.codeTip').css('display','none');
+						if(t!=""){
+							$('.app_active_code').val(t);
+							$('.app_active_code').attr("status",1);
+						}
+					}
+				}
+			});		
+		}
+
+		//初始化运行
+		init();
+	</script>
+</html>

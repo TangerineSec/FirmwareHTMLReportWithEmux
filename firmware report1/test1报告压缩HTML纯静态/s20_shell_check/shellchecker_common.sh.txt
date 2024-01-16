@@ -1,0 +1,310 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 5:[0m
+[0mldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }[0m
+[33m                                  ^-- SC2048 (warning): Use "$@" (with quotes) to prevent whitespace problems.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 6:[0m
+[0mlibs() { ldd $* | awk '{print $3}'; }[0m
+[33m             ^-- SC2048 (warning): Use "$@" (with quotes) to prevent whitespace problems.[0m
+[32m             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+libs() { ldd "$*" | awk '{print $3}'; }
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 11:[0m
+[0m		[ -f $file -a ! -f $dest ] && {[0m
+[32m                     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[33m                           ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[32m                                   ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		[ -f "$file" -a ! -f "$dest" ] && {
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 12:[0m
+[0m			dir="$(dirname $dest)"[0m
+[32m                                       ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			dir="$(dirname "$dest")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 14:[0m
+[0m			cp $file $dest[0m
+[32m                           ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                 ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+			cp "$file" "$dest"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 22:[0m
+[0m	[ -x "$src" ] && files="$src $(libs $src)"[0m
+[32m                                            ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -x "$src" ] && files="$src $(libs "$src")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 23:[0m
+[0m	install_file $files[0m
+[32m                     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	install_file "$files"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 30:[0m
+[0m		dir="$(dirname $dest)"[0m
+[32m                               ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		dir="$(dirname "$dest")"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 32:[0m
+[0m		[ -f "$dest" ] || ln -s $src $dest[0m
+[32m                                        ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                             ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		[ -f "$dest" ] || ln -s "$src" "$dest"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 37:[0m
+[0m	mount | grep "on $1 type" 2>&- 1>&- || mount -o bind $1 $1[0m
+[32m                                                             ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                                ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount | grep "on $1 type" 2>&- 1>&- || mount -o bind "$1" "$1"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 38:[0m
+[0m	mkdir -p $1$2 $1/proc $1/sys $1/dev $1/tmp $1/overlay && \[0m
+[32m                 ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                              ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mkdir -p "$1""$2" "$1"/proc "$1"/sys "$1"/dev "$1"/tmp "$1"/overlay && \
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 39:[0m
+[0m	mount -o move /proc $1/proc && \[0m
+[32m                            ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                    ^-- SC2015 (info): Note that A && B || C is not if-then-else. C may run when A is true.[0m
+
+[1mDid you mean: [0m
+	mount -o move /proc "$1"/proc && \
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 40:[0m
+[0m	pivot_root $1 $1$2 || {[0m
+[32m                   ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                        ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	pivot_root "$1" "$1""$2" || {
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 41:[0m
+[0m        umount $1 $1[0m
+[32m               ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                  ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+        umount "$1" "$1"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 45:[0m
+[0m	mount -o move $2/sys /sys[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o move "$2"/sys /sys
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 46:[0m
+[0m	mount -o move $2/dev /dev[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o move "$2"/dev /dev
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 47:[0m
+[0m	mount -o move $2/tmp /tmp[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o move "$2"/tmp /tmp
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 48:[0m
+[0m	mount -o move $2/overlay /overlay 2>&-[0m
+[32m                      ^-- SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	mount -o move "$2"/overlay /overlay 2>&-
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 61:[0m
+[0m		install_bin $file[0m
+[32m                            ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		install_bin "$file"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 63:[0m
+[0m	install_file /etc/resolv.conf /lib/functions.sh /lib/functions.sh /lib/upgrade/*.sh $RAMFS_COPY_DATA[0m
+[32m                                                                                            ^--------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	install_file /etc/resolv.conf /lib/functions.sh /lib/functions.sh /lib/upgrade/*.sh "$RAMFS_COPY_DATA"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 83:[0m
+[0m	local sig="${1:-TERM}"[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 84:[0m
+[0m	echo -n "Sending $sig to remaining processes ... "[0m
+[33m             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 86:[0m
+[0m	local stat[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 90:[0m
+[0m		local pid name state ppid rest[0m
+[33m                ^----------------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 91:[0m
+[0m		read pid name state ppid rest < $stat[0m
+[32m                ^--^ SC2162 (info): read without -r will mangle backslashes.[0m
+[33m                              ^---^ SC2034 (warning): state appears unused. Verify use (or export if used externally).[0m
+[32m                                                ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		read pid name state ppid rest < "$stat"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 94:[0m
+[0m		local cmdline[0m
+[33m                ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 95:[0m
+[0m		read cmdline < /proc/$pid/cmdline[0m
+[32m                ^--^ SC2162 (info): read without -r will mangle backslashes.[0m
+[32m                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		read cmdline < /proc/"$pid"/cmdline
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 106:[0m
+[0m				if [ $pid -ne $$ ] && [ $ppid -ne $$ ]; then[0m
+[32m                                     ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                        ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+				if [ "$pid" -ne $$ ] && [ "$ppid" -ne $$ ]; then
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 107:[0m
+[0m					echo -n "$name "[0m
+[33m                                             ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 108:[0m
+[0m					kill -$sig $pid 2>/dev/null[0m
+[32m                                              ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                                   ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					kill -"$sig" "$pid" 2>/dev/null
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 117:[0m
+[0m	local arg="$1"; shift[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 124:[0m
+[0m	local default="$1"; shift;[0m
+[33m        ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 125:[0m
+[0m	local answer="$default"[0m
+[33m        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 129:[0m
+[0m			0) echo -n "$* (y/N): ";;[0m
+[33m                                ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 130:[0m
+[0m			*) echo -n "$* (Y/n): ";;[0m
+[33m                                ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 132:[0m
+[0m		read answer[0m
+[32m                ^--^ SC2162 (info): read without -r will mangle backslashes.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 151:[0m
+[0m	local from="$1"[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 152:[0m
+[0m	local conc="$2"[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 153:[0m
+[0m	local cmd[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 160:[0m
+[0m		local magic="$(eval $cmd $from | dd bs=2 count=1 2>/dev/null | hexdump -n 2 -e '1/1 "%02x"')"[0m
+[33m                ^---------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m                      ^---^ SC2155 (warning): Declare and assign separately to avoid masking return values.[0m
+[32m                                    ^--^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+[32m                                         ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+		local magic="$(eval "$cmd" "$from" | dd bs=2 count=1 2>/dev/null | hexdump -n 2 -e '1/1 "%02x"')"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 194:[0m
+[0m	if [ "$SAVE_CONFIG" -eq 1 -a -z "$USE_REFRESH" ]; then[0m
+[33m                                  ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/upgrade/common.sh line 209:[0m
+[0m	[ "$SAVE_CONFIG" -eq 1 -a -n "$USE_REFRESH" ] && {[0m
+[33m                               ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- state appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC2048 -- Use "$@" (with quotes) to prevent...
+  https://www.shellcheck.net/wiki/SC2155 -- Declare and assign separately to ...

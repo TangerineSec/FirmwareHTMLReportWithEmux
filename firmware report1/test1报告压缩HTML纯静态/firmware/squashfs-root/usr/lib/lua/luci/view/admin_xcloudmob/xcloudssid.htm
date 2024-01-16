@@ -1,0 +1,113 @@
+<%+xcmob_header%>
+<style type='text/css'>
+	.xcmod_ssidsetupcontent h2{
+		font-size:18px;
+		color:#50BBBC;
+		font-weight: 700;
+		width:195px;
+		margin:20px auto 0px auto;
+		text-align: center;
+	}
+
+	.xcmod_pwdsetuppanel{
+		width:260px;
+		margin:50px auto 0px auto;
+	}
+
+	.ssidsetup{
+		display: block;
+		width:240px;
+		height:44px;
+		margin:0px auto;
+		padding-left:10px;
+		padding-right:10px;
+		border:none;
+		color:#666;
+		background: url('<%=media%>/mobile/input1.png') no-repeat center;
+	}
+
+	.xcmod_navbtn{	
+	}
+
+	.xcmod_lansetup{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		right:10px;
+		background: url('<%=media%>/mobile/lansetup.png') no-repeat center;
+	}
+
+	.xcmod_back{
+		display: block;
+		position: absolute;
+		top:5px;
+		width:44px;
+		height:44px;		
+		cursor: pointer;
+		left:10px;
+		background: url('<%=media%>/mobile/navreturn.png') no-repeat center;
+	}	
+</style>
+<div class='xcmod_nav'>
+	<h2>new wifi</h2>
+	<a class='xcmod_back' onclick="window.history.go(-1);"></a>
+	<a href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmoblan"))%>' class='xcmod_lansetup'></a>
+</div>
+<div class='xcmod_content xcmod_ssidsetupcontent'>
+	<div class='xcmod_img xcmod_pwd'>
+		<img src='<%=media%>/mobile/ssidsetup.png'>
+	</div>
+	<%
+		local uci = require "luci.model.uci".cursor()
+		local ntm = require "luci.model.network"
+		ntm.init(uci)
+
+		local devices  = ntm:get_wifidevs()
+		local devs
+		local netlist = {}
+
+		for _, dev in ipairs(devices) do local nets = dev:get_wifinets()
+			local nets = dev:get_wifinets()
+			for _, net in ipairs(nets) do
+				netlist[#netlist+1] = net:id()
+			end
+		end
+
+		local netmd = require "luci.model.network".init()
+		local net = netmd:get_wifinet(netlist[1])
+
+		local ssid = nil
+		ssid = net:get("ssid")
+	%>	
+	<h2>给路由器起一个名字</h2>
+	<div class='xcmod_pwdsetuppanel'>
+	<input type='text' class='ssidsetup' value='<%=ssid%>'>
+	<input type='submit' name='submit' class='loginsubmit ssidsetupbtn' rel='1' value='下一步'>
+	<input type='submit' name='submit' class='loginsubmit ssidsetuppass' rel='0' value='跳过'>
+	</div>
+	<div style='height:50px'>
+	</div>
+</div>
+<script type='text/javascript'>
+	$('.loginsubmit').click(function(){
+		var flag = $(this).attr('rel');
+
+		if (flag == "0"){
+			window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudrestart"))%>';
+		}else{
+			var ssid = $('.ssidsetup').val();
+			$.ajax({
+				url:'<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudmodssid"))%>',
+				data:{sid:ssid},
+				type:'POST',
+				dataType:'json',
+				success:function(){
+					window.location.href='<%=pcdata(luci.dispatcher.build_url("admin/xcloudmob/xcloudrestart"))%>';
+				}
+			})
+		}
+	})	
+</script>
+<%+xcmob_footer%>

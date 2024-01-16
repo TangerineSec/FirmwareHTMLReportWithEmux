@@ -1,0 +1,80 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibebtc.so[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibebtc.so[0m
+
+srl v1, a0, 0x18
+srl a0, a0, 8
+or v1, a1, v1
+andi a0, a0, 0xff00
+andi v0, v0, 0xff00
+or v1, v1, a0
+sll v0, v0, 8
+or v0, v1, v0
+addiu v1, zero, -2
+beq v0, v1, 0x7b6c
+addiu a2, zero, 0x1f
+addiu v1, zero, -4
+addiu a2, zero, 0x1e
+addiu a0, zero, -1
+beq v1, v0, 0x7b64
+nop
+addiu a2, a2, -1
+bne a2, a0, 0x7af0
+sll v1, v1, 1
+lw s0, -0x7fe8(gp)
+lbu v1, 0x2a(sp)
+lbu v0, 0x2b(sp)
+lw a1, -0x7fd8(gp)
+lbu a2, 0x28(sp)
+lbu a3, 0x29(sp)
+[31mlw t9, -sym.imp.sprintf(gp)[0m
+sw v1, 0x10(sp)
+addiu a0, s0, 0x664
+sw v0, 0x14(sp)
+jalr t9
+addiu a1, a1, -0x2ee8
+lw ra, 0x24(sp)
+addiu v0, s0, 0x664
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x28
+lw s0, -0x7fe8(gp)
+lw ra, 0x24(sp)
+addiu v0, s0, 0x664
+sb zero, 0x664(s0)
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x28
+beqz a2, 0x7b4c
+lw s0, -0x7fe8(gp)
+lw s0, -0x7fe8(gp)
+lw a1, -0x7fd8(gp)
+[31mlw t9, -sym.imp.sprintf(gp)[0m
+addiu a0, s0, 0x664
+jalr t9
+addiu a1, a1, -0x2eec
+lw ra, 0x24(sp)
+addiu v0, s0, 0x664
+lw s0, 0x20(sp)
+jr ra
+addiu sp, sp, 0x28
+lui gp, 2
+addiu gp, gp, -0x898
+addu gp, gp, t9
+lw t9, -sym.imp.__errno_location(gp)
+addiu sp, sp, -0x48
+sw gp, 0x10(sp)
+sw a3, 0x20(sp)
+sw ra, 0x44(sp)
+sw s5, 0x40(sp)
+sw s4, 0x3c(sp)
+sw s3, 0x38(sp)
+sw s2, 0x34(sp)
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m2[0m times [0;33mlibebtc.so[0m
+

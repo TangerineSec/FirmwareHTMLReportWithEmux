@@ -1,0 +1,24 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/RTS5826_FW_check.sh line 3:[0m
+[0mlatest_version=`/usr/sbin/cfg -a r -p /etc RTS5826.ini RTS5826 version`[0m
+[32m               ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+latest_version=$(/usr/sbin/cfg -a r -p /etc RTS5826.ini RTS5826 version)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/RTS5826_FW_check.sh line 5:[0m
+[0mnow_version=`/usr/sbin/rscam_uvc --fw_version | sed -n '2p'`[0m
+[32m            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+now_version=$(/usr/sbin/rscam_uvc --fw_version | sed -n '2p')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/rc.d/init.d/RTS5826_FW_check.sh line 11:[0m
+[0m	if [ "$?" = "0" ]; then[0m
+[32m             ^--^ SC2181 (style): Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...
+  https://www.shellcheck.net/wiki/SC2181 -- Check exit code directly with e.g...

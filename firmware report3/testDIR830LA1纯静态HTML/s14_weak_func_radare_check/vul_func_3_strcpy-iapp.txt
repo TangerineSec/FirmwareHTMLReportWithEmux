@@ -1,0 +1,113 @@
+[[0;33m*[0m] Binary protection state of [0;33miapp[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcpy[0m tear down of [0;33miapp[0m
+
+addiu a2, zero, 2
+jalr t9
+move a0, s2
+lw gp, 0x18(sp)
+beqz v0, 0x401c80
+move a0, s2
+lw t9, -sym.imp.strncmp(gp)
+lui a1, 0x40
+addiu a2, zero, 3
+jalr t9
+addiu a1, a1, 0x3050
+lw gp, 0x18(sp)
+beqz v0, 0x401c80
+move a0, s2
+lw t9, -sym.imp.strncmp(gp)
+lui a1, 0x40
+addiu a2, zero, 4
+jalr t9
+addiu a1, a1, 0x3054
+lw gp, 0x18(sp)
+bnez v0, 0x401cc8
+lui a0, 0x40
+lb v1, 0x1c(s1)
+bnez v1, 0x401c9c
+move v0, s7
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s2
+b 0x401cb4
+move a0, fp
+lb v1, (v0)
+move a0, v0
+bnez v1, 0x401c9c
+addiu v0, v0, 0x10
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+move a1, s2
+jalr t9
+nop
+lw gp, 0x18(sp)
+b 0x401d50
+nop
+lw t9, -sym.imp.puts(gp)
+b 0x401f08
+addiu a0, a0, 0x305c
+lw t9, -sym.imp.atoi(gp)
+lw a0, (s3)
+jalr t9
+nop
+slti v1, v0, 4
+lw gp, 0x18(sp)
+bnez v1, 0x401d50
+sw v0, 0x73c(s1)
+addiu v0, zero, 3
+b 0x401d50
+sw v0, 0x73c(s1)
+--
+bnez v0, 0x401d84
+lui a0, 0x40
+lbu v0, 0x30(s1)
+andi v0, v0, 0xfd
+sb v0, 0x30(s1)
+lw t9, -sym.imp.getopt(gp)
+lw a0, 0x188(sp)
+lw a1, 0x18c(sp)
+jalr t9
+move a2, s6
+lw gp, 0x18(sp)
+bgtz v0, 0x401c00
+addiu v1, zero, 0x64
+lui v0, 0x41
+lb v0, 0x352c(v0)
+bnez v0, 0x401d90
+nop
+lui a0, 0x40
+lw t9, -sym.imp.puts(gp)
+b 0x401f08
+addiu a0, a0, 0x3074
+lui a0, 0x41
+lb v0, 0x3b81(a0)
+bnez v0, 0x401db4
+addiu a0, a0, 0x3b81
+[31mlw t9, -sym.imp.strcpy(gp)[0m
+lui a1, 0x40
+jalr t9
+addiu a1, a1, 0x30bc
+lw gp, 0x18(sp)
+lw t9, -sym.imp.stat(gp)
+lui s1, 0x40
+addiu a0, s1, 0x30c4
+jalr t9
+addiu a1, sp, 0xc0
+lw gp, 0x18(sp)
+bnez v0, 0x401de4
+nop
+lw t9, -sym.imp.unlink(gp)
+jalr t9
+addiu a0, s1, 0x30c4
+lw gp, 0x18(sp)
+lw t9, -sym.imp.mkfifo(gp)
+lui s1, 0x40
+addiu a0, s1, 0x30c4
+jalr t9
+
+[[0;33m*[0m] Function [0;33mstrcpy[0m used [0;33m3[0m times [0;33miapp[0m
+

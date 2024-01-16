@@ -1,0 +1,203 @@
+[[0;33m*[0m] Binary protection state of [0;33mntfs-3g[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [32mCanary found[0m      [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols
+
+[0m
+[[0;33m*[0m] Function [0;33mstrcat[0m tear down of [0;33mntfs-3g[0m
+
+add r0, r0, 1
+bl sym.ntfs_malloc
+subs r6, r0, 0
+bne 0x9b74
+mvn r4, 0
+mov r0, r4
+pop {r4, r5, r6, pc}
+mov r1, r2
+pop {r4, r5, r6, lr}
+b sym.ntfs_mbstoucs
+ldr r3, obj.nf_ns_user_prefix_len
+mov r1, r2
+ldr r0, [r3]
+add r0, r5, r0
+pop {r4, r5, r6, lr}
+b sym.ntfs_mbstoucs
+ldr r1, obj.xattr_ntfs_3g
+bl sym.strcpy
+mov r1, r5
+mov r0, r6
+[31mbl sym.strcat[0m
+mov r1, r4
+mov r0, r6
+--
+beq 0xcc94
+ldr r0, [r5, 8]
+bl sym.strlen
+rsb r1, r0, 0xff0
+mov r0, r6
+add r1, r1, 0xf
+bl sym.getcwd
+cmp r0, 0
+ldreq r6, [r5]
+beq 0xc5c8
+ldr r6, [r5]
+ldr r7, [r6, 0x78]
+mov r0, r7
+bl sym.strlen
+ldr r1, [0x0000d068]
+add r0, r7, r0
+mov r2, 2
+bl sym.memcpy
+ldr r0, [r6, 0x78]
+ldr r1, [r5, 8]
+[31mbl sym.strcat[0m
+ldr r3, [r6, 0x78]
+cmp r3, 0
+--
+bl sym.umount2
+bl sym.drop_privs
+b 0x16994
+bl sym.getuid
+bl sym.getpwuid
+cmp r0, 0
+beq 0x16e90
+ldr r4, [r0]
+cmp r4, 0
+beq 0x16e90
+mov r0, r4
+bl sym.strlen
+ldr r1, str.user
+mov r2, r0
+mov r0, r6
+bl sym.add_option
+cmn r0, 1
+beq 0x16abc
+ldr r0, [sp, 0x234]
+mov r1, r4
+[31mbl sym.strcat[0m
+b 0x16660
+add r6, sp, 0x234
+--
+sub r0, r4, 2
+add r2, sp, 0x10c
+mov r3, ip
+str ip, [sp, 0x10c]
+bl sym.ntfs_ucstombs
+cmp r0, 0
+ble 0x42538
+mov r0, r4
+ldr r1, obj.mappingdir
+mov r2, 0xa
+bl sym.memcpy
+ldr r1, [sp, 0x10c]
+mov r0, r4
+ldrb r3, [r1]
+sub r2, r3, 0x61
+uxtb r2, r2
+cmp r2, 0x19
+subls r3, r3, 0x20
+strbls r3, [r1]
+ldrls r1, [sp, 0x10c]
+[31mbl sym.strcat[0m
+mov r0, r4
+bl sym.strlen
+--
+add r0, r0, 0xb
+bl sym.ntfs_malloc
+subs r5, r0, 0
+beq 0x42a8c
+mov r1, r6
+bl sym.strcpy
+mov r0, r5
+bl sym.strlen
+ldr r1, [0x00042b68]
+mov r2, 2
+add r0, r5, r0
+bl sym.memcpy
+mov r0, r5
+bl sym.strlen
+ldr r1, obj.mappingdir
+add r0, r5, r0
+mov r2, 0xa
+bl sym.memcpy
+mov r0, r5
+ldr r1, [sp, 4]
+[31mbl sym.strcat[0m
+ldr r0, [sp, 4]
+cmp r0, 0
+--
+mov r0, r6
+bl sym.strlen
+mov r7, r0
+mov r0, r5
+bl sym.strlen
+add r0, r7, r0
+add r0, r0, 2
+bl sym.ntfs_malloc
+subs r5, r0, 0
+beq 0x42b48
+mov r1, r6
+bl sym.strcpy
+mov r0, r5
+bl sym.strlen
+ldr r1, [0x00042b68]
+add r0, r5, r0
+mov r2, 2
+bl sym.memcpy
+mov r0, r5
+ldr r1, [sp, 4]
+[31mbl sym.strcat[0m
+ldr r0, [sp, 4]
+bl sym.free
+--
+mov r0, r7
+bl sym.strlen
+mov sb, r0
+mov r0, r6
+bl sym.strlen
+add r0, sb, r0
+add r0, r0, 2
+bl sym.ntfs_malloc
+subs r6, r0, 0
+beq 0x42f78
+mov r1, r7
+bl sym.strcpy
+mov r0, r6
+bl sym.strlen
+ldr r1, [0x00043224]
+add r0, r6, r0
+mov r2, 2
+bl sym.memcpy
+mov r0, r6
+ldr r1, [sp, 0x3c]
+[31mbl sym.strcat[0m
+ldr r0, [sp, 0x3c]
+bl sym.free
+--
+add r0, r0, 0xb
+bl sym.ntfs_malloc
+subs r6, r0, 0
+beq 0x430e8
+mov r1, r7
+bl sym.strcpy
+mov r0, r6
+bl sym.strlen
+ldr r1, [0x00043224]
+mov r2, 2
+add r0, r6, r0
+bl sym.memcpy
+mov r0, r6
+bl sym.strlen
+ldr r1, str..NTFS_3G_
+add r0, r6, r0
+mov r2, 0xa
+bl sym.memcpy
+mov r0, r6
+ldr r1, [sp, 0x3c]
+[31mbl sym.strcat[0m
+b 0x430e8
+lsl r2, ip, 1
+
+[[0;33m*[0m] Function [0;33mstrcat[0m used [0;33m8[0m times [0;33mntfs-3g[0m
+

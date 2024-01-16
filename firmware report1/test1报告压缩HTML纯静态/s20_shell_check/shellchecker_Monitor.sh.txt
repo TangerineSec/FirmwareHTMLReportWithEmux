@@ -1,0 +1,38 @@
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 8:[0m
+[0mspace=""[0m
+[33m^---^ SC2034 (warning): space appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 10:[0m
+[0mtimeout = 30[0m
+[31m        ^-- SC2283 (error): Remove spaces around = to assign (or use [ ] to compare, or quote '=' if literal).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 11:[0m
+[0mtmptm=0[0m
+[33m^---^ SC2034 (warning): tmptm appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 13:[0m
+[0mwhile [ 1 ][0m
+[32m        ^-- SC2161 (style): Instead of '[ 1 ]', use 'true'.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 16:[0m
+[0m    servernam=`ps | grep xCloudClient | grep -v grep | awk '{print $NF}'`[0m
+[32m              ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m               ^-- SC2009 (info): Consider using pgrep instead of grepping ps output.[0m
+
+[1mDid you mean: [0m
+    servernam=$(ps | grep xCloudClient | grep -v grep | awk '{print $NF}')
+
+
+[1mIn /logs/firmware/squashfs-root/usr/local/xcloud/bin/Monitor.sh line 17:[0m
+[0m    if [ "" == "$servernam" ][0m
+[33m            ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2283 -- Remove spaces around = to assign ...
+  https://www.shellcheck.net/wiki/SC2034 -- space appears unused. Verify use ...
+  https://www.shellcheck.net/wiki/SC3014 -- In POSIX sh, == in place of = is ...

@@ -1,0 +1,88 @@
+[[0;33m*[0m] Binary protection state of [0;33mpptp.so[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [31mSymbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mpptp.so[0m
+
+    25f0:	e28d3f63 	add	r3, sp, #396	; 0x18c
+    25f4:	e59fc2a0 	ldr	ip, [pc, #672]	; 289c <pptp_start_client+0x580>
+    25f8:	e0846006 	add	r6, r4, r6
+    25fc:	e58d7118 	str	r7, [sp, #280]	; 0x118
+    2600:	e084e00e 	add	lr, r4, lr
+    2604:	e59d700c 	ldr	r7, [sp, #12]
+    2608:	e3a02032 	mov	r2, #50	; 0x32
+    260c:	e084c00c 	add	ip, r4, ip
+    2610:	e58d011c 	str	r0, [sp, #284]	; 0x11c
+    2614:	e1a01006 	mov	r1, r6
+    2618:	e1a00003 	mov	r0, r3
+    261c:	e58d3134 	str	r3, [sp, #308]	; 0x134
+    2620:	e0848008 	add	r8, r4, r8
+    2624:	e3a03000 	mov	r3, #0
+    2628:	e58de120 	str	lr, [sp, #288]	; 0x120
+    262c:	e58dc130 	str	ip, [sp, #304]	; 0x130
+    2630:	e58d3138 	str	r3, [sp, #312]	; 0x138
+    2634:	e58d5124 	str	r5, [sp, #292]	; 0x124
+    2638:	e58d8128 	str	r8, [sp, #296]	; 0x128
+    263c:	e58d712c 	str	r7, [sp, #300]	; 0x12c
+[31m    2640:	ebfffe97 	bl	20a4 <sprintf@plt>[0m
+    2644:	e1a01006 	mov	r1, r6
+    2648:	e1a02009 	mov	r2, r9
+    264c:	e1a00005 	mov	r0, r5
+[31m    2650:	ebfffe93 	bl	20a4 <sprintf@plt>[0m
+    2654:	e59f2244 	ldr	r2, [pc, #580]	; 28a0 <pptp_start_client+0x584>
+    2658:	e3a01080 	mov	r1, #128	; 0x80
+--
+    2780:	ebfffded 	bl	1f3c <read@plt>
+    2784:	e3500002 	cmp	r0, #2
+    2788:	1affffeb 	bne	273c <pptp_start_client+0x420>
+    278c:	e28dcc01 	add	ip, sp, #256	; 0x100
+    2790:	e28dec01 	add	lr, sp, #256	; 0x100
+    2794:	e1dccab4 	ldrh	ip, [ip, #164]	; 0xa4
+    2798:	e28d1f4f 	add	r1, sp, #316	; 0x13c
+    279c:	e5990004 	ldr	r0, [r9, #4]
+    27a0:	e3a0201e 	mov	r2, #30
+    27a4:	e1cec4b2 	strh	ip, [lr, #66]	; 0x42
+    27a8:	ebfffd50 	bl	1cf0 <connect@plt>
+    27ac:	e3500000 	cmp	r0, #0
+    27b0:	1a00001f 	bne	2834 <pptp_start_client+0x518>
+    27b4:	e59d2014 	ldr	r2, [sp, #20]
+    27b8:	e59f10f0 	ldr	r1, [pc, #240]	; 28b0 <pptp_start_client+0x594>
+    27bc:	e7943002 	ldr	r3, [r4, r2]
+    27c0:	e0841001 	add	r1, r4, r1
+    27c4:	e5932000 	ldr	r2, [r3]
+    27c8:	e59f30e4 	ldr	r3, [pc, #228]	; 28b4 <pptp_start_client+0x598>
+    27cc:	e7940003 	ldr	r0, [r4, r3]
+[31m    27d0:	ebfffe33 	bl	20a4 <sprintf@plt>[0m
+    27d4:	e5990004 	ldr	r0, [r9, #4]
+    27d8:	eaffff73 	b	25ac <pptp_start_client+0x290>
+--
+    2904:	e59f0060 	ldr	r0, [pc, #96]	; 296c <pptp_connect+0xa4>
+    2908:	e0830000 	add	r0, r3, r0
+    290c:	ebfffd81 	bl	1f18 <fatal@plt>
+    2910:	e3e00000 	mvn	r0, #0
+    2914:	e8bd8010 	pop	{r4, pc}
+    2918:	e59f2048 	ldr	r2, [pc, #72]	; 2968 <pptp_connect+0xa0>
+    291c:	e7932002 	ldr	r2, [r3, r2]
+    2920:	e5922000 	ldr	r2, [r2]
+    2924:	e3520000 	cmp	r2, #0
+    2928:	0afffff5 	beq	2904 <pptp_connect+0x3c>
+    292c:	e59f103c 	ldr	r1, [pc, #60]	; 2970 <pptp_connect+0xa8>
+    2930:	e59f403c 	ldr	r4, [pc, #60]	; 2974 <pptp_connect+0xac>
+    2934:	e59f003c 	ldr	r0, [pc, #60]	; 2978 <pptp_connect+0xb0>
+    2938:	e7931001 	ldr	r1, [r3, r1]
+    293c:	e0834004 	add	r4, r3, r4
+    2940:	e7930000 	ldr	r0, [r3, r0]
+    2944:	e591c000 	ldr	ip, [r1]
+    2948:	e59f102c 	ldr	r1, [pc, #44]	; 297c <pptp_connect+0xb4>
+    294c:	e584c004 	str	ip, [r4, #4]
+    2950:	e0831001 	add	r1, r3, r1
+[31m    2954:	ebfffdd2 	bl	20a4 <sprintf@plt>[0m
+    2958:	e5940004 	ldr	r0, [r4, #4]
+    295c:	e8bd8010 	pop	{r4, pc}
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m4[0m times [0;33mpptp.so[0m
+

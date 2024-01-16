@@ -1,0 +1,36 @@
+[[0;33m*[0m] Binary protection state of [0;33mnvram.svn-base[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mnvram.svn-base[0m
+
+    8864:	e3530000 	cmp	r3, #0
+    8868:	01a09005 	moveq	r9, r5
+    886c:	0a000008 	beq	8894 <_start+0x298>
+    8870:	e1a09005 	mov	r9, r5
+    8874:	e1a00009 	mov	r0, r9
+    8878:	ebffff2f 	bl	853c <puts@plt>
+    887c:	e1a00009 	mov	r0, r9
+    8880:	ebffff57 	bl	85e4 <strlen@plt>
+    8884:	e2800001 	add	r0, r0, #1
+    8888:	e7f93000 	ldrb	r3, [r9, r0]!
+    888c:	e3530000 	cmp	r3, #0
+    8890:	1afffff7 	bne	8874 <_start+0x278>
+    8894:	e5943000 	ldr	r3, [r4]
+    8898:	e5d33000 	ldrb	r3, [r3]
+    889c:	e3530064 	cmp	r3, #100	; 0x64
+    88a0:	0affffae 	beq	8760 <_start+0x164>
+    88a4:	e089200a 	add	r2, r9, sl
+    88a8:	e5980000 	ldr	r0, [r8]
+    88ac:	e59f1054 	ldr	r1, [pc, #84]	; 8908 <_start+0x30c>
+    88b0:	e2623801 	rsb	r3, r2, #65536	; 0x10000
+[31m    88b4:	ebffff26 	bl	8554 <fprintf@plt>[0m
+    88b8:	eaffffa8 	b	8760 <_start+0x164>
+    88bc:	ebffff39 	bl	85a8 <nvram_commit@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m1[0m times [0;33mnvram.svn-base[0m
+

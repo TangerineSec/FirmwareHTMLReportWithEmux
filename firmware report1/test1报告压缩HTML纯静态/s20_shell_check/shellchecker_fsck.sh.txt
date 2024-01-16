@@ -1,0 +1,42 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 8:[0m
+[0m	local device="$1"[0m
+[33m        ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 9:[0m
+[0m	local fsck_fstype="$2"[0m
+[33m        ^---------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 10:[0m
+[0m	local fsck_enabled="$3"[0m
+[33m        ^----------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 11:[0m
+[0m	local known_type[0m
+[33m        ^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 12:[0m
+[0m	local found_fsck=0[0m
+[33m        ^--------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 19:[0m
+[0m					fsck_${known_type} "$device"[0m
+[32m                                             ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+					fsck_"${known_type}" "$device"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/functions/fsck.sh line 25:[0m
+[0m				logger -t 'fstab' "Unable to check/repair $device; no known fsck for filesystem type $fstype"[0m
+[33m                                                                                                                     ^-----^ SC2154 (warning): fstype is referenced but not assigned.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2154 -- fstype is referenced but not assi...
+  https://www.shellcheck.net/wiki/SC3043 -- In POSIX sh, 'local' is undefined.
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...

@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Copyright (C) 2009 OpenWrt.org
+check_usb() {
+	USB_DEVICES_RY1=22
+	USB_DEVICES_RY2=30
+	num=`cat /proc/bus/usb/devices | wc | awk '{print $1}'`
+
+	capbility=`/usr/local/localshell/getcapability`
+	
+	if [ "$capbility" = "RY-02" ]; then
+		 if  [ "$num" -gt "$USB_DEVICES_RY2" ]; then
+			brightness=`cat /sys/class/leds/usb\:blue/brightness`
+
+			if  [ "$brightness" -eq "0" ]; then
+				echo 255 > /sys/class/leds/usb\:yellow/brightness
+			fi
+
+		 else
+			echo 0 > /sys/class/leds/usb\:blue/brightness
+			echo 0 > /sys/class/leds/usb\:yellow/brightness
+		 fi
+	 else
+	
+		if  [ "$num" -gt "$USB_DEVICES_RY1" ]; then
+			brightness=`cat /sys/class/leds/ry01\:usb/brightness`
+
+			if  [ "$brightness" -eq "0" ]; then
+				echo 255 > /sys/class/leds/ry01\:usb/brightness
+			fi
+
+		 else
+			echo 0 > /sys/class/leds/ry01\:usb/brightness
+		 fi
+	 fi
+}
+
+check_usb
+
+case "$ACTION" in
+	add)
+		# update LEDs
+		;;
+	remove)
+		# update LEDs
+		;;
+esac	
+		

@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibjson-c.so.2.0.1[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibjson-c.so.2.0.1[0m
+
+addiu sp, sp, -0xb0
+lw t9, -sym.imp.vsnprintf(gp)
+addiu v0, sp, 0xb8
+sw s1, 0xa4(sp)
+move s1, a1
+sw gp, 0x10(sp)
+sw s2, 0xa8(sp)
+sw s0, 0xa0(sp)
+sw a2, 0xb8(sp)
+sw a3, 0xbc(sp)
+sw ra, 0xac(sp)
+move s0, a0
+sw v0, 0x1c(sp)
+addiu a0, sp, 0x20
+addiu a1, zero, 0x80
+move a2, s1
+jalr t9
+move a3, v0
+move s2, v0
+addiu v0, zero, -1
+beq s2, v0, 0x68f4
+lw gp, 0x10(sp)
+slti v0, s2, 0x80
+bnez v0, 0x6950
+lw t9, -sym.printbuf_memappend(gp)
+[31mlw t9, -sym.imp.vasprintf(gp)[0m
+addiu v0, sp, 0xb8
+sw v0, 0x1c(sp)
+addiu a0, sp, 0x18
+move a1, s1
+jalr t9
+move a2, v0
+move s2, v0
+bgez v0, 0x6924
+lw gp, 0x10(sp)
+b 0x6960
+addiu s2, zero, -1
+lw t9, -sym.printbuf_memappend(gp)
+lw a1, 0x18(sp)
+move a0, s0
+jalr t9
+move a2, v0
+lw gp, 0x10(sp)
+lw t9, -sym.imp.free(gp)
+jalr t9
+lw a0, 0x18(sp)
+
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m1[0m times [0;33mlibjson-c.so.2.0.1[0m
+

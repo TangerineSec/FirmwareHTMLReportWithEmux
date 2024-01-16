@@ -1,0 +1,58 @@
+[[0;33m*[0m] Binary protection state of [0;33msignalc[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [31mNo PIE[0m       [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33msystem[0m tear down of [0;33msignalc[0m
+
+swl a3, (a0)
+swr a3, 3(a0)
+swl a2, 4(a0)
+swr a2, 7(a0)
+swl v1, 8(a0)
+swr v1, 0xb(a0)
+swl a1, 0xc(a0)
+jr ra
+swr a1, 0xf(a0)
+addiu sp, sp, -0x120
+sw ra, 0x11c(sp)
+sw s0, 0x118(sp)
+lui gp, 0x44
+addiu gp, gp, 0x3280
+sw gp, 0x10(sp)
+lui a2, 0x43
+addiu s0, sp, 0x18
+move a3, a0
+addiu a2, a2, -0x58f8
+lw t9, -sym.imp.snprintf(gp)
+move a0, s0
+addiu a1, zero, 0xff
+jalr t9
+sb zero, 0x117(sp)
+lw gp, 0x10(sp)
+[31mlw t9, -sym.imp.system(gp)[0m
+jalr t9
+move a0, s0
+lw ra, 0x11c(sp)
+lw s0, 0x118(sp)
+jr ra
+addiu sp, sp, 0x120
+addiu sp, sp, -0x28
+sw ra, 0x24(sp)
+sw s2, 0x20(sp)
+sw s1, 0x1c(sp)
+sw s0, 0x18(sp)
+lui gp, 0x44
+addiu gp, gp, 0x3280
+sw gp, 0x10(sp)
+move s0, a1
+bnez a0, 0x413268
+move s1, a2
+addiu v0, zero, -0x1e
+lw ra, 0x24(sp)
+lw s2, 0x20(sp)
+
+[[0;33m*[0m] Function [0;33msystem[0m used [0;33m1[0m times [0;33msignalc[0m
+

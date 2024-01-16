@@ -1,0 +1,92 @@
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 4:[0m
+[0m. /lib/functions.sh[0m
+[32m  ^---------------^ SC1091 (info): Not following: /lib/functions.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 5:[0m
+[0m. /lib/netifd/netifd-proto.sh[0m
+[32m  ^-------------------------^ SC1091 (info): Not following: /lib/netifd/netifd-proto.sh was not specified as input (see shellcheck -x).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 8:[0m
+[0m	local max=128[0m
+[33m        ^-------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 9:[0m
+[0m	local type[0m
+[33m        ^--------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+[33m              ^--^ SC2034 (warning): type appears unused. Verify use (or export if used externally).[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 10:[0m
+[0m	while [ -n "$1" -a -n "$2" -a $max -gt 0 ]; do[0m
+[33m                        ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+[33m                                   ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 12:[0m
+[0m		max=$(($max-1))[0m
+[32m                       ^--^ SC2004 (style): $/${} is unnecessary on arithmetic variables.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 19:[0m
+[0m	proto_add_ipv4_address "$ip" "${subnet:-255.255.255.0}"[0m
+[33m                                ^-^ SC2154 (warning): ip is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 22:[0m
+[0m	for i in $router; do[0m
+[33m                 ^-----^ SC2154 (warning): router is referenced but not assigned.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 27:[0m
+[0m	[ -n "$staticroutes" ] && set_classless_routes $staticroutes[0m
+[32m                                                       ^-----------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -n "$staticroutes" ] && set_classless_routes "$staticroutes"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 28:[0m
+[0m	[ -n "$msstaticroutes" ] && set_classless_routes $msstaticroutes[0m
+[32m                                                         ^-------------^ SC2086 (info): Double quote to prevent globbing and word splitting.[0m
+
+[1mDid you mean: [0m
+	[ -n "$msstaticroutes" ] && set_classless_routes "$msstaticroutes"
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 38:[0m
+[0m	if [ -n "$IFACE6RD" -a -n "$ip6rd" ]; then[0m
+[33m                            ^-- SC2166 (warning): Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 39:[0m
+[0m		local v4mask="${ip6rd%% *}"[0m
+[33m                ^----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 41:[0m
+[0m		local ip6rdprefixlen="${ip6rd%% *}"[0m
+[33m                ^------------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 43:[0m
+[0m		local ip6rdprefix="${ip6rd%% *}"[0m
+[33m                ^---------------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 45:[0m
+[0m		local ip6rdbr="${ip6rd%% *}"[0m
+[33m                ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/lib/netifd/dhcp.script line 84:[0m
+[0m[ -f /etc/udhcpc.user ] && . /etc/udhcpc.user[0m
+[32m                             ^--------------^ SC1091 (info): Not following: /etc/udhcpc.user was not specified as input (see shellcheck -x).[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- type appears unused. Verify use (...
+  https://www.shellcheck.net/wiki/SC2154 -- ip is referenced but not assigned.
+  https://www.shellcheck.net/wiki/SC2166 -- Prefer [ p ] && [ q ] as [ p -a q...

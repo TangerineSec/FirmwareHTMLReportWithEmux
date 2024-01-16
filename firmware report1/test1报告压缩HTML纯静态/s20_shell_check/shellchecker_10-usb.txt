@@ -1,0 +1,64 @@
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 7:[0m
+[0m	num=`cat /proc/bus/usb/devices | wc | awk '{print $1}'`[0m
+[32m            ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                 ^-------------------^ SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.[0m
+
+[1mDid you mean: [0m
+	num=$(cat /proc/bus/usb/devices | wc | awk '{print $1}')
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 9:[0m
+[0m	capbility=`/usr/local/localshell/getcapability`[0m
+[32m                  ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+
+[1mDid you mean: [0m
+	capbility=$(/usr/local/localshell/getcapability)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 13:[0m
+[0m			brightness=`cat /sys/class/leds/usb\:blue/brightness`[0m
+[32m                                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                           ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+[1mDid you mean: [0m
+			brightness=$(cat /sys/class/leds/usb\:blue/brightness)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 16:[0m
+[0m				echo 255 > /sys/class/leds/usb\:yellow/brightness[0m
+[32m                                                              ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 20:[0m
+[0m			echo 0 > /sys/class/leds/usb\:blue/brightness[0m
+[32m                                                    ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 21:[0m
+[0m			echo 0 > /sys/class/leds/usb\:yellow/brightness[0m
+[32m                                                    ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 26:[0m
+[0m			brightness=`cat /sys/class/leds/ry01\:usb/brightness`[0m
+[32m                                   ^-- SC2006 (style): Use $(...) notation instead of legacy backticks `...`.[0m
+[32m                                                            ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+[1mDid you mean: [0m
+			brightness=$(cat /sys/class/leds/ry01\:usb/brightness)
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 29:[0m
+[0m				echo 255 > /sys/class/leds/ry01\:usb/brightness[0m
+[32m                                                               ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+
+[1mIn /logs/firmware/squashfs-root/etc/hotplug.d/usb/10-usb line 33:[0m
+[0m			echo 0 > /sys/class/leds/ry01\:usb/brightness[0m
+[32m                                                     ^-- SC1001 (info): This \: will be a regular ':' in this context.[0m
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1001 -- This \: will be a regular ':' in ...
+  https://www.shellcheck.net/wiki/SC2002 -- Useless cat. Consider 'cmd < file...
+  https://www.shellcheck.net/wiki/SC2006 -- Use $(...) notation instead of le...

@@ -1,0 +1,119 @@
+[[0;33m*[0m] Binary protection state of [0;33mliblua.so.5.1.4[0m
+[REF] /logs/s12_binary_protection.txt
+
+  
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [31mNX disabled[0m  [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols
+
+[0m
+[[0;33m*[0m] Function [0;33mfprintf[0m tear down of [0;33mliblua.so.5.1.4[0m
+
+lw v1, 4(a1)
+beqz v1, 0x19218
+move v0, zero
+sw v1, (a2)
+lw v0, (a1)
+sw zero, 4(a1)
+jr ra
+nop
+lui gp, 3
+addiu gp, gp, -0x6a80
+addu gp, gp, t9
+lw t9, -sym.lua_tolstring(gp)
+lw v0, -0x7d04(gp)
+addiu sp, sp, -0x20
+sw ra, 0x1c(sp)
+sw gp, 0x10(sp)
+sw s0, 0x18(sp)
+addiu a1, zero, -1
+move a2, zero
+jalr t9
+lw s0, (v0)
+lw gp, 0x10(sp)
+move a0, s0
+move a2, v0
+lw a1, -0x7eb8(gp)
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+addiu a1, a1, -0x78a8
+lw ra, 0x1c(sp)
+move v0, zero
+lw s0, 0x18(sp)
+jr ra
+addiu sp, sp, 0x20
+lui gp, 3
+addiu gp, gp, -0x6ae4
+addu gp, gp, t9
+addiu sp, sp, -0x20
+sw gp, 0x10(sp)
+sw ra, 0x1c(sp)
+bnez a3, 0x192c0
+move a0, a1
+lw t9, -sym.imp.free(gp)
+jalr t9
+nop
+lw ra, 0x1c(sp)
+move v0, zero
+--
+addiu s5, s5, -0x78b8
+b 0x1ea18
+addiu s4, s4, -0x78bc
+lw t9, -sym.lua_type(gp)
+jalr t9
+move a1, s0
+addiu v1, zero, 3
+lw gp, 0x10(sp)
+move a0, s1
+bne v0, v1, 0x1e9d4
+move a1, s0
+lw t9, -sym.lua_isinteger(gp)
+jalr t9
+nop
+beqz v0, 0x1e994
+lw gp, 0x10(sp)
+beql s6, zero, 0x1ea14
+addiu s0, s0, 1
+lw t9, -sym.lua_tointeger(gp)
+move a0, s1
+jalr t9
+move a1, s0
+lw gp, 0x10(sp)
+move a0, s3
+move a1, s4
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+jalr t9
+move a2, v0
+b 0x1e9cc
+lw gp, 0x10(sp)
+beql s6, zero, 0x1ea14
+addiu s0, s0, 1
+lw t9, -sym.lua_tonumber(gp)
+move a0, s1
+jalr t9
+move a1, s0
+lw gp, 0x10(sp)
+move a0, s3
+move a1, s5
+[31mlw t9, -sym.imp.fprintf(gp)[0m
+move a2, v0
+jalr t9
+move a3, v1
+lw gp, 0x10(sp)
+b 0x1ea10
+slt s6, zero, v0
+lw t9, -sym.luaL_checklstring(gp)
+jalr t9
+addiu a2, sp, 0x18
+beqz s6, 0x1ea10
+lw gp, 0x10(sp)
+lw t9, -sym.imp.fwrite(gp)
+lw a2, 0x18(sp)
+move a0, v0
+addiu a1, zero, 1
+jalr t9
+move a3, s3
+lw s6, 0x18(sp)
+lw gp, 0x10(sp)
+xor s6, v0, s6
+
+[[0;33m*[0m] Function [0;33mfprintf[0m used [0;33m3[0m times [0;33mliblua.so.5.1.4[0m
+

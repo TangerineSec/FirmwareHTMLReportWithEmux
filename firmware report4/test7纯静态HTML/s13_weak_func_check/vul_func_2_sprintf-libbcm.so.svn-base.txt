@@ -1,0 +1,60 @@
+[[0;33m*[0m] Binary protection state of [0;33mlibbcm.so.svn-base[0m
+[REF] s12
+
+  	RELRO          CANARY            NX           PIE       RPATH        RUNPATH      SYMBOLS      
+  	[31mNo RELRO[0m       [31mNo Canary found[0m   [32mNX enabled[0m   [33mDSO[0m          [32mNo RPATH[0m     [32mNo RUNPATH[0m   [32mNo Symbols[0m
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m tear down of [0;33mlibbcm.so.svn-base[0m
+
+ cd4:	000090e8 	andeq	r9, r0, r8, ror #1
+ cd8:	00000e48 	andeq	r0, r0, r8, asr #28
+ cdc:	00000e74 	andeq	r0, r0, r4, ror lr
+ ce0:	00000e34 	andeq	r0, r0, r4, lsr lr
+
+00000ce4 <bcmgpio_getpin>:
+ ce4:	e59f3104 	ldr	r3, [pc, #260]	; df0 <bcmgpio_getpin+0x10c>
+ ce8:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ cec:	e1a06000 	mov	r6, r0
+ cf0:	e1a0a001 	mov	sl, r1
+ cf4:	e24dd010 	sub	sp, sp, #16
+ cf8:	e28d8004 	add	r8, sp, #4
+ cfc:	e3a07000 	mov	r7, #0
+ d00:	e8930007 	ldm	r3, {r0, r1, r2}
+ d04:	e1a03008 	mov	r3, r8
+ d08:	e8a30003 	stmia	r3!, {r0, r1}
+ d0c:	e5c32000 	strb	r2, [r3]
+ d10:	e59f10dc 	ldr	r1, [pc, #220]	; df4 <bcmgpio_getpin+0x110>
+ d14:	e1a02007 	mov	r2, r7
+ d18:	e1a00008 	mov	r0, r8
+[31m d1c:	ebfffe68 	bl	6c4 <sprintf@plt>[0m
+ d20:	e1a00008 	mov	r0, r8
+ d24:	ebfffe5a 	bl	694 <nvram_get@plt>
+--
+ d60:	e3a0102c 	mov	r1, #44	; 0x2c
+ d64:	e1a00009 	mov	r0, r9
+ d68:	ebfffe67 	bl	70c <strchr@plt>
+ d6c:	e2504000 	subs	r4, r0, #0
+ d70:	e0693004 	rsb	r3, r9, r4
+ d74:	1afffff6 	bne	d54 <bcmgpio_getpin+0x70>
+ d78:	e1a00009 	mov	r0, r9
+ d7c:	e1a01006 	mov	r1, r6
+ d80:	ebfffe49 	bl	6ac <strcmp@plt>
+ d84:	e3500000 	cmp	r0, #0
+ d88:	0a000015 	beq	de4 <bcmgpio_getpin+0x100>
+ d8c:	e2877001 	add	r7, r7, #1
+ d90:	e3570020 	cmp	r7, #32
+ d94:	1affffdd 	bne	d10 <bcmgpio_getpin+0x2c>
+ d98:	e37a0001 	cmn	sl, #1
+ d9c:	01a0000a 	moveq	r0, sl
+ da0:	0a000010 	beq	de8 <bcmgpio_getpin+0x104>
+ da4:	e59f1048 	ldr	r1, [pc, #72]	; df4 <bcmgpio_getpin+0x110>
+ da8:	e1a0200a 	mov	r2, sl
+ dac:	e1a00008 	mov	r0, r8
+[31m db0:	ebfffe43 	bl	6c4 <sprintf@plt>[0m
+ db4:	e1a00008 	mov	r0, r8
+ db8:	ebfffe35 	bl	694 <nvram_get@plt>
+
+[0m
+[[0;33m*[0m] Function [0;33msprintf[0m used [0;33m2[0m times [0;33mlibbcm.so.svn-base[0m
+
